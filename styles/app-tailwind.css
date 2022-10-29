@@ -1,3 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white font-light text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400;
+  }
+
+  .link {
+    @apply focus:focus-inline font-semibold lowercase tracking-wide text-brand underline;
+    font-variant: small-caps;
+  }
+
+  h1 {
+    @apply mb-4 text-5xl font-black tracking-tight;
+  }
+  h2 {
+    @apply mb-2 text-3xl font-bold tracking-tight;
+  }
+  h3 {
+    @apply mb-2 text-2xl font-bold tracking-tight;
+  }
+  h4 {
+    @apply mb-2 text-xl font-semibold;
+  }
+  h5 {
+    @apply font-semibold uppercase tracking-wide;
+  }
+}
+
+@layer utilities {
+  .spacing {
+    @apply px-5 py-3;
+  }
+  .spacing-sm {
+    @apply px-3 py-1.5;
+  }
+  .spacing-lg {
+    @apply px-8 py-5;
+  }
+
+  .text-xx {
+    @apply text-[.625rem] tracking-wide;
+  }
+
+  .focus-inline {
+    @apply rounded-lg bg-brand text-brand-100 outline-none ring-2 ring-brand;
+  }
+}
+
+@layer components {
+  .button {
+    @apply spacing inline-flex cursor-pointer justify-center rounded-xl  border text-center font-semibold normal-case tracking-normal outline-none  transition;
+    font-variant: normal;
+    @apply border-gray-200 bg-gray-50 text-gray-600 hover:border-brand-300 hover:bg-brand-100 hover:text-brand focus:border-brand focus:text-brand focus:ring-4 focus:ring-brand-300  active:scale-95 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:active:scale-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-brand dark:hover:bg-brand-900 dark:hover:text-white   dark:focus:border-brand dark:focus:ring-brand-900 dark:disabled:border-gray-800 dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+  }
+
+  .button-primary {
+    @apply border-brand bg-brand text-white hover:border-brand-700 hover:bg-brand-700 hover:text-white focus:text-white disabled:border-brand-300 disabled:bg-brand-300 disabled:text-brand-100 dark:border-brand dark:bg-brand dark:text-white dark:hover:border-brand-700 dark:hover:bg-brand-700 dark:disabled:border-brand-900 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
+  }
+
+  .button-small {
+    @apply spacing-sm rounded-lg text-sm;
+  }
+  .button-large {
+    @apply spacing-lg rounded-2xl text-2xl font-bold;
+  }
+
+  .button-link {
+    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent focus:border-transparent dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent dark:focus:border-transparent dark:focus:text-brand;
+  }
+}
