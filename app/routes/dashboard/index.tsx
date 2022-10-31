@@ -1,3 +1,5 @@
+import Layout from "~/components/Layout";
+
 export default function Dashboard() {
-	return <div>Dash</div>;
+  return <Layout>Dash</Layout>;
 }

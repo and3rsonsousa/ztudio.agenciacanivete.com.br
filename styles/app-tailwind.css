@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-white font-light text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400;
+    @apply bg-white font-light text-gray-700 antialiased dark:bg-gray-900 dark:text-gray-400;
   }
 
   .link {
@@ -13,13 +13,13 @@
   }
 
   h1 {
-    @apply mb-4 text-5xl font-black tracking-tight;
+    @apply mb-8 text-5xl font-bold tracking-tight;
   }
   h2 {
-    @apply mb-2 text-3xl font-bold tracking-tight;
+    @apply mb-4 text-3xl font-bold tracking-tight;
   }
   h3 {
-    @apply mb-2 text-2xl font-bold tracking-tight;
+    @apply mb-4 text-2xl font-bold tracking-tight;
   }
   h4 {
     @apply mb-2 text-xl font-semibold;
@@ -30,14 +30,18 @@
 }
 
 @layer utilities {
-  .spacing {
-    @apply px-5 py-3;
-  }
   .spacing-sm {
     @apply px-3 py-1.5;
   }
+  .spacing {
+    @apply px-5 py-3;
+  }
   .spacing-lg {
     @apply px-8 py-5;
+  }
+
+  .shadow-color {
+    @apply shadow-2xl shadow-gray-500/25;
   }
 
   .text-xx {
@@ -47,17 +51,33 @@
   .focus-inline {
     @apply rounded-lg bg-brand text-brand-100 outline-none ring-2 ring-brand;
   }
+
+  .focus-block {
+    @apply focus:border-brand focus:text-brand focus:outline-none focus:ring-4 focus:ring-brand-300;
+    @apply dark:focus:border-brand dark:focus:ring-brand-900;
+  }
 }
 
 @layer components {
   .button {
-    @apply spacing inline-flex cursor-pointer justify-center rounded-xl  border text-center font-semibold normal-case tracking-normal outline-none  transition;
+    /* base do botão */
+    @apply spacing inline-flex cursor-pointer justify-center rounded-xl  border  text-center font-semibold normal-case tracking-normal  outline-none transition active:scale-95;
     font-variant: normal;
-    @apply border-gray-200 bg-gray-50 text-gray-600 hover:border-brand-300 hover:bg-brand-100 hover:text-brand focus:border-brand focus:text-brand focus:ring-4 focus:ring-brand-300  active:scale-95 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-300 disabled:active:scale-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-brand dark:hover:bg-brand-900 dark:hover:text-white   dark:focus:border-brand dark:focus:ring-brand-900 dark:disabled:border-gray-800 dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+    /* botão em estado normal */
+    @apply bg-white  hover:border-brand hover:bg-brand-100/50 hover:text-brand;
+    /* botão em modo escuro */
+    @apply dark:bg-gray-800 dark:text-gray-300  dark:hover:bg-brand-900 dark:hover:text-white     dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+    /* botão desabilitado */
+    @apply disabled:cursor-not-allowed  disabled:border-transparent disabled:bg-gray-100 disabled:text-gray-300 disabled:active:scale-100;
+    @apply focus-block;
   }
 
   .button-primary {
-    @apply border-brand bg-brand text-white hover:border-brand-700 hover:bg-brand-700 hover:text-white focus:text-white disabled:border-brand-300 disabled:bg-brand-300 disabled:text-brand-100 dark:border-brand dark:bg-brand dark:text-white dark:hover:border-brand-700 dark:hover:bg-brand-700 dark:disabled:border-brand-900 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
+    @apply border-transparent bg-brand text-white hover:bg-brand-700 hover:text-white focus:border-brand-700 focus:text-white;
+    /* botão primário desabilitado */
+    @apply disabled:bg-brand-300 disabled:text-brand-100;
+    /* botão primário em modo escuro */
+    @apply dark:bg-brand dark:text-white  dark:hover:bg-brand-700 dark:focus:border-brand-100/50 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
   }
 
   .button-small {
@@ -70,4 +90,40 @@
   .button-link {
     @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent focus:border-transparent dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent dark:focus:border-transparent dark:focus:text-brand;
   }
+
+  .field {
+    @apply mb-4 block;
+  }
+  .field-label {
+    @apply mb-2 block font-semibold;
+  }
+  .field-input {
+    @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50  dark:placeholder:text-gray-700;
+    @apply dark:bg-black/25 dark:focus:ring-brand-900;
+    @apply invalid:border-error-500 invalid:ring-error-500/25 dark:invalid:ring-error-500/25;
+    @apply focus-block;
+  }
+}
+
+.header-menu {
+  @apply flex pr-2;
+}
+
+.header-menu-link {
+  @apply block rounded-md border border-transparent p-2;
+  @apply focus-block;
+}
+.header-menu-link svg {
+  @apply w-4;
+}
+
+.dropdown-content {
+  @apply shadow-color overflow-hidden rounded-xl border bg-gray-50;
+}
+
+.dropdown-label {
+  @apply text-xx spacing-sm font-semibold uppercase tracking-wide text-gray-400;
+}
+.dropdown-item {
+  @apply spacing-sm text-sm focus:bg-brand focus:text-white focus:outline-none;
 }

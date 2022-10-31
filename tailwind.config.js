@@ -20,6 +20,11 @@ module.exports = {
         700: "#5814B8",
         900: "#3B1782",
       },
+
+      error: colors.red,
+      alert: colors.amber,
+      success: colors.emerald,
+
       post: colors.violet,
       reels: colors.fuchsia,
       meeting: colors.sky,
