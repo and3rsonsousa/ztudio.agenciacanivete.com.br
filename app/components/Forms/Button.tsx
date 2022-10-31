@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Button({
   children,
   small,
@@ -5,6 +7,7 @@ export default function Button({
   primary,
   disabled,
   link,
+  onClick,
 }: {
   children: React.ReactNode;
   small?: boolean;
@@ -12,6 +15,7 @@ export default function Button({
   primary?: boolean;
   disabled?: boolean;
   link?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   return (
     <button
@@ -19,6 +23,7 @@ export default function Button({
         large ? " button-large" : ""
       }${primary ? " button-primary" : ""}${link ? " button-link" : ""}`}
       disabled={disabled}
+      onClick={onClick}
     >
       {children}
     </button>

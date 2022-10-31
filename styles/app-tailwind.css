@@ -9,21 +9,25 @@
 
   .link {
     @apply focus:focus-inline font-semibold lowercase tracking-wide text-brand underline;
-    font-variant: small-caps;
+    font-variant:small-caps;
   }
 
   h1 {
     @apply mb-8 text-5xl font-bold tracking-tight;
   }
+
   h2 {
     @apply mb-4 text-3xl font-bold tracking-tight;
   }
+
   h3 {
     @apply mb-4 text-2xl font-bold tracking-tight;
   }
+
   h4 {
     @apply mb-2 text-xl font-semibold;
   }
+
   h5 {
     @apply font-semibold uppercase tracking-wide;
   }
@@ -33,9 +37,11 @@
   .spacing-sm {
     @apply px-3 py-1.5;
   }
+
   .spacing {
     @apply px-5 py-3;
   }
+
   .spacing-lg {
     @apply px-8 py-5;
   }
@@ -61,14 +67,14 @@
 @layer components {
   .button {
     /* base do botão */
-    @apply spacing inline-flex cursor-pointer justify-center rounded-xl  border  text-center font-semibold normal-case tracking-normal  outline-none transition active:scale-95;
-    font-variant: normal;
+    @apply spacing inline-flex cursor-pointer justify-center rounded-xl border text-center font-semibold normal-case tracking-normal outline-none transition active:scale-95;
+    font-variant:normal;
     /* botão em estado normal */
-    @apply bg-white  hover:border-brand hover:bg-brand-100/50 hover:text-brand;
+    @apply bg-white hover:border-brand hover:bg-brand-100/50 hover:text-brand;
     /* botão em modo escuro */
-    @apply dark:bg-gray-800 dark:text-gray-300  dark:hover:bg-brand-900 dark:hover:text-white     dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+    @apply dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-brand-900 dark:hover:text-white dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
     /* botão desabilitado */
-    @apply disabled:cursor-not-allowed  disabled:border-transparent disabled:bg-gray-100 disabled:text-gray-300 disabled:active:scale-100;
+    @apply disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-100 disabled:text-gray-300 disabled:active:scale-100;
     @apply focus-block;
   }
 
@@ -77,31 +83,38 @@
     /* botão primário desabilitado */
     @apply disabled:bg-brand-300 disabled:text-brand-100;
     /* botão primário em modo escuro */
-    @apply dark:bg-brand dark:text-white  dark:hover:bg-brand-700 dark:focus:border-brand-100/50 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
+    @apply dark:bg-brand dark:text-white dark:hover:bg-brand-700 dark:focus:border-brand-100/50 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
   }
 
   .button-small {
     @apply spacing-sm rounded-lg text-sm;
   }
+
   .button-large {
     @apply spacing-lg rounded-2xl text-2xl font-bold;
   }
 
   .button-link {
-    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent focus:border-transparent dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent dark:focus:border-transparent dark:focus:text-brand;
+    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent  dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent ;
+  }
+
+  .button svg {
+    @apply w-4
   }
 
   .field {
     @apply mb-4 block;
   }
+
   .field-label {
     @apply mb-2 block font-semibold;
   }
+
   .field-input {
-    @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50  dark:placeholder:text-gray-700;
+    @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50 dark:placeholder:text-gray-700;
     @apply dark:bg-black/25 dark:focus:ring-brand-900;
     @apply invalid:border-error-500 invalid:ring-error-500/25 dark:invalid:ring-error-500/25;
-    @apply focus-block;
+    @apply focus-block focus:text-gray-700;
   }
 }
 
@@ -113,6 +126,7 @@
   @apply block rounded-md border border-transparent p-2;
   @apply focus-block;
 }
+
 .header-menu-link svg {
   @apply w-4;
 }
@@ -124,6 +138,39 @@
 .dropdown-label {
   @apply text-xx spacing-sm font-semibold uppercase tracking-wide text-gray-400;
 }
+
 .dropdown-item {
   @apply spacing-sm text-sm focus:bg-brand focus:text-white focus:outline-none;
+}
+
+.dropdown-item a{
+  @apply block
+}
+
+.calendar {
+  @apply p-2
+}
+
+.calendar-weekday {
+  @apply font-semibold tracking-wide text-xs px-2 py-4 text-center text-gray-400 dark:text-gray-600;  
+}
+
+.calendar-day {
+  @apply p-2 border-t text-center dark:border-gray-800 lg:px-1 lg:text-left
+}
+.calendar-day.not-this-month button{
+  @apply text-gray-300 dark:text-gray-700 
+}
+
+.calendar-day button{
+  @apply w-8 h-8 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition text-sm border border-transparent lg:w-6 lg:h-6 lg:text-xs;
+  @apply focus-block
+}
+
+.calendar-day.is-today button {
+  @apply font-semibold text-brand;
+  
+}
+.calendar-day.is-selected button{
+  @apply font-semibold text-white bg-brand 
 }
