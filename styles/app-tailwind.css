@@ -156,7 +156,7 @@
 }
 
 .calendar-day {
-  @apply p-2 border-t text-center dark:border-gray-800 lg:px-1 lg:text-left
+  @apply py-2 border-t text-center dark:border-gray-800  lg:text-left
 }
 .calendar-day.not-this-month button{
   @apply text-gray-300 dark:text-gray-700 

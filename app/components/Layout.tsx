@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen w-full flex-col  lg:flex-row">
       {/* Header */}
-      <div className="no-scrollbars flex items-center justify-between border-b dark:border-gray-800 lg:flex lg:w-48 lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-4">
+      <div className="no-scrollbars flex flex-shrink-0 items-center justify-between border-b dark:border-gray-800 lg:flex lg:w-48 lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-4">
         <div className="lg:w-full">
           {/* Logo */}
           <div className="w-32 p-4">
