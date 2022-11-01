@@ -1,5 +1,4 @@
 import type {
-  ActionFunction,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
@@ -14,7 +13,6 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { createServerClient } from "@supabase/auth-helpers-remix";
 import styles from "./app.css";
 
 export const meta: MetaFunction = () => ({
@@ -34,9 +32,9 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = () => {
   return json({
     env: {
-      SUPABASE_URL: "https://prmvfibheijucdazdfzc.supabase.co",
+      SUPABASE_URL: "https://pivlgmzzjgsysyvmsgjy.supabase.co",
       SUPABASE_ANON_KEY:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzY4MzI1MCwiZXhwIjoxOTU5MjU5MjUwfQ.ElgtQJthx_B3DM_zIL2acASAo_J_F9HclpLDv1m_hQ0",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdmxnbXp6amdzeXN5dm1zZ2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTMyNTM3NDUsImV4cCI6MTk2ODgyOTc0NX0.sSMLicGE_LCmu1YidlnHFqwNnNj4K2CCfJUiTHc3muA",
     },
   });
 };
@@ -44,13 +42,15 @@ export const loader: LoaderFunction = () => {
 export default function App() {
   const { env } = useLoaderData();
   return (
-    <html lang="pt-br" className="drk">
+    <html lang="pt-br">
       <head>
         <Meta />
         <Links />
       </head>
       <body>
-        <Outlet />
+        <div className="app">
+          <Outlet />
+        </div>
         <ScrollRestoration />
         <script
           dangerouslySetInnerHTML={{

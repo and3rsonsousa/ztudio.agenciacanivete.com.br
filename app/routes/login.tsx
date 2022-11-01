@@ -1,7 +1,9 @@
-import { ActionFunction, json, LoaderFunction } from "@remix-run/cloudflare";
-import { redirect } from "@remix-run/cloudflare";
-import { Form, useSearchParams } from "@remix-run/react";
-import { createServerClient } from "@supabase/auth-helpers-remix";
+import {
+  ActionFunction,
+  LoaderFunction,
+  redirect,
+} from "@remix-run/cloudflare";
+import { Form } from "@remix-run/react";
 import Button from "~/components/Forms/Button";
 import Field from "~/components/Forms/Field";
 import { signIN } from "~/lib/auth.server";

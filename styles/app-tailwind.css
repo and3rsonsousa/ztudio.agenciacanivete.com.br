@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  body {
+  .app {
     @apply bg-white font-light text-gray-700 antialiased dark:bg-gray-900 dark:text-gray-400;
   }
 
@@ -67,7 +67,7 @@
 @layer components {
   .button {
     /* base do botão */
-    @apply spacing inline-flex cursor-pointer justify-center rounded-xl border text-center font-semibold normal-case tracking-normal outline-none transition active:scale-95;
+    @apply spacing inline-flex items-center gap-2 cursor-pointer justify-center rounded-xl border text-center font-semibold normal-case tracking-normal outline-none transition active:scale-95;
     font-variant:normal;
     /* botão em estado normal */
     @apply bg-white hover:border-brand hover:bg-brand-100/50 hover:text-brand;
@@ -112,9 +112,9 @@
 
   .field-input {
     @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50 dark:placeholder:text-gray-700;
+    @apply focus-block focus:text-gray-700;
     @apply dark:bg-black/25 dark:focus:ring-brand-900;
     @apply invalid:border-error-500 invalid:ring-error-500/25 dark:invalid:ring-error-500/25;
-    @apply focus-block focus:text-gray-700;
   }
 }
 
@@ -123,7 +123,7 @@
 }
 
 .header-menu-link {
-  @apply block rounded-md border border-transparent p-2;
+  @apply flex rounded-md border border-transparent p-2;
   @apply focus-block;
 }
 
@@ -132,15 +132,15 @@
 }
 
 .dropdown-content {
-  @apply shadow-color overflow-hidden rounded-xl border bg-gray-50;
+  @apply shadow-color rounded-xl border bg-gray-50 dark:bg-gray-700 dark:border-gray-900 py-2;
 }
 
 .dropdown-label {
-  @apply text-xx spacing-sm font-semibold uppercase tracking-wide text-gray-400;
+  @apply text-xx spacing-sm font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500;
 }
 
 .dropdown-item {
-  @apply spacing-sm text-sm focus:bg-brand focus:text-white focus:outline-none;
+  @apply spacing-sm text-xs focus:bg-gray-200 focus:outline-none dark:text-gray-400  dark:focus:bg-gray-600 text-gray-700 cursor-pointer;
 }
 
 .dropdown-item a{
@@ -148,7 +148,7 @@
 }
 
 .calendar {
-  @apply p-2
+  /* @apply p-2 */
 }
 
 .calendar-weekday {
@@ -173,4 +173,47 @@
 }
 .calendar-day.is-selected button{
   @apply font-semibold text-white bg-brand 
+}
+
+.no-scrollbars::-webkit-scrollbar {
+    display: none;
+}
+.dialog-overlay{
+  @apply bg-gray-800/50 fixed inset-0
+
+}
+
+.dialog-content{
+  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border rounded-xl shadow-xl
+}
+
+
+.field-checkbox{
+  @apply flex gap-4 items-center relative
+}
+.field-checkbox .field-label{
+  @apply m-0
+
+}
+.field-checkbox input{
+  
+  @apply absolute opacity-0
+  
+}
+.field-checkbox .checkbox{
+  @apply w-4 h-4 rounded bg-gray-100  border border-transparent
+}
+.field-checkbox .checkbox svg{
+  @apply opacity-0 scale-50 transition text-white
+}
+
+.field-checkbox input:checked ~ .checkbox{
+  @apply bg-brand relative
+}
+.field-checkbox input:checked ~ .checkbox svg{
+  @apply scale-100 opacity-100
+}
+
+.field-checkbox input:focus ~ .checkbox{
+  @apply border-brand ring-4 ring-brand-300
 }

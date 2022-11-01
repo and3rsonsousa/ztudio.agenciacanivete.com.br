@@ -6,6 +6,7 @@ export default function Field({
   type,
   placeholder,
   value,
+  pattern,
   onChange,
 }: {
   title: string;
@@ -13,6 +14,7 @@ export default function Field({
   type?: "text" | "email" | "password";
   placeholder?: string;
   value?: string;
+  pattern?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
@@ -25,7 +27,7 @@ export default function Field({
         name={name}
         defaultValue={value}
         onChange={onChange}
-        // pattern="[A-Za-z]*"
+        pattern={pattern}
       />
     </label>
   );
