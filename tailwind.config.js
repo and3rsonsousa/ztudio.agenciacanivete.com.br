@@ -34,10 +34,10 @@ module.exports = {
 
       idea: colors.yellow,
       do: colors.orange,
-      doing: colors.rose,
-      review: colors.purple,
+      doing: colors.pink,
+      review: colors.violet,
       done: colors.sky,
-      accomplished: colors.lime,
+      accomplished: colors.emerald,
     },
   },
   plugins: [],

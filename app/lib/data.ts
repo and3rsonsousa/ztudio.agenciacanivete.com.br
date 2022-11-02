@@ -1,3 +1,15 @@
+import {
+  add,
+  endOfMonth,
+  endOfWeek,
+  format,
+  parse,
+  setDefaultOptions,
+  startOfMonth,
+  startOfToday,
+  startOfWeek,
+} from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { getSupabase } from "./supabase";
 
 export const getPerson = (id: string, request: Request) => {
@@ -96,69 +108,64 @@ export const getTagsStatus = async (request: Request) => {
   return { tags, status };
 };
 
-// export const getActions = async (
-//   args: {
-//     user?: string;
-//     account?: string;
-//     period?: string;
-//     holidays?: true;
-//   } = {}
-// ) => {
-//   let { user, account, period, holidays } = args;
+export const getActions = async (
+  args: {
+    request?: Request;
+    user?: string;
+    account?: string;
+    period?: Date;
+  } = {}
+) => {
+  let { user, account, period, request } = args;
 
-//   let _period = dayjs();
+  if (!request) {
+    throw new Error("Request is undefined");
+  }
 
-//   if (period) {
-//     _period = dayjs(period);
-//   }
+  let _period = period ?? startOfToday();
+  let firstDayOfCurrentMonth = parse(
+    format(_period, "MMM-yyy"),
+    "MMM-yyyy",
+    new Date()
+  );
 
-//   let firstDay = _period.startOf("month").startOf("week");
-//   let lastDay = _period.endOf("month").endOf("week").add(1, "day");
+  let firstDay = add(startOfWeek(startOfMonth(firstDayOfCurrentMonth)), {
+    days: -1,
+  });
+  let lastDay = add(endOfWeek(endOfMonth(firstDayOfCurrentMonth)), {
+    hours: 1,
+  });
+  const { supabase } = getSupabase(request);
 
-//   if (holidays) {
-//     let { data, error } = await supabase
-//       .from("Action")
-//       .select("*")
-//       .gte("date", firstDay.format("YYYY-MM-DD"))
-//       .lt("date", lastDay.format("YYYY-MM-DD"))
-//       .is("account", null)
-//       .order("date", {
-//         ascending: true,
-//       })
-//       .order("created_at", { ascending: true });
+  if (account) {
+    return supabase
+      .from("Action")
+      .select("*, Account!inner(*)")
+      .eq("Account.slug", account)
+      .gte("date", format(firstDay, "y/M/d"))
+      .lte("date", format(lastDay, "y/M/d"))
+      .order("date", {
+        ascending: true,
+      })
+      .order("created_at", { ascending: true });
+  } else {
+    if (!user) {
+      throw new Error("User is undefined");
+    }
 
-//     if (error) {
-//       return { error };
-//     }
-
-//     return { data };
-//   } else {
-//     if (account) {
-//       return supabase
-//         .from("Action")
-//         .select("*, Account!inner(*)")
-//         .eq("Account.slug", account)
-//         .gte("date", firstDay.format("YYYY-MM-DD"))
-//         .lt("date", lastDay.format("YYYY-MM-DD"))
-//         .order("date", {
-//           ascending: true,
-//         })
-//         .order("created_at", { ascending: true });
-//     } else {
-//       return supabase
-//         .from("Action")
-//         .select("*, Account!inner(*)")
-//         .contains("Account.users", [user])
-//         .gte("date", firstDay.format("YYYY-MM-DD"))
-//         .lt("date", lastDay.format("YYYY-MM-DD"))
-//         .filter("account", "not.is", null)
-//         .order("date", {
-//           ascending: true,
-//         })
-//         .order("created_at", { ascending: true });
-//     }
-//   }
-// };
+    return supabase
+      .from("Action")
+      .select("*, Account!inner(*)")
+      .contains("Account.users", [user])
+      .gte("date", format(firstDay, "y/M/d"))
+      .lte("date", format(lastDay, "y/M/d"))
+      .filter("account", "not.is", null)
+      .order("date", {
+        ascending: true,
+      })
+      .order("created_at", { ascending: true });
+  }
+};
 
 // export const getAction = (id?: string) => {
 //   return supabase

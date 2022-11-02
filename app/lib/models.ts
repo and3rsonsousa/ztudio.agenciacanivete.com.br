@@ -41,6 +41,12 @@ export type ActionModel = {
   updated_at?: string;
   position?: 1 | 2 | 3;
 };
+export type CelebrationModel = {
+  id: string;
+  name: string;
+  date: string;
+  is_holiday: boolean;
+};
 
 export type ActionModelFull = {
   id: string;
@@ -63,8 +69,8 @@ export type ItemModel = {
 
 export type DayModel = {
   date: Date;
-  holidays: ActionModel[];
   actions: ActionModel[];
+  celebrations: CelebrationModel[];
 };
 
 export type DropdownOptions = Array<

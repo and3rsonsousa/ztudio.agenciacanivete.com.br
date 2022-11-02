@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}`}
-                  className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal hover:bg-gray-100 focus:outline-none"
+                  className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none"
                 >
                   {account.name}
                 </Link>

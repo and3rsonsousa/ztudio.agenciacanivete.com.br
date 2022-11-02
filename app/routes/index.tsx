@@ -4,7 +4,9 @@ export default function Index() {
   return (
     <div className="grid h-screen place-content-center">
       <div className="w-96 text-center">
-        <h1 className="mb-8 text-brand">Studio</h1>
+        <div>
+          <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-32" />
+        </div>
         <p>
           Sistema de gestão de ações criado
           <br /> e mantido pela{" "}
