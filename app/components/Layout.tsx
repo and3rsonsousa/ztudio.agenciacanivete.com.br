@@ -1,15 +1,14 @@
 import {
   BriefcaseIcon,
-  MagnifyingGlassIcon,
   MoonIcon,
   SunIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import * as Dialog from "@radix-ui/react-dialog";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Link, useMatches, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import type { AccountModel, PersonModel } from "~/lib/models";
+import SearchBox from "./SearchBox";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
@@ -35,8 +34,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="no-scrollbars flex flex-shrink-0 items-center justify-between border-b dark:border-gray-800 lg:flex lg:w-48 lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-4">
         <div className="lg:w-full">
           {/* Logo */}
-          <div className="w-32 p-4">
-            <img src="/logo.png" alt="STUDIO" />
+          <div className="w-36 p-4">
+            <Link
+              to={`/dashboard`}
+              className="focus-block -mt2 -ml-2 block rounded border border-transparent p-2 transition"
+            >
+              <img src="/logo.png" alt="STUDIO" />
+            </Link>
           </div>
           {/* Clientes large view */}
           <div className="hidden p-2 lg:block">
@@ -44,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}`}
-                  className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none"
+                  className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
                 >
                   {account.name}
                 </Link>
@@ -59,24 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
           <div className="lg:p-2">
-            <Dialog.Root>
-              <Dialog.Trigger asChild>
-                <button
-                  onClick={() => {}}
-                  className="header-menu-link flex w-full cursor-text items-center justify-between gap-2 rounded lg:bg-gray-100"
-                >
-                  <div className="hidden text-sm lg:block">Pesquisar</div>
-                  <div>
-                    <MagnifyingGlassIcon />
-                  </div>
-                </button>
-              </Dialog.Trigger>
-              <Dialog.Overlay className="dialog-overlay">
-                <Dialog.Content className="dialog-content w-72 overflow-hidden border border-black/5 sm:w-96 lg:w-[36rem]">
-                  ok
-                </Dialog.Content>
-              </Dialog.Overlay>
-            </Dialog.Root>
+            <SearchBox />
           </div>
           <div>
             <DropdownMenu.Root>

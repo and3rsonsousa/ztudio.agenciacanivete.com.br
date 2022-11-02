@@ -1,5 +1,6 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { Outlet } from "@remix-run/react";
+import { useState } from "react";
 import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
 import { getAccounts, getPerson, getTagsStatus } from "~/lib/data";
@@ -21,6 +22,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Dashboard() {
   // const loaderData = useLoaderData();
+  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
+  const [openDialogAction, setOpenDialogAction] = useState(false);
   return (
     <Layout>
       {/* <pre>
@@ -28,7 +31,18 @@ export default function Dashboard() {
           {JSON.stringify(loaderData, undefined, 2)}
         </code>
       </pre> */}
-      <Outlet />
+      <Outlet
+        context={{
+          celebrations: {
+            openDialogCelebration,
+            setOpenDialogCelebration,
+          },
+          actions: {
+            openDialogAction,
+            setOpenDialogAction,
+          },
+        }}
+      />
     </Layout>
   );
 }

@@ -4,12 +4,10 @@ import {
   endOfWeek,
   format,
   parse,
-  setDefaultOptions,
   startOfMonth,
   startOfToday,
   startOfWeek,
 } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { getSupabase } from "./supabase";
 
 export const getPerson = (id: string, request: Request) => {
@@ -20,13 +18,18 @@ export const getPerson = (id: string, request: Request) => {
 // export const getPersons = () =>
 //   supabase.from("Person").select("*").order("name", { ascending: true });
 
-// export const getAccount = async (args: { id?: string; slug?: string } = {}) => {
-//   const { id, slug } = args;
-//   if (id) {
-//     return supabase.from("Account").select("*").eq("id", id).single();
-//   }
-//   return supabase.from("Account").select("*").eq("slug", slug).single();
-// };
+export const getAccount = async (
+  request: Request,
+
+  slug?: string,
+  id?: string
+) => {
+  const { supabase } = getSupabase(request);
+  if (id) {
+    return supabase.from("Account").select("*").eq("id", id).single();
+  }
+  return supabase.from("Account").select("*").eq("slug", slug).single();
+};
 
 export const getAccounts = (userId: string, request: Request) => {
   const { supabase } = getSupabase(request);

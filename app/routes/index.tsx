@@ -24,8 +24,12 @@ export default function Index() {
           {/* <Link to={`/login?signup`} className="button button-link">
             Criar Conta
           </Link> */}
-          <Link to={`/login`} className="button button-primary">
-            Fazer Login
+          <Link
+            to={`/dashboard
+          `}
+            className="button button-primary"
+          >
+            Entrar
           </Link>
         </div>
       </div>

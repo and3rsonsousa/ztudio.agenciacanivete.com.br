@@ -8,6 +8,7 @@ export default function Button({
   disabled,
   link,
   onClick,
+  type,
 }: {
   children: React.ReactNode;
   small?: boolean;
@@ -15,10 +16,12 @@ export default function Button({
   primary?: boolean;
   disabled?: boolean;
   link?: boolean;
+  type?: "submit" | "reset" | "button";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   return (
     <button
+      type={type}
       className={`button${small ? " button-small" : ""}${
         large ? " button-large" : ""
       }${primary ? " button-primary" : ""}${link ? " button-link" : ""}`}

@@ -2,17 +2,17 @@ import {
   CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ExclamationTriangleIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Form } from "@remix-run/react";
+import { Form, useOutletContext } from "@remix-run/react";
 import {
   add,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
   format,
-  getMonth,
   isEqual,
   isSameMonth,
   isToday,
@@ -22,6 +22,7 @@ import {
   startOfToday,
   startOfWeek,
 } from "date-fns";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
@@ -64,16 +65,16 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
 
   function setSelectedDayAndCurrentMonth(day: Date) {
     setSelectedDay(day);
-    changeMonth(getMonth(day) - getMonth(firstDayOfCurrentMonth));
+    // changeMonth(getMonth(day) - getMonth(firstDayOfCurrentMonth));
   }
 
   return (
     <div className="calendar lg:flex lg:h-screen lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
-        <h2 className="mb-0 p-4 text-2xl first-letter:capitalize lg:text-3xl">
+        <h4 className="mb-0 p-4 first-letter:capitalize">
           {format(firstDayOfCurrentMonth, `MMMM 'de' Y`)}
-        </h2>
+        </h4>
         <div>
           <Button link onClick={() => changeMonth(-1)}>
             <ChevronLeftIcon />
@@ -84,9 +85,9 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
         </div>
       </div>
 
-      <div className="flex-auto  overflow-hidden lg:flex">
+      <div className="flex-auto overflow-hidden lg:flex">
         {/* Calendar  */}
-        <div className="no-scrollbars w-full overflow-auto dark:border-gray-800 lg:border-r">
+        <div className="no-scrollbars flex w-full flex-col overflow-auto dark:border-gray-800 lg:border-r">
           <div className="grid grid-cols-7">
             {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
               (day, index) => (
@@ -96,7 +97,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
               )
             )}
           </div>
-          <div className="grid grid-cols-7">
+          <div className="grid flex-auto grid-cols-7">
             {days.map((day, index) => (
               <div
                 key={index}
@@ -201,65 +202,108 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
   );
 }
 
-const CalendarInfo = ({ day }: { day: DayModel }) => (
-  <div className="mt-16 flex flex-col border-t pt-16 lg:mt-0 lg:w-96 lg:border-0 lg:pt-0">
-    <div className="border-b p-4 dark:border-gray-800">
-      {/* Header */}
+const CalendarInfo = ({ day }: { day: DayModel }) => {
+  const context: {
+    celebrations: {
+      openDialogCelebration: boolean;
+      setOpenDialogCelebration: () => void;
+    };
+    actions: {
+      openDialogAction: boolean;
+      setOpenDialogAction: () => void;
+    };
+  } = useOutletContext();
 
-      <h5>{format(day.date, "d 'de' MMMM 'de' y")}</h5>
+  return (
+    <div className="mt-16 flex flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-96 lg:border-0 lg:pt-0">
+      {day !== undefined ? (
+        <>
+          <div className="border-b p-4 dark:border-gray-800">
+            {/* Header */}
 
-      {/* Celebrations */}
+            <h5>{format(day.date, "d 'de' MMMM 'de' y")}</h5>
 
-      {day.celebrations.length > 0 ? (
-        <div className="mt-4 flex flex-col">
-          {day.celebrations.map((celebration, index) => (
-            <div key={index} className="my-1 w-full text-xs font-normal">
-              {celebration.name}
-            </div>
-          ))}
+            {/* Celebrations */}
+
+            {day.celebrations.length > 0 ? (
+              <div className="mt-4 flex flex-col">
+                {day.celebrations.map((celebration, index) => (
+                  <div key={index} className="my-1 w-full text-xs font-normal">
+                    {celebration.name}
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="no-scrollbars flex h-full  flex-col overflow-auto p-4">
+            {day.actions.length > 0 ? (
+              day.actions.map((action, i) => (
+                <ActionMedium action={action} key={i} />
+              ))
+            ) : (
+              <Exclamation>Nenhuma ação para esse dia</Exclamation>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-auto p-8">
+          <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
         </div>
-      ) : null}
-    </div>
-
-    <div className="no-scrollbars flex h-full  flex-col overflow-auto p-4">
-      {day.actions.map((action, i) => (
-        <ActionMedium action={action} key={i} />
-      ))}
-    </div>
-
-    <div className="flex items-center justify-end border-t p-4 dark:border-gray-800">
-      <div>
-        <Dialog.Root>
+      )}
+      <div className="flex items-center justify-end border-t p-4 dark:border-gray-800">
+        {/* Dialog for Celebrations */}
+        <Dialog.Root
+          open={context.celebrations.openDialogCelebration}
+          onOpenChange={context.celebrations.setOpenDialogCelebration}
+        >
           <Dialog.Trigger asChild>
             <Button link>
               <CalendarIcon />
             </Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay className="dialog-overlay" />
-            <Dialog.Content className="dialog-content p-4 font-light text-gray-700 antialiased lg:p-8">
-              <Dialog.Title>
-                <h3>Nova Data Comemorativa</h3>
-              </Dialog.Title>
-              <Form method="post">
-                <Field name="name" title="Nome" />
-                <Field
-                  name="date"
-                  title="Data"
-                  pattern="[0-9]{1,2}/[0-9]{1,2}"
-                />
-                <Checkbox title="Feriado" name="is_holiday" />
-                <div className="text-right">
-                  <Button primary>Adicionar</Button>
-                </div>
-              </Form>
-            </Dialog.Content>
+            <AnimatePresence>
+              <>
+                <Dialog.Overlay className="dialog-overlay" />
+
+                <Dialog.Content className="dialog">
+                  <motion.div
+                    className="dialog-content p-4 font-light  antialiased lg:p-8"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      transition: { ease: "circOut", duration: 0.6 },
+                    }}
+                  >
+                    <Dialog.Title>
+                      <h3>Nova Data Comemorativa</h3>
+                    </Dialog.Title>
+                    <Form method="post">
+                      <Field name="name" title="Nome" />
+                      <Field
+                        name="date"
+                        title="Data"
+                        pattern="[0-9]{1,2}/[0-9]{1,2}"
+                      />
+                      <Checkbox title="Feriado" name="is_holiday" />
+                      <div className="text-right">
+                        <Button primary>Adicionar</Button>
+                      </div>
+                    </Form>
+                  </motion.div>
+                </Dialog.Content>
+              </>
+            </AnimatePresence>
           </Dialog.Portal>
         </Dialog.Root>
-      </div>
 
-      <div>
-        <Dialog.Root>
+        {/* Dialog for Actions */}
+        <Dialog.Root
+          open={context.actions.openDialogAction}
+          onOpenChange={context.actions.setOpenDialogAction}
+        >
           <Dialog.Trigger asChild>
             <Button primary>
               Nova Ação <PlusIcon />
@@ -267,15 +311,32 @@ const CalendarInfo = ({ day }: { day: DayModel }) => (
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="dialog-overlay" />
-            <Dialog.Content className="dialog-content p-4 font-light text-gray-700 antialiased">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-              totam nostrum, unde assumenda consequatur labore ex eos fugiat
-              aliquid inventore eius explicabo officia cumque ducimus
-              dignissimos et facere iusto. Deserunt.
+            <Dialog.Content asChild>
+              <motion.div className="dialog-content p-4 font-light text-gray-700 antialiased">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
+                totam nostrum, unde assumenda consequatur labore ex eos fugiat
+                aliquid inventore eius explicabo officia cumque ducimus
+                dignissimos et facere iusto. Deserunt.
+              </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
       </div>
+    </div>
+  );
+};
+
+const Exclamation = ({
+  children,
+  icon,
+}: {
+  children: React.ReactNode;
+  icon?: boolean;
+}) => (
+  <div>
+    <div className="mx-auto flex items-center gap-4 rounded-xl bg-gray-100 p-4 text-xs dark:bg-gray-800">
+      {icon ? <ExclamationTriangleIcon className="w-8 text-gray-400" /> : null}
+      <div>{children}</div>
     </div>
   </div>
 );

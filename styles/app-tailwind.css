@@ -61,7 +61,7 @@
   .focus-block {
     @apply focus:border-brand focus:text-brand focus:outline-none focus:ring-4 focus:ring-brand-300;
     
-    @apply dark:focus:border-brand dark:focus:ring-brand-900;
+    @apply dark:focus:border-brand dark:focus:ring-brand-900 dark:focus:text-white;
     
   }
 }
@@ -180,13 +180,15 @@
 .no-scrollbars::-webkit-scrollbar {
     display: none;
 }
+.dialog{
+  @apply fixed z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+}
 .dialog-overlay{
-  @apply bg-gray-800/50 fixed inset-0
-
+  @apply bg-gray-800/50 fixed inset-0 z-40 dark:bg-gray-900/75
 }
 
 .dialog-content{
-  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border rounded-xl shadow-xl
+  @apply  z-50  bg-white border dark:border-gray-700 rounded-xl shadow-xl dark:bg-gray-800 text-gray-700 dark:text-gray-400
 }
 
 
@@ -203,7 +205,7 @@
   
 }
 .field-checkbox .checkbox{
-  @apply w-4 h-4 rounded bg-gray-100  border border-transparent
+  @apply w-4 h-4 rounded bg-gray-100 dark:bg-gray-600  border border-transparent transition
 }
 .field-checkbox .checkbox svg{
   @apply opacity-0 scale-50 transition text-white
@@ -217,7 +219,7 @@
 }
 
 .field-checkbox input:focus ~ .checkbox{
-  @apply border-brand ring-4 ring-brand-300
+  @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900
 }
 
 
@@ -286,7 +288,7 @@
 
 
 .bg-idea {
-  @apply bg-idea-500 dark:bg-idea-800 text-white
+  @apply bg-idea-500 dark:bg-idea-700 text-white
 }
 .bg-idea-hover {
   @apply hover:bg-idea-600 dark:hover:bg-idea-700
@@ -309,17 +311,17 @@
   @apply bg-doing-500 dark:bg-doing-700 text-white
 }
 .bg-doing-hover {
-  @apply hover:bg-doing-500 dark:hover:bg-doing-600
+  @apply hover:bg-doing-600 dark:hover:bg-doing-600
 }
 .border-doing {
   @apply border-doing-500;
 }
 
 .bg-review {
-  @apply bg-review-500 dark:bg-review-700 text-white
+  @apply bg-review-500 dark:bg-review-800 text-white
 }
 .bg-review-hover {
-  @apply hover:bg-review-500 dark:hover:bg-review-600
+  @apply hover:bg-review-600 dark:hover:bg-review-700
 }
 .border-review {
   @apply border-review-500;
@@ -329,7 +331,7 @@
   @apply bg-done-500 dark:bg-done-700 text-white
 }
 .bg-done-hover {
-  @apply hover:bg-done-500 dark:hover:bg-done-600
+  @apply hover:bg-done-600 dark:hover:bg-done-600
 }
 .border-done {
   @apply border-done-500
@@ -339,7 +341,7 @@
   @apply bg-accomplished-500 dark:bg-accomplished-700 text-white
 }
 .bg-accomplished-hover {
-  @apply hover:bg-accomplished-500 dark:hover:bg-accomplished-600
+  @apply hover:bg-accomplished-600 dark:hover:bg-accomplished-600
 }
 .border-accomplished{
   @apply border-accomplished-500
