@@ -355,23 +355,23 @@
   @apply bg-info-100 dark:bg-info-700 text-info-700 dark:text-info-200
 }
 .bg-info svg {
-  @apply text-info-400 dark:text-info-500 w-6
+  @apply text-info-300 dark:text-info-500 w-6
 }
 .bg-alert{
   @apply bg-alert-100 dark:bg-alert-700 text-alert-700 dark:text-alert-200
 }
 .bg-alert svg {
-  @apply text-alert-400 dark:text-alert-500 w-6
+  @apply text-alert-300 dark:text-alert-500 w-6
 }
 .bg-error{
   @apply bg-error-100 dark:bg-error-700 text-error-700 dark:text-error-200
 }
 .bg-error svg {
-  @apply text-error-400 dark:text-error-500 w-6
+  @apply text-error-300 dark:text-error-500 w-6
 }
 .bg-success{
   @apply bg-success-100 dark:bg-success-700 text-success-700 dark:text-success-200
 }
 .bg-success svg {
-  @apply text-success-400 dark:text-success-500 w-6
+  @apply text-success-300 dark:text-success-500 w-6
 }

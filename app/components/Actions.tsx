@@ -47,6 +47,9 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
     >
       <div>
         <div className="text-sm font-normal">{action.name}</div>
+        {action.description ? (
+          <div className="text-xx mb-2">{action.description}</div>
+        ) : null}
         <div className="text-xx flex gap-4 text-gray-500">
           <div>12h13</div>
           <div>Clínica Univet</div>

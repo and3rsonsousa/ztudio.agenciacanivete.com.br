@@ -310,20 +310,27 @@ export const handleAction = async (formData: FormData, request: Request) => {
 async function createCelebration(formData: FormData, request: Request) {
   const { supabase } = getSupabase(request);
 
+  let name = formData.get("name");
   let date = formData.get("date") as string;
+  if (name === "" || date === "") {
+    return {
+      error: {
+        message: "Nome ou Data está em branco",
+      },
+    };
+  }
+
   let dateSplit = date.split("/");
 
   const { data, error } = await supabase
     .from("Celebration")
     .insert({
-      name: formData.get("name"),
+      name: name,
       date: `${dateSplit[1]}/${dateSplit[0]}`,
       is_holiday: formData.get("is_holiday"),
     })
     .select()
     .single();
-
-  console.log(data);
 
   return {
     data,

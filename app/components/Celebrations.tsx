@@ -12,15 +12,16 @@ const Celebration = ({
 }) => {
   return (
     <div
-      className={`group flex w-full items-center justify-between ${
+      className={`group flex w-full items-center justify-between  ${
         small ? "text-xx my-0.5" : "my-1 text-xs"
       } font-normal`}
+      title={celebration.name}
     >
-      <div className="flex w-full items-center gap-1">
+      <div className="flex flex-auto items-center gap-1 overflow-hidden">
         {celebration.is_holiday ? (
           <StarIcon className="w-3 text-gray-400" />
         ) : null}
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap">
           {celebration.name}
         </div>
       </div>

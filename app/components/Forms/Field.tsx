@@ -7,6 +7,7 @@ export default function Field({
   placeholder,
   value,
   pattern,
+  required,
   onChange,
 }: {
   title: string;
@@ -15,6 +16,7 @@ export default function Field({
   placeholder?: string;
   value?: string;
   pattern?: string;
+  required?: boolean;
 
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
@@ -29,6 +31,7 @@ export default function Field({
         defaultValue={value}
         onChange={onChange}
         pattern={pattern}
+        required={required}
       />
     </label>
   );
