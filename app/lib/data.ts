@@ -184,7 +184,7 @@ export const getCelebrations = async (
 
   const { supabase } = getSupabase(request);
 
-  return supabase.from("Celebration").select("*");
+  return supabase.from("Celebration").select("*").order("is_holiday");
 };
 
 // export const getAction = (id?: string) => {

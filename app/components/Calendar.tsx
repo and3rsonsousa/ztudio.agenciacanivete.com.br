@@ -4,6 +4,8 @@ import {
   ChevronRightIcon,
   ExclamationTriangleIcon,
   PlusIcon,
+  StarIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useMatches, useOutletContext } from "@remix-run/react";
@@ -31,7 +33,6 @@ import type { ActionModel, CelebrationModel, DayModel } from "~/lib/models";
 import { Action, ActionMedium } from "./Actions";
 import AddCelebrationDialog from "./AddCelebrationDialog";
 import Button from "./Forms/Button";
-import { StarIcon } from "@heroicons/react/20/solid";
 
 export default function Calendar({ actions }: { actions: ActionModel[] }) {
   setDefaultOptions({ locale: ptBR });
@@ -164,6 +165,15 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
                     <Action key={index} action={action} />
                   ))}
                 </div>
+                <div className="p-1">
+                  {day.celebrations.map((celebration) => (
+                    <Celebration
+                      celebration={celebration}
+                      key={celebration.id}
+                      small
+                    />
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -206,20 +216,10 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
             {/* Celebrations */}
 
             {day.celebrations.length > 0 ? (
-              <div className="mt-4 flex flex-col">
-                {day.celebrations
-                  .sort((a, b) => (a.is_holiday > b.is_holiday ? -1 : 1))
-                  .map((celebration, index) => (
-                    <div
-                      key={index}
-                      className="my-1 flex w-full gap-1 text-xs font-normal"
-                    >
-                      {celebration.is_holiday ? (
-                        <StarIcon className="w-3 text-gray-400" />
-                      ) : null}
-                      <div>{celebration.name}</div>
-                    </div>
-                  ))}
+              <div className=" mt-4 flex flex-col">
+                {day.celebrations.map((celebration, index) => (
+                  <Celebration celebration={celebration} key={index} />
+                ))}
               </div>
             ) : null}
           </div>
@@ -315,3 +315,31 @@ const Exclamation = ({
     </div>
   </div>
 );
+
+const Celebration = ({
+  celebration,
+  small,
+}: {
+  celebration: CelebrationModel;
+  small?: boolean;
+}) => {
+  return (
+    <div
+      className={`group  flex w-full items-center justify-between ${
+        small ? "text-xx my-0.5" : "my-1 text-xs"
+      } font-normal`}
+    >
+      <div className="flex w-full items-center gap-1">
+        {celebration.is_holiday ? (
+          <StarIcon className="w-3 text-gray-400" />
+        ) : null}
+        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
+          {celebration.name}
+        </div>
+      </div>
+      <div className=" opacity-0 transition group-hover:opacity-100">
+        <TrashIcon className="w-3" />
+      </div>
+    </div>
+  );
+};
