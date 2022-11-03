@@ -15,8 +15,10 @@ export const getPerson = (id: string, request: Request) => {
   return supabase.from("Person").select("*").eq("user", id).single();
 };
 
-// export const getPersons = () =>
-//   supabase.from("Person").select("*").order("name", { ascending: true });
+export const getPersons = (request: Request) => {
+  const { supabase } = getSupabase(request);
+  return supabase.from("Person").select("*").order("name", { ascending: true });
+};
 
 export const getAccount = async (
   request: Request,
@@ -169,6 +171,21 @@ export const getActions = async (
       .order("created_at", { ascending: true });
   }
 };
+export const getCelebrations = async (
+  args: {
+    request?: Request;
+  } = {}
+) => {
+  let { request } = args;
+
+  if (!request) {
+    throw new Error("Request is undefined");
+  }
+
+  const { supabase } = getSupabase(request);
+
+  return supabase.from("Celebration").select("*");
+};
 
 // export const getAction = (id?: string) => {
 //   return supabase
@@ -253,28 +270,48 @@ export const getActions = async (
 //   return { data, error };
 // }
 
-// export const handleAction = async (formData: FormData) => {
-//   const action = formData.get("action") as string;
+export const handleAction = async (formData: FormData, request: Request) => {
+  const action = formData.get("action") as string;
 
-//   if (action === "create-action") {
-//     return await createAction(formData);
-//   } else if (action.match(/update-/)) {
-//     const id = formData.get("id") as string;
-//     let values = {};
-//     if (action === "update-tag") {
-//       values = { tag: formData.get("tag") as string };
-//     } else if (action === "update-status") {
-//       values = { status: formData.get("status") as string };
-//     } else if (action === "update-date") {
-//       values = { date: formData.get("date") as string };
-//     }
-//     return await updateAction(id, values);
-//   } else if (action === "delete-action") {
-//     const id = formData.get("id") as string;
-//     return await deleteAction(id);
-//   }
+  if (action === "create-action") {
+    // return await createAction(formData);
+  } else if (action.match(/update-/)) {
+    const id = formData.get("id") as string;
+    let values = {};
+    if (action === "update-tag") {
+      values = { tag: formData.get("tag") as string };
+    } else if (action === "update-status") {
+      values = { status: formData.get("status") as string };
+    } else if (action === "update-date") {
+      values = { date: formData.get("date") as string };
+    }
+    // return await updateAction(id, values);
+  } else if (action === "delete-action") {
+    const id = formData.get("id") as string;
+    // return await deleteAction(id);
+  } else if (action === "create-celebration") {
+    return await createCelebration(formData, request);
+  }
 
-//   return {
-//     error: { message: "No matched action" },
-//   };
-// };
+  return {
+    error: { message: "No matched action" },
+  };
+};
+
+async function createCelebration(formData: FormData, request: Request) {
+  const { supabase } = getSupabase(request);
+
+  let date = formData.get("date") as string;
+  let dateSplit = date.split("/");
+
+  const { data, error } = await supabase.from("Celebration").insert({
+    name: formData.get("name"),
+    date: `${dateSplit[1]}/${dateSplit[0]}`,
+    is_holiday: formData.get("is_holiday"),
+  });
+
+  return {
+    data,
+    error,
+  };
+}

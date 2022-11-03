@@ -1036,6 +1036,18 @@ h5 {
   margin-bottom: 2rem;
 }
 
+.-mt-4 {
+  margin-top: -1rem;
+}
+
+.-mt-1 {
+  margin-top: -0.25rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -1104,8 +1116,16 @@ h5 {
   width: 8rem;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .flex-auto {
@@ -1326,6 +1346,10 @@ h5 {
   padding-top: 4rem;
 }
 
+.pt-0 {
+  padding-top: 0px;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1396,6 +1420,11 @@ h5 {
 .text-gray-200 {
   --tw-text-opacity: 1;
   color: rgb(226 232 240 / var(--tw-text-opacity));
+}
+
+.text-alert-300 {
+  --tw-text-opacity: 1;
+  color: rgb(252 211 77 / var(--tw-text-opacity));
 }
 
 .antialiased {
@@ -2189,6 +2218,11 @@ h5 {
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
+.dark .dark\:text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
+}
+
 .dark .dark\:hover\:bg-gray-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
@@ -2227,6 +2261,10 @@ h5 {
     height: 100vh;
   }
 
+  .lg\:h-full {
+    height: 100%;
+  }
+
   .lg\:w-96 {
     width: 24rem;
   }
@@ -2241,6 +2279,10 @@ h5 {
 
   .lg\:w-\[36rem\] {
     width: 36rem;
+  }
+
+  .lg\:flex-auto {
+    flex: 1 1 auto;
   }
 
   .lg\:flex-row {

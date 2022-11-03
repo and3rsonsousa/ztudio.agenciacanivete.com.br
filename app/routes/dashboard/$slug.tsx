@@ -14,10 +14,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function SlugPage() {
   const loaderData = useLoaderData();
+
   return (
-    <div>
-      <div className="border-b p-4 dark:border-gray-800">
-        {<h2 className="mb-0 text-gray-200">{loaderData.account.name}</h2>}
+    <div className="flex h-screen flex-col">
+      <div className="flex justify-between border-b p-4 dark:border-gray-800">
+        <h2 className="mb-0 dark:text-gray-200">{loaderData.account.name}</h2>
       </div>
       <Calendar actions={loaderData.actions} />
     </div>

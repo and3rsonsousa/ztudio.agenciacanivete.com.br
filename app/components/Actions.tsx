@@ -17,7 +17,9 @@ export const Action = ({ action }: { action: ActionModel }) => {
     <div
       className={`mx-1 mt-1 rounded py-1 px-2 bg-${
         status.filter((stat) => stat.id === action.status)[0].slug
-      } flex items-center justify-between`}
+      } bg-${
+        status.filter((stat) => stat.id === action.status)[0].slug
+      }-hover flex cursor-pointer items-center justify-between transition`}
     >
       <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
         {action.name}

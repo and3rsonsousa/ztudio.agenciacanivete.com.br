@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="no-scrollbars flex flex-shrink-0 items-center justify-between border-b dark:border-gray-800 lg:flex lg:w-48 lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-4">
         <div className="lg:w-full">
           {/* Logo */}
-          <div className="w-36 p-4">
+          <div className="-mt-1 w-36 p-4 pt-0">
             <Link
               to={`/dashboard`}
               className="focus-block -mt2 -ml-2 block rounded border border-transparent p-2 transition"

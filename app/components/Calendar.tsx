@@ -6,7 +6,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Form, useOutletContext } from "@remix-run/react";
+import { useMatches, useOutletContext } from "@remix-run/react";
 import {
   add,
   eachDayOfInterval,
@@ -22,18 +22,20 @@ import {
   startOfToday,
   startOfWeek,
 } from "date-fns";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
-import type { ActionModel, DayModel } from "~/lib/models";
+import { fade, scaleUp } from "~/lib/animations";
+import type { ActionModel, CelebrationModel, DayModel } from "~/lib/models";
 import { Action, ActionMedium } from "./Actions";
+import AddCelebrationDialog from "./AddCelebrationDialog";
 import Button from "./Forms/Button";
-import Checkbox from "./Forms/Checkbox";
-import Field from "./Forms/Field";
+import { StarIcon } from "@heroicons/react/20/solid";
 
 export default function Calendar({ actions }: { actions: ActionModel[] }) {
   setDefaultOptions({ locale: ptBR });
+  const celebrations: CelebrationModel[] = useMatches()[1].data.celebrations;
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyy"));
@@ -52,7 +54,12 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
         format(new Date(_day.date), "y-M-d")
       );
     });
-    _day.celebrations = [];
+    _day.celebrations = celebrations.filter((celebration) => {
+      return (
+        format(new Date(_day.date), "dd-MM") ===
+        format(new Date(celebration.date), "dd-MM")
+      );
+    });
     return _day;
   });
 
@@ -65,11 +72,14 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
 
   function setSelectedDayAndCurrentMonth(day: Date) {
     setSelectedDay(day);
+    // Ao escolher o dia define também o mês
+    // Ex: Caso seja mês de agosto, e escolha uma data de setembro ou de julho
+    // EX: o mês muda para o da data selecionada
     // changeMonth(getMonth(day) - getMonth(firstDayOfCurrentMonth));
   }
 
   return (
-    <div className="calendar lg:flex lg:h-screen lg:flex-col">
+    <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
         <h4 className="mb-0 p-4 first-letter:capitalize">
@@ -117,47 +127,17 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
                     {format(day.date, "d")}
                   </button>
                 </div>
-                {/* Ações Contínuas */}
-                {index >= 10 && index <= 18 ? (
-                  <div className={`relative mt-2 -mb-1 h-6 `}>
-                    {index === 10 || index % 7 === 0 ? (
-                      <div
-                        className={`absolute z-10 cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-idea-500 py-1 px-2 text-xs font-medium text-white transition hover:bg-idea-600 ${
-                          index === 10 ? " ml-1 rounded-l " : " rounded-r"
-                        }`}
-                        style={
-                          index === 10
-                            ? {
-                                width:
-                                  " calc(" +
-                                  (7 - (index % 7)) * 100 +
-                                  "% - 4px)",
-                              }
-                            : {
-                                width:
-                                  " calc(" +
-                                  100 * (18 - index > 7 ? 7 : 18 - index + 1) +
-                                  "% - 4px)",
-                              }
-                        }
-                      >
-                        {index === 10 || index % 7 === 0
-                          ? "Nome da Ação nessa linha que vai ser bem grande para ver como fica aqui que não é tão largo, né?"
-                          : null}
-                      </div>
-                    ) : null}
-                  </div>
-                ) : null}
-                {index >= 16 && index <= 19 ? (
+
+                {/* {index >= 11 && index <= 21 ? (
                   <div
                     className={`relative mt-2 -mb-1`}
                     style={{ height: 24 + "px" }}
                   >
-                    {index === 16 || index % 7 === 0 ? (
+                    {index === 11 || index % 7 === 0 ? (
                       <div
                         className={`absolute z-10 cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-doing-500 py-1 px-2 text-xs font-medium text-white  transition hover:bg-doing-600 ${
-                          index === 16
-                            ? Math.ceil(19 / 7) * 7 > 19
+                          index === 11
+                            ? Math.ceil(21 / 7) * 7 > 21
                               ? " ml-1 rounded "
                               : " ml-1 rounded-l "
                             : " rounded-r"
@@ -165,19 +145,19 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
                         style={{
                           width:
                             " calc(" +
-                            100 * (18 - index > 7 ? 7 : 19 - index + 1) +
+                            100 * (18 - index > 7 ? 7 : 21 - index + 1) +
                             "% - " +
-                            (Math.ceil(19 / 7) * 7 > 19 ? 8 : 4) +
+                            (Math.ceil(21 / 7) * 7 > 21 ? 8 : 4) +
                             "px)",
                         }}
                       >
-                        {index === 16 || index % 7 === 0
+                        {index === 11 || index % 7 === 0
                           ? "Black Friday - Newbyte"
                           : null}
                       </div>
                     ) : null}
                   </div>
-                ) : null}
+                ) : null} */}
 
                 <div className="mt-2">
                   {day.actions.map((action, index) => (
@@ -227,11 +207,19 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
 
             {day.celebrations.length > 0 ? (
               <div className="mt-4 flex flex-col">
-                {day.celebrations.map((celebration, index) => (
-                  <div key={index} className="my-1 w-full text-xs font-normal">
-                    {celebration.name}
-                  </div>
-                ))}
+                {day.celebrations
+                  .sort((a, b) => (a.is_holiday > b.is_holiday ? -1 : 1))
+                  .map((celebration, index) => (
+                    <div
+                      key={index}
+                      className="my-1 flex w-full gap-1 text-xs font-normal"
+                    >
+                      {celebration.is_holiday ? (
+                        <StarIcon className="w-3 text-gray-400" />
+                      ) : null}
+                      <div>{celebration.name}</div>
+                    </div>
+                  ))}
               </div>
             ) : null}
           </div>
@@ -251,10 +239,10 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
           <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
         </div>
       )}
+
       <div className="flex items-center justify-end border-t p-4 dark:border-gray-800">
         {/* Dialog for Celebrations */}
         <Dialog.Root
-          open={context.celebrations.openDialogCelebration}
           onOpenChange={context.celebrations.setOpenDialogCelebration}
         >
           <Dialog.Trigger asChild>
@@ -262,64 +250,51 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
               <CalendarIcon />
             </Button>
           </Dialog.Trigger>
-          <Dialog.Portal>
-            <AnimatePresence>
-              <>
-                <Dialog.Overlay className="dialog-overlay" />
-
-                <Dialog.Content className="dialog">
+          <AnimatePresence>
+            {context.celebrations.openDialogCelebration ? (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
                   <motion.div
-                    className="dialog-content p-4 font-light  antialiased lg:p-8"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      transition: { ease: "circOut", duration: 0.6 },
-                    }}
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
+
+                <Dialog.Content forceMount className="dialog">
+                  <motion.div
+                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8"
+                    {...scaleUp()}
                   >
-                    <Dialog.Title>
-                      <h3>Nova Data Comemorativa</h3>
-                    </Dialog.Title>
-                    <Form method="post">
-                      <Field name="name" title="Nome" />
-                      <Field
-                        name="date"
-                        title="Data"
-                        pattern="[0-9]{1,2}/[0-9]{1,2}"
-                      />
-                      <Checkbox title="Feriado" name="is_holiday" />
-                      <div className="text-right">
-                        <Button primary>Adicionar</Button>
-                      </div>
-                    </Form>
+                    <AddCelebrationDialog date={new Date()} />
                   </motion.div>
                 </Dialog.Content>
-              </>
-            </AnimatePresence>
-          </Dialog.Portal>
+              </Dialog.Portal>
+            ) : null}
+          </AnimatePresence>
         </Dialog.Root>
 
         {/* Dialog for Actions */}
-        <Dialog.Root
-          open={context.actions.openDialogAction}
-          onOpenChange={context.actions.setOpenDialogAction}
-        >
+        <Dialog.Root onOpenChange={context.actions.setOpenDialogAction}>
           <Dialog.Trigger asChild>
             <Button primary>
               Nova Ação <PlusIcon />
             </Button>
           </Dialog.Trigger>
-          <Dialog.Portal>
-            <Dialog.Overlay className="dialog-overlay" />
-            <Dialog.Content asChild>
-              <motion.div className="dialog-content p-4 font-light text-gray-700 antialiased">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                totam nostrum, unde assumenda consequatur labore ex eos fugiat
-                aliquid inventore eius explicabo officia cumque ducimus
-                dignissimos et facere iusto. Deserunt.
-              </motion.div>
-            </Dialog.Content>
-          </Dialog.Portal>
+          <AnimatePresence>
+            {context.actions.openDialogAction ? (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay className="dialog-overlay" />
+                <Dialog.Content asChild className="dialog">
+                  <motion.div className="dialog-content p-4 font-light text-gray-700 antialiased">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Soluta totam nostrum, unde assumenda consequatur labore ex
+                    eos fugiat aliquid inventore eius explicabo officia cumque
+                    ducimus dignissimos et facere iusto. Deserunt.
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            ) : null}
+          </AnimatePresence>
         </Dialog.Root>
       </div>
     </div>
