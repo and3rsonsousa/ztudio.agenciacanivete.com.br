@@ -21,6 +21,7 @@ module.exports = {
         900: "#3B1782",
       },
 
+      info: colors.slate,
       error: colors.red,
       alert: colors.amber,
       success: colors.emerald,

@@ -27,8 +27,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     getCelebrations({ request }),
   ]);
 
-  console.log(celebrations);
-
   return { person, accounts, tags, status, celebrations };
 };
 

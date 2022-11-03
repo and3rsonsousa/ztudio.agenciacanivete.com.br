@@ -160,20 +160,20 @@
 .calendar-day {
   @apply py-2 border-t text-center dark:border-gray-800  lg:text-left
 }
-.calendar-day.not-this-month button{
+.calendar-day.not-this-month .day-button{
   @apply text-gray-300 dark:text-gray-700 
 }
 
-.calendar-day button{
+.calendar-day .day-button{
   @apply w-8 h-8 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition text-sm border border-transparent lg:w-6 lg:h-6 lg:text-xs;
   @apply focus-block
 }
 
-.calendar-day.is-today button {
+.calendar-day.is-today .day-button {
   @apply font-semibold text-brand;
   
 }
-.calendar-day.is-selected button{
+.calendar-day.is-selected .day-button{
   @apply font-semibold text-white bg-brand 
 }
 
@@ -345,4 +345,33 @@
 }
 .border-accomplished{
   @apply border-accomplished-500
+}
+
+
+.exclamation{
+  @apply mx-auto flex items-center gap-4 rounded-xl  p-4 text-xs 
+}
+.bg-info{
+  @apply bg-info-100 dark:bg-info-700 text-info-700 dark:text-info-200
+}
+.bg-info svg {
+  @apply text-info-400 dark:text-info-500 w-6
+}
+.bg-alert{
+  @apply bg-alert-100 dark:bg-alert-700 text-alert-700 dark:text-alert-200
+}
+.bg-alert svg {
+  @apply text-alert-400 dark:text-alert-500 w-6
+}
+.bg-error{
+  @apply bg-error-100 dark:bg-error-700 text-error-700 dark:text-error-200
+}
+.bg-error svg {
+  @apply text-error-400 dark:text-error-500 w-6
+}
+.bg-success{
+  @apply bg-success-100 dark:bg-success-700 text-success-700 dark:text-success-200
+}
+.bg-success svg {
+  @apply text-success-400 dark:text-success-500 w-6
 }

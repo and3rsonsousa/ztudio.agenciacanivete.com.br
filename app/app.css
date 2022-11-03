@@ -972,14 +972,19 @@ h5 {
   margin-right: 0.25rem;
 }
 
+.my-0\.5 {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+}
+
 .my-1 {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .my-2 {
@@ -987,19 +992,14 @@ h5 {
   margin-bottom: 0.5rem;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
-}
-
-.my-0\.5 {
-  margin-top: 0.125rem;
-  margin-bottom: 0.125rem;
-}
-
-.my-0 {
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 
 .mt-1 {
@@ -1018,6 +1018,14 @@ h5 {
   margin-bottom: 0px;
 }
 
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1028,14 +1036,6 @@ h5 {
 
 .ml-1 {
   margin-left: 0.25rem;
-}
-
-.mt-16 {
-  margin-top: 4rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .-mt-1 {
@@ -1096,10 +1096,6 @@ h5 {
 
 .w-96 {
   width: 24rem;
-}
-
-.w-8 {
-  width: 2rem;
 }
 
 .w-36 {
@@ -1173,10 +1169,6 @@ h5 {
   place-content: center;
 }
 
-.content-end {
-  align-content: flex-end;
-}
-
 .items-center {
   align-items: center;
 }
@@ -1213,10 +1205,6 @@ h5 {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.self-end {
-  align-self: flex-end;
 }
 
 .overflow-auto {
@@ -1296,14 +1284,14 @@ h5 {
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
+.bg-error-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
 .bg-doing-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(236 72 153 / var(--tw-bg-opacity));
-}
-
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
 .bg-gray-600 {
@@ -1355,12 +1343,20 @@ h5 {
   padding-top: 0px;
 }
 
+.pt-4 {
+  padding-top: 1rem;
+}
+
 .text-center {
   text-align: center;
 }
 
 .text-right {
   text-align: right;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .text-xs {
@@ -1393,10 +1389,6 @@ h5 {
   font-weight: 700;
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
-
 .tracking-widest {
   letter-spacing: 0.1em;
 }
@@ -1411,14 +1403,19 @@ h5 {
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
-.text-white {
+.text-error-700 {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-gray-300 {
@@ -1636,17 +1633,17 @@ h5 {
   }
 }
 
-.calendar-day.not-this-month button {
+.calendar-day.not-this-month .day-button {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
 }
 
-.dark .calendar-day.not-this-month button {
+.dark .calendar-day.not-this-month .day-button {
   --tw-text-opacity: 1;
   color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
-.calendar-day button {
+.calendar-day .day-button {
   height: 2rem;
   width: 2rem;
   border-radius: 9999px;
@@ -1661,18 +1658,18 @@ h5 {
   transition-duration: 150ms;
 }
 
-.calendar-day button:hover {
+.calendar-day .day-button:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
-.dark .calendar-day button:hover {
+.dark .calendar-day .day-button:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 1024px) {
-  .calendar-day button {
+  .calendar-day .day-button {
     height: 1.5rem;
     width: 1.5rem;
     font-size: 0.75rem;
@@ -1680,7 +1677,7 @@ h5 {
   }
 }
 
-.calendar-day button:focus {
+.calendar-day .day-button:focus {
   --tw-border-opacity: 1;
   border-color: rgb(128 0 255 / var(--tw-border-opacity));
   --tw-text-opacity: 1;
@@ -1694,7 +1691,7 @@ h5 {
   --tw-ring-color: rgb(212 186 247 / var(--tw-ring-opacity));
 }
 
-.dark .calendar-day button:focus {
+.dark .calendar-day .day-button:focus {
   --tw-border-opacity: 1;
   border-color: rgb(128 0 255 / var(--tw-border-opacity));
   --tw-text-opacity: 1;
@@ -1703,13 +1700,13 @@ h5 {
   --tw-ring-color: rgb(59 23 130 / var(--tw-ring-opacity));
 }
 
-.calendar-day.is-today button {
+.calendar-day.is-today .day-button {
   font-weight: 600;
   --tw-text-opacity: 1;
   color: rgb(128 0 255 / var(--tw-text-opacity));
 }
 
-.calendar-day.is-selected button {
+.calendar-day.is-selected .day-button {
   --tw-bg-opacity: 1;
   background-color: rgb(128 0 255 / var(--tw-bg-opacity));
   font-weight: 600;
@@ -2169,6 +2166,118 @@ h5 {
   border-color: rgb(16 185 129 / var(--tw-border-opacity));
 }
 
+.exclamation {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.bg-info {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+
+.dark .bg-info {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
+}
+
+.bg-info svg {
+  width: 1.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity));
+}
+
+.dark .bg-info svg {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+
+.bg-alert {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(180 83 9 / var(--tw-text-opacity));
+}
+
+.dark .bg-alert {
+  --tw-bg-opacity: 1;
+  background-color: rgb(180 83 9 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(253 230 138 / var(--tw-text-opacity));
+}
+
+.bg-alert svg {
+  width: 1.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(251 191 36 / var(--tw-text-opacity));
+}
+
+.dark .bg-alert svg {
+  --tw-text-opacity: 1;
+  color: rgb(245 158 11 / var(--tw-text-opacity));
+}
+
+.bg-error {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+}
+
+.dark .bg-error {
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity));
+}
+
+.bg-error svg {
+  width: 1.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
+
+.dark .bg-error svg {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.bg-success {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(4 120 87 / var(--tw-text-opacity));
+}
+
+.dark .bg-success {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 120 87 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(167 243 208 / var(--tw-text-opacity));
+}
+
+.bg-success svg {
+  width: 1.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(52 211 153 / var(--tw-text-opacity));
+}
+
+.dark .bg-success svg {
+  --tw-text-opacity: 1;
+  color: rgb(16 185 129 / var(--tw-text-opacity));
+}
+
 .first-letter\:capitalize::first-letter {
   text-transform: capitalize;
 }
@@ -2186,6 +2295,11 @@ h5 {
 .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {
@@ -2332,6 +2446,10 @@ h5 {
 
   .lg\:pt-0 {
     padding-top: 0px;
+  }
+
+  .lg\:pt-8 {
+    padding-top: 2rem;
   }
 
   .dark .lg\:dark\:bg-gray-800 {

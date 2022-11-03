@@ -2,10 +2,7 @@ import {
   CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ExclamationTriangleIcon,
   PlusIcon,
-  StarIcon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useMatches, useOutletContext } from "@remix-run/react";
@@ -15,9 +12,6 @@ import {
   endOfMonth,
   endOfWeek,
   format,
-  isEqual,
-  isSameMonth,
-  isToday,
   parse,
   setDefaultOptions,
   startOfMonth,
@@ -30,8 +24,11 @@ import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 import { fade, scaleUp } from "~/lib/animations";
 import type { ActionModel, CelebrationModel, DayModel } from "~/lib/models";
-import { Action, ActionMedium } from "./Actions";
+import { ActionMedium } from "./Actions";
 import AddCelebrationDialog from "./AddCelebrationDialog";
+import Celebration from "./Celebrations";
+import Day from "./Day";
+import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
 export default function Calendar({ actions }: { actions: ActionModel[] }) {
@@ -110,71 +107,13 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
           </div>
           <div className="grid flex-auto grid-cols-7">
             {days.map((day, index) => (
-              <div
+              <Day
                 key={index}
-                className={`calendar-day${
-                  isToday(day.date) ? " is-today" : ""
-                }${
-                  isSameMonth(day.date, firstDayOfCurrentMonth)
-                    ? ""
-                    : " not-this-month"
-                }${isEqual(selectedDay, day.date) ? " is-selected" : ""}`}
-              >
-                <div className="px-2 lg:px-1">
-                  <button
-                    className="appearance-none"
-                    onClick={() => setSelectedDayAndCurrentMonth(day.date)}
-                  >
-                    {format(day.date, "d")}
-                  </button>
-                </div>
-
-                {/* {index >= 11 && index <= 21 ? (
-                  <div
-                    className={`relative mt-2 -mb-1`}
-                    style={{ height: 24 + "px" }}
-                  >
-                    {index === 11 || index % 7 === 0 ? (
-                      <div
-                        className={`absolute z-10 cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-doing-500 py-1 px-2 text-xs font-medium text-white  transition hover:bg-doing-600 ${
-                          index === 11
-                            ? Math.ceil(21 / 7) * 7 > 21
-                              ? " ml-1 rounded "
-                              : " ml-1 rounded-l "
-                            : " rounded-r"
-                        }`}
-                        style={{
-                          width:
-                            " calc(" +
-                            100 * (18 - index > 7 ? 7 : 21 - index + 1) +
-                            "% - " +
-                            (Math.ceil(21 / 7) * 7 > 21 ? 8 : 4) +
-                            "px)",
-                        }}
-                      >
-                        {index === 11 || index % 7 === 0
-                          ? "Black Friday - Newbyte"
-                          : null}
-                      </div>
-                    ) : null}
-                  </div>
-                ) : null} */}
-
-                <div className="mt-2">
-                  {day.actions.map((action, index) => (
-                    <Action key={index} action={action} />
-                  ))}
-                </div>
-                <div className="p-1">
-                  {day.celebrations.map((celebration) => (
-                    <Celebration
-                      celebration={celebration}
-                      key={celebration.id}
-                      small
-                    />
-                  ))}
-                </div>
-              </div>
+                day={day}
+                firstDayOfCurrentMonth={firstDayOfCurrentMonth}
+                selectedDay={selectedDay}
+                setSelectedDayAndCurrentMonth={setSelectedDayAndCurrentMonth}
+              />
             ))}
           </div>
         </div>
@@ -230,7 +169,7 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
                 <ActionMedium action={action} key={i} />
               ))
             ) : (
-              <Exclamation>Nenhuma ação para esse dia</Exclamation>
+              <Exclamation icon>Nenhuma ação para esse dia</Exclamation>
             )}
           </div>
         </>
@@ -296,49 +235,6 @@ const CalendarInfo = ({ day }: { day: DayModel }) => {
             ) : null}
           </AnimatePresence>
         </Dialog.Root>
-      </div>
-    </div>
-  );
-};
-
-const Exclamation = ({
-  children,
-  icon,
-}: {
-  children: React.ReactNode;
-  icon?: boolean;
-}) => (
-  <div>
-    <div className="mx-auto flex items-center gap-4 rounded-xl bg-gray-100 p-4 text-xs dark:bg-gray-800">
-      {icon ? <ExclamationTriangleIcon className="w-8 text-gray-400" /> : null}
-      <div>{children}</div>
-    </div>
-  </div>
-);
-
-const Celebration = ({
-  celebration,
-  small,
-}: {
-  celebration: CelebrationModel;
-  small?: boolean;
-}) => {
-  return (
-    <div
-      className={`group  flex w-full items-center justify-between ${
-        small ? "text-xx my-0.5" : "my-1 text-xs"
-      } font-normal`}
-    >
-      <div className="flex w-full items-center gap-1">
-        {celebration.is_holiday ? (
-          <StarIcon className="w-3 text-gray-400" />
-        ) : null}
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
-          {celebration.name}
-        </div>
-      </div>
-      <div className=" opacity-0 transition group-hover:opacity-100">
-        <TrashIcon className="w-3" />
       </div>
     </div>
   );

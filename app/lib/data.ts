@@ -264,17 +264,22 @@ export const getCelebrations = async (
 //   return { data, error };
 // }
 
-// export async function deleteAction(id: string) {
-//   const { data, error } = await supabase.from("Action").delete().eq("id", id);
+export async function deleteItem(request: Request, item: string, id: string) {
+  const { supabase } = getSupabase(request);
+  const { data, error } = await supabase.from(item).delete().eq("id", id);
 
-//   return { data, error };
-// }
+  return { data, error };
+}
 
 export const handleAction = async (formData: FormData, request: Request) => {
   const action = formData.get("action") as string;
 
-  if (action === "create-action") {
-    // return await createAction(formData);
+  if (action.match(/create-/)) {
+    if (action === "create-celebration") {
+      return await createCelebration(formData, request);
+    } else if (action === "create-action") {
+      // return await createAction(formData);
+    }
   } else if (action.match(/update-/)) {
     const id = formData.get("id") as string;
     let values = {};
@@ -286,11 +291,15 @@ export const handleAction = async (formData: FormData, request: Request) => {
       values = { date: formData.get("date") as string };
     }
     // return await updateAction(id, values);
-  } else if (action === "delete-action") {
+  } else if (action.match(/delete-/)) {
+    let item = "";
     const id = formData.get("id") as string;
-    // return await deleteAction(id);
-  } else if (action === "create-celebration") {
-    return await createCelebration(formData, request);
+    if (action === "delete-action") {
+      item = "Action";
+    } else if (action === "delete-celebration") {
+      item = "Celebration";
+    }
+    return await deleteItem(request, item, id);
   }
 
   return {
@@ -304,11 +313,17 @@ async function createCelebration(formData: FormData, request: Request) {
   let date = formData.get("date") as string;
   let dateSplit = date.split("/");
 
-  const { data, error } = await supabase.from("Celebration").insert({
-    name: formData.get("name"),
-    date: `${dateSplit[1]}/${dateSplit[0]}`,
-    is_holiday: formData.get("is_holiday"),
-  });
+  const { data, error } = await supabase
+    .from("Celebration")
+    .insert({
+      name: formData.get("name"),
+      date: `${dateSplit[1]}/${dateSplit[0]}`,
+      is_holiday: formData.get("is_holiday"),
+    })
+    .select()
+    .single();
+
+  console.log(data);
 
   return {
     data,
