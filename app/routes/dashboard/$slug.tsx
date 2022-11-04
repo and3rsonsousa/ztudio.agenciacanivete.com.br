@@ -1,7 +1,7 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
-import { getAccount, getActions } from "~/lib/data";
+import { getAccount, getActions, handleAction } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const [{ data: actions }, { data: account }] = await Promise.all([
@@ -10,6 +10,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ]);
 
   return { actions, account, params };
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  return handleAction(formData, request);
 };
 
 export default function SlugPage() {

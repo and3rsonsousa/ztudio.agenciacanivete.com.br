@@ -121,7 +121,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                 </Dialog.Overlay>
                 <Dialog.Content className="dialog" forceMount>
                   <motion.div
-                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
                     <AddActionDialog date={day.date} />

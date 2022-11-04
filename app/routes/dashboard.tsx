@@ -5,6 +5,7 @@ import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
 import {
   getAccounts,
+  getCampaigns,
   getCelebrations,
   getPerson,
   getTagsStatus,
@@ -20,19 +21,21 @@ export const loader: LoaderFunction = async ({ request }) => {
     { data: accounts },
     { tags, status },
     { data: celebrations },
+    { data: campaigns },
   ] = await Promise.all([
     getPerson(userId, request),
     getAccounts(userId, request),
     getTagsStatus(request),
     getCelebrations({ request }),
+    getCampaigns({ request }),
   ]);
 
-  return { person, accounts, tags, status, celebrations };
+  return { person, accounts, tags, status, celebrations, campaigns };
 };
 
 export default function Dashboard() {
   const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
-  const [openDialogAction, setOpenDialogAction] = useState(false);
+  const [openDialogAction, setOpenDialogAction] = useState(true);
   return (
     <Layout>
       <Outlet

@@ -1,5 +1,5 @@
 import Button from "~/components/Forms/Button";
-import Field from "~/components/Forms/Field";
+import Field from "~/components/Forms/InputField";
 
 export default function Components() {
   return (

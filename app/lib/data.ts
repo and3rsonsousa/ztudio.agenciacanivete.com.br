@@ -187,6 +187,22 @@ export const getCelebrations = async (
   return supabase.from("Celebration").select("*").order("is_holiday");
 };
 
+export const getCampaigns = async (
+  args: {
+    request?: Request;
+  } = {}
+) => {
+  let { request } = args;
+
+  if (!request) {
+    throw new Error("Request is undefined");
+  }
+
+  const { supabase } = getSupabase(request);
+
+  return supabase.from("Campaign").select("*");
+};
+
 // export const getAction = (id?: string) => {
 //   return supabase
 //     .from("Action")
@@ -273,11 +289,54 @@ export async function deleteItem(request: Request, item: string, id: string) {
 
 export const handleAction = async (formData: FormData, request: Request) => {
   const action = formData.get("action") as string;
+  const { supabase } = getSupabase(request);
 
   if (action.match(/create-/)) {
     if (action === "create-celebration") {
       return await createCelebration(formData, request);
     } else if (action === "create-action") {
+      const [
+        action,
+        user,
+        name,
+        account,
+        campaign,
+        description,
+        tag,
+        status,
+        date,
+      ] = Array.from(formData.values());
+
+      const values = {
+        creator: user,
+        responsible: user,
+        name,
+        account,
+        campaign: campaign ? campaign : null,
+        description,
+        tag,
+        status,
+        date,
+      };
+
+      if (name === "") {
+        return {
+          error: {
+            message: "Nome não pode ser em branco",
+          },
+        };
+      }
+
+      const { data, error } = await supabase
+        .from("Action")
+        .insert(values)
+        .select("*")
+        .single();
+
+      console.log({ values, error });
+
+      return { data, error };
+
       // return await createAction(formData);
     }
   } else if (action.match(/update-/)) {

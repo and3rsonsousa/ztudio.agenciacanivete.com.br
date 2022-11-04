@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Field({
+export default function InputField({
   title,
   name,
   type,
@@ -12,7 +12,7 @@ export default function Field({
 }: {
   title: string;
   name: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "datetime-local";
   placeholder?: string;
   value?: string;
   pattern?: string;
