@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import {
   CalendarIcon,
   ChevronRightIcon,
@@ -36,8 +35,10 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           <div className="border-b p-4 dark:border-gray-800">
             {/* Header */}
             <div className="flex items-center justify-between">
-              <h5>{format(day.date, "d 'de' MMMM 'de' y")}</h5>
-              <Button link>
+              <h5 className="text-xs">
+                {format(day.date, "d 'de' MMMM 'de' y")}
+              </h5>
+              <Button link small>
                 <ChevronRightIcon />
               </Button>
             </div>
@@ -91,7 +92,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
                 <Dialog.Content forceMount className="dialog">
                   <motion.div
-                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8"
+                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
                     <AddCelebrationDialog date={new Date()} />
@@ -120,7 +121,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                 </Dialog.Overlay>
                 <Dialog.Content className="dialog" forceMount>
                   <motion.div
-                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8"
+                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
                     <AddActionDialog date={day.date} />

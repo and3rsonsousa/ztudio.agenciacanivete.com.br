@@ -40,7 +40,7 @@ export default function AddCelebrationDialog({ date }: { date: Date }) {
           placeholder="dd/mm"
         />
         <Checkbox title="Feriado" name="is_holiday" />
-        <div className="flex items-center justify-end border-t pt-4 lg:pt-8">
+        <div className="flex items-center justify-end pt-4">
           {/* <Checkbox
             name="close"
             title="Manter aberta"

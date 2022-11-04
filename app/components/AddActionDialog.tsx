@@ -20,8 +20,16 @@ export default function AddActionDialog({ date }: { date: Date }) {
       <h4 className="mb-4">Nova Ação</h4>
       <Form method="post" ref={formRef}>
         <Field name="name" title="Nome" />
+        <div>Descrição</div>
+        <div>Cliente</div>
+        <div>Campanha</div>
+        <div>Tag</div>
+        <div>Status</div>
+        <div>Data</div>
+        <div>Data Final</div>
+        <div>Responsavel</div>
 
-        <div className="flex items-center justify-end border-t pt-4 lg:pt-8">
+        <div className="flex items-center justify-end pt-4">
           {/* <Checkbox
             name="close"
             title="Manter aberta"
