@@ -17,7 +17,7 @@ import styles from "./app.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "STUDIO",
+  title: "ꜱᴛᴜᴅɪᴏ",
   viewport: "width=device-width,initial-scale=1",
 });
 

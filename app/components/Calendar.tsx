@@ -22,7 +22,8 @@ import Button from "./Forms/Button";
 
 export default function Calendar({ actions }: { actions: ActionModel[] }) {
   setDefaultOptions({ locale: ptBR });
-  const celebrations: CelebrationModel[] = useMatches()[1].data.celebrations;
+  const matches = useMatches();
+  const celebrations: CelebrationModel[] = matches[1].data.celebrations;
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyy"));

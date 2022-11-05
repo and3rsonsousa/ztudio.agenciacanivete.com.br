@@ -3,10 +3,10 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
-import { useMatches } from "@remix-run/react";
+import { useMatches, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
 import { parseISO } from "date-fns/esm";
-import type { ActionModel, ItemModel } from "~/lib/models";
+import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -37,13 +37,19 @@ export const Action = ({ action }: { action: ActionModel }) => {
 export const ActionMedium = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
   const tags: ItemModel[] = matches[1].data.tags;
+  const acccounts: AccountModel[] = matches[1].data.accounts;
+  const account = acccounts.filter(
+    (account) => account.id === action.account
+  )[0];
   const status: ItemModel[] = matches[1].data.status;
   const tag = tags.filter((tag) => tag.id === action.tag)[0];
   const stat = status.filter((stat) => stat.id === action.status)[0];
+  const navigate = useNavigate();
 
   return (
     <div
       className={`group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 border-${stat.slug}`}
+      onClick={() => navigate(`/dashboard/${account.slug}/${action.id}`)}
     >
       <div>
         <div className="text-sm font-normal">{action.name}</div>

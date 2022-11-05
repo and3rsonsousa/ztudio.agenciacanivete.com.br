@@ -287,7 +287,7 @@ export async function deleteItem(request: Request, item: string, id: string) {
   return { data, error };
 }
 
-export const handleAction = async (formData: FormData, request: Request) => {
+export const createAction = async (formData: FormData, request: Request) => {
   const action = formData.get("action") as string;
   const { supabase } = getSupabase(request);
 
@@ -295,21 +295,18 @@ export const handleAction = async (formData: FormData, request: Request) => {
     if (action === "create-celebration") {
       return await createCelebration(formData, request);
     } else if (action === "create-action") {
-      const [
-        action,
-        user,
-        name,
-        account,
-        campaign,
-        description,
-        tag,
-        status,
-        date,
-      ] = Array.from(formData.values());
+      const creator = formData.get("creator");
+      const name = formData.get("name");
+      const account = formData.get("account");
+      const campaign = formData.get("campaign");
+      const description = formData.get("description");
+      const tag = formData.get("tag");
+      const status = formData.get("status");
+      const date = formData.get("date");
 
       const values = {
-        creator: user,
-        responsible: user,
+        creator: creator,
+        responsible: creator,
         name,
         account,
         campaign: campaign ? campaign : null,
@@ -322,7 +319,14 @@ export const handleAction = async (formData: FormData, request: Request) => {
       if (name === "") {
         return {
           error: {
-            message: "Nome não pode ser em branco",
+            message: "Coloque o nome da ação.",
+          },
+        };
+      }
+      if (account === "") {
+        return {
+          error: {
+            message: "Escolha um cliente.",
           },
         };
       }
@@ -332,8 +336,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .insert(values)
         .select("*")
         .single();
-
-      console.log({ values, error });
 
       return { data, error };
 

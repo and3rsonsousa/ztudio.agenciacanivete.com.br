@@ -8,6 +8,7 @@ import {
   getCampaigns,
   getCelebrations,
   getPerson,
+  getPersons,
   getTagsStatus,
 } from "~/lib/data";
 
@@ -18,24 +19,26 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const [
     { data: person },
+    { data: persons },
     { data: accounts },
     { tags, status },
     { data: celebrations },
     { data: campaigns },
   ] = await Promise.all([
     getPerson(userId, request),
+    getPersons(request),
     getAccounts(userId, request),
     getTagsStatus(request),
     getCelebrations({ request }),
     getCampaigns({ request }),
   ]);
 
-  return { person, accounts, tags, status, celebrations, campaigns };
+  return { person, persons, accounts, tags, status, celebrations, campaigns };
 };
 
 export default function Dashboard() {
   const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
-  const [openDialogAction, setOpenDialogAction] = useState(true);
+  const [openDialogAction, setOpenDialogAction] = useState(false);
   return (
     <Layout>
       <Outlet

@@ -4,7 +4,13 @@ module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        gray: {
+          1000: "#0a0f1c",
+        },
+      },
+    },
     colors: {
       white: "white",
       black: "black",
@@ -14,7 +20,6 @@ module.exports = {
       brand: {
         DEFAULT: "#8000FF",
         100: "#F1E6FF",
-        // 300: "#C499FF",
         300: "#D4BAF7",
         500: "#8000FF",
         700: "#5814B8",

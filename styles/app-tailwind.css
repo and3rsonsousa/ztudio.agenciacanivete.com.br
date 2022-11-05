@@ -4,7 +4,7 @@
 
 @layer base {
   .app {
-    @apply bg-white font-light text-gray-700 antialiased dark:bg-gray-900 dark:text-gray-400;
+    @apply bg-white font-light text-gray-700 antialiased dark:bg-gray-1000 dark:text-gray-400;
   }
 
   .link {
