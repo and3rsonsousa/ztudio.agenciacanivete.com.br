@@ -6,6 +6,9 @@ import {
 import { useMatches, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
 import { parseISO } from "date-fns/esm";
+import { motion } from "framer-motion";
+import { scaleUp } from "~/lib/animations";
+
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 
 export const Action = ({ action }: { action: ActionModel }) => {
@@ -14,12 +17,33 @@ export const Action = ({ action }: { action: ActionModel }) => {
   const status: ItemModel[] = matches[1].data.status;
 
   return (
-    <div
-      className={`mx-1 mt-1 rounded py-1 px-2 bg-${
+    <motion.div
+      draggable
+      variants={scaleUp()}
+      onDragStart={(e) => {
+        const ele = e.target as HTMLElement;
+
+        const ghost = ele.cloneNode(true) as HTMLElement;
+        ghost.style.width = `${ele.offsetWidth}px`;
+        ghost.style.height = `${ele.offsetHeight}px`;
+        ghost.style.position = "absolute";
+        ghost.style.top = "0";
+        ghost.style.left = "0";
+        ghost.style.offset = ".2";
+        ghost.style.zIndex = "-1";
+        // ghost.classList.add("transform scale-125");
+        document.querySelector(".app")?.appendChild(ghost);
+        (e as DragEvent).dataTransfer?.setDragImage(
+          ghost,
+          ele.offsetWidth / 2,
+          ele.offsetHeight / 2
+        );
+      }}
+      className={`action-line mx-1 mt-1 rounded py-1 px-2  bg-${
         status.filter((stat) => stat.id === action.status)[0].slug
       } bg-${
         status.filter((stat) => stat.id === action.status)[0].slug
-      }-hover flex cursor-pointer items-center justify-between transition`}
+      }-hover flex cursor-pointer items-center justify-between`}
     >
       <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
         {action.name}
@@ -30,7 +54,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
           ? format(parseISO(action.date), "mm")
           : ""}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

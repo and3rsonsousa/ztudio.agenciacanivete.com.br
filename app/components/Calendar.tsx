@@ -83,10 +83,10 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
         </div>
       </div>
 
-      <div className="flex-auto overflow-hidden lg:flex">
+      <div className=" overflow-hidden lg:flex">
         {/* Calendar  */}
-        <div className="no-scrollbars flex w-full flex-col overflow-auto dark:border-gray-800 lg:border-r">
-          <div className="grid grid-cols-7">
+        <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
+          <div className="grid grid-cols-7 border-b">
             {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
               (day, index) => (
                 <div key={index} className="calendar-weekday">
@@ -95,7 +95,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
               )
             )}
           </div>
-          <div className="grid flex-auto grid-cols-7">
+          <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
             {days.map((day, index) => (
               <Day
                 key={index}
@@ -108,6 +108,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
           </div>
         </div>
         {/* Info */}
+
         <DayInfo
           day={
             days.filter(

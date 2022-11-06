@@ -1,4 +1,4 @@
-export const scaleUp = () => ({
+export const scaleUp = (stagger?: number) => ({
   initial: { opacity: 0, scale: 0.8 },
   animate: {
     opacity: 1,
@@ -6,6 +6,7 @@ export const scaleUp = () => ({
     transition: {
       ease: "circOut",
       duration: 0.4,
+      staggerChildren: stagger ?? undefined,
     },
   },
   exit: {

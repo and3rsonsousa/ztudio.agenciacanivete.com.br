@@ -1,4 +1,6 @@
 import { format, isEqual, isSameMonth, isToday } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
+import { scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
 import Celebration from "./Celebrations";
@@ -16,9 +18,18 @@ export default function Day({
 }) {
   return (
     <div
+      onDragOver={(e) => {
+        e.currentTarget.classList.add("dragover");
+      }}
+      onDragLeave={(e) => {
+        e.currentTarget.classList.remove("dragover");
+      }}
+      onDrop={(e) => {
+        e.currentTarget.classList.add("dropped");
+      }}
       className={`calendar-day${isToday(day.date) ? " is-today" : ""}${
         isSameMonth(day.date, firstDayOfCurrentMonth) ? "" : " not-this-month"
-      }${isEqual(selectedDay, day.date) ? " is-selected" : ""}`}
+      }${isEqual(selectedDay, day.date) ? " is-selected" : ""} transition `}
     >
       <div className="px-2 lg:px-1">
         <button
@@ -59,17 +70,24 @@ export default function Day({
                     ) : null}
                   </div>
                 ) : null} */}
-
-      <div className="mt-2">
-        {day.actions.map((action, index) => (
-          <Action key={index} action={action} />
-        ))}
-      </div>
-      <div className="p-1">
-        {day.celebrations.map((celebration) => (
-          <Celebration celebration={celebration} key={celebration.id} small />
-        ))}
-      </div>
+      <AnimatePresence>
+        <motion.div
+          className="mt-2"
+          variants={scaleUp(0.1)}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {day.actions.map((action, index) => (
+            <Action key={index} action={action} />
+          ))}
+        </motion.div>
+        <div className="p-1">
+          {day.celebrations.map((celebration) => (
+            <Celebration celebration={celebration} key={celebration.id} small />
+          ))}
+        </div>
+      </AnimatePresence>
     </div>
   );
 }
