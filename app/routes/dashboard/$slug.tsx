@@ -3,8 +3,14 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/cloudflare";
-import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
+import {
+  Link,
+  Outlet,
+  useLoaderData,
+  useOutletContext,
+} from "@remix-run/react";
 import { handleAction, getAccount } from "~/lib/data";
+import type { AccountModel } from "~/lib/models";
 
 export const meta: MetaFunction = ({ data }) => {
   return {
@@ -24,12 +30,14 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Slug() {
-  const loaderData = useLoaderData();
+  const { account } = useLoaderData<{ account: AccountModel }>();
 
   return (
     <div className="flex h-screen flex-col">
       <div className="flex justify-between border-b p-4 dark:border-gray-800">
-        <h2 className="mb-0 dark:text-gray-200">{loaderData.account.name}</h2>
+        <Link to={`/dashboard/${account.slug}`}>
+          <h2 className="mb-0 dark:text-gray-200">{account.name}</h2>
+        </Link>
       </div>
       <Outlet context={useOutletContext()} />
     </div>

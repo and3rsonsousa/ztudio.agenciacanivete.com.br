@@ -1,4 +1,4 @@
-import { useFetcher, useMatches, useTransition } from "@remix-run/react";
+import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import { format, formatDistance } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import type {
@@ -23,6 +23,7 @@ export default function AddActionDialog({
 }) {
   const matches = useMatches();
   const fetcher = useFetcher();
+  const navigate = useNavigate();
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const campaigns: CampaignModel[] = matches[1].data.campaigns;
@@ -60,6 +61,7 @@ export default function AddActionDialog({
   const isAdding =
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "create-action";
+
   const isUpdating =
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "update-action";
@@ -80,7 +82,7 @@ export default function AddActionDialog({
 
       return () => clearInterval(save);
     }
-  }, [isAdding, action, fetcher]);
+  }, [isAdding, action, fetcher, navigate]);
   return (
     <>
       <div className="mb-4 flex justify-between">
@@ -114,7 +116,13 @@ export default function AddActionDialog({
         )}
       </div>
 
-      <fetcher.Form method="post" ref={formRef}>
+      <fetcher.Form
+        method="post"
+        ref={formRef}
+        onSubmit={(event) => {
+          console.log(event);
+        }}
+      >
         <input
           type="hidden"
           name="action"
@@ -128,13 +136,17 @@ export default function AddActionDialog({
           title="Nome"
           value={action ? action.name : undefined}
         />
-        <SelectField
-          name="account"
-          title="Cliente"
-          value={account ? account.id : undefined}
-          items={accountItems}
-          onChange={setSelectedAccount}
-        />
+        {action ? (
+          <input type="hidden" name="account" value={account.id} />
+        ) : (
+          <SelectField
+            name="account"
+            title="Cliente"
+            value={account ? account.id : undefined}
+            items={accountItems}
+            onChange={setSelectedAccount}
+          />
+        )}
         <SelectField
           name="campaign"
           title="Campanha"
@@ -164,6 +176,7 @@ export default function AddActionDialog({
             }
             items={tags.map((tag) => ({ title: tag.name, value: tag.id }))}
           />
+          {action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"}
 
           <SelectField
             name="status"

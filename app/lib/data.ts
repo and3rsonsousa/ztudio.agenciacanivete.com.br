@@ -349,11 +349,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
       .select("*")
       .single();
 
-    console.log({
-      data,
-      error,
-    });
-
     return { data, error };
   } else if (action.match(/delete-/)) {
     let item = "";
