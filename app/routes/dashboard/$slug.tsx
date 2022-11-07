@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/cloudflare";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
-import { createAction, getAccount } from "~/lib/data";
+import { handleAction, getAccount } from "~/lib/data";
 
 export const meta: MetaFunction = ({ data }) => {
   return {
@@ -20,7 +20,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  return createAction(formData, request);
+  return handleAction(formData, request);
 };
 
 export default function Slug() {

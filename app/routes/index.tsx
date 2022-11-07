@@ -16,7 +16,7 @@ export default function Index() {
             rel="noreferrer"
             className="link"
           >
-            Agência Canivete
+            αɢêɴᴄɪα ᴄαɴɪᴠeᴛe
           </a>
           .
         </p>

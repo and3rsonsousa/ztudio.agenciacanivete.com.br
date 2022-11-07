@@ -171,6 +171,7 @@ export const getActions = async (
       .order("created_at", { ascending: true });
   }
 };
+
 export const getCelebrations = async (
   args: {
     request?: Request;
@@ -213,7 +214,7 @@ export const getCampaigns = async (
 //     .single();
 // };
 
-// export async function createAction(formData: FormData) {
+// export async function handleAction(formData: FormData) {
 //   const name = formData.get("name") as string;
 //   const date = formData.get("date") as string;
 //   const account = formData.get("account") as string;
@@ -258,40 +259,48 @@ export const getCampaigns = async (
 //   }
 // }
 
-// export async function updateAction(
-//   id: string,
-//   values: {
-//     name?: string;
-//     date?: string;
-//     account?: string;
-//     description?: string;
-//     tag?: string;
-//     status?: string;
-//     responsible?: string;
-//     campaign?: string;
-//     date_end?: string;
-//   }
-// ) {
-//   const { data, error } = await supabase
-//     .from("Action")
-//     .update(values)
-//     .eq("id", id);
-
-//   return { data, error };
-// }
-
-export async function deleteItem(request: Request, item: string, id: string) {
+export async function updateAction(
+  request: Request,
+  id: string,
+  values: {
+    name?: string;
+    date?: string;
+    account?: string;
+    description?: string;
+    tag?: string;
+    status?: string;
+    responsible?: string;
+    campaign?: string;
+    date_end?: string;
+  }
+) {
   const { supabase } = getSupabase(request);
-  const { data, error } = await supabase.from(item).delete().eq("id", id);
+  const { data, error } = await supabase
+    .from("Action")
+    .update(values)
+    .eq("id", id);
 
   return { data, error };
 }
 
-export const createAction = async (formData: FormData, request: Request) => {
+export async function deleteItem(request: Request, item: string, id: string) {
+  const { supabase } = getSupabase(request);
+  const { data, error } = await supabase
+    .from(item)
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+export const handleAction = async (formData: FormData, request: Request) => {
   const action = formData.get("action") as string;
   const { supabase } = getSupabase(request);
 
   if (action.match(/create-/)) {
+    // Celebration
     if (action === "create-celebration") {
       return await createCelebration(formData, request);
     } else if (action === "create-action") {
@@ -338,20 +347,39 @@ export const createAction = async (formData: FormData, request: Request) => {
         .single();
 
       return { data, error };
-
-      // return await createAction(formData);
     }
   } else if (action.match(/update-/)) {
     const id = formData.get("id") as string;
     let values = {};
+    let table = "";
     if (action === "update-tag") {
       values = { tag: formData.get("tag") as string };
+      table = "Tag";
     } else if (action === "update-status") {
       values = { status: formData.get("status") as string };
+      table = "Status";
     } else if (action === "update-date") {
-      values = { date: formData.get("date") as string };
+      values = {
+        date: format(
+          new Date(formData.get("date") as string),
+          "y-MM-dd'T'HH:mm:ss"
+        ),
+      };
+      table = "Action";
+
+      console.log(formData);
     }
-    // return await updateAction(id, values);
+
+    const { data, error } = await supabase
+      .from(table)
+      .update(values)
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    console.log({ data, error });
+
+    return { data, error };
   } else if (action.match(/delete-/)) {
     let item = "";
     const id = formData.get("id") as string;

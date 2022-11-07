@@ -1,6 +1,6 @@
+import { useFetcher } from "@remix-run/react";
 import { format, isEqual, isSameMonth, isToday } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
 import Celebration from "./Celebrations";
@@ -16,20 +16,46 @@ export default function Day({
   firstDayOfCurrentMonth: any;
   setSelectedDayAndCurrentMonth: (date: Date) => void;
 }) {
+  const fetcher = useFetcher();
+
   return (
     <div
+      data-date={format(day.date, "y-MM-dd'T'hh:mm:ss")}
       onDragOver={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
         e.currentTarget.classList.add("dragover");
       }}
       onDragLeave={(e) => {
         e.currentTarget.classList.remove("dragover");
       }}
       onDrop={(e) => {
-        e.currentTarget.classList.add("dropped");
+        e.currentTarget.classList.remove("dragover");
+        // console.log(e.currentTarget.getAttribute("date-attr"));
+
+        const dragging = document.querySelector(".dragging");
+        const id = dragging?.getAttribute("data-id") as string;
+        const draggingDate = dragging?.getAttribute("data-date") as string;
+        const dropDate = e.currentTarget.getAttribute("data-date") as string;
+
+        fetcher.submit(
+          {
+            action: "update-date",
+            date: `${format(new Date(dropDate), "y-MM-dd")}T${format(
+              new Date(draggingDate),
+              "HH:mm:ss"
+            )}`,
+            id,
+          },
+          {
+            method: "post",
+          }
+        );
       }}
       className={`calendar-day${isToday(day.date) ? " is-today" : ""}${
         isSameMonth(day.date, firstDayOfCurrentMonth) ? "" : " not-this-month"
       }${isEqual(selectedDay, day.date) ? " is-selected" : ""} transition `}
+      date-attr={format(day.date, "y-MM-dd")}
     >
       <div className="px-2 lg:px-1">
         <button
@@ -70,24 +96,17 @@ export default function Day({
                     ) : null}
                   </div>
                 ) : null} */}
-      <AnimatePresence>
-        <motion.div
-          className="mt-2"
-          variants={scaleUp(0.1)}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          {day.actions.map((action, index) => (
-            <Action key={index} action={action} />
-          ))}
-        </motion.div>
-        <div className="p-1">
-          {day.celebrations.map((celebration) => (
-            <Celebration celebration={celebration} key={celebration.id} small />
-          ))}
-        </div>
-      </AnimatePresence>
+
+      <div className="mt-2">
+        {day.actions.map((action, index) => (
+          <Action key={action.id} action={action} />
+        ))}
+      </div>
+      <div className="p-1">
+        {day.celebrations.map((celebration) => (
+          <Celebration celebration={celebration} key={celebration.id} small />
+        ))}
+      </div>
     </div>
   );
 }

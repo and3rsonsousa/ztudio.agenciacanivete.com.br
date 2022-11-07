@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
-import { getActions, createAction } from "~/lib/data";
+import { getActions, handleAction } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { data } = await getUser(request);
@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  return createAction(formData, request);
+  return handleAction(formData, request);
 };
 
 const DashboardIndex = () => {

@@ -158,7 +158,7 @@
 }
 
 .calendar-day {
-  @apply py-2 border-b text-center dark:border-gray-800  lg:text-left
+  @apply py-2 border-b transition text-center dark:border-gray-800  lg:text-left
 }
 .calendar-day.not-this-month .day-button{
   @apply text-gray-300 dark:text-gray-700 
@@ -376,14 +376,19 @@
   @apply text-success-300 dark:text-success-500 w-6
 }
 
-/* .action-line *{ 
-  pointer-events:  none;
-} */
+ .action-line { 
+  @apply transition mx-1 mt-1 rounded py-1 px-2
+  
+} 
 
 .dragover {
-  @apply bg-gray-100 dark:bg-gray-700 
+  @apply bg-brand-100 dark:bg-brand-700 ring-1 ring-brand ring-inset
 }
 
 .dropped  {
   @apply bg-error-50
+}
+
+.deleting {
+  @apply scale-90 opacity-25
 }
