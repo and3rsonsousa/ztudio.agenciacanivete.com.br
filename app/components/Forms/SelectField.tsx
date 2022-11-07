@@ -1,6 +1,7 @@
 import { ChevronUpDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import * as Select from "@radix-ui/react-select";
+import { useState } from "react";
 
 export default function SelectField({
   title,
@@ -19,12 +20,20 @@ export default function SelectField({
   placeholder?: string;
   onChange?: (value: string) => void;
 }) {
+  const [selectedValue, setValue] = useState(value);
+
   return (
     <label className="field relative">
       <span className="field-label">{title}</span>
       <Select.Root
-        value={value}
-        onValueChange={onChange}
+        value={selectedValue}
+        onValueChange={(value) => {
+          if (onChange) {
+            onChange(value);
+          }
+
+          setValue(value);
+        }}
         name={name}
         disabled={disabled}
       >

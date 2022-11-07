@@ -204,60 +204,16 @@ export const getCampaigns = async (
   return supabase.from("Campaign").select("*");
 };
 
-// export const getAction = (id?: string) => {
-//   return supabase
-//     .from("Action")
-//     .select(
-//       "*, account:Account(*), status(*), tag:Tag(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*), tasks:Task(*)"
-//     )
-//     .eq("id", id)
-//     .single();
-// };
-
-// export async function handleAction(formData: FormData) {
-//   const name = formData.get("name") as string;
-//   const date = formData.get("date") as string;
-//   const account = formData.get("account") as string;
-//   const description = (formData.get("description") as string) || null;
-//   const date_end = (formData.get("date_end") as string) || null;
-//   const tag = formData.get("tag") as string;
-//   const status = formData.get("status") as string;
-//   const creator = formData.get("creator") as string;
-//   const responsible = formData.get("responsible") as string;
-//   const campaign = (formData.get("campaign") as string) || null;
-
-//   if (account) {
-//     const { data: action, error } = await supabase.from("Action").insert([
-//       {
-//         name,
-//         description,
-//         date,
-//         date_end,
-//         tag,
-//         status,
-//         account,
-//         creator,
-//         responsible,
-//         campaign,
-//       },
-//     ]);
-
-//     if (error) return { error };
-
-//     return action;
-//   } else {
-//     const { data: action, error } = await supabase.from("Action").insert([
-//       {
-//         name,
-//         date,
-//       },
-//     ]);
-
-//     if (error) return { error };
-
-//     return action;
-//   }
-// }
+export const getAction = (request: Request, id: string) => {
+  const { supabase } = getSupabase(request);
+  return supabase
+    .from("Action")
+    .select(
+      "*, account:Account(*), status(*), tag:Tag(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
+    )
+    .eq("id", id)
+    .single();
+};
 
 export async function updateAction(
   request: Request,
@@ -353,10 +309,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
     let values = {};
     let table = "";
     if (action === "update-tag") {
-      values = { tag: formData.get("tag") as string };
+      values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
       table = "Tag";
     } else if (action === "update-status") {
-      values = { status: formData.get("status") as string };
+      values = {
+        status: formData.get("status") as string,
+        updated_at: "NOW()",
+      };
       table = "Status";
     } else if (action === "update-date") {
       values = {
@@ -364,10 +323,23 @@ export const handleAction = async (formData: FormData, request: Request) => {
           new Date(formData.get("date") as string),
           "y-MM-dd'T'HH:mm:ss"
         ),
+        updated_at: "NOW()",
       };
       table = "Action";
+    } else if (action === "update-action") {
+      values = {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        account: formData.get("account") as string,
+        tag: formData.get("tag") as string,
+        status: formData.get("status") as string,
+        date: formData.get("date") as string,
+        responsible: formData.get("responsible") as string,
+        updated_at: "NOW()",
+        campaign: formData.get("campaign") as string,
+      };
 
-      console.log(formData);
+      table = "Action";
     }
 
     const { data, error } = await supabase
@@ -377,7 +349,10 @@ export const handleAction = async (formData: FormData, request: Request) => {
       .select("*")
       .single();
 
-    console.log({ data, error });
+    console.log({
+      data,
+      error,
+    });
 
     return { data, error };
   } else if (action.match(/delete-/)) {

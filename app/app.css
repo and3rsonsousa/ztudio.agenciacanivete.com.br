@@ -966,6 +966,10 @@ h5 {
   z-index: 50;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .my-0\.5 {
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
@@ -1004,6 +1008,10 @@ h5 {
   margin-bottom: 1rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -1026,6 +1034,10 @@ h5 {
 
 .mt-4 {
   margin-top: 1rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .-mt-1 {
@@ -1076,6 +1088,10 @@ h5 {
   height: 100vh;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .w-1 {
   width: 0.25rem;
 }
@@ -1124,6 +1140,10 @@ h5 {
   max-width: 24rem;
 }
 
+.max-w-2xl {
+  max-width: 42rem;
+}
+
 .flex-auto {
   flex: 1 1 auto;
 }
@@ -1135,6 +1155,16 @@ h5 {
 .translate-y-4 {
   --tw-translate-y: 1rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .cursor-pointer {
@@ -1187,16 +1217,16 @@ h5 {
   justify-content: space-between;
 }
 
-.gap-4 {
-  gap: 1rem;
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-1 {
   gap: 0.25rem;
 }
 
-.gap-2 {
-  gap: 0.5rem;
+.gap-4 {
+  gap: 1rem;
 }
 
 .gap-8 {
@@ -1255,6 +1285,14 @@ h5 {
   border-width: 1px;
 }
 
+.border-4 {
+  border-width: 4px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
 .border-l-4 {
   border-left-width: 4px;
 }
@@ -1277,6 +1315,31 @@ h5 {
 
 .border-black\/10 {
   border-color: rgb(0 0 0 / 0.1);
+}
+
+.border-brand {
+  --tw-border-opacity: 1;
+  border-color: rgb(128 0 255 / var(--tw-border-opacity));
+}
+
+.border-t-brand {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(128 0 255 / var(--tw-border-opacity));
+}
+
+.border-t-gray-200 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(226 232 240 / var(--tw-border-opacity));
+}
+
+.border-t-gray-400 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+
+.border-t-brand-300 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(212 186 247 / var(--tw-border-opacity));
 }
 
 .bg-gray-50 {
@@ -1374,6 +1437,10 @@ h5 {
   line-height: 1.25rem;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .font-medium {
   font-weight: 500;
 }
@@ -1386,12 +1453,12 @@ h5 {
   font-weight: 300;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .font-bold {
   font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 .tracking-widest {
@@ -1408,14 +1475,14 @@ h5 {
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-gray-700 {
@@ -1426,6 +1493,10 @@ h5 {
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .opacity-75 {
@@ -2159,29 +2230,29 @@ h5 {
 
 .bg-accomplished {
   --tw-bg-opacity: 1;
-  background-color: rgb(20 184 166 / var(--tw-bg-opacity));
+  background-color: rgb(132 204 22 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .dark .bg-accomplished {
   --tw-bg-opacity: 1;
-  background-color: rgb(15 118 110 / var(--tw-bg-opacity));
+  background-color: rgb(77 124 15 / var(--tw-bg-opacity));
 }
 
 .bg-accomplished-hover:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+  background-color: rgb(101 163 13 / var(--tw-bg-opacity));
 }
 
 .dark .bg-accomplished-hover:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+  background-color: rgb(101 163 13 / var(--tw-bg-opacity));
 }
 
 .border-accomplished {
   --tw-border-opacity: 1;
-  border-color: rgb(20 184 166 / var(--tw-border-opacity));
+  border-color: rgb(132 204 22 / var(--tw-border-opacity));
 }
 
 .exclamation {
@@ -2490,8 +2561,8 @@ h5 {
     height: 100%;
   }
 
-  .lg\:w-96 {
-    width: 24rem;
+  .lg\:w-80 {
+    width: 20rem;
   }
 
   .lg\:w-48 {

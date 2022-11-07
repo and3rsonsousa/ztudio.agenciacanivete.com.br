@@ -36,7 +36,6 @@ export type ActionModel = {
   tag?: string;
   status?: string;
   description?: string;
-  date_end?: string;
   created_at?: string;
   updated_at?: string;
   position?: 1 | 2 | 3;
@@ -56,9 +55,11 @@ export type ActionModelFull = {
   tag: ItemModel;
   status: ItemModel;
   description?: string;
-  date_end?: string;
-  created_at?: string;
-  updated_at?: string;
+  campaign?: CampaignModel;
+  created_at: string;
+  updated_at: string;
+  creator: PersonModel;
+  responsible: PersonModel;
 };
 
 export type ItemModel = {

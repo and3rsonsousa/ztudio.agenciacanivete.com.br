@@ -10,8 +10,15 @@ import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
-  // const tags: ItemModel[] = matches[1].data.tags;
+  const accounts: AccountModel[] = matches[1].data.accounts;
+  const tags: ItemModel[] = matches[1].data.tags;
+  const account = accounts.filter(
+    (account) => account.id === action.account
+  )[0];
+  const tag = tags.filter((tag) => tag.id === action.tag)[0];
+
   const status: ItemModel[] = matches[1].data.status;
+  const navigate = useNavigate();
 
   return (
     <div
@@ -46,11 +53,19 @@ export const Action = ({ action }: { action: ActionModel }) => {
         status.filter((stat) => stat.id === action.status)[0].slug
       } bg-${
         status.filter((stat) => stat.id === action.status)[0].slug
-      }-hover flex cursor-pointer items-center justify-between`}
+      }-hover flex cursor-pointer items-center justify-between gap-2`}
       title={action.name}
+      onClick={() => {
+        navigate(`/dashboard/${account.slug}/${action.id}`);
+      }}
     >
-      <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
-        {action.name}
+      <div className="flex items-center gap-1 overflow-hidden">
+        <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
+          {tag.name.slice(0, 3)}
+        </div>
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
+          {action.name}
+        </div>
       </div>
       <div className="text-xx hidden font-medium opacity-75 2xl:block">
         {format(new Date(action.date), "H'h'")}

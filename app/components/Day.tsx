@@ -1,6 +1,5 @@
 import { useFetcher } from "@remix-run/react";
 import { format, isEqual, isSameMonth, isToday } from "date-fns";
-import { AnimatePresence, motion } from "framer-motion";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
 import Celebration from "./Celebrations";

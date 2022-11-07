@@ -43,7 +43,7 @@ module.exports = {
       doing: colors.pink,
       review: colors.violet,
       done: colors.sky,
-      accomplished: colors.teal,
+      accomplished: colors.lime,
     },
   },
   plugins: [],

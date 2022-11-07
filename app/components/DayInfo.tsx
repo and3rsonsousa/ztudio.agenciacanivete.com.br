@@ -2,6 +2,7 @@ import {
   CalendarIcon,
   ChevronRightIcon,
   PlusIcon,
+  StarIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useOutletContext } from "@remix-run/react";
@@ -26,10 +27,14 @@ const DayInfo = ({ day }: { day: DayModel }) => {
       openDialogAction: boolean;
       setOpenDialogAction: () => void;
     };
+    campaigns: {
+      openDialogCampaign: boolean;
+      setOpenDialogCampaign: () => void;
+    };
   } = useOutletContext();
 
   return (
-    <div className="mt-16 flex flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-96 lg:border-0 lg:pt-0">
+    <div className="mt-16 flex flex-shrink-0 flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-80 lg:border-0 lg:pt-0">
       {day !== undefined ? (
         <>
           <div className="border-b p-4 dark:border-gray-800">
@@ -70,14 +75,14 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </div>
       )}
 
-      <div className="flex items-center justify-end border-t p-4 dark:border-gray-800">
+      <div className="flex items-center justify-end gap-2 border-t p-4 dark:border-gray-800">
         {/* Dialog for Celebrations */}
         <Dialog.Root
           onOpenChange={context.celebrations.setOpenDialogCelebration}
         >
           <Dialog.Trigger asChild>
-            <Button link>
-              <CalendarIcon />
+            <Button link small>
+              <StarIcon />
             </Button>
           </Dialog.Trigger>
           <AnimatePresence>
@@ -103,12 +108,45 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           </AnimatePresence>
         </Dialog.Root>
 
+        {/* Dialog for Campaigns */}
+
+        <Dialog.Root onOpenChange={context.campaigns.setOpenDialogCampaign}>
+          <Dialog.Trigger asChild>
+            <Button link small>
+              <CalendarIcon />
+            </Button>
+          </Dialog.Trigger>
+          <AnimatePresence>
+            {context.campaigns.openDialogCampaign ? (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
+                  <motion.div
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
+
+                <Dialog.Content forceMount className="dialog">
+                  <motion.div
+                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    {...scaleUp()}
+                  >
+                    <AddCelebrationDialog date={new Date()} />
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            ) : null}
+          </AnimatePresence>
+        </Dialog.Root>
+
         {/* Dialog for Actions */}
         <Dialog.Root onOpenChange={context.actions.setOpenDialogAction}>
           <Dialog.Trigger asChild>
-            <Button primary>
-              Nova Ação <PlusIcon />
-            </Button>
+            <div className="ml-4">
+              <Button primary>
+                Nova Ação <PlusIcon />
+              </Button>
+            </div>
           </Dialog.Trigger>
           <AnimatePresence>
             {context.actions.openDialogAction ? (
