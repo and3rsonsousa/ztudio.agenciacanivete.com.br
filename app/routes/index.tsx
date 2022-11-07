@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Index() {
   return (
-    <div className="grid h-screen place-content-center">
+    <div className="grid h-screen place-content-center selection:bg-brand selection:text-white">
       <div className="w-96 text-center">
         <div>
           <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-32" />

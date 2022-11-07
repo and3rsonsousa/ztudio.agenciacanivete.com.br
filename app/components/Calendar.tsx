@@ -83,7 +83,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
         </div>
       </div>
 
-      <div className="overflow-hidden lg:flex">
+      <div className="h-full overflow-hidden lg:flex">
         {/* Calendar  */}
         <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
           <div className="grid grid-cols-7 border-b">

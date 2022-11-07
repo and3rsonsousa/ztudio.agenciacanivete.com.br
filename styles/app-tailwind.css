@@ -8,8 +8,8 @@
   }
 
   .link {
-    @apply focus:focus-inline font-semibold lowercase tracking-wide text-brand underline;
-    font-variant:small-caps;
+    @apply focus:focus-inline font-semibold tracking-wide text-brand underline;
+    
   }
 
   h1 {

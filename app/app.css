@@ -435,7 +435,6 @@ video {
 
 .link {
   font-weight: 600;
-  text-transform: lowercase;
   letter-spacing: 0.025em;
   --tw-text-opacity: 1;
   color: rgb(128 0 255 / var(--tw-text-opacity));
@@ -455,10 +454,6 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(128 0 255 / var(--tw-ring-opacity));
-}
-
-.link {
-  font-variant:small-caps;
 }
 
 h1 {
@@ -2347,6 +2342,46 @@ h5 {
 
 .first-letter\:capitalize::first-letter {
   text-transform: capitalize;
+}
+
+.selection\:bg-brand *::-moz-selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(128 0 255 / var(--tw-bg-opacity));
+}
+
+.selection\:bg-brand *::selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(128 0 255 / var(--tw-bg-opacity));
+}
+
+.selection\:text-white *::-moz-selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:text-white *::selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:bg-brand::-moz-selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(128 0 255 / var(--tw-bg-opacity));
+}
+
+.selection\:bg-brand::selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(128 0 255 / var(--tw-bg-opacity));
+}
+
+.selection\:text-white::-moz-selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.selection\:text-white::selection {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:bg-gray-100:hover {
