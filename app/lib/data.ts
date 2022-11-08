@@ -347,7 +347,10 @@ export const handleAction = async (formData: FormData, request: Request) => {
         date: formData.get("date") as string,
         responsible: formData.get("responsible") as string,
         updated_at: "NOW()",
-        campaign: formData.get("campaign") as string,
+        campaign:
+          formData.get("campaign") !== ""
+            ? (formData.get("campaign") as string)
+            : null,
       };
 
       table = "Action";
@@ -364,6 +367,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         users: formData.getAll("users") as string[],
       };
     }
+
     const { data, error } = await supabase
       .from(table)
       .update(values)
@@ -371,7 +375,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
       .select("*")
       .single();
 
-    return { data, error };
+    return {
+      data: {
+        ...data,
+        reload: formData.get("reload") === "true" ? true : null,
+      },
+      error,
+    };
   } else if (action.match(/delete-/)) {
     let table = "";
     const id = formData.get("id") as string;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function InputField({
   title,
@@ -18,8 +18,10 @@ export default function InputField({
   pattern?: string;
   required?: boolean;
 
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
 }) {
+  const [Value, setValue] = useState(value);
+
   return (
     <label className="field">
       <span className="field-label">{title}</span>
@@ -28,8 +30,13 @@ export default function InputField({
         className="field-input"
         placeholder={placeholder ?? title}
         name={name}
-        defaultValue={value}
-        onChange={onChange}
+        value={Value}
+        onChange={(event) => {
+          setValue(event.target.value);
+          if (onChange) {
+            onChange(event.target.value);
+          }
+        }}
         pattern={pattern}
         required={required}
       />

@@ -37,8 +37,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
   const [openDialogAction, setOpenDialogAction] = useState(false);
+  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
   const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
   const [openDialogSearch, setOpenDialogSearch] = useState(false);
   return (

@@ -1,4 +1,10 @@
-import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
+import {
+  Form,
+  useFetcher,
+  useMatches,
+  useOutletContext,
+  useTransition,
+} from "@remix-run/react";
 import { format, formatDistance } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import type {
@@ -23,7 +29,13 @@ export default function AddActionDialog({
 }) {
   const matches = useMatches();
   const fetcher = useFetcher();
-  const navigate = useNavigate();
+
+  const context: {
+    actions: {
+      openDialogAction: boolean;
+      setOpenDialogAction: () => void;
+    };
+  } = useOutletContext();
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const campaigns: CampaignModel[] = matches[1].data.campaigns;
@@ -49,6 +61,7 @@ export default function AddActionDialog({
   const [selectedAccount, setSelectedAccount] = useState(
     account ? account.id : ""
   );
+
   const campaignItems = selectedAccount
     ? campaigns
         .filter((campaign) => campaign.account === selectedAccount)
@@ -58,9 +71,11 @@ export default function AddActionDialog({
         }))
     : undefined;
 
+  const transition = useTransition();
+
   const isAdding =
-    fetcher.state === "submitting" &&
-    fetcher.submission.formData.get("action") === "create-action";
+    transition.state === "submitting" &&
+    transition.submission.formData.get("action") === "create-action";
 
   const isUpdating =
     fetcher.state === "submitting" &&
@@ -70,19 +85,17 @@ export default function AddActionDialog({
   useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset();
-      if (!action) {
-        // Fechar o Dialog
-      }
     }
-
-    // if (action) {
-    //   const save = setInterval(() => {
-    //     fetcher.submit(formRef.current);
-    //   }, 30000);
-
-    //   return () => clearInterval(save);
-    // }
-  }, [isAdding, action, fetcher, navigate]);
+    if (action) {
+      const save = setInterval(() => {
+        fetcher.submit(formRef.current, {
+          method: "post",
+          action: `/autosave`,
+        });
+      }, 20000);
+      return () => clearInterval(save);
+    }
+  }, [action, fetcher, isAdding, context]);
   return (
     <>
       <div className="mb-4 flex justify-between">
@@ -118,7 +131,15 @@ export default function AddActionDialog({
         )}
       </div>
 
-      <fetcher.Form method="post" ref={formRef}>
+      <Form
+        method="post"
+        ref={formRef}
+        onSubmit={() => {
+          if (!action && context) {
+            context.actions?.setOpenDialogAction();
+          }
+        }}
+      >
         <input
           type="hidden"
           name="action"
@@ -204,18 +225,19 @@ export default function AddActionDialog({
           />
         </div>
 
-        <div className="flex items-center justify-end pt-4">
-          {/* <Checkbox
-            name="close"
-            title="Manter aberta"
-            checked={keepOpened}
-            onChange={() => setKeepOpened(!keepOpened)}
-          /> */}
+        <div className="flex items-center justify-end gap-2 pt-4">
+          {action && (
+            <Form method="post">
+              <input type="hidden" name="id" value={action.id} />
+              <input type="hidden" name="action" value="delete-action" />
+              <Button>Excluir</Button>
+            </Form>
+          )}
           <Button primary type="submit">
             {action ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
-      </fetcher.Form>
+      </Form>
     </>
   );
 }
