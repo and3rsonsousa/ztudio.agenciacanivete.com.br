@@ -1,16 +1,19 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import AddActionDialog from "~/components/AddActionDialog";
 import { getAction, handleAction } from "~/lib/data";
 import type { ActionModelFull } from "~/lib/models";
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
-  return handleAction(formData, request);
+  await handleAction(formData, request);
+
+  return redirect(`/dashboard/${params.slug}`);
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const { data: action } = await getAction(request, params.action as string);
+  const { data: action } = await getAction(request, params.id as string);
 
   return { action };
 };
@@ -21,7 +24,6 @@ export default function ActionPage() {
     <div className="p-4 lg:p-8">
       <div className="mx-auto max-w-2xl">
         <AddActionDialog action={action} />
-        <pre>{JSON.stringify(action, undefined, 2)}</pre>
       </div>
     </div>
   );

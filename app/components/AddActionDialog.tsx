@@ -87,9 +87,11 @@ export default function AddActionDialog({
     <>
       <div className="mb-4 flex justify-between">
         <div>
-          <h4 className="m-0">{action ? `Editar Ação` : `Nova Ação`}</h4>
+          <h4 className="m-0 dark:text-gray-200">
+            {action ? `Editar Ação` : `Nova Ação`}
+          </h4>
           {action ? (
-            <div className="mt-1 text-xs font-normal text-gray-300">
+            <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
               #{action.id}
             </div>
           ) : null}
@@ -116,13 +118,7 @@ export default function AddActionDialog({
         )}
       </div>
 
-      <fetcher.Form
-        method="post"
-        ref={formRef}
-        onSubmit={(event) => {
-          console.log(event);
-        }}
-      >
+      <fetcher.Form method="post" ref={formRef}>
         <input
           type="hidden"
           name="action"
@@ -176,7 +172,6 @@ export default function AddActionDialog({
             }
             items={tags.map((tag) => ({ title: tag.name, value: tag.id }))}
           />
-          {action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"}
 
           <SelectField
             name="status"

@@ -56,7 +56,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
       }-hover flex cursor-pointer items-center justify-between gap-2`}
       title={action.name}
       onClick={() => {
-        navigate(`/dashboard/${account.slug}/${action.id}`);
+        navigate(`/dashboard/${account.slug}/action/${action.id}`);
       }}
     >
       <div className="flex items-center gap-1 overflow-hidden">
@@ -93,7 +93,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
 
   return (
     <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 border-${stat.slug}`}
+      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${stat.slug}`}
     >
       <div>
         <div className="text-sm font-normal">{action.name}</div>
@@ -115,7 +115,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
       <div className="absolute -top-2 -right-2 flex translate-y-4  justify-between gap-2 rounded bg-gray-800 p-2 text-gray-400 opacity-0 transition group-hover:translate-y-0  group-hover:opacity-100">
         <button
           onClick={() => {
-            navigate(`/dashboard/${account.slug}/${action.id}`);
+            navigate(`/dashboard/${account.slug}/action/${action.id}`);
           }}
         >
           <PencilIcon className="w-3 transition hover:text-gray-300" />

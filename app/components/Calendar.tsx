@@ -86,7 +86,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
       <div className="h-full overflow-hidden lg:flex">
         {/* Calendar  */}
         <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
-          <div className="grid grid-cols-7 border-b">
+          <div className="grid grid-cols-7 border-b dark:border-gray-800">
             {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
               (day, index) => (
                 <div key={index} className="calendar-weekday">

@@ -7,7 +7,7 @@ import {
   getAccounts,
   getCampaigns,
   getCelebrations,
-  getPerson,
+  getPersonByUser,
   getPersons,
   getTagsStatus,
 } from "~/lib/data";
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     { data: celebrations },
     { data: campaigns },
   ] = await Promise.all([
-    getPerson(userId, request),
+    getPersonByUser(userId, request),
     getPersons(request),
     getAccounts(userId, request),
     getTagsStatus(request),

@@ -1,3 +1,4 @@
+import { LockClosedIcon } from "@heroicons/react/20/solid";
 import {
   BriefcaseIcon,
   MoonIcon,
@@ -84,15 +85,61 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <DropdownMenu.Label className="dropdown-label">
                     minha conta
                   </DropdownMenu.Label>
-                  <DropdownMenu.Item className="dropdown-item">
+                  <DropdownMenu.Item className="dropdown-item item-small">
                     Meus dados
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
-                    className="dropdown-item"
+                    className="dropdown-item item-small"
                     onSelect={() => navigate("/signout")}
                   >
                     Sair
                   </DropdownMenu.Item>
+                  {person.admin && (
+                    <>
+                      <hr className="my-2 dark:border-gray-800" />
+                      <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
+                        <LockClosedIcon className="w-3" />
+                        <div>clientes</div>
+                      </DropdownMenu.Label>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          to={`/dashboard/admin/accounts`}
+                          className="dropdown-item item-small block"
+                        >
+                          Ver Clientes
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          to={`/dashboard/admin/accounts/new`}
+                          className="dropdown-item item-small block"
+                        >
+                          Novo Cliente
+                        </Link>
+                      </DropdownMenu.Item>
+                      <hr className="my-2 dark:border-gray-800" />
+                      <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
+                        <LockClosedIcon className="w-3" />
+                        <div>usuários</div>
+                      </DropdownMenu.Label>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          to={`/dashboard/admin/users/`}
+                          className="dropdown-item item-small block"
+                        >
+                          Ver Usuários
+                        </Link>
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          to={`/dashboard/admin/users/new`}
+                          className="dropdown-item item-small block"
+                        >
+                          Novo Usuário
+                        </Link>
+                      </DropdownMenu.Item>
+                    </>
+                  )}
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
@@ -111,7 +158,7 @@ function ThemeSwitcher() {
 
   return (
     <DropdownMenu.Item
-      className="dropdown-item flex items-center gap-2"
+      className="dropdown-item item-small flex items-center gap-2"
       onSelect={() => {
         if (theme === "dark") {
           document.body.classList.remove("dark");

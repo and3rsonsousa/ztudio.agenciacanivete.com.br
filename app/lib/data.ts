@@ -12,6 +12,11 @@ import { getSupabase } from "./supabase";
 
 export const getPerson = (id: string, request: Request) => {
   const { supabase } = getSupabase(request);
+  return supabase.from("Person").select("*").eq("id", id).single();
+};
+
+export const getPersonByUser = (id: string, request: Request) => {
+  const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").eq("user", id).single();
 };
 
@@ -22,7 +27,6 @@ export const getPersons = (request: Request) => {
 
 export const getAccount = async (
   request: Request,
-
   slug?: string,
   id?: string
 ) => {
@@ -42,6 +46,13 @@ export const getAccounts = (userId: string, request: Request) => {
     .order("name", {
       ascending: true,
     });
+};
+
+export const getAllAccounts = (request: Request) => {
+  const { supabase } = getSupabase(request);
+  return supabase.from("Account").select("*").order("name", {
+    ascending: true,
+  });
 };
 
 // export const deleteAccount = async (id: string) => {
@@ -340,8 +351,19 @@ export const handleAction = async (formData: FormData, request: Request) => {
       };
 
       table = "Action";
+    } else if (action === "update-person") {
+      table = "Person";
+      values = {
+        name: formData.get("name") as string,
+      };
+    } else if (action === "update-account") {
+      table = "Account";
+      values = {
+        name: formData.get("name") as string,
+        slug: formData.get("slug") as string,
+        users: formData.getAll("users") as string[],
+      };
     }
-
     const { data, error } = await supabase
       .from(table)
       .update(values)
@@ -351,14 +373,16 @@ export const handleAction = async (formData: FormData, request: Request) => {
 
     return { data, error };
   } else if (action.match(/delete-/)) {
-    let item = "";
+    let table = "";
     const id = formData.get("id") as string;
     if (action === "delete-action") {
-      item = "Action";
+      table = "Action";
     } else if (action === "delete-celebration") {
-      item = "Celebration";
+      table = "Celebration";
+    } else if (action === "delete-account") {
+      table = "Account";
     }
-    return await deleteItem(request, item, id);
+    return await deleteItem(request, table, id);
   }
 
   return {
