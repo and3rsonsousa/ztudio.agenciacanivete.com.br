@@ -75,13 +75,13 @@ export default function AddActionDialog({
       }
     }
 
-    if (action) {
-      const save = setInterval(() => {
-        fetcher.submit(formRef.current);
-      }, 30000);
+    // if (action) {
+    //   const save = setInterval(() => {
+    //     fetcher.submit(formRef.current);
+    //   }, 30000);
 
-      return () => clearInterval(save);
-    }
+    //   return () => clearInterval(save);
+    // }
   }, [isAdding, action, fetcher, navigate]);
   return (
     <>
