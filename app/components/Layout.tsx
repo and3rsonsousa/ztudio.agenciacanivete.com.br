@@ -143,6 +143,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           Novo Usuário
                         </Link>
                       </DropdownMenu.Item>
+                      <hr className="my-2 dark:border-gray-800" />
+                      <DropdownMenu.Item asChild>
+                        <Link
+                          to={`/dashboard/roadmap`}
+                          className="dropdown-item item-small block"
+                        >
+                          Roadmap
+                        </Link>
+                      </DropdownMenu.Item>
                     </>
                   )}
                 </DropdownMenu.Content>
