@@ -1,8 +1,4 @@
-import {
-  DocumentDuplicateIcon,
-  PencilIcon,
-  TrashIcon,
-} from "@heroicons/react/20/solid";
+import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
 
@@ -114,20 +110,24 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
       </div>
       <div className="absolute -top-2 -right-2 flex translate-y-4  justify-between gap-2 rounded bg-gray-800 p-2 text-gray-400 opacity-0 transition group-hover:translate-y-0  group-hover:opacity-100">
         <button
+          title="Editar ação"
           onClick={() => {
             navigate(`/dashboard/${account.slug}/action/${action.id}`);
           }}
         >
           <PencilIcon className="w-3 transition hover:text-gray-300" />
         </button>
-        <button
+        {/* <button
+        
+          title="Duplicar ação"
           onClick={() => {
             alert("Não implementado");
           }}
         >
           <DocumentDuplicateIcon className="w-3 transition hover:text-gray-300" />
-        </button>
+        </button> */}
         <button
+          title="Excluir ação"
           onClick={() => {
             fetcher.submit(
               {

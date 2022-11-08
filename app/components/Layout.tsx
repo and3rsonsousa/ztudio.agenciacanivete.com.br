@@ -85,8 +85,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <DropdownMenu.Label className="dropdown-label">
                     minha conta
                   </DropdownMenu.Label>
-                  <DropdownMenu.Item className="dropdown-item item-small">
-                    Meus dados
+                  <DropdownMenu.Item asChild>
+                    <Link
+                      to="/dashboard/me"
+                      className="dropdown-item item-small block"
+                    >
+                      Meus dados
+                    </Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
                     className="dropdown-item item-small"
