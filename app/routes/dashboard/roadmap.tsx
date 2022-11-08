@@ -22,6 +22,17 @@ export default function Roadmap() {
         "Menu com opções mais rápidas de serem acessadas no calendário",
       state: 1,
     },
+    {
+      title: "Busca",
+      description:
+        "Combobox com a função de busca e também inciar micro ações, como criar nova ação, data celebrativa ou campanha.",
+      state: 2,
+    },
+    {
+      title: "Campanha",
+      description: "Criar todo esquema de campanhas.",
+      state: 1,
+    },
   ];
 
   const icons = [

@@ -997,11 +997,6 @@ h5 {
   margin-bottom: 0px;
 }
 
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1102,6 +1097,10 @@ h5 {
   display: none;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .h-1 {
   height: 0.25rem;
 }
@@ -1118,16 +1117,24 @@ h5 {
   height: 100vh;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
 .w-1 {
   width: 0.25rem;
 }
 
 .w-3 {
   width: 0.75rem;
-}
-
-.w-4 {
-  width: 1rem;
 }
 
 .w-full {
@@ -1140,10 +1147,6 @@ h5 {
 
 .w-\[36rem\] {
   width: 36rem;
-}
-
-.w-36 {
-  width: 9rem;
 }
 
 .w-72 {
@@ -1227,10 +1230,6 @@ h5 {
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-.grid-cols-5 {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
 .flex-col {
   flex-direction: column;
 }
@@ -1291,10 +1290,8 @@ h5 {
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
-.divide-x > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-x-reverse: 0;
-  border-right-width: calc(1px * var(--tw-divide-x-reverse));
-  border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+.self-end {
+  align-self: flex-end;
 }
 
 .overflow-auto {
@@ -1317,12 +1314,12 @@ h5 {
   white-space: nowrap;
 }
 
-.rounded {
-  border-radius: 0.25rem;
-}
-
 .rounded-full {
   border-radius: 9999px;
+}
+
+.rounded {
+  border-radius: 0.25rem;
 }
 
 .rounded-xl {
@@ -1662,6 +1659,7 @@ h5 {
 }
 
 .dropdown-content {
+  z-index: 50;
   border-radius: 0.75rem;
   border-width: 1px;
   border-color: rgb(0 0 0 / 0.1);
@@ -1713,8 +1711,7 @@ h5 {
 }
 
 .dropdown-item:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+  background-color: rgb(100 116 139 / 0.1);
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
@@ -1740,6 +1737,17 @@ h5 {
 
 .dropdown-item a {
   display: block;
+}
+
+.dropdown-hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-color: rgb(100 116 139 / 0.1);
+}
+
+.dark .dropdown-hr {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-border-opacity));
 }
 
 .calendar {

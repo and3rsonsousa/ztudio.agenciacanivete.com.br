@@ -321,13 +321,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
     let table = "";
     if (action === "update-tag") {
       values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
-      table = "Tag";
+      table = "Action";
     } else if (action === "update-status") {
       values = {
         status: formData.get("status") as string,
         updated_at: "NOW()",
       };
-      table = "Status";
+      table = "Action";
     } else if (action === "update-date") {
       values = {
         date: format(
@@ -383,6 +383,38 @@ export const handleAction = async (formData: FormData, request: Request) => {
       table = "Account";
     }
     return await deleteItem(request, table, id);
+  } else if (action.match(/duplicate-/)) {
+    const id = formData.get("id") as string;
+
+    if (action === "duplicate-action") {
+      const { data: old_action } = await supabase
+        .from("Action")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      const new_action = {
+        name: old_action.name,
+        description: old_action.description,
+        date: old_action.date,
+        tag: old_action.tag,
+        status: old_action.status,
+        account: old_action.account,
+        campaign: old_action.campaign,
+        creator: old_action.creator,
+        responsible: old_action.responsible,
+      };
+
+      const { data, error } = await supabase
+        .from("Action")
+        .insert(new_action)
+        .select("*")
+        .single();
+
+      console.log({ data, error });
+
+      return { data, error };
+    }
   }
 
   return {

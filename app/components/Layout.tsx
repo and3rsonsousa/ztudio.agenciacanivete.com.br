@@ -81,7 +81,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <ThemeSwitcher />
                   </div>
 
-                  <hr className="my-2 dark:border-gray-800" />
+                  <hr className="dropdown-hr" />
                   <DropdownMenu.Label className="dropdown-label">
                     minha conta
                   </DropdownMenu.Label>
@@ -101,7 +101,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </DropdownMenu.Item>
                   {person.admin && (
                     <>
-                      <hr className="my-2 dark:border-gray-800" />
+                      <hr className="dropdown-hr" />
                       <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
                         <LockClosedIcon className="w-3" />
                         <div>clientes</div>
@@ -122,7 +122,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           Novo Cliente
                         </Link>
                       </DropdownMenu.Item>
-                      <hr className="my-2 dark:border-gray-800" />
+                      <hr className="dropdown-hr" />
                       <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
                         <LockClosedIcon className="w-3" />
                         <div>usuários</div>
@@ -143,7 +143,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           Novo Usuário
                         </Link>
                       </DropdownMenu.Item>
-                      <hr className="my-2 dark:border-gray-800" />
+                      <hr className="dropdown-hr" />
                       <DropdownMenu.Item asChild>
                         <Link
                           to={`/dashboard/roadmap`}

@@ -1,8 +1,22 @@
-import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
-import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
+import {
+  ChevronRightIcon,
+  PencilIcon,
+  TrashIcon,
+  DocumentDuplicateIcon as Duplicate,
+} from "@heroicons/react/20/solid";
+
+import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
+import * as ContextMenu from "@radix-ui/react-context-menu";
 
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
+import {
+  DocumentCheckIcon,
+  DocumentDuplicateIcon,
+  PencilSquareIcon,
+  TagIcon,
+  TrashIcon as Trash,
+} from "@heroicons/react/24/outline";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -16,60 +30,190 @@ export const Action = ({ action }: { action: ActionModel }) => {
   const status: ItemModel[] = matches[1].data.status;
   const navigate = useNavigate();
 
+  const fetcher = useFetcher();
+
   return (
-    <div
-      data-date={action.date}
-      data-id={action.id}
-      draggable
-      onDragStart={(e) => {
-        const ele = e.target as HTMLElement;
-        const ghost = ele.cloneNode(true) as HTMLElement;
+    <ContextMenu.Root>
+      <ContextMenu.Trigger>
+        <div
+          data-date={action.date}
+          data-id={action.id}
+          draggable
+          onDragStart={(e) => {
+            const ele = e.target as HTMLElement;
+            const ghost = ele.cloneNode(true) as HTMLElement;
 
-        ghost.style.width = `${ele.offsetWidth}px`;
-        ghost.style.height = `${ele.offsetHeight}px`;
-        ghost.style.position = "absolute";
-        ghost.style.top = "0";
-        ghost.style.left = "0";
-        ghost.style.offset = ".2";
-        ghost.style.zIndex = "-1";
-        ghost.classList.add("dragging");
+            ghost.style.width = `${ele.offsetWidth}px`;
+            ghost.style.height = `${ele.offsetHeight}px`;
+            ghost.style.position = "absolute";
+            ghost.style.top = "0";
+            ghost.style.left = "0";
+            ghost.style.offset = ".2";
+            ghost.style.zIndex = "-1";
+            ghost.classList.add("dragging");
 
-        document.querySelector(".app")?.appendChild(ghost);
-        e.dataTransfer?.setDragImage(
-          ghost,
-          ele.offsetWidth / 2,
-          ele.offsetHeight / 2
-        );
+            document.querySelector(".app")?.appendChild(ghost);
+            e.dataTransfer?.setDragImage(
+              ghost,
+              ele.offsetWidth / 2,
+              ele.offsetHeight / 2
+            );
 
-        setTimeout(() => {
-          ghost.parentNode?.removeChild(ghost);
-        }, 1000);
-      }}
-      className={`action-line duration-500 bg-${
-        status.filter((stat) => stat.id === action.status)[0].slug
-      } bg-${
-        status.filter((stat) => stat.id === action.status)[0].slug
-      }-hover flex cursor-pointer items-center justify-between gap-2`}
-      title={action.name}
-      onClick={() => {
-        navigate(`/dashboard/${account.slug}/action/${action.id}`);
-      }}
-    >
-      <div className="flex items-center gap-1 overflow-hidden">
-        <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
-          {tag.name.slice(0, 3)}
+            setTimeout(() => {
+              ghost.parentNode?.removeChild(ghost);
+            }, 1000);
+          }}
+          className={`action-line duration-500 bg-${
+            status.filter((stat) => stat.id === action.status)[0].slug
+          } bg-${
+            status.filter((stat) => stat.id === action.status)[0].slug
+          }-hover flex cursor-pointer items-center justify-between gap-2`}
+          title={action.name}
+          onClick={() => {
+            navigate(`/dashboard/${account.slug}/action/${action.id}`);
+          }}
+        >
+          <div className="flex items-center gap-1 overflow-hidden">
+            <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
+              {tag.name.slice(0, 3)}
+            </div>
+            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
+              {action.name}
+            </div>
+          </div>
+          <div className="text-xx hidden font-medium opacity-75 2xl:block">
+            {format(new Date(action.date), "H'h'")}
+            {format(new Date(action.date), "mm") !== "00"
+              ? format(new Date(action.date), "mm")
+              : ""}
+          </div>
         </div>
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
-          {action.name}
-        </div>
-      </div>
-      <div className="text-xx hidden font-medium opacity-75 2xl:block">
-        {format(new Date(action.date), "H'h'")}
-        {format(new Date(action.date), "mm") !== "00"
-          ? format(new Date(action.date), "mm")
-          : ""}
-      </div>
-    </div>
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <ContextMenu.Content className="dropdown-content w-36">
+          <ContextMenu.Item asChild>
+            <Link
+              to={`/dashboard/${account.slug}/action/${action.id}`}
+              className="dropdown-item item-small flex items-center gap-2"
+            >
+              <PencilSquareIcon className="w-4" /> <div>Editar</div>
+            </Link>
+          </ContextMenu.Item>
+
+          <ContextMenu.Item
+            onSelect={(event) => {
+              fetcher.submit(
+                {
+                  action: "duplicate-action",
+                  id: action.id,
+                },
+                {
+                  method: "post",
+                }
+              );
+            }}
+            className="dropdown-item item-small flex items-center gap-2"
+          >
+            <DocumentDuplicateIcon className="w-4" /> <div>Duplicar</div>
+          </ContextMenu.Item>
+          <ContextMenu.Item
+            onSelect={(event) => {
+              fetcher.submit(
+                {
+                  action: "delete-action",
+                  id: action.id,
+                },
+                {
+                  method: "post",
+                }
+              );
+            }}
+            className="dropdown-item item-small flex items-center gap-2"
+          >
+            <Trash className="w-4" /> <div>Excluir</div>
+          </ContextMenu.Item>
+          <hr className="dropdown-hr" />
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+              <TagIcon className="w-4" />
+              <div className="flex flex-auto justify-between gap-4">
+                <div>Status</div>
+
+                <div className="">
+                  <ChevronRightIcon className="w-4" />
+                </div>
+              </div>
+            </ContextMenu.SubTrigger>
+            <ContextMenu.Portal>
+              <ContextMenu.SubContent className="dropdown-content w-36">
+                {tags.map((tag) => (
+                  <ContextMenu.Item
+                    key={tag.id}
+                    onSelect={(event) => {
+                      fetcher.submit(
+                        {
+                          action: "update-tag",
+                          id: action.id,
+                          tag: tag.id,
+                        },
+                        {
+                          method: "post",
+                        }
+                      );
+                    }}
+                    className="dropdown-item item-small flex items-center gap-2"
+                  >
+                    <div
+                      className={`h-2 w-2 rounded-full bg-${tag.slug}`}
+                    ></div>
+                    <div>{tag.name}</div>
+                  </ContextMenu.Item>
+                ))}
+              </ContextMenu.SubContent>
+            </ContextMenu.Portal>
+          </ContextMenu.Sub>
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+              <DocumentCheckIcon className="w-4" />
+              <div className="flex flex-auto justify-between gap-4">
+                <div>Status</div>
+
+                <div className="">
+                  <ChevronRightIcon className="w-4" />
+                </div>
+              </div>
+            </ContextMenu.SubTrigger>
+            <ContextMenu.Portal>
+              <ContextMenu.SubContent className="dropdown-content w-36">
+                {status.map((stat) => (
+                  <ContextMenu.Item
+                    key={stat.id}
+                    onSelect={(event) => {
+                      fetcher.submit(
+                        {
+                          action: "update-status",
+                          id: action.id,
+                          status: stat.id,
+                        },
+                        {
+                          method: "post",
+                        }
+                      );
+                    }}
+                    className="dropdown-item item-small flex items-center gap-2"
+                  >
+                    <div
+                      className={`h-2 w-2 rounded-full bg-${stat.slug}`}
+                    ></div>
+                    <div>{stat.name}</div>
+                  </ContextMenu.Item>
+                ))}
+              </ContextMenu.SubContent>
+            </ContextMenu.Portal>
+          </ContextMenu.Sub>
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
   );
 };
 
@@ -117,15 +261,22 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
         >
           <PencilIcon className="w-3 transition hover:text-gray-300" />
         </button>
-        {/* <button
-        
+        <button
           title="Duplicar ação"
           onClick={() => {
-            alert("Não implementado");
+            fetcher.submit(
+              {
+                action: "duplicate-action",
+                id: action.id,
+              },
+              {
+                method: "post",
+              }
+            );
           }}
         >
-          <DocumentDuplicateIcon className="w-3 transition hover:text-gray-300" />
-        </button> */}
+          <Duplicate className="w-3 transition hover:text-gray-300" />
+        </button>
         <button
           title="Excluir ação"
           onClick={() => {

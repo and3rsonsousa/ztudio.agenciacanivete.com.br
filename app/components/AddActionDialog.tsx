@@ -161,6 +161,7 @@ export default function AddActionDialog({
           name="description"
           title="Descrição"
           value={action ? action.description : undefined}
+          lines={action ? 5 : 3}
         />
 
         <div className="grid w-full grid-cols-2 gap-4">

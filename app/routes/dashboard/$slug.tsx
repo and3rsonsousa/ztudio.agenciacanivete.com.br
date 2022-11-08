@@ -1,15 +1,11 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/cloudflare";
+import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 import {
   Link,
   Outlet,
   useLoaderData,
   useOutletContext,
 } from "@remix-run/react";
-import { handleAction, getAccount } from "~/lib/data";
+import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
 export const meta: MetaFunction = ({ data }) => {
@@ -22,11 +18,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { data: account } = await getAccount(request, params.slug);
 
   return { account };
-};
-
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  return handleAction(formData, request);
 };
 
 export default function Slug() {
