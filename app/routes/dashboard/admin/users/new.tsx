@@ -48,7 +48,7 @@ export default function NewUser() {
   }>();
 
   return (
-    <div className="h-full w-1/2 max-w-md border-l p-4 lg:px-8">
+    <div className="h-full w-1/2 max-w-md border-l p-4 dark:border-gray-800 lg:px-8">
       <h4 className="mb-4">Novo Usuário</h4>
       {actionData?.error && (
         <Exclamation type="error">{actionData.error.message}</Exclamation>

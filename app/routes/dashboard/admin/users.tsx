@@ -44,7 +44,7 @@ export default function Users() {
         </div>
       </div>
       <div className="flex h-full overflow-hidden">
-        <div className="no-scrollbars w-1/2 max-w-md divide-y overflow-hidden overflow-y-auto">
+        <div className="no-scrollbars w-1/2 max-w-md divide-y overflow-hidden overflow-y-auto dark:divide-gray-800">
           {persons.map((person) => (
             <div
               key={person.id}

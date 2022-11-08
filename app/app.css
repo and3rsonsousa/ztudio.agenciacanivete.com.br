@@ -1378,11 +1378,6 @@ h5 {
   background-color: rgb(241 245 249 / 0.5);
 }
 
-.bg-gray-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-}
-
 .p-4 {
   padding: 1rem;
 }
@@ -1868,7 +1863,7 @@ h5 {
 }
 
 .dark .dialog-overlay {
-  background-color: rgb(15 23 42 / 0.75);
+  background-color: rgb(10 15 28 / 0.75);
 }
 
 .dialog-content {
@@ -2553,6 +2548,11 @@ h5 {
   opacity: 1;
 }
 
+.dark .dark\:divide-gray-800 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-divide-opacity));
+}
+
 .dark .dark\:border-gray-800 {
   --tw-border-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-border-opacity));
@@ -2577,14 +2577,14 @@ h5 {
   color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
-.dark .dark\:hover\:bg-gray-800:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-}
-
 .dark .dark\:hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:hover\:bg-gray-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {
