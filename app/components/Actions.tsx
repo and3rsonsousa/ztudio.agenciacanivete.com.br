@@ -3,6 +3,7 @@ import {
   PencilIcon,
   TrashIcon,
   DocumentDuplicateIcon as Duplicate,
+  CheckCircleIcon,
 } from "@heroicons/react/20/solid";
 
 import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
@@ -137,7 +138,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <TagIcon className="w-4" />
               <div className="flex flex-auto justify-between gap-4">
-                <div>Status</div>
+                <div>Tags</div>
 
                 <div className="">
                   <ChevronRightIcon className="w-4" />
@@ -166,7 +167,10 @@ export const Action = ({ action }: { action: ActionModel }) => {
                     <div
                       className={`h-2 w-2 rounded-full bg-${tag.slug}`}
                     ></div>
-                    <div>{tag.name}</div>
+                    <div className="flex-shrink-0 flex-grow">{tag.name}</div>
+                    {action.tag === tag.id && (
+                      <CheckCircleIcon className="w-4" />
+                    )}
                   </ContextMenu.Item>
                 ))}
               </ContextMenu.SubContent>
@@ -205,7 +209,10 @@ export const Action = ({ action }: { action: ActionModel }) => {
                     <div
                       className={`h-2 w-2 rounded-full bg-${stat.slug}`}
                     ></div>
-                    <div>{stat.name}</div>
+                    <div className="flex-shrink-0 flex-grow">{stat.name}</div>
+                    {action.status === stat.id && (
+                      <CheckCircleIcon className="w-4" />
+                    )}
                   </ContextMenu.Item>
                 ))}
               </ContextMenu.SubContent>

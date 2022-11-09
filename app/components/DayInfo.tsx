@@ -21,15 +21,15 @@ const DayInfo = ({ day }: { day: DayModel }) => {
   const context: {
     celebrations: {
       openDialogCelebration: boolean;
-      setOpenDialogCelebration: () => void;
+      setOpenDialogCelebration: (b?: boolean) => void;
     };
     actions: {
       openDialogAction: boolean;
-      setOpenDialogAction: () => void;
+      setOpenDialogAction: (b?: boolean) => void;
     };
     campaigns: {
       openDialogCampaign: boolean;
-      setOpenDialogCampaign: () => void;
+      setOpenDialogCampaign: (b?: boolean) => void;
     };
   } = useOutletContext();
 
@@ -140,7 +140,10 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </Dialog.Root>
 
         {/* Dialog for Actions */}
-        <Dialog.Root onOpenChange={context.actions.setOpenDialogAction}>
+        <Dialog.Root
+          open={context.actions.openDialogAction}
+          onOpenChange={context.actions.setOpenDialogAction}
+        >
           <Dialog.Trigger asChild>
             <div className="ml-4">
               <Button primary>

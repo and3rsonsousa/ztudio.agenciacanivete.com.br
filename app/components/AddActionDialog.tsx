@@ -33,7 +33,7 @@ export default function AddActionDialog({
   const context: {
     actions: {
       openDialogAction: boolean;
-      setOpenDialogAction: () => void;
+      setOpenDialogAction: any;
     };
   } = useOutletContext();
 
@@ -136,7 +136,7 @@ export default function AddActionDialog({
         ref={formRef}
         onSubmit={() => {
           if (!action && context) {
-            context.actions?.setOpenDialogAction();
+            context.actions?.setOpenDialogAction(false);
           }
         }}
       >
