@@ -30,7 +30,6 @@ export default function Day({
       }}
       onDrop={(e) => {
         e.currentTarget.classList.remove("dragover");
-        // console.log(e.currentTarget.getAttribute("date-attr"));
 
         const dragging = document.querySelector(".dragging");
         const id = dragging?.getAttribute("data-id") as string;
