@@ -10,7 +10,7 @@ import type { AccountModel } from "~/lib/models";
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    title: `${data.account.name} / ꜱᴛᴜᴅɪᴏ`,
+    title: `${data.account.name} / STUDIO`,
   };
 };
 
