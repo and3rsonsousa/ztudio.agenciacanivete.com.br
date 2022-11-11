@@ -110,6 +110,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 },
                 {
                   method: "post",
+                  action: "/handle-action",
                 }
               );
             }}
@@ -126,6 +127,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 },
                 {
                   method: "post",
+                  action: "/handle-action",
                 }
               );
             }}
@@ -159,6 +161,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                         },
                         {
                           method: "post",
+                          action: "/handle-action",
                         }
                       );
                     }}
@@ -201,6 +204,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                         },
                         {
                           method: "post",
+                          action: "/handle-action",
                         }
                       );
                     }}
@@ -278,6 +282,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
               },
               {
                 method: "post",
+                action: "/handle-action",
               }
             );
           }}
@@ -294,6 +299,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
               },
               {
                 method: "post",
+                action: "/handle-action",
               }
             );
           }}

@@ -10,7 +10,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-
   return handleAction(formData, request);
 };
 

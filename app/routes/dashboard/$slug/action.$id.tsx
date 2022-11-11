@@ -33,20 +33,21 @@ export default function ActionPage() {
   const actionData = useActionData<{ error: { message: string } }>();
 
   return (
-    <div className="p-4 lg:p-8">
+    <div className="overflow-hidden p-4 lg:p-8">
       <div className="mx-auto h-full max-w-4xl grid-cols-3 overflow-hidden lg:grid">
-        <div className="col-span-2 h-full px-4">
+        <div className="no-scrollbars col-span-2 h-full overflow-hidden overflow-y-auto px-4">
           {actionData && (
             <Exclamation type="error">{actionData.error.message}</Exclamation>
           )}
           <AddActionDialog action={action} />
         </div>
-        <div className="col-span-1 h-full px-4">
-          <h4>Ações recentes</h4>
-          <div className="no-scrollbars overflow-hidden overflow-y-auto">
+        <div className="col-span-1 h-full overflow-hidden ">
+          <h4 className="px-4">Ações recentes</h4>
+          <div className="no-scrollbars h-full overflow-hidden overflow-y-auto p-4">
             {actions.map((action) => (
               <ActionMedium action={action} key={action.id} />
             ))}
+            <div className="h-4"> </div>
           </div>
         </div>
       </div>

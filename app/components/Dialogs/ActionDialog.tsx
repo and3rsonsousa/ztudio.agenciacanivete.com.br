@@ -99,11 +99,11 @@ export default function AddActionDialog({
         if (isDirty) {
           fetcher.submit(formRef.current, {
             method: "post",
-            action: `/autosave`,
+            action: `/handle-action`,
           });
           setDirty(false);
         }
-      }, 20000);
+      }, 5000);
       return () => {
         clearInterval(save);
         window.removeEventListener("keydown", getDirty);
@@ -154,6 +154,9 @@ export default function AddActionDialog({
             context.actions?.setOpenDialogAction(false);
           }
         }}
+        // action={`/handle-action${
+        //   action ? `?redirectTo=/dashboard/${account.slug}` : ""
+        // }`}
       >
         <input
           type="hidden"
