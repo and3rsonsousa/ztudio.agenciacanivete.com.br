@@ -70,17 +70,20 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
     <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
-        <h4 className="mb-0 p-4 first-letter:capitalize">
-          {format(firstDayOfCurrentMonth, `MMMM 'de' Y`)}
-        </h4>
-        <div>
-          <Button link onClick={() => changeMonth(-1)}>
-            <ChevronLeftIcon />
-          </Button>
-          <Button link onClick={() => changeMonth(1)}>
-            <ChevronRightIcon />
-          </Button>
+        <div className="flex items-center gap-2">
+          <h4 className="mb-0 p-4 first-letter:capitalize">
+            {format(firstDayOfCurrentMonth, `MMMM 'de' Y`)}
+          </h4>
+          <div>
+            <Button link small onClick={() => changeMonth(-1)}>
+              <ChevronLeftIcon />
+            </Button>
+            <Button link small onClick={() => changeMonth(1)}>
+              <ChevronRightIcon />
+            </Button>
+          </div>
         </div>
+        <div></div>
       </div>
 
       <div className="h-full overflow-hidden lg:flex">

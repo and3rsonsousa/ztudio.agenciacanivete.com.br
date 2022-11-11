@@ -228,7 +228,13 @@ export const Action = ({ action }: { action: ActionModel }) => {
   );
 };
 
-export const ActionMedium = ({ action }: { action: ActionModel }) => {
+export const ActionMedium = ({
+  action,
+  fullDate,
+}: {
+  action: ActionModel;
+  fullDate?: boolean;
+}) => {
   const matches = useMatches();
   const fetcher = useFetcher();
   const tags: ItemModel[] = matches[1].data.tags;
@@ -246,17 +252,28 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
     <div
       className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${stat.slug}`}
     >
-      <div>
+      <div className="overflow-hidden">
         <div className="text-sm font-normal">{action.name}</div>
         {action.description ? (
           <div className="text-xx mb-2">{action.description}</div>
         ) : null}
-        <div className="text-xx flex gap-4 text-gray-500">
-          <div>
-            {format(date, "H'h'")}
-            {format(date, "mm") !== "00" ? format(date, "mm") : ""}
+        <div className="text-xx flex gap-4 overflow-hidden text-gray-500">
+          <div className="whitespace-nowrap">
+            {fullDate
+              ? format(
+                  date,
+                  "d/M/yy 'às' H'h'".concat(
+                    format(date, "mm") !== "00" ? "mm" : ""
+                  )
+                )
+              : format(
+                  date,
+                  "H'h'".concat(format(date, "mm") !== "00" ? "mm" : "")
+                )}
           </div>
-          <div>{account.name}</div>
+          <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+            {account.name}
+          </div>
           <div className="flex items-center gap-1">
             <div className={`h-1 w-1 rounded-full bg-${tag.slug}`}></div>
             <div>{tag.name}</div>

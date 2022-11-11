@@ -314,6 +314,45 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .single();
 
       return { data, error };
+    } else if (action === "create-campaign") {
+      const creator = formData.get("creator");
+      const name = formData.get("name");
+      const account = formData.get("account");
+      const description = formData.get("description");
+      const date_start = formData.get("date_start");
+      const date_end = formData.get("date_end");
+
+      const values = {
+        creator: creator,
+        name,
+        account,
+        description,
+        date_start,
+        date_end,
+      };
+
+      if (name === "") {
+        return {
+          error: {
+            message: "Coloque o nome da campanha.",
+          },
+        };
+      }
+      if (account === "") {
+        return {
+          error: {
+            message: "Escolha um cliente.",
+          },
+        };
+      }
+
+      const { data, error } = await supabase
+        .from("Campaign")
+        .insert(values)
+        .select("*")
+        .single();
+
+      return { data, error };
     }
   } else if (action.match(/update-/)) {
     const id = formData.get("id") as string;

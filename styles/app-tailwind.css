@@ -107,7 +107,7 @@
   }
 
   .field {
-    @apply mb-4 block;
+    @apply mb-4 block w-full;
   }
 
   .field-label {
@@ -359,8 +359,9 @@
 
 
 .exclamation{
-  @apply mx-auto flex items-center gap-4 rounded-xl  p-4 text-xs 
+  @apply inline-flex items-center gap-4 rounded-xl p-4
 }
+
 .bg-info{
   @apply bg-info-100 dark:bg-info-700 text-info-700 dark:text-info-200
 }

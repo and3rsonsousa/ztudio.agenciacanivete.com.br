@@ -27,8 +27,11 @@ export default function CelebrationDialog({ date }: { date: Date }) {
   useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset();
+      if (actionData && !actionData.error) {
+        context.celebrations?.setOpenDialogCelebration(false);
+      }
     }
-  }, [isAdding]);
+  }, [isAdding, context, actionData]);
 
   return (
     <>
@@ -39,17 +42,7 @@ export default function CelebrationDialog({ date }: { date: Date }) {
         </Exclamation>
       ) : null}
 
-      <Form
-        method="post"
-        ref={formRef}
-        onSubmit={() => {
-          if (context) {
-            console.log("OK AQUI");
-
-            context.celebrations?.setOpenDialogCelebration(false);
-          }
-        }}
-      >
+      <Form method="post" ref={formRef}>
         <input type="hidden" name="action" value="create-celebration" />
         <Field name="name" title="Nome" />
         <Field

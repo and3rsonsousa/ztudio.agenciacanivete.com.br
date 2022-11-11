@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Link, useMatches, useNavigate } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import type { AccountModel, PersonModel } from "~/lib/models";
 import SearchBox from "./SearchBox";
 
@@ -17,13 +17,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const accounts: AccountModel[] = matches[1].data.accounts;
   // const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
+  const useIsomorphicEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+  useIsomorphicEffect(() => {
     let theme;
     if (localStorage) {
       theme = localStorage.getItem("theme");
     }
+
     if (theme) {
-      document.body.classList.add(theme);
+      document.body.classList.add("dark");
     }
   }, []);
 

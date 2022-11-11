@@ -1,5 +1,6 @@
 import {
   Form,
+  useActionData,
   useFetcher,
   useMatches,
   useOutletContext,
@@ -19,6 +20,7 @@ import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
 
 import { ptBR } from "date-fns/locale";
+import Exclamation from "../Exclamation";
 
 export default function ActionDialog({
   date,
@@ -29,6 +31,7 @@ export default function ActionDialog({
 }) {
   const matches = useMatches();
   const fetcher = useFetcher();
+  const actionData = useActionData();
 
   const context: {
     actions: {
@@ -86,7 +89,13 @@ export default function ActionDialog({
   useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset();
+      if (actionData && !actionData.error) {
+        context.actions.setOpenDialogAction(false);
+      }
     }
+  }, [isAdding, context, actionData]);
+
+  useEffect(() => {
     function getDirty() {
       setDirty(true);
     }
@@ -110,7 +119,7 @@ export default function ActionDialog({
         window.removeEventListener("mousedown", getDirty);
       };
     }
-  }, [action, isDirty, fetcher, isAdding, context]);
+  }, [action, isDirty, fetcher]);
   return (
     <>
       <div className="mb-4 flex justify-between">
@@ -124,6 +133,7 @@ export default function ActionDialog({
             </div>
           ) : null}
         </div>
+
         {/* Mostra há quanto tempo foi criado ou atualizado */}
         {action && (
           <div className="flex items-center gap-2 text-xs text-gray-400">
@@ -145,6 +155,12 @@ export default function ActionDialog({
           </div>
         )}
       </div>
+
+      {actionData && actionData.error ? (
+        <Exclamation type="error" icon>
+          {actionData.error.message}
+        </Exclamation>
+      ) : null}
 
       <Form
         method="post"

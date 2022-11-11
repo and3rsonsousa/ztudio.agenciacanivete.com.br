@@ -5,14 +5,15 @@ import {
   useOutletContext,
   useTransition,
 } from "@remix-run/react";
-import { add, format } from "date-fns";
-import { useEffect, useRef, useState } from "react";
+import { add } from "date-fns";
+import { useEffect, useRef } from "react";
 import type { AccountModel, CampaignModel, PersonModel } from "~/lib/models";
 import Exclamation from "../Exclamation";
 import Button from "../Forms/Button";
-import InputField from "../Forms/InputField";
-import Field from "../Forms/InputField";
+import DatepickerField from "../Forms/DatepickerField";
+import { default as Field } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
+import TextareaField from "../Forms/TextareaField";
 
 export default function CampaignDialog({
   date,
@@ -48,27 +49,31 @@ export default function CampaignDialog({
   useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset();
+      if (actionData && !actionData.error) {
+        context.campaigns?.setOpenDialogCampaign(false);
+      }
     }
-  }, [isAdding]);
+  }, [isAdding, actionData, context]);
 
   return (
     <>
-      <h4 className="mb-4">Nova Campanha</h4>
+      <div>
+        <h4 className="m-0 dark:text-gray-200">
+          {campaign ? `Editar Campanha` : `Nova Campanha`}
+        </h4>
+        {campaign ? (
+          <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
+            #{campaign.id}
+          </div>
+        ) : null}
+      </div>
       {actionData && actionData.error ? (
         <Exclamation type="error" icon>
           {actionData.error.message}
         </Exclamation>
       ) : null}
 
-      <Form
-        method="post"
-        ref={formRef}
-        onSubmit={() => {
-          if (context) {
-            context.campaigns?.setOpenDialogCampaign(false);
-          }
-        }}
-      >
+      <Form method="post" ref={formRef}>
         <input type="hidden" name="action" value="create-campaign" />
 
         {campaign ? (
@@ -76,28 +81,10 @@ export default function CampaignDialog({
         ) : (
           <input type="hidden" name="creator" value={creator.id} />
         )}
-        <Field name="name" title="Nome" />
-        <InputField
-          name="date_start"
-          title="Começa em"
-          type="datetime-local"
-          value={format(
-            campaign ? new Date(campaign.date_start) : date ?? new Date(),
-            "y-MM-dd 00:00"
-          )}
-          placeholder="dd/mm"
-        />
-        <InputField
-          name="date_end"
-          title="Termina em"
-          type="datetime-local"
-          value={format(
-            campaign
-              ? new Date(campaign.date_end)
-              : add(date, { days: 7 }) ?? new Date(),
-            "y-MM-dd 23:59"
-          )}
-          placeholder="dd/mm"
+        <Field
+          name="name"
+          title="Nome"
+          value={campaign ? campaign.name : undefined}
         />
         {campaign ? (
           <input type="hidden" name="account" value={account.id} />
@@ -109,9 +96,52 @@ export default function CampaignDialog({
             items={accountItems}
           />
         )}
+        <TextareaField
+          name="description"
+          title="Descrição"
+          lines={3}
+          value={campaign ? campaign.description : undefined}
+        />
+        <div className="flex gap-4">
+          <DatepickerField
+            name="date_start"
+            title="Começa em"
+            date={campaign ? new Date(campaign.date_start) : date ?? new Date()}
+          />
+          <DatepickerField
+            name="date_end"
+            title="Termina em"
+            date={
+              campaign
+                ? new Date(campaign.date_end)
+                : add(date ?? new Date(), { days: 7 })
+            }
+          />
+
+          {/* <InputField
+            name="date_start"
+            title="Começa em"
+            type="datetime-local"
+            value={format(
+              campaign ? new Date(campaign.date_start) : date ?? new Date(),
+              "y-MM-dd 00:00"
+            )}
+          />
+          <InputField
+            name="date_end"
+            title="Termina em"
+            type="datetime-local"
+            value={format(
+              campaign
+                ? new Date(campaign.date_end)
+                : add(date, { days: 7 }) ?? new Date(),
+              "y-MM-dd 23:59"
+            )}
+          /> */}
+        </div>
 
         <div className="flex items-center justify-end pt-4">
-          <Button primary small type="submit">
+          <Button primary type="submit">
             Adicionar
           </Button>
         </div>

@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { fade, scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
 import { ActionMedium } from "./Actions";
-import AddActionDialog from "./Dialogs/ActionDialog";
+import ActionDialog from "./Dialogs/ActionDialog";
 import AddCelebrationDialog from "./Dialogs/CelebrationDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import Celebration from "./Celebrations";
@@ -129,7 +129,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
                 <Dialog.Content forceMount className="dialog">
                   <motion.div
-                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
                     <CampaignDialog date={new Date()} />
@@ -166,7 +166,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                     className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
-                    <AddActionDialog date={day.date} />
+                    <ActionDialog date={day.date} />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>

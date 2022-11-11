@@ -45,7 +45,7 @@ export default function ActionPage() {
           <h4 className="px-4">Ações recentes</h4>
           <div className="no-scrollbars h-full overflow-hidden overflow-y-auto p-4">
             {actions.map((action) => (
-              <ActionMedium action={action} key={action.id} />
+              <ActionMedium action={action} key={action.id} fullDate />
             ))}
             <div className="h-4"> </div>
           </div>

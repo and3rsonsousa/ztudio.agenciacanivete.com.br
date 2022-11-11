@@ -58,6 +58,7 @@ export default function App() {
             __html: `window.env = ${JSON.stringify(env)}`,
           }}
         />
+
         <Scripts />
         <LiveReload />
       </body>
