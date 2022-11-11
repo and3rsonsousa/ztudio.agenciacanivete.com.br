@@ -20,7 +20,7 @@ import TextareaField from "../Forms/TextareaField";
 
 import { ptBR } from "date-fns/locale";
 
-export default function AddActionDialog({
+export default function ActionDialog({
   date,
   action,
 }: {
@@ -154,9 +154,6 @@ export default function AddActionDialog({
             context.actions?.setOpenDialogAction(false);
           }
         }}
-        // action={`/handle-action${
-        //   action ? `?redirectTo=/dashboard/${account.slug}` : ""
-        // }`}
       >
         <input
           type="hidden"

@@ -1,4 +1,9 @@
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useOutletContext,
+  useTransition,
+} from "@remix-run/react";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
 import Exclamation from "../Exclamation";
@@ -6,9 +11,14 @@ import Button from "../Forms/Button";
 import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
 
-export default function AddCelebrationDialog({ date }: { date: Date }) {
+export default function CelebrationDialog({ date }: { date: Date }) {
   const actionData = useActionData();
   const transition = useTransition();
+  const context: {
+    celebrations: {
+      setOpenDialogCelebration: any;
+    };
+  } = useOutletContext();
   const isAdding =
     transition.state === "submitting" &&
     transition.submission.formData.get("action") === "create-celebration";
@@ -29,7 +39,17 @@ export default function AddCelebrationDialog({ date }: { date: Date }) {
         </Exclamation>
       ) : null}
 
-      <Form method="post" ref={formRef}>
+      <Form
+        method="post"
+        ref={formRef}
+        onSubmit={() => {
+          if (context) {
+            console.log("OK AQUI");
+
+            context.celebrations?.setOpenDialogCelebration(false);
+          }
+        }}
+      >
         <input type="hidden" name="action" value="create-celebration" />
         <Field name="name" title="Nome" />
         <Field
