@@ -23,6 +23,7 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
+  { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   {
     rel: "icon",
     href: "/ico.png",

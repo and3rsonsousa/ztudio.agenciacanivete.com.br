@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 var colors = require("tailwindcss/colors");
+var theme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -9,6 +10,9 @@ module.exports = {
         gray: {
           1000: "#0a0f1c",
         },
+      },
+      fontFamily: {
+        sans: ["Inter var", ...theme.fontFamily.sans],
       },
     },
     colors: {
