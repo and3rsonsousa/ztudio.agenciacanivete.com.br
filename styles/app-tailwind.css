@@ -36,11 +36,11 @@
 
 @layer utilities {
   .spacing-sm {
-    @apply px-3 py-1.5;
+    @apply px-4 py-1.5
   }
 
   .spacing {
-    @apply px-5 py-3;
+    @apply px-6 py-3;
   }
 
   .spacing-lg {
@@ -70,15 +70,16 @@
 @layer components {
   .button {
     /* base do botão */
-    @apply spacing inline-flex items-center gap-2 cursor-pointer justify-center rounded-xl border text-center font-semibold normal-case tracking-normal outline-none transition active:scale-95;
+    @apply spacing inline-flex items-center gap-2 cursor-pointer justify-center rounded-full border border-gray-300 text-center font-semibold normal-case tracking-normal outline-none transition active:scale-95 whitespace-nowrap;
     font-variant:normal;
     /* botão em estado normal */
-    @apply bg-white hover:border-brand hover:bg-brand-100/50 hover:text-brand;
+    @apply bg-white  hover:bg-gray-100 ;
     /* botão em modo escuro */
-    @apply dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-brand-900 dark:hover:text-white dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+    @apply dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700  dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
     /* botão desabilitado */
     @apply disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-100 disabled:text-gray-300 disabled:active:scale-100;
-    @apply focus-block;
+    
+    @apply  focus-block
   }
 
   .button-primary {
@@ -90,11 +91,11 @@
   }
 
   .button-small {
-    @apply spacing-sm rounded-lg text-sm;
+    @apply spacing-sm text-sm;
   }
 
   .button-large {
-    @apply spacing-lg rounded-2xl text-2xl font-bold;
+    @apply spacing-lg text-2xl font-bold;
   }
 
   .button-link {
@@ -143,7 +144,7 @@
 }
 
 .dropdown-item {
-  @apply spacing antialiased focus:bg-gray-500/[.2] focus:outline-none dark:text-gray-200  dark:focus:bg-gray-300/25 text-gray-700 cursor-pointer;
+  @apply spacing antialiased focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200  text-gray-700 cursor-pointer;
 }
 
 .dropdown-item.item-small{

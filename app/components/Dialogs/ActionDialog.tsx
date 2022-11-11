@@ -13,10 +13,10 @@ import type {
   CampaignModel,
   PersonModel,
 } from "~/lib/models";
-import Button from "./Forms/Button";
-import { default as Field, default as InputField } from "./Forms/InputField";
-import SelectField from "./Forms/SelectField";
-import TextareaField from "./Forms/TextareaField";
+import Button from "../Forms/Button";
+import { default as Field, default as InputField } from "../Forms/InputField";
+import SelectField from "../Forms/SelectField";
+import TextareaField from "../Forms/TextareaField";
 
 import { ptBR } from "date-fns/locale";
 
@@ -61,6 +61,7 @@ export default function AddActionDialog({
   const [selectedAccount, setSelectedAccount] = useState(
     account ? account.id : ""
   );
+  const [isDirty, setDirty] = useState(false);
 
   const campaignItems = selectedAccount
     ? campaigns
@@ -86,16 +87,30 @@ export default function AddActionDialog({
     if (!isAdding) {
       formRef.current?.reset();
     }
+    function getDirty() {
+      setDirty(true);
+    }
+
+    window.addEventListener("keydown", getDirty);
+    window.addEventListener("mousedown", getDirty);
+
     if (action) {
       const save = setInterval(() => {
-        fetcher.submit(formRef.current, {
-          method: "post",
-          action: `/autosave`,
-        });
+        if (isDirty) {
+          fetcher.submit(formRef.current, {
+            method: "post",
+            action: `/autosave`,
+          });
+          setDirty(false);
+        }
       }, 20000);
-      return () => clearInterval(save);
+      return () => {
+        clearInterval(save);
+        window.removeEventListener("keydown", getDirty);
+        window.removeEventListener("mousedown", getDirty);
+      };
     }
-  }, [action, fetcher, isAdding, context]);
+  }, [action, isDirty, fetcher, isAdding, context]);
   return (
     <>
       <div className="mb-4 flex justify-between">

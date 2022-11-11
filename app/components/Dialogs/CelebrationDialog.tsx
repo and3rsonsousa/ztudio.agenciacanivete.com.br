@@ -1,10 +1,10 @@
 import { Form, useActionData, useTransition } from "@remix-run/react";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
-import Exclamation from "./Exclamation";
-import Button from "./Forms/Button";
-import Checkbox from "./Forms/CheckboxField";
-import Field from "./Forms/InputField";
+import Exclamation from "../Exclamation";
+import Button from "../Forms/Button";
+import Checkbox from "../Forms/CheckboxField";
+import Field from "../Forms/InputField";
 
 export default function AddCelebrationDialog({ date }: { date: Date }) {
   const actionData = useActionData();

@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { useActionData, useLoaderData } from "@remix-run/react";
 import { ActionMedium } from "~/components/Actions";
-import AddActionDialog from "~/components/AddActionDialog";
+import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, handleAction } from "~/lib/data";
 import type { ActionModel, ActionModelFull } from "~/lib/models";

@@ -1,9 +1,10 @@
 import Button from "~/components/Forms/Button";
+import DatepickerField from "~/components/Forms/DatepickerField";
 import Field from "~/components/Forms/InputField";
 
 export default function Components() {
   return (
-    <div className="container mx-auto px-8">
+    <div className="container mx-auto max-w-xl px-8">
       <div className="my-16">
         <h1>Componentes</h1>
       </div>
@@ -12,50 +13,49 @@ export default function Components() {
         <div>
           <h3>Buttons</h3>
         </div>
-        <div className="grid-cols-2 gap-8 md:grid">
-          <div className="flex flex-col gap-4">
-            <div>
-              <h4>Padrão</h4>
-              <Code>.button</Code>
-            </div>
-            <div>
-              <Button small>Fazer Login</Button>
-            </div>
-            <div>
-              <Button>Fazer Login</Button>
-            </div>
-            <div>
-              <Button large>Fazer Login</Button>
-            </div>
 
-            <div>
-              <Button disabled>Fazer Login</Button>
-            </div>
+        <div className="flex flex-col gap-4">
+          <div>
+            <h4>Padrão</h4>
+            <Code>.button</Code>
+          </div>
+          <div>
+            <Button small>Fazer Login</Button>
+          </div>
+          <div>
+            <Button>Fazer Login</Button>
+          </div>
+          <div>
+            <Button large>Fazer Login</Button>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <div>
-              <h4>Primário</h4>
-              <Code>.button.button-primary</Code>
-            </div>
-            <div>
-              <Button primary small>
-                Fazer Login
-              </Button>
-            </div>
-            <div>
-              <Button primary>Fazer Login</Button>
-            </div>
-            <div>
-              <Button primary large>
-                Fazer Login
-              </Button>
-            </div>
-            <div>
-              <Button disabled primary>
-                Fazer Login
-              </Button>
-            </div>
+          <div>
+            <Button disabled>Fazer Login</Button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <div>
+            <h4>Primário</h4>
+            <Code>.button.button-primary</Code>
+          </div>
+          <div>
+            <Button primary small>
+              Fazer Login
+            </Button>
+          </div>
+          <div>
+            <Button primary>Fazer Login</Button>
+          </div>
+          <div>
+            <Button primary large>
+              Fazer Login
+            </Button>
+          </div>
+          <div>
+            <Button disabled primary>
+              Fazer Login
+            </Button>
           </div>
         </div>
       </div>
@@ -81,8 +81,9 @@ export default function Components() {
           <Field
             name="teste"
             title="Text"
-            onChange={(event) => console.log(event.target.value)}
+            onChange={(string) => console.log(string)}
           />
+          <DatepickerField title="Data" />
         </div>
       </div>
       <div className="py-8 text-center text-xs font-bold tracking-widest ">
