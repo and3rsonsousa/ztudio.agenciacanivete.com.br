@@ -1,24 +1,24 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
-import { getActions, handleAction } from "~/lib/data";
+import { getActions, getCampaigns } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { data } = await getUser(request);
-  const [{ data: actions }] = await Promise.all([
+  const {
+    data: {
+      session: { user },
+    },
+  } = await getUser(request);
+  const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
       request,
-      user: data.session.user.id,
+      user: user.id,
     }),
+    getCampaigns({ request, user: user.id }),
   ]);
 
-  return { actions };
-};
-
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  return handleAction(formData, request);
+  return { actions, campaigns };
 };
 
 const DashboardIndex = () => {

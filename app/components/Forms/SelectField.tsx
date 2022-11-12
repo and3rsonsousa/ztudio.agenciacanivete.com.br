@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
@@ -39,8 +40,9 @@ export default function SelectField({
       >
         <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed disabled:text-gray-300">
           <Select.Value placeholder={placeholder ?? "Selecione um item"} />
-          <Select.Icon>
-            <ChevronDownIcon className="w-4" />
+          <Select.Icon className="-mr-3">
+            {/* <ChevronUpDownIcon className="w-6" /> */}
+            <ChevronDownIcon className="w-6" />
           </Select.Icon>
         </Select.Trigger>
 

@@ -1,9 +1,4 @@
-import {
-  Form,
-  useActionData,
-  useOutletContext,
-  useTransition,
-} from "@remix-run/react";
+import { useFetcher, useOutletContext } from "@remix-run/react";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
 import Exclamation from "../Exclamation";
@@ -12,37 +7,38 @@ import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
 
 export default function CelebrationDialog({ date }: { date: Date }) {
-  const actionData = useActionData();
-  const transition = useTransition();
   const context: {
     celebrations: {
       setOpenDialogCelebration: any;
     };
   } = useOutletContext();
+  const fetcher = useFetcher();
   const isAdding =
-    transition.state === "submitting" &&
-    transition.submission.formData.get("action") === "create-celebration";
+    fetcher.state === "submitting" &&
+    fetcher.submission.formData.get("action") === "create-celebration";
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (!isAdding) {
-      formRef.current?.reset();
-      if (actionData && !actionData.error) {
-        context.celebrations?.setOpenDialogCelebration(false);
-      }
+    if (
+      !isAdding &&
+      fetcher.state === "idle" &&
+      fetcher.data &&
+      !fetcher.data.error
+    ) {
+      context.celebrations?.setOpenDialogCelebration(false);
     }
-  }, [isAdding, context, actionData]);
+  }, [isAdding, context, fetcher]);
 
   return (
     <>
       <h4 className="mb-4">Nova Data Comemorativa</h4>
-      {actionData && actionData.error ? (
+      {fetcher.data && fetcher.data.error ? (
         <Exclamation type="error" icon>
-          {actionData.error.message}
+          {fetcher.data.error.message}
         </Exclamation>
       ) : null}
 
-      <Form method="post" ref={formRef}>
+      <fetcher.Form method="post" ref={formRef} action="/handle-action">
         <input type="hidden" name="action" value="create-celebration" />
         <Field name="name" title="Nome" />
         <Field
@@ -54,17 +50,11 @@ export default function CelebrationDialog({ date }: { date: Date }) {
         />
         <Checkbox title="Feriado" name="is_holiday" />
         <div className="flex items-center justify-end pt-4">
-          {/* <Checkbox
-            name="close"
-            title="Manter aberta"
-            checked={keepOpened}
-            onChange={() => setKeepOpened(!keepOpened)}
-          /> */}
           <Button primary type="submit">
             Adicionar
           </Button>
         </div>
-      </Form>
+      </fetcher.Form>
     </>
   );
 }

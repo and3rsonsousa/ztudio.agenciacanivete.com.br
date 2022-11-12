@@ -202,16 +202,22 @@ export const getCelebrations = async (
 export const getCampaigns = async (
   args: {
     request?: Request;
+    user?: string;
   } = {}
 ) => {
-  let { request } = args;
+  let { request, user } = args;
 
   if (!request) {
     throw new Error("Request is undefined");
   }
 
-  const { supabase } = getSupabase(request);
+  if (!user) {
+    throw new Error("User is undefined");
+  }
 
+  const { supabase } = getSupabase(request);
+  // TODO:
+  // Filtrar campanhas pelas contas que o usuário tem acesso
   return supabase.from("Campaign").select("*");
 };
 
@@ -315,6 +321,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
 
       return { data, error };
     } else if (action === "create-campaign") {
+      console.log(formData);
+
       const creator = formData.get("creator");
       const name = formData.get("name");
       const account = formData.get("account");
@@ -345,6 +353,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
           },
         };
       }
+
+      console.log({ values });
 
       const { data, error } = await supabase
         .from("Campaign")
@@ -489,10 +499,12 @@ async function createCelebration(formData: FormData, request: Request) {
     .insert({
       name: name,
       date: `${dateSplit[1]}/${dateSplit[0]}`,
-      is_holiday: formData.get("is_holiday"),
+      is_holiday: !!formData.get("is_holiday"),
     })
     .select()
     .single();
+
+  console.log(data);
 
   return {
     data,

@@ -1,10 +1,8 @@
 import {
   Form,
-  useActionData,
   useFetcher,
   useMatches,
   useOutletContext,
-  useTransition,
 } from "@remix-run/react";
 import { format, formatDistance } from "date-fns";
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +29,7 @@ export default function ActionDialog({
 }) {
   const matches = useMatches();
   const fetcher = useFetcher();
-  const actionData = useActionData();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const context: {
     actions: {
@@ -41,10 +39,10 @@ export default function ActionDialog({
   } = useOutletContext();
 
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const campaigns: CampaignModel[] = matches[1].data.campaigns;
   const tags: CampaignModel[] = matches[1].data.tags;
   const status: CampaignModel[] = matches[1].data.status;
   const persons: PersonModel[] = matches[1].data.persons;
+  const campaigns: CampaignModel[] = matches[2].data.campaigns;
 
   const creator: PersonModel = action ? action.creator : matches[1].data.person;
   const account: AccountModel = action
@@ -66,34 +64,34 @@ export default function ActionDialog({
   );
   const [isDirty, setDirty] = useState(false);
 
-  const campaignItems = selectedAccount
-    ? campaigns
-        .filter((campaign) => campaign.account === selectedAccount)
-        .map((campaign) => ({
-          title: campaign.name,
-          value: campaign.id,
-        }))
-    : undefined;
-
-  const transition = useTransition();
+  const campaignItems =
+    selectedAccount && campaigns
+      ? campaigns
+          .filter((campaign) => campaign.account === selectedAccount)
+          .map((campaign) => ({
+            title: campaign.name,
+            value: campaign.id,
+          }))
+      : [];
 
   const isAdding =
-    transition.state === "submitting" &&
-    transition.submission.formData.get("action") === "create-action";
+    fetcher.state === "submitting" &&
+    fetcher.submission.formData.get("action") === "create-action";
 
   const isUpdating =
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "update-action";
-  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (!isAdding) {
-      formRef.current?.reset();
-      if (actionData && !actionData.error) {
-        context.actions.setOpenDialogAction(false);
-      }
+    if (
+      !isAdding &&
+      fetcher.state === "idle" &&
+      fetcher.data &&
+      !fetcher.data.error
+    ) {
+      context.actions.setOpenDialogAction(false);
     }
-  }, [isAdding, context, actionData]);
+  }, [isAdding, context, fetcher]);
 
   useEffect(() => {
     function getDirty() {
@@ -156,21 +154,13 @@ export default function ActionDialog({
         )}
       </div>
 
-      {actionData && actionData.error ? (
+      {fetcher.data && fetcher.data.error ? (
         <Exclamation type="error" icon>
-          {actionData.error.message}
+          {fetcher.data.error.message}
         </Exclamation>
       ) : null}
 
-      <Form
-        method="post"
-        ref={formRef}
-        onSubmit={() => {
-          if (!action && context) {
-            context.actions?.setOpenDialogAction(false);
-          }
-        }}
-      >
+      <fetcher.Form method="post" ref={formRef} action="/handle-action">
         <input
           type="hidden"
           name="action"
@@ -200,7 +190,7 @@ export default function ActionDialog({
           title="Campanha"
           items={campaignItems}
           placeholder={
-            campaignItems && selectedAccount
+            selectedAccount
               ? campaignItems?.length > 0
                 ? "Selecione uma campanha"
                 : "Nenhum campanha para esse cliente"
@@ -268,7 +258,7 @@ export default function ActionDialog({
             {action ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
-      </Form>
+      </fetcher.Form>
     </>
   );
 }

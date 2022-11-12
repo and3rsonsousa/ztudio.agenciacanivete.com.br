@@ -46,6 +46,7 @@ export default function Day({
             id,
           },
           {
+            action: "/handle-action",
             method: "post",
           }
         );

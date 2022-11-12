@@ -83,7 +83,7 @@ export default function Components() {
             title="Text"
             onChange={(string) => console.log(string)}
           />
-          <DatepickerField title="Data" />
+          <DatepickerField name="" title="Data" />
         </div>
       </div>
       <div className="py-8 text-center text-xs font-bold tracking-widest ">

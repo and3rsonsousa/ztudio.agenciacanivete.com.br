@@ -1,9 +1,8 @@
 import {
-  Form,
   useActionData,
+  useFetcher,
   useMatches,
   useOutletContext,
-  useTransition,
 } from "@remix-run/react";
 import { add } from "date-fns";
 import { useEffect, useRef } from "react";
@@ -22,8 +21,8 @@ export default function CampaignDialog({
   date: Date;
   campaign?: CampaignModel;
 }) {
-  const actionData = useActionData();
-  const transition = useTransition();
+  const fetcher = useFetcher();
+
   const matches = useMatches();
   const accounts: AccountModel[] = matches[1].data.accounts;
   const creator: PersonModel = matches[1].data.person;
@@ -42,22 +41,24 @@ export default function CampaignDialog({
     };
   } = useOutletContext();
   const isAdding =
-    transition.state === "submitting" &&
-    transition.submission.formData.get("action") === "create-celebration";
+    fetcher.state === "submitting" &&
+    fetcher.submission.formData.get("action") === "create-celebration";
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (!isAdding) {
-      formRef.current?.reset();
-      if (actionData && !actionData.error) {
-        context.campaigns?.setOpenDialogCampaign(false);
-      }
+    if (
+      !isAdding &&
+      fetcher.state === "idle" &&
+      fetcher.data &&
+      !fetcher.data.error
+    ) {
+      context.campaigns?.setOpenDialogCampaign(false);
     }
-  }, [isAdding, actionData, context]);
+  }, [isAdding, context, fetcher]);
 
   return (
     <>
-      <div>
+      <div className="mb-4">
         <h4 className="m-0 dark:text-gray-200">
           {campaign ? `Editar Campanha` : `Nova Campanha`}
         </h4>
@@ -67,13 +68,13 @@ export default function CampaignDialog({
           </div>
         ) : null}
       </div>
-      {actionData && actionData.error ? (
+      {fetcher.data && fetcher.data.error ? (
         <Exclamation type="error" icon>
-          {actionData.error.message}
+          {fetcher.data.error.message}
         </Exclamation>
       ) : null}
 
-      <Form method="post" ref={formRef}>
+      <fetcher.Form method="post" ref={formRef} action="/handle-action">
         <input type="hidden" name="action" value="create-campaign" />
 
         {campaign ? (
@@ -145,7 +146,7 @@ export default function CampaignDialog({
             Adicionar
           </Button>
         </div>
-      </Form>
+      </fetcher.Form>
     </>
   );
 }

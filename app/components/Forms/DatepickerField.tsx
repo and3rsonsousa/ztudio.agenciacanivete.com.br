@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import { ptBR } from "date-fns/esm/locale";
 import { useState } from "react";
+import InputField from "./InputField";
 
 export default function DatepickerField({
   title,
@@ -30,17 +31,17 @@ export default function DatepickerField({
   full?: boolean;
 }) {
   let today = startOfToday();
+  const _date = date ?? new Date();
 
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyy"));
   let firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  let [selectedDay, setSelectedDay] = useState(new Date(_date));
 
   let newDays = eachDayOfInterval({
     start: startOfWeek(startOfMonth(firstDayOfCurrentMonth)),
     end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
   });
 
-  const _date = date ?? new Date();
-  let [selectedDay, setSelectedDay] = useState(new Date(_date));
   const formatValue = (date: Date) =>
     format(
       date,
@@ -55,23 +56,25 @@ export default function DatepickerField({
         locale: ptBR,
       }
     );
-
   let [Value, setValue] = useState(formatValue(selectedDay));
 
   return (
     <label className="field ">
       <div className="field-label">{title}</div>
+      <input
+        type="hidden"
+        name={name}
+        value={format(selectedDay, "y-MM-dd'T'HH:mm:ss")}
+      />
       <Popover.Root>
         <Popover.Trigger asChild>
-          <input
-            name={name}
-            className="field-input overflow-hidden text-ellipsis whitespace-nowrap first-letter:capitalize"
-            value={Value}
-          />
+          <button className="field-input overflow-hidden text-ellipsis whitespace-nowrap first-letter:capitalize">
+            {Value}
+          </button>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content className="dropdown-content text-xx p-4 text-center font-light antialiased outline-none">
-            <div className="flex justify-between">
+          <Popover.Content className="dropdown-content text-xx p-4 text-center font-light antialiased outline-none dark:text-gray-200">
+            <div className="flex justify-between ">
               <button
                 onClick={() =>
                   setCurrentMonth(
@@ -104,7 +107,7 @@ export default function DatepickerField({
               {["D", "S", "T", "Q", "Q", "S", "S"].map((day, index) => (
                 <div
                   key={index}
-                  className="p-1 font-semibold text-gray-700 antialiased"
+                  className="p-1 font-semibold text-gray-700 antialiased "
                 >
                   {day}
                 </div>
@@ -112,7 +115,7 @@ export default function DatepickerField({
               {newDays.map((day, i) => (
                 <div
                   role="button"
-                  className={`p-1 ${
+                  className={`p-1  ${
                     format(day, "dd/MM/y") === format(selectedDay, "dd/MM/y")
                       ? " rounded-full bg-brand font-semibold text-white "
                       : isToday(day)
@@ -120,7 +123,7 @@ export default function DatepickerField({
                       : ""
                   }${
                     !isSameMonth(day, firstDayOfCurrentMonth)
-                      ? " text-gray-400"
+                      ? " text-gray-400 dark:text-gray-500"
                       : ""
                   }`}
                   key={i}
@@ -133,6 +136,16 @@ export default function DatepickerField({
                 </div>
               ))}
             </div>
+            {/* <div>
+              <input
+                type="text"
+                className="appearance-none bg-transparent text-center  text-sm focus:outline-none"
+                pattern="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
+                required
+                value={format(selectedDay, "HH:mm:ss")}
+                
+              />
+            </div> */}
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>

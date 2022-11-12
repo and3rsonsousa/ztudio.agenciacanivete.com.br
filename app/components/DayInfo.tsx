@@ -12,7 +12,7 @@ import { fade, scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
 import { ActionMedium } from "./Actions";
 import ActionDialog from "./Dialogs/ActionDialog";
-import AddCelebrationDialog from "./Dialogs/CelebrationDialog";
+import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import Celebration from "./Celebrations";
 import Exclamation from "./Exclamation";
@@ -101,7 +101,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                     className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
-                    <AddCelebrationDialog date={new Date()} />
+                    <CelebrationDialog date={new Date()} />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>

@@ -21,9 +21,6 @@ export default function Index() {
           .
         </p>
         <div className="mt-16 space-x-2">
-          {/* <Link to={`/login?signup`} className="button button-link">
-            Criar Conta
-          </Link> */}
           <Link
             to={`/dashboard
           `}
