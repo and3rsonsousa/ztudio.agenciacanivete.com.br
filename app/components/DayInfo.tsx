@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useOutletContext } from "@remix-run/react";
-import { format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import { fade, scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
@@ -42,7 +41,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             {/* Header */}
             <div className="flex items-center justify-between">
               <h5 className="text-xs">
-                {format(day.date, "d 'de' MMMM 'de' y")}
+                {day.date.format("D [de] MMMM [de] YYYY")}
               </h5>
               <Button link small>
                 <ChevronRightIcon />
@@ -101,7 +100,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                     className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
-                    <CelebrationDialog date={new Date()} />
+                    <CelebrationDialog date={day.date} />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>
@@ -132,7 +131,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                     className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
                     {...scaleUp()}
                   >
-                    <CampaignDialog date={new Date()} />
+                    <CampaignDialog date={day.date} />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>

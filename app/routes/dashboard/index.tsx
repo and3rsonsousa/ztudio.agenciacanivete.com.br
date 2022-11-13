@@ -5,6 +5,8 @@ import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
+  let period = new URL(request.url).searchParams.get("period");
+
   const {
     data: {
       session: { user },
@@ -14,6 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     getActions({
       request,
       user: user.id,
+      period,
     }),
     getCampaigns({ request, user: user.id }),
   ]);

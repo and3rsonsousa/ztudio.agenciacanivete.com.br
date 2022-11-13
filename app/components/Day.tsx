@@ -1,5 +1,6 @@
-import { useFetcher } from "@remix-run/react";
-import { format, isEqual, isSameMonth, isToday } from "date-fns";
+import { useFetcher, useNavigate } from "@remix-run/react";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
 import Celebration from "./Celebrations";
@@ -8,18 +9,18 @@ export default function Day({
   day,
   selectedDay,
   firstDayOfCurrentMonth,
-  setSelectedDayAndCurrentMonth,
+  setSelectedDay,
 }: {
   day: DayModel;
-  selectedDay: Date;
-  firstDayOfCurrentMonth: any;
-  setSelectedDayAndCurrentMonth: (date: Date) => void;
+  selectedDay: string;
+  firstDayOfCurrentMonth: Dayjs;
+  setSelectedDay: (date: string) => void;
 }) {
   const fetcher = useFetcher();
 
   return (
     <div
-      data-date={format(day.date, "y-MM-dd'T'hh:mm:ss")}
+      data-date={day.date.format("YYYY-MM-DD[T]HH:mm:ss")}
       onDragOver={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -39,10 +40,9 @@ export default function Day({
         fetcher.submit(
           {
             action: "update-date",
-            date: `${format(new Date(dropDate), "y-MM-dd")}T${format(
-              new Date(draggingDate),
-              "HH:mm:ss"
-            )}`,
+            date: `${dayjs(dropDate).format("YYYY-MM-DD")}T${dayjs(
+              draggingDate
+            ).format("HH:mm:ss")}`,
             id,
           },
           {
@@ -51,17 +51,31 @@ export default function Day({
           }
         );
       }}
-      className={`calendar-day${isToday(day.date) ? " is-today" : ""}${
-        isSameMonth(day.date, firstDayOfCurrentMonth) ? "" : " not-this-month"
-      }${isEqual(selectedDay, day.date) ? " is-selected" : ""} transition `}
-      date-attr={format(day.date, "y-MM-dd")}
+      className={`calendar-day${
+        day.date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+          ? " is-today"
+          : ""
+      }${
+        day.date.format("MM") === firstDayOfCurrentMonth.format("MM")
+          ? ""
+          : " not-this-month"
+      }${
+        dayjs(selectedDay).format("YYYY-MM-DD") ===
+        day.date.format("YYYY-MM-DD")
+          ? " is-selected"
+          : ""
+      } transition `}
+      date-attr={day.date.format("YYYY-MM-DD")}
     >
       <div className="px-2 lg:px-1">
         <button
           className="day-button appearance-none"
-          onClick={() => setSelectedDayAndCurrentMonth(day.date)}
+          onClick={() => {
+            // navigate(`?period=${day.date.format("YYYY-MM")}`)
+            setSelectedDay(day.date.format("YYYY-MM-DD"));
+          }}
         >
-          {format(day.date, "d")}
+          {day.date.format("D")}
         </button>
       </div>
 

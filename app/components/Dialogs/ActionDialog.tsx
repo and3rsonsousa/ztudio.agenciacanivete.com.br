@@ -4,7 +4,6 @@ import {
   useMatches,
   useOutletContext,
 } from "@remix-run/react";
-import { format, formatDistance } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import type {
   AccountModel,
@@ -17,14 +16,19 @@ import { default as Field, default as InputField } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
 
-import { ptBR } from "date-fns/locale";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import relativeTime from "dayjs/plugin/relativeTime";
 import Exclamation from "../Exclamation";
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
 
 export default function ActionDialog({
   date,
   action,
 }: {
-  date?: Date;
+  date?: Dayjs;
   action?: ActionModelFull;
 }) {
   const matches = useMatches();
@@ -141,14 +145,12 @@ export default function ActionDialog({
               ) : null}
             </div>
             <div>
-              {format(new Date(action.created_at), "y-MM-dd HH:mm:ss") ===
-              format(new Date(action.updated_at), "y-MM-dd HH:mm:ss")
-                ? "Criado há "
-                : "Atualizado há "}
+              {dayjs(action.created_at).format("YYYY-MM-dd HH:mm:ss") ===
+              dayjs(action.updated_at).format("YYYY-MM-dd HH:mm:ss")
+                ? "Criado "
+                : "Atualizado "}
 
-              {formatDistance(new Date(), new Date(action.updated_at), {
-                locale: ptBR,
-              })}
+              {dayjs(action.updated_at).fromNow()}
             </div>
           </div>
         )}
@@ -232,10 +234,19 @@ export default function ActionDialog({
             name="date"
             title="Data"
             type="datetime-local"
-            value={format(
-              action ? new Date(action.date) : date ?? new Date(),
-              "y-MM-dd 11:12"
-            )}
+            value={
+              action
+                ? action.date
+                : date
+                ? date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+                  ? parseInt(dayjs().format("HH")) >= 11
+                    ? dayjs()
+                        .add(dayjs().hour() + 1, "hour")
+                        .format("YYYY-MM-DD[T]HH:mm:ss")
+                    : date.format("YYYY-MM-DD[T11:12:00]")
+                  : date.format("YYYY-MM-DD[T11:12:00]")
+                : undefined
+            }
           />
 
           <SelectField

@@ -1,5 +1,5 @@
 import { useFetcher, useMatches, useOutletContext } from "@remix-run/react";
-import { add } from "date-fns";
+import type { Dayjs } from "dayjs";
 import { useEffect, useRef } from "react";
 import type { AccountModel, CampaignModel, PersonModel } from "~/lib/models";
 import Exclamation from "../Exclamation";
@@ -13,7 +13,7 @@ export default function CampaignDialog({
   date,
   campaign,
 }: {
-  date: Date;
+  date: Dayjs;
   campaign?: CampaignModel;
 }) {
   const fetcher = useFetcher();
@@ -102,15 +102,15 @@ export default function CampaignDialog({
           <DatepickerField
             name="date_start"
             title="Começa em"
-            date={campaign ? new Date(campaign.date_start) : date ?? new Date()}
+            date={campaign ? parseISO(campaign.date_start) : date ?? parseISO()}
           />
           <DatepickerField
             name="date_end"
             title="Termina em"
             date={
               campaign
-                ? new Date(campaign.date_end)
-                : add(date ?? new Date(), { days: 7 })
+                ? parseISO(campaign.date_end)
+                : add(date ?? parseISO(), { days: 7 })
             }
           />
 
@@ -119,7 +119,7 @@ export default function CampaignDialog({
             title="Começa em"
             type="datetime-local"
             value={format(
-              campaign ? new Date(campaign.date_start) : date ?? new Date(),
+              campaign ? parseISO(campaign.date_start) : date ?? parseISO(),
               "y-MM-dd 00:00"
             )}
           />
@@ -129,8 +129,8 @@ export default function CampaignDialog({
             type="datetime-local"
             value={format(
               campaign
-                ? new Date(campaign.date_end)
-                : add(date, { days: 7 }) ?? new Date(),
+                ? parseISO(campaign.date_end)
+                : add(date, { days: 7 }) ?? parseISO(),
               "y-MM-dd 23:59"
             )}
           /> */}

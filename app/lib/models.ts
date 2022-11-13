@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 export type PersonModel = {
   id: string;
   name: string;
@@ -69,7 +70,7 @@ export type ItemModel = {
 };
 
 export type DayModel = {
-  date: Date;
+  date: Dayjs;
   actions: ActionModel[];
   celebrations: CelebrationModel[];
 };

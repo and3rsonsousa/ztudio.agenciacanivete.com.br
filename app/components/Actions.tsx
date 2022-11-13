@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/20/solid";
 
 import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
-import { format } from "date-fns";
 import * as ContextMenu from "@radix-ui/react-context-menu";
 
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
@@ -83,10 +82,10 @@ export const Action = ({ action }: { action: ActionModel }) => {
             </div>
           </div>
           <div className="text-xx hidden font-medium opacity-75 2xl:block">
-            {format(new Date(action.date), "H'h'")}
-            {format(new Date(action.date), "mm") !== "00"
-              ? format(new Date(action.date), "mm")
-              : ""}
+            {/* {format(parseISO(action.date), "H'h'")}
+            {format(parseISO(action.date), "mm") !== "00"
+              ? format(parseISO(action.date), "mm")
+              : ""} */}
           </div>
         </div>
       </ContextMenu.Trigger>
@@ -246,7 +245,7 @@ export const ActionMedium = ({
   const tag = tags.filter((tag) => tag.id === action.tag)[0];
   const stat = status.filter((stat) => stat.id === action.status)[0];
   const navigate = useNavigate();
-  const date = new Date(action.date);
+  // const date = parseISO(action.date);
 
   return (
     <div
@@ -259,7 +258,7 @@ export const ActionMedium = ({
         ) : null}
         <div className="text-xx flex gap-4 overflow-hidden text-gray-500">
           <div className="whitespace-nowrap">
-            {fullDate
+            {/* {fullDate
               ? format(
                   date,
                   "d/M/yy 'às' H'h'".concat(
@@ -269,7 +268,7 @@ export const ActionMedium = ({
               : format(
                   date,
                   "H'h'".concat(format(date, "mm") !== "00" ? "mm" : "")
-                )}
+                )} */}
           </div>
           <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
             {account.name}

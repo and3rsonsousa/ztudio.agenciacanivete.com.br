@@ -1,21 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import * as Popover from "@radix-ui/react-popover";
-import {
-  add,
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  format,
-  isSameMonth,
-  isToday,
-  parse,
-  startOfMonth,
-  startOfToday,
-  startOfWeek,
-} from "date-fns";
-import { ptBR } from "date-fns/esm/locale";
+import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
+import "dayjs/locale/pt-br";
+
 import { useState } from "react";
-import InputField from "./InputField";
+import { getPeriod } from "~/lib/functions";
+
+dayjs.locale("pt-br");
 
 export default function DatepickerField({
   title,
@@ -26,35 +18,23 @@ export default function DatepickerField({
 }: {
   title: string;
   name: string;
-  date?: Date;
+  date?: Dayjs;
   pattern?: string;
   full?: boolean;
 }) {
-  let today = startOfToday();
-  const _date = date ?? new Date();
+  const _date = date ?? dayjs();
 
-  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyy"));
-  let firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  let [selectedDay, setSelectedDay] = useState(new Date(_date));
+  let [selectedDay, setSelectedDay] = useState(_date);
+  let [currentMonth, setCurrentMonth] = useState(_date.format("YYYY-MM"));
+  const { firstDayOfCurrentMonth, days } = getPeriod({ period: currentMonth });
 
-  let newDays = eachDayOfInterval({
-    start: startOfWeek(startOfMonth(firstDayOfCurrentMonth)),
-    end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
-  });
-
-  const formatValue = (date: Date) =>
-    format(
-      date,
+  const formatValue = (date: Dayjs) =>
+    date.format(
       pattern ?? full
-        ? "iiii, d 'de' MMMM 'de' y 'às' H'h'".concat(
-            format(date, "mm") === "00" ? "" : "mm"
+        ? "dddd, D [de] MMMM [de] YYYY [às] H[h]".concat(
+            date.format("mm") === "00" ? "" : "mm"
           )
-        : "EEEEEE, d/M/yy 'às' H'h'".concat(
-            format(date, "mm") === "00" ? "" : "mm"
-          ),
-      {
-        locale: ptBR,
-      }
+        : "ddd, D/M/YY [às] H[h]".concat(date.format("mm") === "00" ? "" : "mm")
     );
   let [Value, setValue] = useState(formatValue(selectedDay));
 
@@ -64,7 +44,7 @@ export default function DatepickerField({
       <input
         type="hidden"
         name={name}
-        value={format(selectedDay, "y-MM-dd'T'HH:mm:ss")}
+        value={selectedDay.format("YYYY-MM-DD[T]HH:mm:ss")}
       />
       <Popover.Root>
         <Popover.Trigger asChild>
@@ -78,25 +58,21 @@ export default function DatepickerField({
               <button
                 onClick={() =>
                   setCurrentMonth(
-                    format(
-                      add(firstDayOfCurrentMonth, { months: -1 }),
-                      "MMM-yyyy"
-                    )
+                    firstDayOfCurrentMonth
+                      .subtract(1, "month")
+                      .format("YYYY-MM")
                   )
                 }
               >
                 <ChevronLeftIcon className="w-4" />
               </button>
               <div className="uppercase tracking-wide">
-                {format(firstDayOfCurrentMonth, "MMMM")}
+                {firstDayOfCurrentMonth.format("MMMM")}
               </div>
               <button
                 onClick={() =>
                   setCurrentMonth(
-                    format(
-                      add(firstDayOfCurrentMonth, { months: 1 }),
-                      "MMM-yyyy"
-                    )
+                    firstDayOfCurrentMonth.add(1, "month").format("YYYY-MM")
                   )
                 }
               >
@@ -112,17 +88,20 @@ export default function DatepickerField({
                   {day}
                 </div>
               ))}
-              {newDays.map((day, i) => (
+              {days.map((day, i) => (
                 <div
                   role="button"
                   className={`p-1  ${
-                    format(day, "dd/MM/y") === format(selectedDay, "dd/MM/y")
+                    day.format("YYYY-MM-DD") ===
+                    selectedDay.format("YYYY-MM-DD")
                       ? " rounded-full bg-brand font-semibold text-white "
-                      : isToday(day)
+                      : day.format("YYYY-MM-DD") ===
+                        dayjs().format("YYYY-MM-DD")
                       ? "font-semibold text-brand"
                       : ""
                   }${
-                    !isSameMonth(day, firstDayOfCurrentMonth)
+                    day.format("YYYY-MM-DD") !==
+                    firstDayOfCurrentMonth.format("YYYY-MM-DD")
                       ? " text-gray-400 dark:text-gray-500"
                       : ""
                   }`}
@@ -132,7 +111,7 @@ export default function DatepickerField({
                     setSelectedDay(day);
                   }}
                 >
-                  {format(day, "d")}
+                  {day.format("d")}
                 </div>
               ))}
             </div>
@@ -143,7 +122,7 @@ export default function DatepickerField({
                 pattern="[0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
                 required
                 value={format(selectedDay, "HH:mm:ss")}
-                
+
               />
             </div> */}
           </Popover.Content>

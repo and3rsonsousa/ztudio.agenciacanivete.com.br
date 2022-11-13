@@ -1,12 +1,12 @@
 import { useFetcher, useOutletContext } from "@remix-run/react";
-import { format } from "date-fns";
+import type { Dayjs } from "dayjs";
 import { useEffect, useRef } from "react";
 import Exclamation from "../Exclamation";
 import Button from "../Forms/Button";
 import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
 
-export default function CelebrationDialog({ date }: { date: Date }) {
+export default function CelebrationDialog({ date }: { date: Dayjs }) {
   const context: {
     celebrations: {
       setOpenDialogCelebration: any;
@@ -45,7 +45,7 @@ export default function CelebrationDialog({ date }: { date: Date }) {
           name="date"
           title="Data"
           pattern="[0-9]{2}/[0-9]{2}"
-          value={format(date, "dd/MM")}
+          value={date.format("DD/MM")}
           placeholder="dd/mm"
         />
         <Checkbox title="Feriado" name="is_holiday" />

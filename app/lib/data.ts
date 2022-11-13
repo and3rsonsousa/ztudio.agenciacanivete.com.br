@@ -1,13 +1,4 @@
-import {
-  add,
-  endOfMonth,
-  endOfWeek,
-  format,
-  parse,
-  startOfMonth,
-  startOfToday,
-  startOfWeek,
-} from "date-fns";
+import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
 export const getPerson = (id: string, request: Request) => {
@@ -129,57 +120,49 @@ export const getActions = async (
     request?: Request;
     user?: string;
     account?: string;
-    period?: Date;
+    period?: string | null;
   } = {}
 ) => {
   let { user, account, period, request } = args;
 
   if (!request) {
-    throw new Error("Request is undefined");
+    return { error: { message: "Request is undefined" } };
   }
 
-  let _period = period ?? startOfToday();
-  let firstDayOfCurrentMonth = parse(
-    format(_period, "MMM-yyy"),
-    "MMM-yyyy",
-    new Date()
-  );
+  const { firstDayOfPeriod, lastDayOfPeriod } = getPeriod({ period });
 
-  let firstDay = add(startOfWeek(startOfMonth(firstDayOfCurrentMonth)), {
-    days: -1,
-  });
-  let lastDay = add(endOfWeek(endOfMonth(firstDayOfCurrentMonth)), {
-    hours: 1,
-  });
   const { supabase } = getSupabase(request);
 
   if (account) {
-    return supabase
+    const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*)")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .eq("Account.slug", account)
-      .gte("date", format(firstDay, "y/M/d"))
-      .lte("date", format(lastDay, "y/M/d"))
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD"))
       .order("date", {
         ascending: true,
       })
       .order("created_at", { ascending: true });
+
+    return { data, error };
   } else {
     if (!user) {
-      throw new Error("User is undefined");
+      return { error: { message: "User is undefined" } };
     }
 
-    return supabase
+    const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*)")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .contains("Account.users", [user])
-      .gte("date", format(firstDay, "y/M/d"))
-      .lte("date", format(lastDay, "y/M/d"))
-      .filter("account", "not.is", null)
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD"))
       .order("date", {
         ascending: true,
       })
       .order("created_at", { ascending: true });
+
+    return { data, error };
   }
 };
 
@@ -378,13 +361,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
       };
       table = "Action";
     } else if (action === "update-date") {
-      values = {
-        date: format(
-          new Date(formData.get("date") as string),
-          "y-MM-dd'T'HH:mm:ss"
-        ),
-        updated_at: "NOW()",
-      };
+      // values = {
+      //   date: format(
+      //     parseISO(formData.get("date") as string),
+      //     "y-MM-dd'T'HH:mm:ss"
+      //   ),
+      //   updated_at: "NOW()",
+      // };
       table = "Action";
     } else if (action === "update-action") {
       values = {
