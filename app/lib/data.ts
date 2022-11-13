@@ -182,26 +182,45 @@ export const getCelebrations = async (
   return supabase.from("Celebration").select("*").order("is_holiday");
 };
 
+export const getCampaign = async (request: Request, id: string) => {
+  const { supabase } = getSupabase(request);
+  const { data, error } = await supabase
+    .from("Campaign")
+    .select("*")
+    .eq("id", id)
+    .single();
+  return { data, error };
+};
 export const getCampaigns = async (
   args: {
     request?: Request;
     user?: string;
+    account?: string;
   } = {}
 ) => {
-  let { request, user } = args;
+  let { request, user, account } = args;
 
   if (!request) {
     throw new Error("Request is undefined");
   }
 
-  if (!user) {
-    throw new Error("User is undefined");
-  }
-
   const { supabase } = getSupabase(request);
+
   // TODO:
   // Filtrar campanhas pelas contas que o usuário tem acesso
-  return supabase.from("Campaign").select("*");
+  if (account) {
+    const { data, error } = await supabase
+      .from("Campaign")
+      .select("*, Account!Campaign_account_fkey!inner(*)")
+      .eq("Account.slug", account);
+    console.log({ data, error, account });
+    return { data, error };
+  } else {
+    if (!user) {
+      throw new Error("User is undefined");
+    }
+    return supabase.from("Campaign").select("*");
+  }
 };
 
 export const getAction = (request: Request, id: string) => {

@@ -26,7 +26,7 @@ export type CampaignModel = {
   account: string;
   date_start: string;
   date_end: string;
-  actions: string[] | ActionModel[];
+  actions: ActionModel[];
   created_at?: string;
   updated_at?: string;
 };

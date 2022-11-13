@@ -14,7 +14,7 @@ export default function CampaignDialog({
   date,
   campaign,
 }: {
-  date: Dayjs;
+  date?: Dayjs;
   campaign?: CampaignModel;
 }) {
   const fetcher = useFetcher();
@@ -108,7 +108,11 @@ export default function CampaignDialog({
           <DatepickerField
             name="date_end"
             title="Termina em"
-            date={campaign ? dayjs(campaign.date_end) : date.add(7, "days")}
+            date={
+              campaign
+                ? dayjs(campaign.date_end)
+                : (date as Dayjs).add(7, "days")
+            }
           />
         </div>
 
