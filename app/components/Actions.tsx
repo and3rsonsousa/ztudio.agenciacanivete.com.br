@@ -21,6 +21,8 @@ import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
+  const fetcher = useFetcher();
+  const url = matches[1].data.url;
   const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: ItemModel[] = matches[1].data.tags;
   const account = accounts.filter(
@@ -30,8 +32,6 @@ export const Action = ({ action }: { action: ActionModel }) => {
 
   const status: ItemModel[] = matches[1].data.status;
   const navigate = useNavigate();
-
-  const fetcher = useFetcher();
 
   return (
     <ContextMenu.Root>
@@ -71,7 +71,9 @@ export const Action = ({ action }: { action: ActionModel }) => {
           }-hover flex cursor-pointer items-center justify-between gap-2`}
           title={action.name}
           onClick={() => {
-            navigate(`/dashboard/${account.slug}/action/${action.id}`);
+            navigate(
+              `/dashboard/${account.slug}/action/${action.id}?redirectTo=${url}`
+            );
           }}
         >
           <div className="flex items-center gap-1 overflow-hidden">

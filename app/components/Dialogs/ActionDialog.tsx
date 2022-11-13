@@ -3,6 +3,7 @@ import {
   useFetcher,
   useMatches,
   useOutletContext,
+  useSearchParams,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import type {
@@ -34,6 +35,7 @@ export default function ActionDialog({
   const matches = useMatches();
   const fetcher = useFetcher();
   const formRef = useRef<HTMLFormElement>(null);
+  const [searchParams] = useSearchParams();
 
   const context: {
     actions: {
@@ -162,7 +164,22 @@ export default function ActionDialog({
         </Exclamation>
       ) : null}
 
-      <fetcher.Form method="post" ref={formRef} action="/handle-action">
+      <fetcher.Form
+        method="post"
+        ref={formRef}
+        action={
+          action
+            ? `./${
+                searchParams.get("redirectTo") !== null
+                  ? "?redirectTo=".concat(
+                      searchParams.get("redirectTo") as string
+                    )
+                  : ""
+              }`
+            : "/handle-action"
+        }
+      >
+        <input type="hidden" name="redirectTo" />
         <input
           type="hidden"
           name="action"

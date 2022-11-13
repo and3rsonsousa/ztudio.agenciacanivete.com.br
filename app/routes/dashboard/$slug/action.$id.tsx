@@ -10,9 +10,10 @@ import type { ActionModel, ActionModelFull } from "~/lib/models";
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
   const { error } = await handleAction(formData, request);
+  const redirectTo = new URL(request.url).searchParams.get("redirectTo");
 
   if (!error) {
-    return redirect(`/dashboard/${params.slug}`);
+    return redirect(redirectTo ?? `/dashboard/${params.slug}`);
   }
 };
 

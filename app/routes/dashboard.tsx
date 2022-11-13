@@ -30,7 +30,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     getCelebrations({ request }),
   ]);
 
-  return { person, persons, accounts, tags, status, celebrations };
+  const url = request.url;
+
+  return { person, persons, accounts, tags, status, celebrations, url };
 };
 
 export default function Dashboard() {
