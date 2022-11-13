@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 export type PersonModel = {
   id: string;
   name: string;
@@ -27,6 +27,8 @@ export type CampaignModel = {
   date_start: string;
   date_end: string;
   actions: string[] | ActionModel[];
+  created_at?: string;
+  updated_at?: string;
 };
 
 export type ActionModel = {
@@ -39,7 +41,6 @@ export type ActionModel = {
   description?: string;
   created_at?: string;
   updated_at?: string;
-  position?: 1 | 2 | 3;
 };
 export type CelebrationModel = {
   id: string;

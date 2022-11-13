@@ -3,12 +3,12 @@ import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getActions, handleAction } from "~/lib/data";
 export const loader: LoaderFunction = async ({ request, params }) => {
-  let searchParams = new URL(request.url).searchParams;
-  console.log({ period: searchParams.get("period") });
+  let period = new URL(request.url).searchParams.get("period");
 
   const { data: actions } = await getActions({
     request,
     account: params.slug,
+    period,
   });
   return { actions };
 };

@@ -1,15 +1,14 @@
 import {
+  CheckCircleIcon,
   ChevronRightIcon,
+  DocumentDuplicateIcon as Duplicate,
   PencilIcon,
   TrashIcon,
-  DocumentDuplicateIcon as Duplicate,
-  CheckCircleIcon,
 } from "@heroicons/react/20/solid";
 
-import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import * as ContextMenu from "@radix-ui/react-context-menu";
+import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
 
-import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import {
   DocumentCheckIcon,
   DocumentDuplicateIcon,
@@ -17,6 +16,8 @@ import {
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
+import dayjs from "dayjs";
+import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -82,10 +83,11 @@ export const Action = ({ action }: { action: ActionModel }) => {
             </div>
           </div>
           <div className="text-xx hidden font-medium opacity-75 2xl:block">
-            {/* {format(parseISO(action.date), "H'h'")}
-            {format(parseISO(action.date), "mm") !== "00"
-              ? format(parseISO(action.date), "mm")
-              : ""} */}
+            {dayjs(action.date).format(
+              "H[h]".concat(
+                dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+              )
+            )}
           </div>
         </div>
       </ContextMenu.Trigger>
@@ -229,10 +231,12 @@ export const Action = ({ action }: { action: ActionModel }) => {
 
 export const ActionMedium = ({
   action,
-  fullDate,
+  showDateAndTime,
+  hideAccount,
 }: {
   action: ActionModel;
-  fullDate?: boolean;
+  showDateAndTime?: boolean;
+  hideAccount?: boolean;
 }) => {
   const matches = useMatches();
   const fetcher = useFetcher();
@@ -245,7 +249,7 @@ export const ActionMedium = ({
   const tag = tags.filter((tag) => tag.id === action.tag)[0];
   const stat = status.filter((stat) => stat.id === action.status)[0];
   const navigate = useNavigate();
-  // const date = parseISO(action.date);
+  const date = dayjs(action.date);
 
   return (
     <div
@@ -258,21 +262,21 @@ export const ActionMedium = ({
         ) : null}
         <div className="text-xx flex gap-4 overflow-hidden text-gray-500">
           <div className="whitespace-nowrap">
-            {/* {fullDate
-              ? format(
-                  date,
-                  "d/M/yy 'às' H'h'".concat(
-                    format(date, "mm") !== "00" ? "mm" : ""
+            {showDateAndTime
+              ? date.format(
+                  "D/M/YY [às] H[h]".concat(
+                    date.format("mm") !== "00" ? "mm" : ""
                   )
                 )
-              : format(
-                  date,
-                  "H'h'".concat(format(date, "mm") !== "00" ? "mm" : "")
-                )} */}
+              : date.format(
+                  "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
+                )}
           </div>
-          <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
-            {account.name}
-          </div>
+          {!hideAccount && (
+            <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+              {account.name}
+            </div>
+          )}
           <div className="flex items-center gap-1">
             <div className={`h-1 w-1 rounded-full bg-${tag.slug}`}></div>
             <div>{tag.name}</div>

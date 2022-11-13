@@ -1,5 +1,4 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";

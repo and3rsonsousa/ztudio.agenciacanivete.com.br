@@ -1,8 +1,5 @@
-import {
-  ActionFunction,
-  LoaderFunction,
-  redirect,
-} from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
+import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { Form } from "@remix-run/react";
 import Button from "~/components/Forms/Button";
 import Field from "~/components/Forms/InputField";

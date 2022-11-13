@@ -5,15 +5,15 @@ import {
   StarIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
-import { useOutletContext } from "@remix-run/react";
+import { useMatches, useOutletContext } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { fade, scaleUp } from "~/lib/animations";
 import type { DayModel } from "~/lib/models";
 import { ActionMedium } from "./Actions";
-import ActionDialog from "./Dialogs/ActionDialog";
-import CelebrationDialog from "./Dialogs/CelebrationDialog";
-import CampaignDialog from "./Dialogs/CampaignDialog";
 import Celebration from "./Celebrations";
+import ActionDialog from "./Dialogs/ActionDialog";
+import CampaignDialog from "./Dialogs/CampaignDialog";
+import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
@@ -32,6 +32,9 @@ const DayInfo = ({ day }: { day: DayModel }) => {
       setOpenDialogCampaign: (b?: boolean) => void;
     };
   } = useOutletContext();
+
+  const matches = useMatches();
+  const account = matches[2].data.account;
 
   return (
     <div className="mt-16 flex flex-shrink-0 flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-80 lg:border-0 lg:pt-0">
@@ -62,7 +65,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           <div className="no-scrollbars flex h-full  flex-col overflow-auto p-4">
             {day.actions.length > 0 ? (
               day.actions.map((action, i) => (
-                <ActionMedium action={action} key={i} />
+                <ActionMedium action={action} key={i} hideAccount={!!account} />
               ))
             ) : (
               <Exclamation icon>Nenhuma ação para esse dia</Exclamation>

@@ -1,4 +1,4 @@
-import { useFetcher, useNavigate } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { DayModel } from "~/lib/models";
