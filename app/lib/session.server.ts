@@ -1,4 +1,4 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
+import { createCookieSessionStorage } from "@remix-run/cloudflare";
 
 const sessionSecret = "5tud10";
 

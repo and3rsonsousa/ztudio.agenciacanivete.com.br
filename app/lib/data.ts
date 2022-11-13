@@ -361,13 +361,10 @@ export const handleAction = async (formData: FormData, request: Request) => {
       };
       table = "Action";
     } else if (action === "update-date") {
-      // values = {
-      //   date: format(
-      //     parseISO(formData.get("date") as string),
-      //     "y-MM-dd'T'HH:mm:ss"
-      //   ),
-      //   updated_at: "NOW()",
-      // };
+      values = {
+        date: formData.get("date") as string,
+        updated_at: "NOW()",
+      };
       table = "Action";
     } else if (action === "update-action") {
       values = {

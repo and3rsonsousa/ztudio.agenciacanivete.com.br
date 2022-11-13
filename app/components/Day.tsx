@@ -20,7 +20,7 @@ export default function Day({
 
   return (
     <div
-      data-date={day.date.format("YYYY-MM-DD[T]HH:mm:ss")}
+      data-date={day.date.format("YYYY-MM-DD[T]HH:mm")}
       onDragOver={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -42,7 +42,7 @@ export default function Day({
             action: "update-date",
             date: `${dayjs(dropDate).format("YYYY-MM-DD")}T${dayjs(
               draggingDate
-            ).format("HH:mm:ss")}`,
+            ).format("HH:mm")}`,
             id,
           },
           {

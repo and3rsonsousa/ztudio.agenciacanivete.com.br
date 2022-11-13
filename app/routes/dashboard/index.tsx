@@ -4,7 +4,7 @@ import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("period");
 
   const {
@@ -15,6 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
       request,
+      account: params.account,
       user: user.id,
       period,
     }),
