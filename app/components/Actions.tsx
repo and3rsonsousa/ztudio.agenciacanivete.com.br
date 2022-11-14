@@ -332,3 +332,29 @@ export const ActionMedium = ({
     </div>
   );
 };
+
+export const ActionGrid = ({
+  action,
+  key,
+}: {
+  action: ActionModel;
+  key: number;
+}) => {
+  return action.name === "support" ? (
+    <div
+      className={`aspect-square border-b border-r bg-gray-100 dark:border-gray-800 dark:bg-gray-900`}
+    ></div>
+  ) : (
+    <div
+      className={`text-xx flex aspect-square flex-col justify-between border-b p-1 text-center leading-tight dark:border-gray-800 ${
+        action.status === "a448e17d-05ba-4ad0-9990-773f9384d15e"
+          ? " text-gray-400 dark:text-gray-500"
+          : ""
+      } ${key + (1 % 3) === 0 ? "" : "border-r"}`}
+    >
+      <div></div>
+      <div>{action.name}</div>
+      <div>{dayjs(action.date).format("DD/MM")}</div>
+    </div>
+  );
+};

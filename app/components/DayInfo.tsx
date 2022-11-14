@@ -1,15 +1,10 @@
-import {
-  CalendarDaysIcon,
-  ChevronRightIcon,
-  PlusIcon,
-  StarIcon,
-} from "@heroicons/react/24/outline";
-import { useMatches, useOutletContext } from "@remix-run/react";
-import type { Dayjs } from "dayjs";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useMatches } from "@remix-run/react";
 import { useState } from "react";
 import type { DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
 import Celebration from "./Celebrations";
+import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
@@ -17,24 +12,6 @@ const DayInfo = ({ day }: { day: DayModel }) => {
   const matches = useMatches();
   const [view, setView] = useState(true);
   const account = matches[2].data.account;
-  const context: {
-    date: {
-      dateOfTheDay: Dayjs;
-      setDateOfTheDay: (b?: Dayjs) => void;
-    };
-    actions: {
-      openDialogAction: boolean;
-      setOpenDialogAction: (b?: boolean) => void;
-    };
-    campaigns: {
-      openDialogCampaign: boolean;
-      setOpenDialogCampaign: (b?: boolean) => void;
-    };
-    celebrations: {
-      openDialogCelebration: boolean;
-      setOpenDialogCelebration: (b?: boolean) => void;
-    };
-  } = useOutletContext();
 
   return (
     <div
@@ -76,50 +53,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </div>
       )}
 
-      {view && (
-        <div className="flex items-center justify-end gap-2 border-t p-4 dark:border-gray-800">
-          {/* Dialog for Celebrations */}
-          <div>
-            <Button
-              link
-              icon
-              onClick={() => {
-                context.date.setDateOfTheDay(day.date);
-                context.celebrations.setOpenDialogCelebration(true);
-              }}
-            >
-              <StarIcon />
-            </Button>
-          </div>
-          <div>
-            <Button
-              link
-              icon
-              onClick={() => {
-                context.date.setDateOfTheDay(day.date);
-                context.campaigns.setOpenDialogCampaign(true);
-              }}
-            >
-              <CalendarDaysIcon />
-            </Button>
-          </div>
-          <div className="ml-4">
-            <Button
-              primary
-              onClick={() => {
-                context.date.setDateOfTheDay(day.date);
-                context.actions.setOpenDialogAction(true);
-              }}
-            >
-              Nova Ação <PlusIcon />
-            </Button>
-          </div>
-
-          {/* Dialog for Campaigns */}
-
-          {/* Dialog for Actions */}
-        </div>
-      )}
+      {view && <CreateButtons date={day.date} action campaign celebration />}
     </div>
   );
 };

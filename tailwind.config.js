@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         gray: {
-          1000: "#0a0f1c",
+          1000: "#0a0c1f",
         },
       },
       fontFamily: {

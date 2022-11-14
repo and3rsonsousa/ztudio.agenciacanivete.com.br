@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useOutletContext } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { DayModel } from "~/lib/models";
@@ -17,6 +17,11 @@ export default function Day({
   setSelectedDay: (date: string) => void;
 }) {
   const fetcher = useFetcher();
+  const context: {
+    date: {
+      setDateOfTheDay: (value: Dayjs) => void;
+    };
+  } = useOutletContext();
 
   return (
     <div
@@ -71,7 +76,7 @@ export default function Day({
         <button
           className="day-button appearance-none"
           onClick={() => {
-            // navigate(`?period=${day.date.format("YYYY-MM")}`)
+            context.date.setDateOfTheDay(day.date);
             setSelectedDay(day.date.format("YYYY-MM-DD"));
           }}
         >

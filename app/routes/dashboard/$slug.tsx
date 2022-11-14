@@ -42,6 +42,12 @@ export default function Slug() {
           >
             Ações
           </Link>
+          <Link
+            className="button button-link"
+            to={`./?instagram${period ? "&period=" + period : ""}`}
+          >
+            Instagram
+          </Link>
           <Link className="button button-link" to={`./campaigns`}>
             Campanhas
           </Link>

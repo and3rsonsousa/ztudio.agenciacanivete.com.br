@@ -12,7 +12,7 @@ export default function ActionList({
   showDateAndTime?: boolean;
 }) {
   return (
-    <div className="no-scrollbars flex h-full  flex-col overflow-auto p-4">
+    <div className="no-scrollbars flex h-full flex-col overflow-auto p-4">
       {actions && actions.length > 0 ? (
         actions.map((action, i) => (
           <ActionMedium action={action} key={i} hideAccount showDateAndTime />

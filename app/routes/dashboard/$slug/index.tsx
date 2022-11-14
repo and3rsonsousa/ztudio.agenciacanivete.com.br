@@ -1,5 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getActions, handleAction } from "~/lib/data";
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -20,6 +20,12 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SlugIndex() {
   const loaderData = useLoaderData();
+  const [searchParams] = useSearchParams();
 
-  return <Calendar actions={loaderData.actions} />;
+  return (
+    <Calendar
+      actions={loaderData.actions}
+      grid={searchParams.get("instagram") !== null}
+    />
+  );
 }

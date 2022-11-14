@@ -8,9 +8,16 @@ import DayInfo from "./DayInfo";
 import Button from "./Forms/Button";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import InstagramGrid from "./InstagramGrid";
 dayjs.locale("pt-br");
 
-export default function Calendar({ actions }: { actions: ActionModel[] }) {
+export default function Calendar({
+  actions,
+  grid,
+}: {
+  actions: ActionModel[];
+  grid?: boolean;
+}) {
   const matches = useMatches();
   const [searchParams] = useSearchParams();
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
@@ -40,7 +47,7 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
   const navigate = useNavigate();
 
   return (
-    <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col">
+    <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
         <div className="flex items-center gap-2">
@@ -105,15 +112,19 @@ export default function Calendar({ actions }: { actions: ActionModel[] }) {
         </div>
         {/* Info */}
 
-        <DayInfo
-          day={
-            days.filter(
-              (day) =>
-                day.date.format("YYYY-MM-DD") ===
-                dayjs(selectedDay).format("YYYY-MM-DD")
-            )[0]
-          }
-        />
+        {grid ? (
+          <InstagramGrid actions={actions} />
+        ) : (
+          <DayInfo
+            day={
+              days.filter(
+                (day) =>
+                  day.date.format("YYYY-MM-DD") ===
+                  dayjs(selectedDay).format("YYYY-MM-DD")
+              )[0]
+            }
+          />
+        )}
       </div>
     </div>
   );
