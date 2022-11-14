@@ -358,7 +358,6 @@ export const ActionGrid = ({
       setOpenDialogAction: (b?: boolean) => void;
     };
   } = useOutletContext();
-  console.log(action.date);
 
   return action.name === "support" ? (
     <div
