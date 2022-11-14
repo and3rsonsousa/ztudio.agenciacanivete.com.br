@@ -53,7 +53,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </div>
       )}
 
-      {view && <CreateButtons date={day.date} action campaign celebration />}
+      {view && <CreateButtons action campaign celebration />}
     </div>
   );
 };

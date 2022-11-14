@@ -4,16 +4,13 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
-import type { Dayjs } from "dayjs";
 import Button from "./Forms/Button";
 
 export default function CreateButtons({
-  date,
   celebration,
   campaign,
   action,
 }: {
-  date: Dayjs;
   celebration?: boolean;
   campaign?: boolean;
   action?: boolean;

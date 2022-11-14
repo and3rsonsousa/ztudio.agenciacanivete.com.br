@@ -23,7 +23,8 @@ import {
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Forms/Button";
 

@@ -87,7 +87,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
             </Exclamation>
           </div>
         ))}
-      {view && <CreateButtons date={dayjs()} action campaign celebration />}
+      {view && <CreateButtons action campaign celebration />}
     </div>
   );
 }
