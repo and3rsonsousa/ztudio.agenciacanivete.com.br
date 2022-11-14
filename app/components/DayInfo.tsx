@@ -29,7 +29,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                   {day.date.format("D [de] MMMM [de] YYYY")}
                 </h5>
               )}
-              <div className={!view ? "-ml-2" : ""}>
+              <div className={`${!view ? "-ml-2" : ""} hidden lg:block`}>
                 <Button link small icon onClick={() => setView(!view)}>
                   <ChevronRightIcon />
                 </Button>
