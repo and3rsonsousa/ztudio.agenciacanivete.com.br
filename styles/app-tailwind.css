@@ -166,8 +166,8 @@ html{
 }
 
 .dropdown-label {
-  @apply text-xx spacing-sm font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500;
-}
+  @apply text-xx spacing-sm font-semibold uppercase antialiased text-gray-700  dark:text-gray-300 ;
+} 
 
 .dropdown-item {
   @apply spacing antialiased focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200  text-gray-700 cursor-pointer;

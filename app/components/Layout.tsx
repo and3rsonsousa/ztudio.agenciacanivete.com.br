@@ -1,6 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import {
   BriefcaseIcon,
+  ChevronRightIcon,
   MoonIcon,
   SunIcon,
   UserIcon,
@@ -153,47 +154,62 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {person.admin && (
                     <>
                       <hr className="dropdown-hr" />
-                      <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
-                        <LockClosedIcon className="w-3" />
-                        <div>clientes</div>
+                      <DropdownMenu.Label className="dropdown-label">
+                        admin
                       </DropdownMenu.Label>
-                      <DropdownMenu.Item asChild>
-                        <Link
-                          to={`/dashboard/admin/accounts`}
-                          className="dropdown-item item-small block"
-                        >
-                          Ver Clientes
-                        </Link>
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item asChild>
-                        <Link
-                          to={`/dashboard/admin/accounts/new`}
-                          className="dropdown-item item-small block"
-                        >
-                          Novo Cliente
-                        </Link>
-                      </DropdownMenu.Item>
-                      <hr className="dropdown-hr" />
-                      <DropdownMenu.Label className="dropdown-label flex items-center gap-1">
-                        <LockClosedIcon className="w-3" />
-                        <div>usuários</div>
-                      </DropdownMenu.Label>
-                      <DropdownMenu.Item asChild>
-                        <Link
-                          to={`/dashboard/admin/users/`}
-                          className="dropdown-item item-small block"
-                        >
-                          Ver Usuários
-                        </Link>
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item asChild>
-                        <Link
-                          to={`/dashboard/admin/users/new`}
-                          className="dropdown-item item-small block"
-                        >
-                          Novo Usuário
-                        </Link>
-                      </DropdownMenu.Item>
+                      <DropdownMenu.Sub>
+                        <DropdownMenu.SubTrigger className="dropdown-item item-small">
+                          <div className="flex items-center justify-between">
+                            <div>Clientes</div>
+                            <ChevronRightIcon className="w-4" />
+                          </div>
+                        </DropdownMenu.SubTrigger>
+                        <DropdownMenu.SubContent className="dropdown-content">
+                          <DropdownMenu.Item asChild>
+                            <Link
+                              to={`/dashboard/admin/accounts`}
+                              className="dropdown-item item-small block"
+                            >
+                              Ver Clientes
+                            </Link>
+                          </DropdownMenu.Item>
+                          <DropdownMenu.Item asChild>
+                            <Link
+                              to={`/dashboard/admin/accounts/new`}
+                              className="dropdown-item item-small block"
+                            >
+                              Novo Cliente
+                            </Link>
+                          </DropdownMenu.Item>
+                        </DropdownMenu.SubContent>
+                      </DropdownMenu.Sub>
+                      <DropdownMenu.Sub>
+                        <DropdownMenu.SubTrigger className="dropdown-item item-small">
+                          <div className="flex items-center justify-between">
+                            <div>Usuários</div>
+                            <ChevronRightIcon className="w-4" />
+                          </div>
+                        </DropdownMenu.SubTrigger>
+                        <DropdownMenu.SubContent className="dropdown-content">
+                          <DropdownMenu.Item asChild>
+                            <Link
+                              to={`/dashboard/admin/users/`}
+                              className="dropdown-item item-small block"
+                            >
+                              Ver Usuários
+                            </Link>
+                          </DropdownMenu.Item>
+                          <DropdownMenu.Item asChild>
+                            <Link
+                              to={`/dashboard/admin/users/new`}
+                              className="dropdown-item item-small block"
+                            >
+                              Novo Usuário
+                            </Link>
+                          </DropdownMenu.Item>
+                        </DropdownMenu.SubContent>
+                      </DropdownMenu.Sub>
+
                       <hr className="dropdown-hr" />
                       <DropdownMenu.Item asChild>
                         <Link
