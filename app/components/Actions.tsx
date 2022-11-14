@@ -7,17 +7,25 @@ import {
 } from "@heroicons/react/20/solid";
 
 import * as ContextMenu from "@radix-ui/react-context-menu";
-import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
+import {
+  Link,
+  useFetcher,
+  useMatches,
+  useNavigate,
+  useOutletContext,
+} from "@remix-run/react";
 
 import {
   DocumentCheckIcon,
   DocumentDuplicateIcon,
+  DocumentPlusIcon,
   PencilSquareIcon,
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
+import Button from "./Forms/Button";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -335,22 +343,48 @@ export const ActionMedium = ({
 
 export const ActionGrid = ({
   action,
-  key,
+  index,
 }: {
   action: ActionModel;
-  key: number;
+  index: number;
 }) => {
+  const context: {
+    date: {
+      setDateOfTheDay: (date: Dayjs) => void;
+    };
+    actions: {
+      openDialogAction: boolean;
+      setOpenDialogAction: (b?: boolean) => void;
+    };
+  } = useOutletContext();
+  console.log(action.date);
+
   return action.name === "support" ? (
     <div
-      className={`aspect-square border-b border-r bg-gray-100 dark:border-gray-800 dark:bg-gray-900`}
-    ></div>
+      className={`grid aspect-square place-items-center border-b border-r bg-gray-100 text-center dark:border-gray-800  dark:bg-gray-900`}
+    >
+      <div>
+        <Button
+          link
+          large
+          icon
+          onClick={() => {
+            context.date.setDateOfTheDay(dayjs(action.date));
+            context.actions.setOpenDialogAction(true);
+          }}
+        >
+          <DocumentPlusIcon />
+        </Button>
+        {/* <div className="text-xx uppercase tracking-wide">NOVA AÇÃO</div> */}
+      </div>
+    </div>
   ) : (
     <div
-      className={`text-xx flex aspect-square flex-col justify-between border-b p-1 text-center leading-tight dark:border-gray-800 ${
+      className={`text-xx flex aspect-square flex-col justify-between border-b p-2 text-center leading-tight dark:border-gray-800 ${
         action.status === "a448e17d-05ba-4ad0-9990-773f9384d15e"
-          ? " text-gray-400 dark:text-gray-500"
+          ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-500"
           : ""
-      } ${key + (1 % 3) === 0 ? "" : "border-r"}`}
+      } ${index + (1 % 3) === 0 ? "" : "border-r"}`}
     >
       <div></div>
       <div>{action.name}</div>

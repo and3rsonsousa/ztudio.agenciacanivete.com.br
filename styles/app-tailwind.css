@@ -102,6 +102,11 @@
     @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent  dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent ;
   }
 
+
+  .button svg {
+    @apply w-4
+  }
+
   .button-icon{
     @apply p-3;
   }
@@ -113,9 +118,14 @@
     @apply p-5
   }
 
-
-  .button svg {
-    @apply w-4
+  .button-icon svg{
+    @apply w-5;
+  }
+  .button-icon.button-small svg{
+      @apply w-4;
+    }
+  .button-icon.button-large svg{
+    @apply w-6;
   }
 
   .field {

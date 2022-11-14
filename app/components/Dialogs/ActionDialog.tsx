@@ -139,7 +139,9 @@ export default function ActionDialog({
       <div className="mb-4 flex justify-between">
         <div>
           <h4 className="m-0 dark:text-gray-200">
-            {action ? `Editar Ação` : `Nova Ação`}
+            {action
+              ? `Editar Ação`
+              : `Nova Ação${account ? " para ".concat(account.name) : ""}`}
           </h4>
           {action ? (
             <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
@@ -203,13 +205,12 @@ export default function ActionDialog({
           title="Nome"
           value={action ? action.name : undefined}
         />
-        {action ? (
+        {action || account ? (
           <input type="hidden" name="account" value={account.id} />
         ) : (
           <SelectField
             name="account"
             title="Cliente"
-            value={account ? account.id : undefined}
             items={accountItems}
             onChange={setSelectedAccount}
           />

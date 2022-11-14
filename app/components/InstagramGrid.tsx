@@ -29,7 +29,9 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
     support.forEach((_, index) => {
       filtered.push({
         id: index.toString(),
-        date: "",
+        date: dayjs(filtered[filtered.length - 1].date)
+          .add(1, "day")
+          .format("YYYY-MM-DD[T]HH:mm:ss"),
         name: "support",
       });
     });
@@ -75,7 +77,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
         (actions ? (
           <div className="no-scrollbars grid h-full grid-cols-3 flex-col content-start overflow-auto">
             {filtered.map((action, i) => (
-              <ActionGrid action={action} key={i} />
+              <ActionGrid action={action} key={i} index={i} />
             ))}
           </div>
         ) : (
