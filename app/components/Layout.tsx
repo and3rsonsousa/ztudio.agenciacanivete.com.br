@@ -12,6 +12,7 @@ import {
   useMatches,
   useNavigate,
   useOutletContext,
+  useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -62,6 +63,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const searchParams =
+    params.get("period") !== null && params.get("instagram") !== null
+      ? `?period=${params.get("period")}&instagram`
+      : params.get("period") !== null
+      ? `?period=${params.get("period")}`
+      : params.get("instagram") !== null
+      ? `?instagram`
+      : "";
 
   return (
     <div className="flex h-screen w-full flex-col  lg:flex-row">
@@ -82,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {accounts.map((account) => (
               <div key={account.id}>
                 <Link
-                  to={`/dashboard/${account.slug}`}
+                  to={`/dashboard/${account.slug}/${searchParams}`}
                   className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
                 >
                   {account.name}
