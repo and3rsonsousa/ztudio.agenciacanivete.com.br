@@ -15,7 +15,12 @@ export default function ActionList({
     <div className="no-scrollbars flex h-full flex-col overflow-auto p-4">
       {actions && actions.length > 0 ? (
         actions.map((action, i) => (
-          <ActionMedium action={action} key={i} hideAccount showDateAndTime />
+          <ActionMedium
+            action={action}
+            key={i}
+            hideAccount={hideAccount}
+            showDateAndTime={showDateAndTime}
+          />
         ))
       ) : (
         <Exclamation icon>Nenhuma ação para exibir.</Exclamation>

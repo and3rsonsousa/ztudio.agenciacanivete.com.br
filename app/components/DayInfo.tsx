@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useMatches } from "@remix-run/react";
+import { useMatches, useParams } from "@remix-run/react";
 import { useState } from "react";
 import type { DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
@@ -9,9 +9,10 @@ import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
-  const matches = useMatches();
+  // const matches = useMatches();
   const [view, setView] = useState(true);
-  const account = matches[2].data.account;
+  // const account = matches[2].data.account;
+  const { slug } = useParams();
 
   return (
     <div
@@ -45,7 +46,13 @@ const DayInfo = ({ day }: { day: DayModel }) => {
               </div>
             ) : null}
           </div>
-          {view && <ActionList actions={day.actions} hideAccount={!!account} />}
+          {view && (
+            <ActionList
+              actions={day.actions}
+              hideAccount={slug !== undefined}
+              showDateAndTime={slug !== undefined}
+            />
+          )}
         </>
       ) : (
         <div className="flex flex-auto p-8">
