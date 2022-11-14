@@ -15,6 +15,7 @@ import DatepickerField from "../Forms/DatepickerField";
 import { default as Field } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
+import Loader from "../Loader";
 
 export default function CampaignDialog({
   campaign,
@@ -63,15 +64,18 @@ export default function CampaignDialog({
 
   return (
     <>
-      <div className="mb-4">
-        <h4 className="m-0 dark:text-gray-200">
-          {campaign ? `Editar Campanha` : `Nova Campanha`}
-        </h4>
-        {campaign ? (
-          <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
-            #{campaign.id}
-          </div>
-        ) : null}
+      <div className="mb-4 flex justify-between">
+        <div>
+          <h4 className="m-0 dark:text-gray-200">
+            {campaign ? `Editar Campanha` : `Nova Campanha`}
+          </h4>
+          {campaign ? (
+            <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
+              #{campaign.id}
+            </div>
+          ) : null}
+        </div>
+        <div>{isAdding && <Loader />}</div>
       </div>
       {fetcher.data && fetcher.data.error ? (
         <Exclamation type="error" icon>

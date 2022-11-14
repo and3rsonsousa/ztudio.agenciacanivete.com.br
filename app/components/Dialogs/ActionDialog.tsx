@@ -24,6 +24,7 @@ import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Loader from "../Loader";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -143,20 +144,21 @@ export default function ActionDialog({
               ? `Editar Ação`
               : `Nova Ação${account ? " para ".concat(account.name) : ""}`}
           </h4>
-          {action ? (
+          {action && (
             <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
               #{action.id}
             </div>
-          ) : null}
+          )}
         </div>
 
         {/* Mostra há quanto tempo foi criado ou atualizado */}
-        {action && (
+        {action ? (
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <div>
               {isUpdating ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-brand-300"></div>
-              ) : null}
+                <Loader size="small" />
+              ) : // <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-brand-300"></div>
+              null}
             </div>
             <div>
               {dayjs(action.created_at).format("YYYY-MM-dd HH:mm:ss") ===
@@ -167,6 +169,8 @@ export default function ActionDialog({
               {dayjs(action.updated_at).fromNow()}
             </div>
           </div>
+        ) : (
+          isAdding && <Loader />
         )}
       </div>
 

@@ -1157,6 +1157,14 @@ h5 {
   height: 1rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
 .w-36 {
   width: 9rem;
 }
@@ -1203,6 +1211,10 @@ h5 {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .max-w-lg {
@@ -1403,6 +1415,14 @@ h5 {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.border-\[3px\] {
+  border-width: 3px;
 }
 
 .border-l-4 {
@@ -2703,6 +2723,11 @@ html{
 .dark .dark\:border-gray-800 {
   --tw-border-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.dark .dark\:border-t-brand-900 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(59 23 130 / var(--tw-border-opacity));
 }
 
 .dark .dark\:bg-gray-800 {

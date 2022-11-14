@@ -5,6 +5,7 @@ import Exclamation from "../Exclamation";
 import Button from "../Forms/Button";
 import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
+import Loader from "../Loader";
 
 export default function CelebrationDialog() {
   const context: {
@@ -35,7 +36,10 @@ export default function CelebrationDialog() {
 
   return (
     <>
-      <h4 className="mb-4">Nova Data Comemorativa</h4>
+      <div className="mb-4 flex justify-between">
+        <h4>Nova Data Comemorativa</h4>
+        <div>{isAdding && <Loader />}</div>
+      </div>
       {fetcher.data && fetcher.data.error ? (
         <Exclamation type="error" icon>
           {fetcher.data.error.message}

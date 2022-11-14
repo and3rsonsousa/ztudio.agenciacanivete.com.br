@@ -69,22 +69,23 @@ export default function Day({
         day.date.format("YYYY-MM-DD")
           ? " is-selected"
           : ""
-      } transition `}
+      } flex flex-col justify-between transition`}
       date-attr={day.date.format("YYYY-MM-DD")}
     >
-      <div className="px-2 lg:px-1">
-        <button
-          className="day-button appearance-none"
-          onClick={() => {
-            context.date.setDateOfTheDay(day.date);
-            setSelectedDay(day.date.format("YYYY-MM-DD"));
-          }}
-        >
-          {day.date.format("D")}
-        </button>
-      </div>
+      <div>
+        <div className="px-2 lg:px-1">
+          <button
+            className="day-button appearance-none"
+            onClick={() => {
+              context.date.setDateOfTheDay(day.date);
+              setSelectedDay(day.date.format("YYYY-MM-DD"));
+            }}
+          >
+            {day.date.format("D")}
+          </button>
+        </div>
 
-      {/* {index >= 11 && index <= 21 ? (
+        {/* {index >= 11 && index <= 21 ? (
                   <div
                     className={`relative mt-2 -mb-1`}
                     style={{ height: 24 + "px" }}
@@ -115,10 +116,11 @@ export default function Day({
                   </div>
                 ) : null} */}
 
-      <div className="mt-2">
-        {day.actions.map((action, index) => (
-          <Action key={action.id} action={action} />
-        ))}
+        <div className="mt-2">
+          {day.actions.map((action, index) => (
+            <Action key={action.id} action={action} />
+          ))}
+        </div>
       </div>
       <div className="p-1">
         {day.celebrations.map((celebration) => (
