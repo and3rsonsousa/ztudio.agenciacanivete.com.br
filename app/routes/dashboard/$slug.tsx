@@ -1,3 +1,9 @@
+import {
+  CalendarDaysIcon,
+  CheckCircleIcon,
+  FolderIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 import {
   Link,
@@ -33,26 +39,32 @@ export default function Slug() {
           to={`/dashboard/${account.slug}`}
           className="focus-block rounded border border-transparent"
         >
-          <h2 className="mb-0 dark:text-gray-200">{account.name}</h2>
+          <h2 className="mb-0 whitespace-nowrap text-xl dark:text-gray-200">
+            {account.name}
+          </h2>
         </Link>
-        <div className="text-sm font-semibold ">
+        <div className="text-sm font-semibold">
           <Link
-            className="button button-link"
+            className="button button-link button-icon"
             to={`./${period ? "?period=" + period : ""}`}
           >
-            Calendário
+            <CalendarDaysIcon />
+            <div className="hidden md:block">Calendário</div>
           </Link>
-          <Link className="button button-link" to={`./actions`}>
-            Ações
+          <Link className="button button-link button-icon" to={`./actions`}>
+            <CheckCircleIcon />
+            <div className="hidden md:block">Ações</div>
           </Link>
           <Link
-            className="button button-link"
+            className="button button-link button-icon"
             to={`./?instagram${period ? "&period=" + period : ""}`}
           >
-            Instagram
+            <HeartIcon />
+            <div className="hidden md:block">Instagram</div>
           </Link>
-          <Link className="button button-link" to={`./campaigns`}>
-            Campanhas
+          <Link className="button button-link button-icon" to={`./campaigns`}>
+            <FolderIcon />
+            <div className="hidden md:block">Campanhas</div>
           </Link>
         </div>
       </div>
