@@ -25,6 +25,7 @@ import SearchBox from "./SearchBox";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
+  const [accountsMenu, settAccountsMenu] = useState(false);
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
   const context: {
@@ -103,9 +104,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="header-menu lg:flex lg:w-full lg:flex-col lg:p-2">
           <div className="lg:hidden">
-            <Link to="#" className="header-menu-link">
+            <button
+              className="header-menu-link"
+              onClick={() => {
+                settAccountsMenu(!accountsMenu);
+              }}
+            >
               <BriefcaseIcon />
-            </Link>
+            </button>
           </div>
 
           <div className="lg:p-2">
@@ -205,6 +211,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
+      {accountsMenu && (
+        <div className="border-b bg-gray-50 p-2 lg:hidden">
+          {accounts.map((account) => (
+            <div key={account.id}>
+              <Link
+                to={`/dashboard/${account.slug}/${searchParams}`}
+                onClick={() => {
+                  settAccountsMenu(false);
+                }}
+                className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent px-2 py-1 text-sm font-normal transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
+              >
+                {account.name}
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Content */}
       <div className="flex-auto">{children}</div>
