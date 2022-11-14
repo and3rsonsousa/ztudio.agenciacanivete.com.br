@@ -13,6 +13,8 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import dayjs from "dayjs";
+import { useState } from "react";
 import styles from "./app.css";
 
 export const meta: MetaFunction = () => ({
@@ -42,6 +44,12 @@ export const loader: LoaderFunction = () => {
 
 export default function App() {
   const { env } = useLoaderData();
+  const [openDialogAction, setOpenDialogAction] = useState(false);
+  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
+  const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
+  const [openDialogSearch, setOpenDialogSearch] = useState(false);
+  const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
+
   return (
     <html lang="pt-br">
       <head>
@@ -50,7 +58,30 @@ export default function App() {
       </head>
       <body>
         <div className="app">
-          <Outlet />
+          <Outlet
+            context={{
+              date: {
+                dateOfTheDay,
+                setDateOfTheDay,
+              },
+              celebrations: {
+                openDialogCelebration,
+                setOpenDialogCelebration,
+              },
+              actions: {
+                openDialogAction,
+                setOpenDialogAction,
+              },
+              campaigns: {
+                openDialogCampaign,
+                setOpenDialogCampaign,
+              },
+              search: {
+                openDialogSearch,
+                setOpenDialogSearch,
+              },
+            }}
+          />
         </div>
         <ScrollRestoration />
         <script

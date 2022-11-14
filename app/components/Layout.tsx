@@ -5,16 +5,46 @@ import {
   SunIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import * as Dialog from "@radix-ui/react-dialog";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { Link, useMatches, useNavigate } from "@remix-run/react";
+import {
+  Link,
+  useMatches,
+  useNavigate,
+  useOutletContext,
+} from "@remix-run/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
+import ActionDialog from "./Dialogs/ActionDialog";
+import CampaignDialog from "./Dialogs/CampaignDialog";
+import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import SearchBox from "./SearchBox";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
+  const context: {
+    search: {
+      openDialogSearch: boolean;
+      setOpenDialogSearch: (b?: boolean) => void;
+    };
+    actions: {
+      openDialogAction: boolean;
+      setOpenDialogAction: (b?: boolean) => void;
+    };
+    campaigns: {
+      openDialogCampaign: boolean;
+      setOpenDialogCampaign: (b?: boolean) => void;
+    };
+    celebrations: {
+      openDialogCelebration: boolean;
+      setOpenDialogCelebration: (b?: boolean) => void;
+    };
+  } = useOutletContext();
+
   // const [searchQuery, setSearchQuery] = useState("");
 
   const useIsomorphicEffect =
@@ -67,6 +97,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <BriefcaseIcon />
             </Link>
           </div>
+
           <div className="lg:p-2">
             <SearchBox />
           </div>
@@ -167,6 +198,81 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Content */}
       <div className="flex-auto">{children}</div>
+
+      {/* Dialog for Celebration */}
+      <Dialog.Root
+        open={context.celebrations.openDialogCelebration}
+        onOpenChange={context.celebrations.setOpenDialogCelebration}
+      >
+        <AnimatePresence>
+          {context.celebrations.openDialogCelebration && (
+            <Dialog.Portal forceMount>
+              <Dialog.Overlay asChild forceMount>
+                <motion.div className="dialog-overlay" {...fade()}></motion.div>
+              </Dialog.Overlay>
+
+              <Dialog.Content forceMount className="dialog">
+                <motion.div
+                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                  {...scaleUp()}
+                >
+                  <CelebrationDialog />
+                </motion.div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          )}
+        </AnimatePresence>
+      </Dialog.Root>
+
+      {/* Dialog for Actions */}
+      <Dialog.Root
+        open={context.actions.openDialogAction}
+        onOpenChange={context.actions.setOpenDialogAction}
+      >
+        <AnimatePresence>
+          {context.actions.openDialogAction && (
+            <Dialog.Portal forceMount>
+              <Dialog.Overlay asChild forceMount>
+                <motion.div className="dialog-overlay" {...fade()}></motion.div>
+              </Dialog.Overlay>
+
+              <Dialog.Content forceMount className="dialog">
+                <motion.div
+                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                  {...scaleUp()}
+                >
+                  <ActionDialog />
+                </motion.div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          )}
+        </AnimatePresence>
+      </Dialog.Root>
+
+      {/* Dialog for Campaign */}
+      <Dialog.Root
+        open={context.campaigns.openDialogCampaign}
+        onOpenChange={context.campaigns.setOpenDialogCampaign}
+      >
+        <AnimatePresence>
+          {context.campaigns.openDialogCampaign && (
+            <Dialog.Portal forceMount>
+              <Dialog.Overlay asChild forceMount>
+                <motion.div className="dialog-overlay" {...fade()}></motion.div>
+              </Dialog.Overlay>
+
+              <Dialog.Content forceMount className="dialog">
+                <motion.div
+                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                  {...scaleUp()}
+                >
+                  <CampaignDialog />
+                </motion.div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          )}
+        </AnimatePresence>
+      </Dialog.Root>
     </div>
   );
 }

@@ -16,17 +16,22 @@ import Button from "../Forms/Button";
 import { default as Field, default as InputField } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
+import Exclamation from "../Exclamation";
 
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Exclamation from "../Exclamation";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
+dayjs.tz.setDefault("America/Fortaleza");
 
 export default function ActionDialog({
-  date,
   action,
 }: {
   date?: Dayjs;
@@ -38,11 +43,16 @@ export default function ActionDialog({
   const [searchParams] = useSearchParams();
 
   const context: {
+    date: {
+      dateOfTheDay: Dayjs;
+    };
     actions: {
       openDialogAction: boolean;
       setOpenDialogAction: any;
     };
   } = useOutletContext();
+
+  const date = context.date.dateOfTheDay;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: CampaignModel[] = matches[1].data.tags;
@@ -257,9 +267,7 @@ export default function ActionDialog({
                 : date
                 ? date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
                   ? parseInt(dayjs().format("HH")) >= 11
-                    ? dayjs()
-                        .add(dayjs().hour() + 1, "hour")
-                        .format("YYYY-MM-DD[T]HH:mm:ss")
+                    ? dayjs().add(1, "hour").format("YYYY-MM-DD[T]HH:mm:ss")
                     : date.format("YYYY-MM-DD[T11:12:00]")
                   : date.format("YYYY-MM-DD[T11:12:00]")
                 : undefined

@@ -1,10 +1,21 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { useActionData, useLoaderData } from "@remix-run/react";
-import { ActionMedium } from "~/components/Actions";
+import ActionList from "~/components/ActionList";
 import CampaignDialog from "~/components/Dialogs/CampaignDialog";
 import Exclamation from "~/components/Exclamation";
-import { getCampaign } from "~/lib/data";
+import { getCampaign, handleAction } from "~/lib/data";
 import type { CampaignModel } from "~/lib/models";
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData();
+  const { error } = await handleAction(formData, request);
+  const redirectTo = new URL(request.url).searchParams.get("redirectTo");
+
+  if (!error) {
+    return redirect(redirectTo ?? `/dashboard/${params.slug}`);
+  }
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data, error } = await getCampaign(request, params.id as string);
@@ -26,16 +37,13 @@ export default function CampaignsPage() {
         <div className="col-span-1 h-full overflow-hidden ">
           <h4 className="px-4">Ações da campanha</h4>
           <div className="no-scrollbars h-full overflow-hidden overflow-y-auto p-4">
-            {campaign.actions &&
-              campaign.actions.map((action) => (
-                <ActionMedium
-                  action={action}
-                  key={action.id}
-                  showDateAndTime
-                  hideAccount
-                />
-              ))}
-            <div className="h-4"> </div>
+            <ActionList
+              actions={campaign.actions}
+              hideAccount
+              showDateAndTime
+            />
+
+            <div className="h-4"></div>
           </div>
         </div>
       </div>

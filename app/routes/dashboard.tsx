@@ -1,6 +1,5 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { Outlet } from "@remix-run/react";
-import { useState } from "react";
+import { Outlet, useOutletContext } from "@remix-run/react";
 import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
 import {
@@ -36,32 +35,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const [openDialogAction, setOpenDialogAction] = useState(false);
-  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
-  const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
-  const [openDialogSearch, setOpenDialogSearch] = useState(false);
+  const context = useOutletContext();
   return (
     <Layout>
-      <Outlet
-        context={{
-          celebrations: {
-            openDialogCelebration,
-            setOpenDialogCelebration,
-          },
-          actions: {
-            openDialogAction,
-            setOpenDialogAction,
-          },
-          campaigns: {
-            openDialogCampaign,
-            setOpenDialogCampaign,
-          },
-          search: {
-            openDialogSearch,
-            setOpenDialogSearch,
-          },
-        }}
-      />
+      <Outlet context={context} />
     </Layout>
   );
 }

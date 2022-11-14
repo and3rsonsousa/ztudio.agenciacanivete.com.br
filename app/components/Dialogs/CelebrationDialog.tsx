@@ -6,12 +6,16 @@ import Button from "../Forms/Button";
 import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
 
-export default function CelebrationDialog({ date }: { date: Dayjs }) {
+export default function CelebrationDialog() {
   const context: {
+    date: {
+      dateOfTheDay: Dayjs;
+    };
     celebrations: {
       setOpenDialogCelebration: any;
     };
   } = useOutletContext();
+  const date = context.date.dateOfTheDay;
   const fetcher = useFetcher();
   const isAdding =
     fetcher.state === "submitting" &&

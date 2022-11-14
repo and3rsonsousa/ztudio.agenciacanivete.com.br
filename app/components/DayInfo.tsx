@@ -1,27 +1,24 @@
 import {
-  CalendarIcon,
+  CalendarDaysIcon,
   ChevronRightIcon,
   PlusIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
-import * as Dialog from "@radix-ui/react-dialog";
 import { useMatches, useOutletContext } from "@remix-run/react";
-import { AnimatePresence, motion } from "framer-motion";
-import { fade, scaleUp } from "~/lib/animations";
+import type { Dayjs } from "dayjs";
 import type { DayModel } from "~/lib/models";
-import { ActionMedium } from "./Actions";
+import ActionList from "./ActionList";
 import Celebration from "./Celebrations";
-import ActionDialog from "./Dialogs/ActionDialog";
-import CampaignDialog from "./Dialogs/CampaignDialog";
-import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
+  const matches = useMatches();
+  const account = matches[2].data.account;
   const context: {
-    celebrations: {
-      openDialogCelebration: boolean;
-      setOpenDialogCelebration: (b?: boolean) => void;
+    date: {
+      dateOfTheDay: Dayjs;
+      setDateOfTheDay: (b?: Dayjs) => void;
     };
     actions: {
       openDialogAction: boolean;
@@ -31,10 +28,13 @@ const DayInfo = ({ day }: { day: DayModel }) => {
       openDialogCampaign: boolean;
       setOpenDialogCampaign: (b?: boolean) => void;
     };
+    celebrations: {
+      openDialogCelebration: boolean;
+      setOpenDialogCelebration: (b?: boolean) => void;
+    };
   } = useOutletContext();
 
-  const matches = useMatches();
-  const account = matches[2].data.account;
+  console.log({ context });
 
   return (
     <div className="mt-16 flex flex-shrink-0 flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-80 lg:border-0 lg:pt-0">
@@ -62,15 +62,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             ) : null}
           </div>
 
-          <div className="no-scrollbars flex h-full  flex-col overflow-auto p-4">
-            {day.actions.length > 0 ? (
-              day.actions.map((action, i) => (
-                <ActionMedium action={action} key={i} hideAccount={!!account} />
-              ))
-            ) : (
-              <Exclamation icon>Nenhuma ação para esse dia</Exclamation>
-            )}
-          </div>
+          <ActionList actions={day.actions} hideAccount={!!account} />
         </>
       ) : (
         <div className="flex flex-auto p-8">
@@ -80,101 +72,45 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
       <div className="flex items-center justify-end gap-2 border-t p-4 dark:border-gray-800">
         {/* Dialog for Celebrations */}
-        <Dialog.Root
-          onOpenChange={context.celebrations.setOpenDialogCelebration}
-        >
-          <Dialog.Trigger asChild>
-            <Button link small>
-              <StarIcon />
-            </Button>
-          </Dialog.Trigger>
-          <AnimatePresence>
-            {context.celebrations.openDialogCelebration ? (
-              <Dialog.Portal forceMount>
-                <Dialog.Overlay asChild forceMount>
-                  <motion.div
-                    className="dialog-overlay"
-                    {...fade()}
-                  ></motion.div>
-                </Dialog.Overlay>
-
-                <Dialog.Content forceMount className="dialog">
-                  <motion.div
-                    className="dialog-content w-96 max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                    {...scaleUp()}
-                  >
-                    <CelebrationDialog date={day.date} />
-                  </motion.div>
-                </Dialog.Content>
-              </Dialog.Portal>
-            ) : null}
-          </AnimatePresence>
-        </Dialog.Root>
+        <div>
+          <Button
+            link
+            small
+            onClick={() => {
+              context.date.setDateOfTheDay(day.date);
+              context.celebrations.setOpenDialogCelebration(true);
+            }}
+          >
+            <StarIcon />
+          </Button>
+        </div>
+        <div>
+          <Button
+            link
+            small
+            onClick={() => {
+              context.date.setDateOfTheDay(day.date);
+              context.campaigns.setOpenDialogCampaign(true);
+            }}
+          >
+            <CalendarDaysIcon />
+          </Button>
+        </div>
+        <div className="ml-4">
+          <Button
+            primary
+            onClick={() => {
+              context.date.setDateOfTheDay(day.date);
+              context.actions.setOpenDialogAction(true);
+            }}
+          >
+            Nova Ação <PlusIcon />
+          </Button>
+        </div>
 
         {/* Dialog for Campaigns */}
 
-        <Dialog.Root onOpenChange={context.campaigns.setOpenDialogCampaign}>
-          <Dialog.Trigger asChild>
-            <Button link small>
-              <CalendarIcon />
-            </Button>
-          </Dialog.Trigger>
-          <AnimatePresence>
-            {context.campaigns.openDialogCampaign ? (
-              <Dialog.Portal forceMount>
-                <Dialog.Overlay asChild forceMount>
-                  <motion.div
-                    className="dialog-overlay"
-                    {...fade()}
-                  ></motion.div>
-                </Dialog.Overlay>
-
-                <Dialog.Content forceMount className="dialog">
-                  <motion.div
-                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                    {...scaleUp()}
-                  >
-                    <CampaignDialog date={day.date} />
-                  </motion.div>
-                </Dialog.Content>
-              </Dialog.Portal>
-            ) : null}
-          </AnimatePresence>
-        </Dialog.Root>
-
         {/* Dialog for Actions */}
-        <Dialog.Root
-          open={context.actions.openDialogAction}
-          onOpenChange={context.actions.setOpenDialogAction}
-        >
-          <Dialog.Trigger asChild>
-            <div className="ml-4">
-              <Button primary>
-                Nova Ação <PlusIcon />
-              </Button>
-            </div>
-          </Dialog.Trigger>
-          <AnimatePresence>
-            {context.actions.openDialogAction ? (
-              <Dialog.Portal forceMount>
-                <Dialog.Overlay asChild forceMount>
-                  <motion.div
-                    className="dialog-overlay"
-                    {...fade()}
-                  ></motion.div>
-                </Dialog.Overlay>
-                <Dialog.Content className="dialog" forceMount>
-                  <motion.div
-                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                    {...scaleUp()}
-                  >
-                    <ActionDialog date={day.date} />
-                  </motion.div>
-                </Dialog.Content>
-              </Dialog.Portal>
-            ) : null}
-          </AnimatePresence>
-        </Dialog.Root>
       </div>
     </div>
   );

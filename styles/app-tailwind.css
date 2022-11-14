@@ -193,12 +193,15 @@
 .dialog{
   @apply fixed z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
 }
+.dialog-search{
+  @apply top-1/4
+}
 .dialog-overlay{
   @apply bg-gray-800/50 fixed inset-0 z-40 dark:bg-gray-1000/75
 }
 
 .dialog-content{
-  @apply  z-50  bg-white border dark:border-gray-700 rounded-xl shadow-xl dark:bg-gray-800 text-gray-700 dark:text-gray-400
+  @apply  z-50  bg-white border dark:border-gray-700 rounded-xl shadow-xl dark:bg-gray-800 text-gray-700 dark:text-gray-400 focus:outline-none
 }
 
 

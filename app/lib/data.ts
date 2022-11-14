@@ -191,6 +191,7 @@ export const getCampaign = async (request: Request, id: string) => {
     .single();
   return { data, error };
 };
+
 export const getCampaigns = async (
   args: {
     request?: Request;
@@ -258,16 +259,37 @@ export async function updateAction(
   return { data, error };
 }
 
-export async function deleteItem(request: Request, item: string, id: string) {
+async function createCelebration(formData: FormData, request: Request) {
   const { supabase } = getSupabase(request);
+
+  let name = formData.get("name");
+  let date = formData.get("date") as string;
+  if (name === "" || date === "") {
+    return {
+      error: {
+        message: "Nome ou Data está em branco",
+      },
+    };
+  }
+
+  let dateSplit = date.split("/");
+
   const { data, error } = await supabase
-    .from(item)
-    .delete()
-    .eq("id", id)
+    .from("Celebration")
+    .insert({
+      name: name,
+      date: `${dateSplit[1]}/${dateSplit[0]}`,
+      is_holiday: !!formData.get("is_holiday"),
+    })
     .select()
     .single();
 
-  return { data, error };
+  console.log(data);
+
+  return {
+    data,
+    error,
+  };
 }
 
 export const handleAction = async (formData: FormData, request: Request) => {
@@ -414,6 +436,16 @@ export const handleAction = async (formData: FormData, request: Request) => {
         slug: formData.get("slug") as string,
         users: formData.getAll("users") as string[],
       };
+    } else if (action === "update-campaign") {
+      values = {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        date_start: formData.get("date_start") as string,
+        date_end: formData.get("date_end") as string,
+        updated_at: "NOW()",
+      };
+
+      table = "Campaign";
     }
 
     const { data, error } = await supabase
@@ -439,8 +471,21 @@ export const handleAction = async (formData: FormData, request: Request) => {
       table = "Celebration";
     } else if (action === "delete-account") {
       table = "Account";
+    } else if (action === "delete-campaign") {
+      table = "Campaign";
+    } else if (action === "delete-person") {
+      table = "Person";
     }
-    return await deleteItem(request, table, id);
+
+    const { supabase } = getSupabase(request);
+    const { data, error } = await supabase
+      .from(table)
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
+
+    return { data, error };
   } else if (action.match(/duplicate-/)) {
     const id = formData.get("id") as string;
 
@@ -477,36 +522,3 @@ export const handleAction = async (formData: FormData, request: Request) => {
     error: { message: "No matched action" },
   };
 };
-
-async function createCelebration(formData: FormData, request: Request) {
-  const { supabase } = getSupabase(request);
-
-  let name = formData.get("name");
-  let date = formData.get("date") as string;
-  if (name === "" || date === "") {
-    return {
-      error: {
-        message: "Nome ou Data está em branco",
-      },
-    };
-  }
-
-  let dateSplit = date.split("/");
-
-  const { data, error } = await supabase
-    .from("Celebration")
-    .insert({
-      name: name,
-      date: `${dateSplit[1]}/${dateSplit[0]}`,
-      is_holiday: !!formData.get("is_holiday"),
-    })
-    .select()
-    .single();
-
-  console.log(data);
-
-  return {
-    data,
-    error,
-  };
-}

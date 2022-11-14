@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { useActionData, useLoaderData } from "@remix-run/react";
-import { ActionMedium } from "~/components/Actions";
+import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, handleAction } from "~/lib/data";
@@ -44,17 +44,7 @@ export default function ActionPage() {
         </div>
         <div className="col-span-1 h-full overflow-hidden ">
           <h4 className="px-4">Ações recentes</h4>
-          <div className="no-scrollbars h-full overflow-hidden overflow-y-auto p-4">
-            {actions.map((action) => (
-              <ActionMedium
-                action={action}
-                key={action.id}
-                showDateAndTime
-                hideAccount
-              />
-            ))}
-            <div className="h-4"> </div>
-          </div>
+          <ActionList actions={actions} hideAccount showDateAndTime />
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import dayjs from "dayjs";
 import Campaign from "~/components/Campaign";
+import Exclamation from "~/components/Exclamation";
+import Button from "~/components/Forms/Button";
 import { getCampaigns } from "~/lib/data";
 import type { CampaignModel } from "~/lib/models";
 
@@ -14,16 +16,32 @@ export default function CampaignsPage() {
   const { campaigns } = useLoaderData<{ campaigns: CampaignModel[] }>();
   return (
     <div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between gap-2 border-b dark:border-gray-800">
         <h4 className="mb-0 p-4 first-letter:capitalize">
           Campanhas de Marketing
         </h4>
+        <div className="pr-4">
+          <Button primary small>
+            <CalendarDaysIcon />
+            <div>Nova Campanha</div>
+          </Button>
+        </div>
       </div>
 
-      <div className="p-4">
-        {campaigns.map((campaign) => (
-          <Campaign key={campaign.id} campaign={campaign} />
-        ))}
+      <div className="divide-y">
+        {campaigns.length ? (
+          campaigns.map((campaign) => (
+            <div key={campaign.id} className="p-4 lg:p-8">
+              <Campaign campaign={campaign} />
+            </div>
+          ))
+        ) : (
+          <div className="p4 lg:p-8">
+            <Exclamation icon>
+              Esse cliente não tem nenhuma campanha.
+            </Exclamation>
+          </div>
+        )}
       </div>
     </div>
   );

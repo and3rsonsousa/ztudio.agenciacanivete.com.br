@@ -1,4 +1,10 @@
-import { useFetcher, useMatches, useOutletContext } from "@remix-run/react";
+import {
+  Form,
+  useFetcher,
+  useMatches,
+  useOutletContext,
+  useSearchParams,
+} from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
@@ -11,15 +17,23 @@ import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
 
 export default function CampaignDialog({
-  date,
   campaign,
 }: {
-  date?: Dayjs;
   campaign?: CampaignModel;
 }) {
   const fetcher = useFetcher();
-
   const matches = useMatches();
+  const [searchParams] = useSearchParams();
+  const context: {
+    date: {
+      dateOfTheDay: Dayjs;
+    };
+    campaigns: {
+      setOpenDialogCampaign: (b: boolean) => void;
+    };
+  } = useOutletContext();
+  const date = context.date.dateOfTheDay;
+
   const accounts: AccountModel[] = matches[1].data.accounts;
   const creator: PersonModel = matches[1].data.person;
   const account: AccountModel = campaign
@@ -31,11 +45,6 @@ export default function CampaignDialog({
     value: account.id,
   }));
 
-  const context: {
-    campaigns: {
-      setOpenDialogCampaign: any;
-    };
-  } = useOutletContext();
   const isAdding =
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "create-celebration";
@@ -70,8 +79,26 @@ export default function CampaignDialog({
         </Exclamation>
       ) : null}
 
-      <fetcher.Form method="post" ref={formRef} action="/handle-action">
-        <input type="hidden" name="action" value="create-campaign" />
+      <fetcher.Form
+        method="post"
+        ref={formRef}
+        action={
+          campaign
+            ? `./${
+                searchParams.get("redirectTo") !== null
+                  ? "?redirectTo=".concat(
+                      searchParams.get("redirectTo") as string
+                    )
+                  : ""
+              }`
+            : "/handle-action"
+        }
+      >
+        <input
+          type="hidden"
+          name="action"
+          value={campaign ? "update-campaign" : "create-campaign"}
+        />
 
         {campaign ? (
           <input type="hidden" name="id" value={campaign.id} />
@@ -116,9 +143,16 @@ export default function CampaignDialog({
           />
         </div>
 
-        <div className="flex items-center justify-end pt-4">
+        <div className="flex items-center justify-end gap-2 pt-4">
+          {campaign && (
+            <Form method="post">
+              <input type="hidden" name="id" value={campaign.id} />
+              <input type="hidden" name="action" value="delete-campaign" />
+              <Button>Excluir</Button>
+            </Form>
+          )}
           <Button primary type="submit">
-            Adicionar
+            {campaign ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
       </fetcher.Form>
