@@ -16,18 +16,18 @@ import {
 } from "@remix-run/react";
 
 import {
-  DocumentCheckIcon,
+  CheckBadgeIcon,
   DocumentDuplicateIcon,
   DocumentPlusIcon,
   PencilSquareIcon,
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import dayjs from "dayjs";
+import * as HoverCard from "@radix-ui/react-hover-card";
 import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Forms/Button";
-import * as HoverCard from "@radix-ui/react-hover-card";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -224,7 +224,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
           </ContextMenu.Sub>
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <DocumentCheckIcon className="w-4" />
+              <CheckBadgeIcon className="w-4" />
               <div className="flex flex-auto justify-between gap-4">
                 <div>Status</div>
 

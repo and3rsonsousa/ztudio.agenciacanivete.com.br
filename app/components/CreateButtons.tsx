@@ -1,7 +1,7 @@
 import {
+  DocumentPlusIcon,
+  FolderPlusIcon,
   StarIcon,
-  CalendarDaysIcon,
-  PlusIcon,
 } from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
 import Button from "./Forms/Button";
@@ -55,7 +55,7 @@ export default function CreateButtons({
               context.campaigns.setOpenDialogCampaign(true);
             }}
           >
-            <CalendarDaysIcon />
+            <FolderPlusIcon />
           </Button>
         </div>
       )}
@@ -63,11 +63,12 @@ export default function CreateButtons({
         <div className="ml-4">
           <Button
             primary
+            icon
             onClick={() => {
               context.actions.setOpenDialogAction(true);
             }}
           >
-            Nova Ação <PlusIcon />
+            <DocumentPlusIcon />
           </Button>
         </div>
       )}

@@ -1,6 +1,6 @@
 import {
   CalendarDaysIcon,
-  CheckCircleIcon,
+  DocumentCheckIcon,
   FolderIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
@@ -52,7 +52,7 @@ export default function Slug() {
             <div className="hidden md:block">Calendário</div>
           </Link>
           <Link className="button button-link button-icon p-2" to={`./actions`}>
-            <CheckCircleIcon />
+            <DocumentCheckIcon />
             <div className="hidden md:block">Ações</div>
           </Link>
           <Link
