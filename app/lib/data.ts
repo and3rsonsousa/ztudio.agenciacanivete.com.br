@@ -233,7 +233,10 @@ export const getCampaigns = async (
     if (!user) {
       throw new Error("User is undefined");
     }
-    return supabase.from("Campaign").select("*");
+    return supabase
+      .from("Campaign")
+      .select("*, Account!Campaign_account_fkey!inner(*)")
+      .contains("Account.users", [user]);
   }
 };
 

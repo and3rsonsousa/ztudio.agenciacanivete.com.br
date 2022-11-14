@@ -67,7 +67,9 @@ export default function CampaignDialog({
       <div className="mb-4 flex justify-between">
         <div>
           <h4 className="m-0 dark:text-gray-200">
-            {campaign ? `Editar Campanha` : `Nova Campanha`}
+            {campaign
+              ? `Editar Campanha`
+              : `Nova Ação${account ? " para ".concat(account.name) : ""}`}
           </h4>
           {campaign ? (
             <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
@@ -114,15 +116,10 @@ export default function CampaignDialog({
           title="Nome"
           value={campaign ? campaign.name : undefined}
         />
-        {campaign ? (
+        {campaign || account ? (
           <input type="hidden" name="account" value={account.id} />
         ) : (
-          <SelectField
-            name="account"
-            title="Cliente"
-            value={account ? account.id : undefined}
-            items={accountItems}
-          />
+          <SelectField name="account" title="Cliente" items={accountItems} />
         )}
         <TextareaField
           name="description"

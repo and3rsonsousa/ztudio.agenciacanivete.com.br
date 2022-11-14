@@ -1,4 +1,3 @@
-import { LockClosedIcon } from "@heroicons/react/20/solid";
 import {
   BriefcaseIcon,
   ChevronRightIcon,

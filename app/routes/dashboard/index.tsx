@@ -22,6 +22,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getCampaigns({ request, user: user.id }),
   ]);
 
+  console.log(campaigns);
+
   return { actions, campaigns };
 };
 

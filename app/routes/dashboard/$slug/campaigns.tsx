@@ -1,6 +1,6 @@
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { CalendarDaysIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useOutletContext } from "@remix-run/react";
 import Campaign from "~/components/Campaign";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Forms/Button";
@@ -14,6 +14,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function CampaignsPage() {
   const { campaigns } = useLoaderData<{ campaigns: CampaignModel[] }>();
+  const context: {
+    campaigns: {
+      setOpenDialogCampaign: (b?: boolean) => void;
+    };
+  } = useOutletContext();
+
+  console.log(context);
+
   return (
     <div>
       <div className="flex items-center justify-between gap-2 border-b dark:border-gray-800">
@@ -21,9 +29,15 @@ export default function CampaignsPage() {
           Campanhas de Marketing
         </h4>
         <div className="pr-4">
-          <Button primary small>
-            <CalendarDaysIcon />
+          <Button
+            primary
+            small
+            onClick={() => {
+              context.campaigns.setOpenDialogCampaign(true);
+            }}
+          >
             <div>Nova Campanha</div>
+            <FolderPlusIcon />
           </Button>
         </div>
       </div>

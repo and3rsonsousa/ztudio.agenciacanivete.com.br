@@ -68,7 +68,7 @@ export default function CreateButtons({
               context.actions.setOpenDialogAction(true);
             }}
           >
-            <DocumentPlusIcon />
+            Nova Ação <DocumentPlusIcon />
           </Button>
         </div>
       )}
