@@ -19,13 +19,16 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function SlugIndex() {
-  const loaderData = useLoaderData();
+  const { actions } = useLoaderData();
   const [searchParams] = useSearchParams();
 
   return (
-    <Calendar
-      actions={loaderData.actions}
-      grid={searchParams.get("instagram") !== null}
-    />
+    <>
+      {/* <pre>{JSON.stringify(actions, undefined, 2)}</pre> */}
+      <Calendar
+        actions={actions}
+        grid={searchParams.get("instagram") !== null}
+      />
+    </>
   );
 }

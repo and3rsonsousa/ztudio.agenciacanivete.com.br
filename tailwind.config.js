@@ -6,6 +6,10 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      screens: {
+        "3xl": "1728px",
+      },
+
       colors: {
         gray: {
           1000: "#0a0c1f",
@@ -50,5 +54,5 @@ module.exports = {
       accomplished: colors.lime,
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

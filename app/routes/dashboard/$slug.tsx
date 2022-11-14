@@ -40,6 +40,9 @@ export default function Slug() {
             className="button button-link"
             to={`./${period ? "?period=" + period : ""}`}
           >
+            Calendário
+          </Link>
+          <Link className="button button-link" to={`./actions`}>
             Ações
           </Link>
           <Link
@@ -53,6 +56,7 @@ export default function Slug() {
           </Link>
         </div>
       </div>
+
       <Outlet context={useOutletContext()} />
     </div>
   );

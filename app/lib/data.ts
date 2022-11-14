@@ -121,25 +121,38 @@ export const getActions = async (
     user?: string;
     account?: string;
     period?: string | null;
+    all?: boolean;
   } = {}
 ) => {
-  let { user, account, period, request } = args;
+  let { user, account, period, request, all } = args;
 
   if (!request) {
     return { error: { message: "Request is undefined" } };
   }
+  const { supabase } = getSupabase(request);
+
+  if (all && account) {
+    const { data, error } = await supabase
+      .from("Action")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
+      .eq("Account.slug", account)
+      .order("date", {
+        ascending: true,
+      })
+      .order("created_at", { ascending: true });
+
+    return { data, error };
+  }
 
   const { firstDayOfPeriod, lastDayOfPeriod } = getPeriod({ period });
-
-  const { supabase } = getSupabase(request);
 
   if (account) {
     const { data, error } = await supabase
       .from("Action")
       .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .eq("Account.slug", account)
-      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD"))
-      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD"))
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
         ascending: true,
       })
@@ -155,8 +168,8 @@ export const getActions = async (
       .from("Action")
       .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .contains("Account.users", [user])
-      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD"))
-      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD"))
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
         ascending: true,
       })
@@ -214,7 +227,7 @@ export const getCampaigns = async (
       .from("Campaign")
       .select("*, Account!Campaign_account_fkey!inner(*)")
       .eq("Account.slug", account);
-    console.log({ data, error, account });
+
     return { data, error };
   } else {
     if (!user) {
@@ -284,8 +297,6 @@ async function createCelebration(formData: FormData, request: Request) {
     .select()
     .single();
 
-  console.log(data);
-
   return {
     data,
     error,
@@ -345,8 +356,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
 
       return { data, error };
     } else if (action === "create-campaign") {
-      console.log(formData);
-
       const creator = formData.get("creator");
       const name = formData.get("name");
       const account = formData.get("account");
@@ -377,8 +386,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
           },
         };
       }
-
-      console.log({ values });
 
       const { data, error } = await supabase
         .from("Campaign")

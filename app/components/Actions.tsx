@@ -269,7 +269,7 @@ export const ActionMedium = ({
       <div className="overflow-hidden">
         <div className="text-sm font-normal">{action.name}</div>
         {action.description ? (
-          <div className="text-xx mb-2">{action.description}</div>
+          <div className="text-xx mb-2 line-clamp-3">{action.description}</div>
         ) : null}
         <div className="text-xx flex gap-4 overflow-hidden text-gray-500">
           <div className="whitespace-nowrap">
