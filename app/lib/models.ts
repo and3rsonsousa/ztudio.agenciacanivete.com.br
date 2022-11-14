@@ -41,12 +41,9 @@ export type ActionModel = {
   description?: string;
   created_at?: string;
   updated_at?: string;
-};
-export type CelebrationModel = {
-  id: string;
-  name: string;
-  date: string;
-  is_holiday: boolean;
+  Account?: AccountModel;
+  Tag?: ItemModel;
+  Status?: ItemModel;
 };
 
 export type ActionModelFull = {
@@ -62,6 +59,13 @@ export type ActionModelFull = {
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
+};
+
+export type CelebrationModel = {
+  id: string;
+  name: string;
+  date: string;
+  is_holiday: boolean;
 };
 
 export type ItemModel = {

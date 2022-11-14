@@ -27,6 +27,7 @@ import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Forms/Button";
+import * as HoverCard from "@radix-ui/react-hover-card";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -45,62 +46,92 @@ export const Action = ({ action }: { action: ActionModel }) => {
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <div
-          data-date={action.date}
-          data-id={action.id}
-          draggable
-          onDragStart={(e) => {
-            const ele = e.target as HTMLElement;
-            const ghost = ele.cloneNode(true) as HTMLElement;
+        <HoverCard.Root>
+          <HoverCard.Trigger>
+            <div
+              data-date={action.date}
+              data-id={action.id}
+              draggable
+              onDragStart={(e) => {
+                const ele = e.target as HTMLElement;
+                const ghost = ele.cloneNode(true) as HTMLElement;
 
-            ghost.style.width = `${ele.offsetWidth}px`;
-            ghost.style.height = `${ele.offsetHeight}px`;
-            ghost.style.position = "absolute";
-            ghost.style.top = "0";
-            ghost.style.left = "0";
-            ghost.style.offset = ".2";
-            ghost.style.zIndex = "-1";
-            ghost.classList.add("dragging");
+                ghost.style.width = `${ele.offsetWidth}px`;
+                ghost.style.height = `${ele.offsetHeight}px`;
+                ghost.style.position = "absolute";
+                ghost.style.top = "0";
+                ghost.style.left = "0";
+                ghost.style.offset = ".2";
+                ghost.style.zIndex = "-1";
+                ghost.classList.add("dragging");
 
-            document.querySelector(".app")?.appendChild(ghost);
-            e.dataTransfer?.setDragImage(
-              ghost,
-              ele.offsetWidth / 2,
-              ele.offsetHeight / 2
-            );
+                document.querySelector(".app")?.appendChild(ghost);
+                e.dataTransfer?.setDragImage(
+                  ghost,
+                  ele.offsetWidth / 2,
+                  ele.offsetHeight / 2
+                );
 
-            setTimeout(() => {
-              ghost.parentNode?.removeChild(ghost);
-            }, 1000);
-          }}
-          className={`action-line duration-500 bg-${
-            status.filter((stat) => stat.id === action.status)[0].slug
-          } bg-${
-            status.filter((stat) => stat.id === action.status)[0].slug
-          }-hover flex cursor-pointer items-center justify-between gap-2`}
-          title={action.name}
-          onClick={() => {
-            navigate(
-              `/dashboard/${account.slug}/action/${action.id}?redirectTo=${url}`
-            );
-          }}
-        >
-          <div className="flex items-center gap-1 overflow-hidden">
-            <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
-              {tag.name.slice(0, 3)}
+                setTimeout(() => {
+                  ghost.parentNode?.removeChild(ghost);
+                }, 1000);
+              }}
+              className={`action-line duration-500 bg-${
+                status.filter((stat) => stat.id === action.status)[0].slug
+              } bg-${
+                status.filter((stat) => stat.id === action.status)[0].slug
+              }-hover flex cursor-pointer items-center justify-between gap-2`}
+              // title={`${action.name} ( ${action.Account?.name} )`}
+              onClick={() => {
+                navigate(
+                  `/dashboard/${account.slug}/action/${action.id}?redirectTo=${url}`
+                );
+              }}
+            >
+              <div className="flex items-center gap-1 overflow-hidden">
+                <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
+                  {tag.name.slice(0, 3)}
+                </div>
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
+                  {action.name}
+                </div>
+              </div>
+              <div className="text-xx hidden font-medium opacity-75 2xl:block">
+                {dayjs(action.date).format(
+                  "H[h]".concat(
+                    dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+                  )
+                )}
+              </div>
             </div>
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
-              {action.name}
-            </div>
-          </div>
-          <div className="text-xx hidden font-medium opacity-75 2xl:block">
-            {dayjs(action.date).format(
-              "H[h]".concat(
-                dayjs(action.date).format("mm") !== "00" ? "mm" : ""
-              )
-            )}
-          </div>
-        </div>
+          </HoverCard.Trigger>
+          <HoverCard.Portal>
+            <HoverCard.Content className="max-w-xs rounded bg-gray-800 p-4 text-sm font-light text-gray-300 antialiased dark:text-gray-700">
+              <div className="mb-1 font-medium">{action.name}</div>
+              {action.description && (
+                <div className="text-xx mb-1 leading-tight line-clamp-6">
+                  {action.description}
+                </div>
+              )}
+              <div className="text-xx flex gap-4">
+                <div>
+                  {dayjs(action.date).format(
+                    "HH[h]".concat(
+                      dayjs(action.date).format("mm") === "00" ? "" : "mm"
+                    )
+                  )}
+                </div>
+                <div>{action.Account?.name}</div>
+                <div className="flex items-center gap-1">
+                  <div
+                    className={`h-1 w-1 bg-${action.Tag?.slug} rounded-full`}
+                  ></div>
+                  <div>{action.Tag?.name}</div>
+                </div>
+              </div>
+            </HoverCard.Content>
+          </HoverCard.Portal>
+        </HoverCard.Root>
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content className="dropdown-content w-36">
