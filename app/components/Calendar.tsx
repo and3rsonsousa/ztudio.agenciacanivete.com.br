@@ -50,7 +50,7 @@ export default function Calendar({
     <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
           <h4 className="mb-0 w-60 p-4 first-letter:capitalize">
             {firstDayOfCurrentMonth.format(`MMMM [de] YYYY`)}
           </h4>
@@ -58,6 +58,7 @@ export default function Calendar({
             <Button
               link
               small
+              icon
               onClick={() => {
                 navigate(
                   `?period=${firstDayOfCurrentMonth
@@ -71,6 +72,7 @@ export default function Calendar({
             <Button
               link
               small
+              icon
               onClick={() => {
                 navigate(
                   `?period=${firstDayOfCurrentMonth
