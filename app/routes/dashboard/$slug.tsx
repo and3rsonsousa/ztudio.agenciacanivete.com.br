@@ -37,32 +37,35 @@ export default function Slug() {
       <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
         <Link
           to={`/dashboard/${account.slug}`}
-          className="focus-block rounded border border-transparent"
+          className="focus-block overflow-hidden rounded border border-transparent"
         >
-          <h2 className="mb-0 whitespace-nowrap text-xl dark:text-gray-200">
+          <h2 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap  dark:text-gray-200">
             {account.name}
           </h2>
         </Link>
         <div className="text-sm font-semibold">
           <Link
-            className="button button-link button-icon"
+            className="button button-link button-icon p-2"
             to={`./${period ? "?period=" + period : ""}`}
           >
             <CalendarDaysIcon />
             <div className="hidden md:block">Calendário</div>
           </Link>
-          <Link className="button button-link button-icon" to={`./actions`}>
+          <Link className="button button-link button-icon p-2" to={`./actions`}>
             <CheckCircleIcon />
             <div className="hidden md:block">Ações</div>
           </Link>
           <Link
-            className="button button-link button-icon"
+            className="button button-link button-icon p-2"
             to={`./?instagram${period ? "&period=" + period : ""}`}
           >
             <HeartIcon />
             <div className="hidden md:block">Instagram</div>
           </Link>
-          <Link className="button button-link button-icon" to={`./campaigns`}>
+          <Link
+            className="button button-link button-icon p-2"
+            to={`./campaigns`}
+          >
             <FolderIcon />
             <div className="hidden md:block">Campanhas</div>
           </Link>
