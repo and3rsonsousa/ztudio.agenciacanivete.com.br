@@ -83,7 +83,7 @@ export default function DatepickerField({
               {["D", "S", "T", "Q", "Q", "S", "S"].map((day, index) => (
                 <div
                   key={index}
-                  className="p-1 font-semibold text-gray-700 antialiased "
+                  className="p-1 font-semibold text-gray-700 antialiased dark:text-gray-200 "
                 >
                   {day}
                 </div>
@@ -94,15 +94,15 @@ export default function DatepickerField({
                   className={`p-1  ${
                     day.format("YYYY-MM-DD") ===
                     selectedDay.format("YYYY-MM-DD")
-                      ? " rounded-full bg-brand font-semibold text-white "
+                      ? " rounded bg-brand font-semibold text-white "
                       : day.format("YYYY-MM-DD") ===
                         dayjs().format("YYYY-MM-DD")
                       ? "font-semibold text-brand"
                       : ""
                   }${
-                    day.format("YYYY-MM-DD") !==
-                    firstDayOfCurrentMonth.format("YYYY-MM-DD")
-                      ? " text-gray-400 dark:text-gray-500"
+                    day.format("YYYY-MM") !==
+                    firstDayOfCurrentMonth.format("YYYY-MM")
+                      ? " text-gray-500 "
                       : ""
                   }`}
                   key={i}
@@ -111,7 +111,7 @@ export default function DatepickerField({
                     setSelectedDay(day);
                   }}
                 >
-                  {day.format("d")}
+                  {day.format("D")}
                 </div>
               ))}
             </div>

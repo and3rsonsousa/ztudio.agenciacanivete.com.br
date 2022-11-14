@@ -34,8 +34,6 @@ const DayInfo = ({ day }: { day: DayModel }) => {
     };
   } = useOutletContext();
 
-  console.log({ context });
-
   return (
     <div className="mt-16 flex flex-shrink-0 flex-col overflow-hidden border-t pt-16 lg:mt-0 lg:w-80 lg:border-0 lg:pt-0">
       {day !== undefined ? (
