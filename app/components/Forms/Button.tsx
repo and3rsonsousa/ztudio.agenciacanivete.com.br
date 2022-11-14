@@ -7,6 +7,8 @@ export default function Button({
   primary,
   disabled,
   link,
+  icon,
+
   onClick,
   type,
 }: {
@@ -16,6 +18,8 @@ export default function Button({
   primary?: boolean;
   disabled?: boolean;
   link?: boolean;
+  icon?: boolean;
+
   type?: "submit" | "reset" | "button";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
@@ -24,7 +28,9 @@ export default function Button({
       type={type}
       className={`button${small ? " button-small" : ""}${
         large ? " button-large" : ""
-      }${primary ? " button-primary" : ""}${link ? " button-link" : ""}`}
+      }${primary ? " button-primary" : ""}${link ? " button-link" : ""}${
+        icon ? " button-icon" : ""
+      }`}
       disabled={disabled}
       onClick={onClick}
     >
