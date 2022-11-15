@@ -70,9 +70,7 @@ export default function Calendar({
 
   const navigate = useNavigate();
 
-  const { firstDayOfCurrentYear, year } = getYear(firstDayOfCurrentMonth);
-
-  console.log(year);
+  const { year } = getYear(firstDayOfCurrentMonth);
 
   return (
     <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
