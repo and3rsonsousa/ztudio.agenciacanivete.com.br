@@ -144,6 +144,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       Meus dados
                     </Link>
                   </DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link
+                      to="/dashboard/trash"
+                      className="dropdown-item item-small block"
+                    >
+                      Lixeira
+                    </Link>
+                  </DropdownMenu.Item>
                   <DropdownMenu.Item
                     className="dropdown-item item-small"
                     onSelect={() => navigate("/signout")}

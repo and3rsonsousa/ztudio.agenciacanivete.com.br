@@ -97,14 +97,6 @@ export const getAllAccounts = (request: Request) => {
 //   return { data };
 // };
 
-// export const getCampaigns = (account: string) => {
-//   return supabase
-//     .from("Campaign")
-//     .select("*, Account!inner(*)")
-//     .eq("Account.slug", account)
-//     .order("date");
-// };
-
 export const getTagsStatus = async (request: Request) => {
   const { supabase } = getSupabase(request);
   const [{ data: tags }, { data: status }] = await Promise.all([
@@ -136,6 +128,7 @@ export const getActions = async (
       .from("Action")
       .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .eq("Account.slug", account)
+      .not("deleted", "is", true)
       .order("date", {
         ascending: true,
       })
@@ -151,6 +144,7 @@ export const getActions = async (
       .from("Action")
       .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .eq("Account.slug", account)
+      .not("deleted", "is", true)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
       .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
@@ -168,6 +162,7 @@ export const getActions = async (
       .from("Action")
       .select("*, Account!inner(*), Tag!inner(*), Status(*)")
       .contains("Account.users", [user])
+      .not("deleted", "is", true)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
       .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
@@ -229,6 +224,7 @@ export const getCampaigns = async (
         "*, Account!Campaign_account_fkey!inner(*),Status!Campaign_status_fkey!inner(*)"
       )
       .eq("Account.slug", account)
+      .not("deleted", "is", true)
       .order("date_start", {
         ascending: true,
       });
@@ -244,6 +240,7 @@ export const getCampaigns = async (
         "*, Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
       )
       .contains("Account.users", [user])
+      .not("deleted", "is", true)
       .order("date_start", {
         ascending: true,
       });
@@ -497,19 +494,37 @@ export const handleAction = async (formData: FormData, request: Request) => {
   } else if (action.match(/delete-/)) {
     let table = "";
     const id = formData.get("id") as string;
+    const { supabase } = getSupabase(request);
+
     if (action === "delete-action") {
+      const { data, error } = await supabase
+        .from("Action")
+        .update({ deleted: true })
+        .eq("id", id)
+        .select()
+        .single();
+
+      return { data, error };
+    } else if (action === "delete-action-trash") {
       table = "Action";
     } else if (action === "delete-celebration") {
-      table = "Celebration";
+      const { data, error } = await supabase
+        .from("Celebration")
+        .update({ deleted: true })
+        .eq("id", id)
+        .select()
+        .single();
+      return { data, error };
     } else if (action === "delete-account") {
       table = "Account";
     } else if (action === "delete-campaign") {
+      table = "Campaign";
+    } else if (action === "delete-campaign-trash") {
       table = "Campaign";
     } else if (action === "delete-person") {
       table = "Person";
     }
 
-    const { supabase } = getSupabase(request);
     const { data, error } = await supabase
       .from(table)
       .delete()

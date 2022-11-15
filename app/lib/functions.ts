@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
-import utc from "dayjs/plugin/utc";
+import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,4 +28,30 @@ export const getPeriod = ({ period }: { period?: string | null }) => {
     lastDayOfPeriod,
     days,
   };
+};
+
+export const getYear = (currentDate: Dayjs) => {
+  const firstDayOfCurrentYear = currentDate.startOf("year");
+  type MonthType = Array<{
+    date: Dayjs;
+  }>;
+  const year: Array<MonthType> = [];
+
+  function getDaysOnMonth(month: number) {
+    const Month = dayjs().month(month);
+    const First = Month.startOf("month");
+    const Last = Month.endOf("month");
+    return Last.diff(First, "days") + 1;
+  }
+
+  for (let month = 0; month < 12; month++) {
+    let current = firstDayOfCurrentYear.add(month, "month").clone();
+    const Month: MonthType = [];
+    for (let day = 0; day < getDaysOnMonth(month); day++) {
+      Month.push({ date: current.add(day, "day") });
+    }
+    year.push(Month);
+  }
+
+  return { firstDayOfCurrentYear, year };
 };

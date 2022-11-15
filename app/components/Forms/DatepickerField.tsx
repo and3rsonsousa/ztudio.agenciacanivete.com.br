@@ -89,8 +89,7 @@ export default function DatepickerField({
                 </div>
               ))}
               {days.map((day, i) => (
-                <div
-                  role="button"
+                <button
                   className={`p-1  ${
                     day.format("YYYY-MM-DD") ===
                     selectedDay.format("YYYY-MM-DD")
@@ -112,7 +111,7 @@ export default function DatepickerField({
                   }}
                 >
                   {day.format("D")}
-                </div>
+                </button>
               ))}
             </div>
             {/* <div>
