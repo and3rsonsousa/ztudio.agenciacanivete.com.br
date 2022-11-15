@@ -1014,6 +1014,10 @@ h5 {
   margin: 0px;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
 .my-0\.5 {
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
@@ -1047,6 +1051,11 @@ h5 {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .mb-1 {
@@ -1115,6 +1124,10 @@ h5 {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .block {
@@ -1417,6 +1430,11 @@ h5 {
   border-bottom-right-radius: 0.25rem;
 }
 
+.rounded-r-full {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1449,6 +1467,10 @@ h5 {
   border-left-width: 1px;
 }
 
+.border-dashed {
+  border-style: dashed;
+}
+
 .border-transparent {
   border-color: transparent;
 }
@@ -1456,6 +1478,16 @@ h5 {
 .border-brand {
   --tw-border-opacity: 1;
   border-color: rgb(128 0 255 / var(--tw-border-opacity));
+}
+
+.border-error-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(241 245 249 / var(--tw-border-opacity));
 }
 
 .border-t-brand-300 {
@@ -1495,6 +1527,14 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-gray-300\/50 {
+  background-color: rgb(203 213 225 / 0.5);
+}
+
+.bg-gray-900\/50 {
+  background-color: rgb(15 23 42 / 0.5);
 }
 
 .p-4 {
@@ -1562,6 +1602,10 @@ h5 {
 
 .pr-2 {
   padding-right: 0.5rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-center {
@@ -1637,6 +1681,10 @@ h5 {
   letter-spacing: 0.1em;
 }
 
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
@@ -1687,6 +1735,23 @@ h5 {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.ring-1 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.ring-error-500 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
 }
 
 .filter {

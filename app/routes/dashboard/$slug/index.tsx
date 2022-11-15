@@ -1,16 +1,19 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
-import { getActions, handleAction } from "~/lib/data";
+import { getActions, getCampaigns, handleAction } from "~/lib/data";
 export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("period");
 
-  const { data: actions } = await getActions({
-    request,
-    account: params.slug,
-    period,
-  });
-  return { actions };
+  const [{ data: actions }, { data: campaigns }] = await Promise.all([
+    getActions({
+      request,
+      account: params.slug,
+      period,
+    }),
+    getCampaigns({ request, account: params.slug }),
+  ]);
+  return { actions, campaigns };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -19,7 +22,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function SlugIndex() {
-  const { actions } = useLoaderData();
+  const { actions, campaigns } = useLoaderData();
   const [searchParams] = useSearchParams();
 
   return (
@@ -27,6 +30,7 @@ export default function SlugIndex() {
       {/* <pre>{JSON.stringify(actions, undefined, 2)}</pre> */}
       <Calendar
         actions={actions}
+        campaigns={campaigns}
         grid={searchParams.get("instagram") !== null}
       />
     </>

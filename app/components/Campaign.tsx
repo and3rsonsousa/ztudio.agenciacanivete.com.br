@@ -1,10 +1,19 @@
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useFetcher, useMatches } from "@remix-run/react";
+import {
+  CheckBadgeIcon,
+  CheckCircleIcon,
+  ChevronRightIcon,
+  PencilIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import * as ContextMenu from "@radix-ui/react-context-menu";
+import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import type { CampaignModel } from "~/lib/models";
+import type { CampaignModel, ItemModel } from "~/lib/models";
+import { action } from "~/routes/handle-action";
 
-export default function Campaign({ campaign }: { campaign: CampaignModel }) {
+export function Campaign({ campaign }: { campaign: CampaignModel }) {
   const matches = useMatches();
   const fetcher = useFetcher();
   const account = matches[2].data.account;
@@ -65,3 +74,99 @@ export default function Campaign({ campaign }: { campaign: CampaignModel }) {
     </div>
   );
 }
+
+export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
+  const navigate = useNavigate();
+  const fetcher = useFetcher();
+  const matches = useMatches();
+  const status: ItemModel[] = matches[1].data.status;
+  return (
+    <ContextMenu.Root>
+      <ContextMenu.Trigger>
+        <div
+          onClick={() =>
+            navigate(
+              `/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`
+            )
+          }
+          className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover transition`}
+        >
+          {campaign.name} {dayjs(campaign.date_end).format("DD/MM/YYYY")}
+        </div>
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <ContextMenu.Content className="dropdown-content">
+          <ContextMenu.Item asChild>
+            <Link
+              to={`/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`}
+              className="dropdown-item item-small flex items-center gap-2"
+            >
+              <PencilSquareIcon className="w-4" /> <div>Editar</div>
+            </Link>
+          </ContextMenu.Item>
+          <ContextMenu.Item
+            className="dropdown-item item-small flex items-center gap-2"
+            onSelect={() => {
+              fetcher.submit(
+                {
+                  id: campaign.id,
+                  action: "delete-campaign",
+                },
+                {
+                  method: "post",
+                  action: "/handle-action",
+                }
+              );
+            }}
+          >
+            <TrashIcon className="w-4" /> <div>Excluir</div>
+          </ContextMenu.Item>
+          <hr className="dropdown-hr" />
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+              <CheckBadgeIcon className="w-4" />
+              <div className="flex flex-auto justify-between gap-4">
+                <div>Status</div>
+
+                <div className="">
+                  <ChevronRightIcon className="w-4" />
+                </div>
+              </div>
+            </ContextMenu.SubTrigger>
+            <ContextMenu.Portal>
+              <ContextMenu.SubContent className="dropdown-content w-36">
+                {status.map((stat) => (
+                  <ContextMenu.Item
+                    key={stat.id}
+                    onSelect={(event) => {
+                      fetcher.submit(
+                        {
+                          action: "update-campaign-status",
+                          id: campaign.id,
+                          status: stat.id,
+                        },
+                        {
+                          method: "post",
+                          action: "/handle-action",
+                        }
+                      );
+                    }}
+                    className="dropdown-item item-small flex items-center gap-2"
+                  >
+                    <div
+                      className={`h-2 w-2 rounded-full bg-${stat.slug}`}
+                    ></div>
+                    <div className="flex-shrink-0 flex-grow">{stat.name}</div>
+                    {campaign.status === stat.id && (
+                      <CheckCircleIcon className="w-4" />
+                    )}
+                  </ContextMenu.Item>
+                ))}
+              </ContextMenu.SubContent>
+            </ContextMenu.Portal>
+          </ContextMenu.Sub>
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
+  );
+};

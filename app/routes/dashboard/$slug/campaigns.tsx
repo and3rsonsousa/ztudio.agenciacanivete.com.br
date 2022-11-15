@@ -1,7 +1,7 @@
-import { CalendarDaysIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
+import { FolderPlusIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData, useOutletContext } from "@remix-run/react";
-import Campaign from "~/components/Campaign";
+import { Campaign } from "~/components/Campaign";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Forms/Button";
 import { getCampaigns } from "~/lib/data";
@@ -19,8 +19,6 @@ export default function CampaignsPage() {
       setOpenDialogCampaign: (b?: boolean) => void;
     };
   } = useOutletContext();
-
-  console.log(context);
 
   return (
     <div>

@@ -29,6 +29,9 @@ export type CampaignModel = {
   actions: ActionModel[];
   created_at?: string;
   updated_at?: string;
+  status: string;
+  Status?: ItemModel;
+  Account?: AccountModel;
 };
 
 export type ActionModel = {
@@ -78,6 +81,7 @@ export type DayModel = {
   date: Dayjs;
   actions: ActionModel[];
   celebrations: CelebrationModel[];
+  campaigns: CampaignModel[];
 };
 
 export type DropdownOptions = Array<

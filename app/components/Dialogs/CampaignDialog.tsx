@@ -8,7 +8,12 @@ import {
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
-import type { AccountModel, CampaignModel, PersonModel } from "~/lib/models";
+import type {
+  AccountModel,
+  CampaignModel,
+  ItemModel,
+  PersonModel,
+} from "~/lib/models";
 import Exclamation from "../Exclamation";
 import Button from "../Forms/Button";
 import DatepickerField from "../Forms/DatepickerField";
@@ -36,6 +41,7 @@ export default function CampaignDialog({
   const date = context.date.dateOfTheDay;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
+  const status: ItemModel[] = matches[1].data.status;
   const creator: PersonModel = matches[1].data.person;
   const account: AccountModel = campaign
     ? campaign.account
@@ -44,6 +50,10 @@ export default function CampaignDialog({
   const accountItems = accounts.map((account) => ({
     title: account.name,
     value: account.id,
+  }));
+  const statusItems = status.map((stat) => ({
+    title: stat.name,
+    value: stat.id,
   }));
 
   const isAdding =
@@ -143,6 +153,7 @@ export default function CampaignDialog({
             }
           />
         </div>
+        <SelectField name="status" title="Status" items={statusItems} />
 
         <div className="flex items-center justify-end gap-2 pt-4">
           {campaign && (

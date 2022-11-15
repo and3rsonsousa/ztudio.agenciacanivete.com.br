@@ -6,12 +6,12 @@ import { getActions, getCampaigns } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("period");
-
   const {
     data: {
       session: { user },
     },
   } = await getUser(request);
+
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
       request,
@@ -22,16 +22,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getCampaigns({ request, user: user.id }),
   ]);
 
-  console.log(campaigns);
-
   return { actions, campaigns };
 };
 
 const DashboardIndex = () => {
-  const { actions } = useLoaderData();
+  const { actions, campaigns } = useLoaderData();
   return (
     <div className="h-screen">
-      <Calendar actions={actions} />
+      <Calendar actions={actions} campaigns={campaigns} />
     </div>
   );
 };

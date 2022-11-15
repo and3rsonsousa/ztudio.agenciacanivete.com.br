@@ -225,18 +225,32 @@ export const getCampaigns = async (
   if (account) {
     const { data, error } = await supabase
       .from("Campaign")
-      .select("*, Account!Campaign_account_fkey!inner(*)")
-      .eq("Account.slug", account);
+      .select(
+        "*, Account!Campaign_account_fkey!inner(*),Status!Campaign_status_fkey!inner(*)"
+      )
+      .eq("Account.slug", account)
+      .order("date_start", {
+        ascending: true,
+      });
 
     return { data, error };
   } else {
     if (!user) {
       throw new Error("User is undefined");
     }
-    return supabase
+    const { data, error } = await supabase
       .from("Campaign")
-      .select("*, Account!Campaign_account_fkey!inner(*)")
-      .contains("Account.users", [user]);
+      .select(
+        "*, Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+      )
+      .contains("Account.users", [user])
+      .order("date_start", {
+        ascending: true,
+      });
+
+    console.log({ data, error });
+
+    return { data, error };
   }
 };
 
@@ -365,6 +379,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
       const description = formData.get("description");
       const date_start = formData.get("date_start");
       const date_end = formData.get("date_end");
+      const status = formData.get("status");
 
       const values = {
         creator: creator,
@@ -373,6 +388,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         description,
         date_start,
         date_end,
+        status,
       };
 
       if (name === "") {
@@ -405,12 +421,18 @@ export const handleAction = async (formData: FormData, request: Request) => {
     if (action === "update-tag") {
       values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
       table = "Action";
-    } else if (action === "update-status") {
+    } else if (action === "update-action-status") {
       values = {
         status: formData.get("status") as string,
         updated_at: "NOW()",
       };
       table = "Action";
+    } else if (action === "update-campaign-status") {
+      values = {
+        status: formData.get("status") as string,
+        updated_at: "NOW()",
+      };
+      table = "Campaign";
     } else if (action === "update-date") {
       values = {
         date: formData.get("date") as string,

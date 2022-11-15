@@ -241,7 +241,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                     onSelect={(event) => {
                       fetcher.submit(
                         {
-                          action: "update-status",
+                          action: "update-action-status",
                           id: action.id,
                           status: stat.id,
                         },
