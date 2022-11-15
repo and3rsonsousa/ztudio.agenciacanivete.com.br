@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import dayjs from "dayjs";
 
 export default function InputField({
   title,
@@ -20,8 +20,6 @@ export default function InputField({
 
   onChange?: (value: string) => void;
 }) {
-  const [Value, setValue] = useState(value);
-
   return (
     <label className="field">
       <span className="field-label">{title}</span>
@@ -30,9 +28,12 @@ export default function InputField({
         className="field-input"
         placeholder={placeholder ?? title}
         name={name}
-        value={Value}
+        defaultValue={
+          type === "datetime-local"
+            ? dayjs(value).format("YYYY-MM-DD[T]HH:mm")
+            : value
+        }
         onChange={(event) => {
-          setValue(event.target.value);
           if (onChange) {
             onChange(event.target.value);
           }

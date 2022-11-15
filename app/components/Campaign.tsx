@@ -11,7 +11,6 @@ import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import type { CampaignModel, ItemModel } from "~/lib/models";
-import { action } from "~/routes/handle-action";
 
 export function Campaign({ campaign }: { campaign: CampaignModel }) {
   const matches = useMatches();

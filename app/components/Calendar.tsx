@@ -1,5 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useMatches, useNavigate, useSearchParams } from "@remix-run/react";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useState } from "react";
 import { getPeriod } from "~/lib/functions";
 import type {
@@ -8,14 +12,10 @@ import type {
   CelebrationModel,
   DayModel,
 } from "~/lib/models";
-import InstagramGrid from "./InstagramGrid";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
 import Button from "./Forms/Button";
-import dayjs from "dayjs";
-import "dayjs/locale/pt-br";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import InstagramGrid from "./InstagramGrid";
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.locale("pt-br");
@@ -32,7 +32,6 @@ export default function Calendar({
   const matches = useMatches();
   const [searchParams] = useSearchParams();
   let height = 0;
-  let lastCampaign: string;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
   const today = dayjs();
   const period = searchParams.get("period");
