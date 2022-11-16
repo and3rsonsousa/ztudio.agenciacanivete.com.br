@@ -250,7 +250,6 @@ export default function ActionDialog({
           lines={action ? 5 : 3}
         />
 
-        <pre>{JSON.stringify(action, undefined, 2)}</pre>
         <div className="grid w-full grid-cols-2 gap-4">
           <SelectField
             name="tag"
