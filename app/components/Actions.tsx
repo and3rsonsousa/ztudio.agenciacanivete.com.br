@@ -1,4 +1,5 @@
 import {
+  ArrowSmallRightIcon,
   CheckCircleIcon,
   ChevronRightIcon,
   DocumentDuplicateIcon as Duplicate,
@@ -33,14 +34,9 @@ export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
   const fetcher = useFetcher();
   const url = matches[1].data.url;
-  const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: ItemModel[] = matches[1].data.tags;
-  const account = accounts.filter(
-    (account) => account.id === action.account
-  )[0];
-  const tag = tags.filter((tag) => tag.id === action.tag)[0];
-
   const status: ItemModel[] = matches[1].data.status;
+
   const navigate = useNavigate();
 
   return (
@@ -76,23 +72,21 @@ export const Action = ({ action }: { action: ActionModel }) => {
                   ghost.parentNode?.removeChild(ghost);
                 }, 1000);
               }}
-              className={`action-line duration-500 bg-${
-                status.filter((stat) => stat.id === action.status)[0].slug
-              } bg-${
-                status.filter((stat) => stat.id === action.status)[0].slug
-              }-hover flex cursor-pointer items-center justify-between gap-2`}
+              className={`action-line py-1 px-2 duration-500 bg-${action.Status.slug} bg-${action.Status.slug}-hover flex cursor-pointer items-center justify-between gap-2`}
               // title={`${action.name} ( ${action.Account?.name} )`}
               onClick={() => {
                 navigate(
-                  `/dashboard/${account.slug}/action/${action.id}?redirectTo=${url}`
+                  `/dashboard/${action.Account.slug}/action/${action.id}?redirectTo=${url}`
                 );
               }}
             >
               <div className="flex items-center gap-1 overflow-hidden">
-                <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
-                  {tag.name.slice(0, 3)}
+                <div
+                  className={`text-xx hidde rounded-l font-semibold uppercase text-white/50 2xl:block`}
+                >
+                  {action.Tag.name.slice(0, 3)}
                 </div>
-                <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap  text-xs font-medium">
                   {action.name}
                 </div>
               </div>
@@ -137,7 +131,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
         <ContextMenu.Content className="dropdown-content w-36">
           <ContextMenu.Item asChild>
             <Link
-              to={`/dashboard/${account.slug}/action/${action.id}`}
+              to={`/dashboard/${action.Account.slug}/action/${action.id}`}
               className="dropdown-item item-small flex items-center gap-2"
             >
               <PencilSquareIcon className="w-4" /> <div>Editar</div>
@@ -282,27 +276,38 @@ export const ActionMedium = ({
 }) => {
   const matches = useMatches();
   const fetcher = useFetcher();
-  const tags: ItemModel[] = matches[1].data.tags;
+  // const tags: ItemModel[] = matches[1].data.tags;
+  // const status: ItemModel[] = matches[1].data.status;
   const acccounts: AccountModel[] = matches[1].data.accounts;
   const account = acccounts.filter(
     (account) => account.id === action.account
   )[0];
-  const status: ItemModel[] = matches[1].data.status;
-  const tag = tags.filter((tag) => tag.id === action.tag)[0];
-  const stat = status.filter((stat) => stat.id === action.status)[0];
+  // const tag = tags.filter((tag) => tag.id === action.tag)[0];
+  // const stat = action.Status;
   const navigate = useNavigate();
   const date = dayjs(action.date);
 
   return (
     <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${stat.slug}`}
+      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${action.Status.slug}`}
     >
       <div className="overflow-hidden">
-        <div className="text-sm font-normal">{action.name}</div>
+        <div className="text-sm font-normal dark:text-gray-300">
+          {action.name}
+        </div>
+        {action.campaign && (
+          <Link
+            to={`/dashboard/${action.Account.slug}/campaign/${action.campaign}`}
+            className="text-xx mb-2 flex items-center hover:underline"
+          >
+            <ArrowSmallRightIcon className="w-4" />
+            <span>{action.Campaign.name}</span>
+          </Link>
+        )}
         {action.description ? (
           <div className="text-xx mb-2 line-clamp-3">{action.description}</div>
         ) : null}
-        <div className="text-xx flex gap-4 overflow-hidden text-gray-500">
+        <div className="text-xx flex gap-4 overflow-hidden opacity-75">
           <div className="whitespace-nowrap">
             {showDateAndTime
               ? date.format(
@@ -320,8 +325,8 @@ export const ActionMedium = ({
             </div>
           )}
           <div className="flex items-center gap-1">
-            <div className={`h-1 w-1 rounded-full bg-${tag.slug}`}></div>
-            <div>{tag.name}</div>
+            <div className={`h-1 w-1 rounded-full bg-${action.Tag.slug}`}></div>
+            <div>{action.Tag.name}</div>
           </div>
         </div>
       </div>
@@ -329,7 +334,7 @@ export const ActionMedium = ({
         <button
           title="Editar ação"
           onClick={() => {
-            navigate(`/dashboard/${account.slug}/action/${action.id}`);
+            navigate(`/dashboard/${action.Account.slug}/action/${action.id}`);
           }}
         >
           <PencilIcon className="w-3 transition hover:text-gray-300" />

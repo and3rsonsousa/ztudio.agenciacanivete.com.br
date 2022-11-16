@@ -126,9 +126,9 @@ export const getActions = async (
   if (all && account) {
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
       .eq("Account.slug", account)
-      .not("deleted", "is", true)
+      .is("deleted", null)
       .order("date", {
         ascending: true,
       })
@@ -142,9 +142,9 @@ export const getActions = async (
   if (account) {
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
       .eq("Account.slug", account)
-      .not("deleted", "is", true)
+      .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
       .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
@@ -160,9 +160,9 @@ export const getActions = async (
 
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*)")
+      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
       .contains("Account.users", [user])
-      .not("deleted", "is", true)
+      .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
       .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
       .order("date", {
@@ -194,9 +194,14 @@ export const getCampaign = async (request: Request, id: string) => {
   const { supabase } = getSupabase(request);
   const { data, error } = await supabase
     .from("Campaign")
-    .select("*")
+    .select(
+      "*, Action!inner(*), Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+    )
     .eq("id", id)
     .single();
+
+  console.log(data, error);
+
   return { data, error };
 };
 
@@ -224,7 +229,7 @@ export const getCampaigns = async (
         "*, Account!Campaign_account_fkey!inner(*),Status!Campaign_status_fkey!inner(*)"
       )
       .eq("Account.slug", account)
-      .not("deleted", "is", true)
+      .is("deleted", null)
       .order("date_start", {
         ascending: true,
       });
@@ -240,7 +245,7 @@ export const getCampaigns = async (
         "*, Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
       )
       .contains("Account.users", [user])
-      .not("deleted", "is", true)
+      .is("deleted", null)
       .order("date_start", {
         ascending: true,
       });
@@ -499,7 +504,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
     if (action === "delete-action") {
       const { data, error } = await supabase
         .from("Action")
-        .update({ deleted: true })
+        .update({ deleted: "true" })
         .eq("id", id)
         .select()
         .single();
@@ -508,17 +513,17 @@ export const handleAction = async (formData: FormData, request: Request) => {
     } else if (action === "delete-action-trash") {
       table = "Action";
     } else if (action === "delete-celebration") {
+      table = "Celebration";
+    } else if (action === "delete-account") {
+      table = "Account";
+    } else if (action === "delete-campaign") {
       const { data, error } = await supabase
-        .from("Celebration")
-        .update({ deleted: true })
+        .from("Campaign")
+        .update({ deleted: "true" })
         .eq("id", id)
         .select()
         .single();
       return { data, error };
-    } else if (action === "delete-account") {
-      table = "Account";
-    } else if (action === "delete-campaign") {
-      table = "Campaign";
     } else if (action === "delete-campaign-trash") {
       table = "Campaign";
     } else if (action === "delete-person") {

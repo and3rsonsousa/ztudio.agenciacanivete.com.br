@@ -32,37 +32,42 @@ export type CampaignModel = {
   status: string;
   Status?: ItemModel;
   Account?: AccountModel;
+  Action?: ActionModel[];
 };
 
 export type ActionModel = {
   id: string;
   name: string;
   date: string;
-  account?: string;
-  tag?: string;
-  status?: string;
-  description?: string;
-  created_at?: string;
-  updated_at?: string;
-  Account?: AccountModel;
-  Tag?: ItemModel;
-  Status?: ItemModel;
-};
-
-export type ActionModelFull = {
-  id: string;
-  name: string;
-  date: string;
-  account?: AccountModel;
-  tag: ItemModel;
-  status: ItemModel;
-  description?: string;
-  campaign?: CampaignModel;
+  account: string;
+  tag: string;
+  status: string;
+  description: string;
+  campaign: string;
   created_at: string;
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
+
+  Tag: ItemModel;
+  Status: ItemModel;
+  Account: AccountModel;
+  Campaign: CampaignModel;
 };
+
+// export type ActionModelFull = {
+//   id: string;
+//   name: string;
+//   date: string;
+//   account?: AccountModel;
+//   tag: ItemModel;
+//   status: ItemModel;
+//   description?: string;
+//   created_at: string;
+//   updated_at: string;
+//   creator: PersonModel;
+//   responsible: PersonModel;
+// };
 
 export type CelebrationModel = {
   id: string;

@@ -4,7 +4,7 @@ import { useActionData, useLoaderData } from "@remix-run/react";
 import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
-import { getAction, getActions, handleAction } from "~/lib/data";
+import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
 import type { ActionModel, ActionModelFull } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -18,12 +18,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const [{ data: action }, { data: actions }] = await Promise.all([
-    getAction(request, params.id as string),
-    getActions({ request, account: params.slug }),
-  ]);
+  const [{ data: action }, { data: actions }, { data: campaigns }] =
+    await Promise.all([
+      getAction(request, params.id as string),
+      getActions({ request, account: params.slug }),
+      getCampaigns({ request, account: params.slug }),
+    ]);
 
-  return { action, actions };
+  return { action, actions, campaigns };
 };
 
 export default function ActionPage() {

@@ -10,20 +10,21 @@ import type {
   AccountModel,
   ActionModelFull,
   CampaignModel,
+  ItemModel,
   PersonModel,
 } from "~/lib/models";
+import Exclamation from "../Exclamation";
 import Button from "../Forms/Button";
 import { default as Field, default as InputField } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
-import Exclamation from "../Exclamation";
 
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
-import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import Loader from "../Loader";
 
 dayjs.extend(utc);
@@ -56,10 +57,11 @@ export default function ActionDialog({
   const date = context.date.dateOfTheDay;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const tags: CampaignModel[] = matches[1].data.tags;
-  const status: CampaignModel[] = matches[1].data.status;
+  const tags: ItemModel[] = matches[1].data.tags;
+  const status: ItemModel[] = matches[1].data.status;
   const persons: PersonModel[] = matches[1].data.persons;
-  const campaigns: CampaignModel[] = matches[2].data.campaigns;
+  const campaigns: CampaignModel[] =
+    matches[2].data.campaigns ?? matches[3].data.campaigns;
 
   const creator: PersonModel = action ? action.creator : matches[1].data.person;
   const account: AccountModel = action
@@ -90,6 +92,8 @@ export default function ActionDialog({
             value: campaign.id,
           }))
       : [];
+
+  console.log(matches);
 
   const isAdding =
     fetcher.state === "submitting" &&
@@ -219,20 +223,28 @@ export default function ActionDialog({
             onChange={setSelectedAccount}
           />
         )}
-        <SelectField
-          name="campaign"
-          title="Campanha"
-          items={campaignItems}
-          placeholder={
-            selectedAccount
-              ? campaignItems?.length > 0
-                ? "Selecione uma campanha"
-                : "Nenhum campanha para esse cliente"
-              : "Escolha um cliente primeiro"
-          }
-          disabled={campaignItems?.length === 0 && selectedAccount !== ""}
-          value={action ? action.campaign?.id : undefined}
-        />
+        {matches[3] && matches[3].data.campaign ? (
+          <input
+            type="hidden"
+            name="campaign"
+            value={matches[3].data.campaign.id}
+          />
+        ) : (
+          <SelectField
+            name="campaign"
+            title="Campanha"
+            items={campaignItems}
+            placeholder={
+              selectedAccount
+                ? campaignItems?.length > 0
+                  ? "Selecione uma campanha"
+                  : "Nenhum campanha para esse cliente"
+                : "Escolha um cliente primeiro"
+            }
+            disabled={campaignItems?.length === 0 && selectedAccount !== ""}
+            value={action ? action.campaign?.id : undefined}
+          />
+        )}
         <TextareaField
           name="description"
           title="Descrição"

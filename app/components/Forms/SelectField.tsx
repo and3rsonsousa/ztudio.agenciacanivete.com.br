@@ -37,7 +37,7 @@ export default function SelectField({
         name={name}
         disabled={disabled}
       >
-        <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed disabled:text-gray-300">
+        <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed ">
           <Select.Value placeholder={placeholder ?? "Selecione um item"} />
           <Select.Icon className="-mr-3">
             {/* <ChevronUpDownIcon className="w-6" /> */}

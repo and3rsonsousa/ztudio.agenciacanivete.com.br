@@ -143,6 +143,7 @@ html{
   .field-input {
     @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50 dark:placeholder:text-gray-700;
     @apply focus-block focus:text-gray-700;
+    @apply disabled:text-gray-300 dark:disabled:text-gray-700;
     @apply dark:bg-black/25 dark:focus:ring-brand-900;
     @apply invalid:border-error-500 invalid:ring-error-500/25 dark:invalid:ring-error-500/25;
   }
@@ -320,7 +321,8 @@ html{
 .bg-tiktok-hover {
   @apply hover:bg-tiktok-500 dark:hover:bg-tiktok-600
 }
-.border-tiktok {@apply border-tiktok-500}
+.border-tiktok {
+  @apply border-tiktok-500}
 
 
 
@@ -417,7 +419,7 @@ html{
 }
 
  .action-line { 
-  @apply transition mx-1 mt-1 rounded py-1 px-2
+  @apply transition mx-1 mt-1 rounded
   
 } 
 
