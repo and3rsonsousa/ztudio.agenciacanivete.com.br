@@ -252,7 +252,7 @@ export default function ActionDialog({
 
         <pre>{JSON.stringify(action, undefined, 2)}</pre>
         <div className="grid w-full grid-cols-2 gap-4">
-          {/* <SelectField
+          <SelectField
             name="tag"
             title="Tags"
             value={
@@ -271,7 +271,7 @@ export default function ActionDialog({
               title: stat.name,
               value: stat.id,
             }))}
-          /> */}
+          />
 
           <InputField
             name="date"

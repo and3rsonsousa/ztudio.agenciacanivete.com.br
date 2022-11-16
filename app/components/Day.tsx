@@ -142,7 +142,7 @@ export default function Day({
 
         <div>
           {day.actions
-            .sort((a, b) => (a.Status.priority > b.Status.priority ? -1 : 1))
+            .sort((a, b) => (a.status.priority > b.status.priority ? -1 : 1))
             .map((action, index) => (
               <Action key={action.id} action={action} />
             ))}
