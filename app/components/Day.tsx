@@ -141,9 +141,11 @@ export default function Day({
         </div>
 
         <div>
-          {day.actions.map((action, index) => (
-            <Action key={action.id} action={action} />
-          ))}
+          {day.actions
+            .sort((a, b) => (a.Status.priority > b.Status.priority ? -1 : 1))
+            .map((action, index) => (
+              <Action key={action.id} action={action} />
+            ))}
         </div>
       </div>
       <div className="p-1">

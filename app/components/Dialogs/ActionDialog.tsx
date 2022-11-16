@@ -8,7 +8,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import type {
   AccountModel,
-  ActionModelFull,
+  ActionModel,
   CampaignModel,
   ItemModel,
   PersonModel,
@@ -37,7 +37,7 @@ export default function ActionDialog({
   action,
 }: {
   date?: Dayjs;
-  action?: ActionModelFull;
+  action?: ActionModel;
 }) {
   const matches = useMatches();
   const fetcher = useFetcher();
@@ -92,8 +92,6 @@ export default function ActionDialog({
             value: campaign.id,
           }))
       : [];
-
-  console.log(matches);
 
   const isAdding =
     fetcher.state === "submitting" &&
@@ -242,7 +240,7 @@ export default function ActionDialog({
                 : "Escolha um cliente primeiro"
             }
             disabled={campaignItems?.length === 0 && selectedAccount !== ""}
-            value={action ? action.campaign?.id : undefined}
+            value={action ? action.Campaign?.id : undefined}
           />
         )}
         <TextareaField
@@ -257,7 +255,7 @@ export default function ActionDialog({
             name="tag"
             title="Tags"
             value={
-              action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
+              action ? action.Tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
             }
             items={tags.map((tag) => ({ title: tag.name, value: tag.id }))}
           />
@@ -266,7 +264,7 @@ export default function ActionDialog({
             name="status"
             title="Status"
             value={
-              action ? action.status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
+              action ? action.Status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
             }
             items={status.map((stat) => ({
               title: stat.name,

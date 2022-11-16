@@ -200,8 +200,6 @@ export const getCampaign = async (request: Request, id: string) => {
     .eq("id", id)
     .single();
 
-  console.log(data, error);
-
   return { data, error };
 };
 
@@ -249,8 +247,6 @@ export const getCampaigns = async (
       .order("date_start", {
         ascending: true,
       });
-
-    console.log({ data, error });
 
     return { data, error };
   }

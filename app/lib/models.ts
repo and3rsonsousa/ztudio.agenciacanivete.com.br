@@ -50,7 +50,7 @@ export type ActionModel = {
   responsible: PersonModel;
 
   Tag: ItemModel;
-  Status: ItemModel;
+  Status: ItemModel & { priority: number };
   Account: AccountModel;
   Campaign: CampaignModel;
 };

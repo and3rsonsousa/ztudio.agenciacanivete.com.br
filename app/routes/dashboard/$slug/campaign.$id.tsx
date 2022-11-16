@@ -35,8 +35,6 @@ export default function CampaignsPage() {
     actions: { setOpenDialogAction: (b: boolean) => void };
   } = useOutletContext();
 
-  console.log(campaign);
-
   return (
     <div className="h-full overflow-hidden p-4 lg:p-8">
       <div className="mx-auto h-full max-w-4xl grid-cols-3 overflow-hidden lg:grid">
