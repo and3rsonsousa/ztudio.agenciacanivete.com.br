@@ -39,20 +39,20 @@ export type ActionModel = {
   id: string;
   name: string;
   date: string;
-  account: string;
-  tag: string;
-  status: string;
+  // account: string;
+  // tag: string;
+  // status: string;
   description: string;
-  campaign: string;
+  // campaign: string;
   created_at: string;
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
 
-  Tag: ItemModel;
-  Status: ItemModel & { priority: number };
-  Account: AccountModel;
-  Campaign: CampaignModel;
+  tag: ItemModel;
+  status: ItemModel & { priority: number };
+  account: AccountModel;
+  campaign: CampaignModel;
 };
 
 // export type ActionModelFull = {

@@ -1,6 +1,8 @@
 import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
+const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+
 export const getPerson = (id: string, request: Request) => {
   const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").eq("id", id).single();
@@ -126,7 +128,7 @@ export const getActions = async (
   if (all && account) {
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
+      .select(SQL__GET__ACTION)
       .eq("Account.slug", account)
       .is("deleted", null)
       .order("date", {
@@ -142,7 +144,10 @@ export const getActions = async (
   if (account) {
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
+      .select(
+        // "*, account:Account(*), tag:Tag(*), status:Status(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
+        SQL__GET__ACTION
+      )
       .eq("Account.slug", account)
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
@@ -160,7 +165,7 @@ export const getActions = async (
 
     const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*), Tag!inner(*), Status(*), Campaign(*)")
+      .select(SQL__GET__ACTION)
       .contains("Account.users", [user])
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
@@ -252,15 +257,19 @@ export const getCampaigns = async (
   }
 };
 
-export const getAction = (request: Request, id: string) => {
+export const getAction = async (request: Request, id: string) => {
   const { supabase } = getSupabase(request);
-  return supabase
+  const { data, error } = await supabase
     .from("Action")
     .select(
-      "*, account:Account(*), status(*), tag:Tag(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
+      "*, account:Account(*), tag:Tag(*), status:Status(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
     )
     .eq("id", id)
     .single();
+
+  console.log({ data, error });
+
+  return { data, error };
 };
 
 export async function updateAction(

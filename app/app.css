@@ -1405,6 +1405,14 @@ h5 {
   white-space: nowrap;
 }
 
+.whitespace-pre {
+  white-space: pre;
+}
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }

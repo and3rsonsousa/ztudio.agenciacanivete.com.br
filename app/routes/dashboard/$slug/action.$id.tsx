@@ -5,7 +5,7 @@ import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
-import type { ActionModel, ActionModelFull } from "~/lib/models";
+import type { ActionModel } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function ActionPage() {
   const { action, actions } = useLoaderData<{
-    action: ActionModelFull;
+    action: ActionModel;
     actions: ActionModel[];
   }>();
   const actionData = useActionData<{ error: { message: string } }>();

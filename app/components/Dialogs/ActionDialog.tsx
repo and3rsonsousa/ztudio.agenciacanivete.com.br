@@ -123,10 +123,10 @@ export default function ActionDialog({
     if (action) {
       const save = setInterval(() => {
         if (isDirty) {
-          fetcher.submit(formRef.current, {
-            method: "post",
-            action: `/handle-action`,
-          });
+          // fetcher.submit(formRef.current, {
+          //   method: "post",
+          //   action: `/handle-action`,
+          // });
           setDirty(false);
         }
       }, 5000);
@@ -240,7 +240,7 @@ export default function ActionDialog({
                 : "Escolha um cliente primeiro"
             }
             disabled={campaignItems?.length === 0 && selectedAccount !== ""}
-            value={action ? action.Campaign?.id : undefined}
+            value={action && action.campaign ? action.campaign.id : undefined}
           />
         )}
         <TextareaField
@@ -250,12 +250,13 @@ export default function ActionDialog({
           lines={action ? 5 : 3}
         />
 
+        <pre>{JSON.stringify(action, undefined, 2)}</pre>
         <div className="grid w-full grid-cols-2 gap-4">
-          <SelectField
+          {/* <SelectField
             name="tag"
             title="Tags"
             value={
-              action ? action.Tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
+              action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
             }
             items={tags.map((tag) => ({ title: tag.name, value: tag.id }))}
           />
@@ -264,13 +265,13 @@ export default function ActionDialog({
             name="status"
             title="Status"
             value={
-              action ? action.Status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
+              action ? action.status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
             }
             items={status.map((stat) => ({
               title: stat.name,
               value: stat.id,
             }))}
-          />
+          /> */}
 
           <InputField
             name="date"
