@@ -103,7 +103,10 @@ export const getTagsStatus = async (request: Request) => {
   const { supabase } = getSupabase(request);
   const [{ data: tags }, { data: status }] = await Promise.all([
     supabase.from("Tag").select("*").order("name", { ascending: true }),
-    supabase.from("Status").select("*"),
+    supabase
+      .from("Status")
+      .select("*")
+      .order("created_at", { ascending: true }),
   ]);
 
   return { tags, status };
