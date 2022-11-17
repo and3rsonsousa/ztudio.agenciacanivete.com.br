@@ -44,25 +44,29 @@ export default function Accounts() {
         </div>
       </div>
       <div className="flex h-full overflow-hidden">
-        <div className="no-scrollbars w-1/2 max-w-md divide-y overflow-hidden overflow-y-auto dark:divide-gray-800">
+        <div className="no-scrollbars w-24 max-w-md divide-y overflow-hidden overflow-y-auto dark:divide-gray-800 md:w-1/2">
           {accounts.map((account) => (
             <div
               key={account.id}
-              className="group flex items-center justify-between"
+              className="group flex  items-center justify-between"
             >
               <Link
                 to={`/dashboard/admin/accounts/${account.id}`}
-                className="block py-4 px-8  font-medium focus:text-brand focus:outline-none"
+                className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
               >
-                {account.name}
+                <span className="hidden md:block">{account.name}</span>
+                <span className="block w-full text-center uppercase md:hidden">
+                  {account.name.slice(0, 3)}
+                </span>
               </Link>
-              <div className="pr-2 opacity-0 transition group-hover:opacity-100">
+              <div className="hidden pr-2 opacity-0 transition group-hover:opacity-100 md:block">
                 <Form method="post">
                   <input type="hidden" name="action" value="delete-account" />
                   <input type="hidden" name="id" value={account.id} />
                   <Button
                     small
                     link
+                    icon
                     onClick={(event) => {
                       if (
                         !window.confirm(

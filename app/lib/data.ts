@@ -1,8 +1,10 @@
+import { getUser } from "~/lib/auth.server";
 import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
 const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
 
+// Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
   const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").eq("id", id).single();
@@ -17,6 +19,8 @@ export const getPersons = (request: Request) => {
   const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").order("name", { ascending: true });
 };
+
+// Simplificar para 2
 
 export const getAccount = async (
   request: Request,
@@ -47,57 +51,6 @@ export const getAllAccounts = (request: Request) => {
     ascending: true,
   });
 };
-
-// export const deleteAccount = async (id: string) => {
-//   let { data, error } = await supabase.from("Account").delete().eq("id", id);
-//   if (error) {
-//     return error;
-//   }
-//   return { data };
-// };
-
-// export const addAccount = async (
-//   name: string,
-//   slug: string,
-//   users: string[]
-// ) => {
-//   let { data, error } = await supabase.from("Account").insert([
-//     {
-//       name,
-//       slug,
-//       users,
-//     },
-//   ]);
-
-//   if (error) {
-//     return { error };
-//   }
-
-//   return { data };
-// };
-
-// export const updateAccount = async (
-//   id: string,
-//   name: string,
-//   slug: string,
-//   users: string[]
-// ) => {
-//   let { data, error } = await supabase
-//     .from("Account")
-//     .update({
-//       id,
-//       name,
-//       slug,
-//       users,
-//     })
-//     .eq("id", id);
-
-//   if (error) {
-//     return { error };
-//   }
-
-//   return { data };
-// };
 
 export const getTagsStatus = async (request: Request) => {
   const { supabase } = getSupabase(request);
@@ -147,10 +100,7 @@ export const getActions = async (
   if (account) {
     const { data, error } = await supabase
       .from("Action")
-      .select(
-        // "*, account:Account(*), tag:Tag(*), status:Status(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
-        SQL__GET__ACTION
-      )
+      .select(SQL__GET__ACTION)
       .eq("Account.slug", account)
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
@@ -273,29 +223,29 @@ export const getAction = async (request: Request, id: string) => {
   return { data, error };
 };
 
-export async function updateAction(
-  request: Request,
-  id: string,
-  values: {
-    name?: string;
-    date?: string;
-    account?: string;
-    description?: string;
-    tag?: string;
-    status?: string;
-    responsible?: string;
-    campaign?: string;
-    date_end?: string;
-  }
-) {
-  const { supabase } = getSupabase(request);
-  const { data, error } = await supabase
-    .from("Action")
-    .update(values)
-    .eq("id", id);
+// export async function updateAction(
+//   request: Request,
+//   id: string,
+//   values: {
+//     name?: string;
+//     date?: string;
+//     account?: string;
+//     description?: string;
+//     tag?: string;
+//     status?: string;
+//     responsible?: string;
+//     campaign?: string;
+//     date_end?: string;
+//   }
+// ) {
+//   const { supabase } = getSupabase(request);
+//   const { data, error } = await supabase
+//     .from("Action")
+//     .update(values)
+//     .eq("id", id);
 
-  return { data, error };
-}
+//   return { data, error };
+// }
 
 async function createCelebration(formData: FormData, request: Request) {
   const { supabase } = getSupabase(request);
@@ -508,14 +458,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
     const { supabase } = getSupabase(request);
 
     if (action === "delete-action") {
-      const { data, error } = await supabase
-        .from("Action")
-        .update({ deleted: "true" })
-        .eq("id", id)
-        .select()
-        .single();
-
-      return { data, error };
+      // const { data, error } = await supabase
+      //   .from("Action")
+      //   .update({ deleted: "true" })
+      //   .eq("id", id)
+      //   .select()
+      //   .single();
+      // return { data, error };
     } else if (action === "delete-action-trash") {
       table = "Action";
     } else if (action === "delete-celebration") {
@@ -533,7 +482,21 @@ export const handleAction = async (formData: FormData, request: Request) => {
     } else if (action === "delete-campaign-trash") {
       table = "Campaign";
     } else if (action === "delete-person") {
-      table = "Person";
+      const session = await getUser(request);
+      const access_token = session.data.session.access_token;
+
+      const { data, error } = await supabase
+        .from("Person")
+        .delete()
+        .eq("id", id)
+        .select()
+        .single();
+
+      // if(!error) {
+      //   supabase.auth.admin.deleteUser(data)
+      // }
+
+      return { data, error };
     }
 
     const { data, error } = await supabase

@@ -35,7 +35,7 @@ export default function UserId() {
   }>();
 
   return (
-    <div className="h-full w-1/2 max-w-md border-l p-4 dark:border-gray-800 lg:px-8">
+    <div className="h-full max-w-md flex-grow border-l p-4 dark:border-gray-800 md:w-1/2 lg:px-8">
       <h4 className="mb-4">Atualizar Cliente</h4>
       {actionData?.error && (
         <Exclamation type="error">{actionData.error.message}</Exclamation>
@@ -61,7 +61,12 @@ export default function UserId() {
           ))}
         </div>
 
-        <div className="flex justify-end">
+        <div className="my-4 flex justify-end gap-2">
+          <Form method="post">
+            <input type="hidden" name="id" value={account.id} />
+            <input type="hidden" name="action" value="delete-account" />
+            <Button>Excluir</Button>
+          </Form>
           <Button type="submit" primary>
             Atualizar
           </Button>
