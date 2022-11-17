@@ -104,19 +104,33 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="header-menu lg:flex lg:w-full lg:flex-col lg:p-2">
           <div className="lg:hidden">
-            <button
-              className="header-menu-link"
-              onClick={() => {
-                settAccountsMenu(!accountsMenu);
-              }}
-            >
-              <BriefcaseIcon />
-            </button>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="header-menu-link">
+                  <BriefcaseIcon />
+                </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content className="dropdown-content">
+                  {accounts.map((account) => (
+                    <DropdownMenu.Item key={account.id} asChild>
+                      <Link
+                        to={`/dashboard/${account.slug}/${searchParams}`}
+                        className="dropdown-item item-small block"
+                      >
+                        {account.name}
+                      </Link>
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </div>
 
           <div className="lg:p-2">
             <SearchBox />
           </div>
+
           <div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="header-menu-link items-center gap-2 lg:w-full lg:justify-between">
@@ -234,101 +248,95 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
-      {accountsMenu && (
-        <div className="border-b bg-gray-50 p-2 lg:hidden">
-          {accounts.map((account) => (
-            <div key={account.id}>
-              <Link
-                to={`/dashboard/${account.slug}/${searchParams}`}
-                onClick={() => {
-                  settAccountsMenu(false);
-                }}
-                className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent px-2 py-1 text-sm font-normal transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
-              >
-                {account.name}
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Content */}
       <div className="flex-auto">{children}</div>
 
-      {/* Dialog for Celebration */}
-      <Dialog.Root
-        open={context.celebrations.openDialogCelebration}
-        onOpenChange={context.celebrations.setOpenDialogCelebration}
-      >
-        <AnimatePresence>
-          {context.celebrations.openDialogCelebration && (
-            <Dialog.Portal forceMount>
-              <Dialog.Overlay asChild forceMount>
-                <motion.div className="dialog-overlay" {...fade()}></motion.div>
-              </Dialog.Overlay>
+      <>
+        {/* Dialog for Celebration */}
+        <Dialog.Root
+          open={context.celebrations.openDialogCelebration}
+          onOpenChange={context.celebrations.setOpenDialogCelebration}
+        >
+          <AnimatePresence>
+            {context.celebrations.openDialogCelebration && (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
+                  <motion.div
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
 
-              <Dialog.Content forceMount className="dialog">
-                <motion.div
-                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                  {...scaleUp()}
-                >
-                  <CelebrationDialog />
-                </motion.div>
-              </Dialog.Content>
-            </Dialog.Portal>
-          )}
-        </AnimatePresence>
-      </Dialog.Root>
+                <Dialog.Content forceMount className="dialog">
+                  <motion.div
+                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    {...scaleUp()}
+                  >
+                    <CelebrationDialog />
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            )}
+          </AnimatePresence>
+        </Dialog.Root>
 
-      {/* Dialog for Actions */}
-      <Dialog.Root
-        open={context.actions.openDialogAction}
-        onOpenChange={context.actions.setOpenDialogAction}
-      >
-        <AnimatePresence>
-          {context.actions.openDialogAction && (
-            <Dialog.Portal forceMount>
-              <Dialog.Overlay asChild forceMount>
-                <motion.div className="dialog-overlay" {...fade()}></motion.div>
-              </Dialog.Overlay>
+        {/* Dialog for Actions */}
+        <Dialog.Root
+          open={context.actions.openDialogAction}
+          onOpenChange={context.actions.setOpenDialogAction}
+        >
+          <AnimatePresence>
+            {context.actions.openDialogAction && (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
+                  <motion.div
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
 
-              <Dialog.Content forceMount className="dialog">
-                <motion.div
-                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                  {...scaleUp()}
-                >
-                  <ActionDialog />
-                </motion.div>
-              </Dialog.Content>
-            </Dialog.Portal>
-          )}
-        </AnimatePresence>
-      </Dialog.Root>
+                <Dialog.Content forceMount className="dialog">
+                  <motion.div
+                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    {...scaleUp()}
+                  >
+                    <ActionDialog />
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            )}
+          </AnimatePresence>
+        </Dialog.Root>
 
-      {/* Dialog for Campaign */}
-      <Dialog.Root
-        open={context.campaigns.openDialogCampaign}
-        onOpenChange={context.campaigns.setOpenDialogCampaign}
-      >
-        <AnimatePresence>
-          {context.campaigns.openDialogCampaign && (
-            <Dialog.Portal forceMount>
-              <Dialog.Overlay asChild forceMount>
-                <motion.div className="dialog-overlay" {...fade()}></motion.div>
-              </Dialog.Overlay>
+        {/* Dialog for Campaign */}
+        <Dialog.Root
+          open={context.campaigns.openDialogCampaign}
+          onOpenChange={context.campaigns.setOpenDialogCampaign}
+        >
+          <AnimatePresence>
+            {context.campaigns.openDialogCampaign && (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
+                  <motion.div
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
 
-              <Dialog.Content forceMount className="dialog">
-                <motion.div
-                  className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
-                  {...scaleUp()}
-                >
-                  <CampaignDialog />
-                </motion.div>
-              </Dialog.Content>
-            </Dialog.Portal>
-          )}
-        </AnimatePresence>
-      </Dialog.Root>
+                <Dialog.Content forceMount className="dialog">
+                  <motion.div
+                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    {...scaleUp()}
+                  >
+                    <CampaignDialog />
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            )}
+          </AnimatePresence>
+        </Dialog.Root>
+      </>
     </div>
   );
 }

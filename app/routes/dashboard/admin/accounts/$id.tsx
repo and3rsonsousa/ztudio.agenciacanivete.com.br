@@ -1,4 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Forms/Button";
@@ -20,6 +21,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
   const { data, error } = await handleAction(formData, request);
+
+  if (formData.get("redirectTo")) {
+    return redirect(formData.get("redirectTo") as string);
+  }
 
   return { data, error };
 };
@@ -65,6 +70,12 @@ export default function UserId() {
           <Form method="post">
             <input type="hidden" name="id" value={account.id} />
             <input type="hidden" name="action" value="delete-account" />
+            <input
+              type="hidden"
+              name="redirectTo"
+              value={`/dashboard/admin/accounts`}
+            />
+
             <Button>Excluir</Button>
           </Form>
           <Button type="submit" primary>
