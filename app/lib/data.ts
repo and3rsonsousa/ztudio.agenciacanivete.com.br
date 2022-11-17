@@ -267,8 +267,6 @@ export const getAction = async (request: Request, id: string) => {
     .eq("id", id)
     .single();
 
-  console.log({ data, error });
-
   return { data, error };
 };
 

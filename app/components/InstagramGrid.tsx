@@ -9,6 +9,9 @@ import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
 import Button from "./Forms/Button";
 
+export type SupportType = { id: string; date: string; name: string };
+export type FilterType = SupportType[];
+
 export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
   const [view, setView] = useState(true);
   const [fill, setFill] = useState(true);
@@ -19,13 +22,14 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
     (tag: ItemModel) => tag.slug === "post" || tag.slug === "reels"
   );
 
-  let filtered: ActionModel[] = actions.filter(
+  let filtered: FilterType = actions.filter(
     (action: ActionModel) =>
-      gridTags.filter((tag: ItemModel) => tag.id === action.tag).length > 0
+      gridTags.filter((tag: ItemModel) => tag.id === action.tag.id).length > 0
   );
 
   if (fill && filtered.length > 3 && filtered.length % 3 !== 0) {
     const support = Array(3 - (filtered.length % 3)).fill("support");
+
     support.forEach((_, index) => {
       filtered.push({
         id: index.toString(),
@@ -36,6 +40,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
       });
     });
   }
+
   filtered = filtered.reverse();
 
   return (

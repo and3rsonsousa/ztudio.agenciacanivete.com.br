@@ -29,6 +29,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Forms/Button";
+import type { SupportType } from "./InstagramGrid";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -72,17 +73,16 @@ export const Action = ({ action }: { action: ActionModel }) => {
                   ghost.parentNode?.removeChild(ghost);
                 }, 1000);
               }}
-              className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover flex cursor-pointer items-center justify-between gap-2`}
-              // title={`${action.name} ( ${action.Account?.name} )`}
+              className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
               onClick={() => {
                 navigate(
                   `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
                 );
               }}
             >
-              <div className="flex items-center gap-1 overflow-hidden">
+              <div className=" flex items-center gap-1 overflow-hidden">
                 <div
-                  className={`text-xx hidde rounded-l font-semibold uppercase text-white/50 2xl:block`}
+                  className={`text-xx hidde rounded-l font-semibold uppercase opacity-50 2xl:block`}
                 >
                   {action.tag.name.slice(0, 3)}
                 </div>
@@ -382,7 +382,7 @@ export const ActionGrid = ({
   action,
   index,
 }: {
-  action: ActionModel;
+  action: ActionModel | SupportType;
   index: number;
 }) => {
   const context: {
@@ -411,13 +411,13 @@ export const ActionGrid = ({
         >
           <DocumentPlusIcon />
         </Button>
-        {/* <div className="text-xx uppercase tracking-wide">NOVA AÇÃO</div> */}
       </div>
     </div>
   ) : (
     <div
       className={`text-xx flex aspect-square flex-col justify-between border-b p-2 text-center leading-tight dark:border-gray-800 ${
-        action.status.id === "a448e17d-05ba-4ad0-9990-773f9384d15e"
+        (action as ActionModel).status.id ===
+        "a448e17d-05ba-4ad0-9990-773f9384d15e"
           ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-500"
           : ""
       } ${index + (1 % 3) === 0 ? "" : "border-r"}`}
