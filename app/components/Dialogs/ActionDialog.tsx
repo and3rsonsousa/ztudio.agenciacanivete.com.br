@@ -281,7 +281,7 @@ export default function ActionDialog({
                 ? action.date
                 : date
                 ? date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
-                  ? parseInt(dayjs().format("HH")) >= 11
+                  ? parseInt(dayjs().format("HH")) >= 10
                     ? dayjs().add(1, "hour").format("YYYY-MM-DD[T]HH:mm:ss")
                     : date.format("YYYY-MM-DD[T11:12:00]")
                   : date.format("YYYY-MM-DD[T11:12:00]")
