@@ -80,17 +80,20 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 );
               }}
             >
-              <div className=" flex items-center gap-1 overflow-hidden">
+              <div className="flex w-full items-center gap-1 overflow-hidden">
                 <div
-                  className={`text-xx hidde rounded-l font-semibold uppercase opacity-50 2xl:block`}
+                  className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
                 >
                   {action.tag.name.slice(0, 3)}
                 </div>
-                <div className="overflow-hidden text-ellipsis whitespace-nowrap  text-xs font-medium">
+                <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
                   {action.name}
                 </div>
+                <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+                  {action.account.name.slice(0, 3)}
+                </div>
               </div>
-              <div className="text-xx hidden font-medium opacity-75 2xl:block">
+              <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
                 {dayjs(action.date).format(
                   "H[h]".concat(
                     dayjs(action.date).format("mm") !== "00" ? "mm" : ""
@@ -276,14 +279,11 @@ export const ActionMedium = ({
 }) => {
   const matches = useMatches();
   const fetcher = useFetcher();
-  // const tags: ItemModel[] = matches[1].data.tags;
-  // const status: ItemModel[] = matches[1].data.status;
   const acccounts: AccountModel[] = matches[1].data.accounts;
   const account = acccounts.filter(
     (account) => account.id === action.account.id
   )[0];
-  // const tag = tags.filter((tag) => tag.id === action.tag)[0];
-  // const stat = action.Status;
+
   const navigate = useNavigate();
   const date = dayjs(action.date);
 
