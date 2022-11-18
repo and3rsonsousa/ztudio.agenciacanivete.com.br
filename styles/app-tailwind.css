@@ -162,10 +162,10 @@ html{
   }
 
   .field-input {
-    @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50 dark:placeholder:text-gray-700;
+    @apply spacing w-full rounded-xl border border-transparent bg-gray-100 font-normal transition placeholder:text-gray-400 focus:bg-gray-50 dark:placeholder:text-gray-600;
     @apply focus-block focus:text-gray-700;
-    @apply disabled:text-gray-300 dark:disabled:text-gray-700;
-    @apply dark:bg-black/25 dark:focus:ring-brand-900;
+    @apply disabled:text-gray-300 dark:disabled:text-gray-600 dark:disabled:bg-gray-900;
+    @apply dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-brand-900;
     @apply invalid:border-error-500 invalid:ring-error-500/25 dark:invalid:ring-error-500/25;
   }
 }

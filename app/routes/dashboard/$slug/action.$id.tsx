@@ -5,6 +5,7 @@ import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
+import { actionsByPriority } from "~/lib/functions";
 import type { ActionModel } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -46,7 +47,11 @@ export default function ActionPage() {
         </div>
         <div className="col-span-1 h-full overflow-hidden ">
           <h4 className="px-4">Ações recentes</h4>
-          <ActionList actions={actions} hideAccount showDateAndTime />
+          <ActionList
+            actions={actionsByPriority(actions)}
+            hideAccount
+            showDateAndTime
+          />
         </div>
       </div>
     </div>

@@ -123,10 +123,10 @@ export default function ActionDialog({
     if (action) {
       const save = setInterval(() => {
         if (isDirty) {
-          // fetcher.submit(formRef.current, {
-          //   method: "post",
-          //   action: `/handle-action`,
-          // });
+          fetcher.submit(formRef.current, {
+            method: "post",
+            action: `/handle-action`,
+          });
           setDirty(false);
         }
       }, 5000);

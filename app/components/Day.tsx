@@ -1,6 +1,7 @@
 import { useFetcher, useOutletContext } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import { actionsByPriority } from "~/lib/functions";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
 import Button from "./Button";
@@ -145,11 +146,9 @@ export default function Day({
         </div>
 
         <div>
-          {day.actions
-            .sort((a, b) => (a.status.priority > b.status.priority ? -1 : 1))
-            .map((action, index) => (
-              <Action key={action.id} action={action} />
-            ))}
+          {actionsByPriority(day.actions).map((action, index) => (
+            <Action key={action.id} action={action} />
+          ))}
         </div>
       </div>
       <div className="p-1">

@@ -1,3 +1,4 @@
+import { ActionModel } from "~/lib/models";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -55,3 +56,9 @@ export const getYear = (currentDate: Dayjs) => {
 
   return { firstDayOfCurrentYear, year };
 };
+
+export function actionsByPriority(actions: ActionModel[]) {
+  return actions.sort((a, b) =>
+    a.status.priority > b.status.priority ? -1 : 1
+  );
+}

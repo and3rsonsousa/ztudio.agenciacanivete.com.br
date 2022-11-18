@@ -39,35 +39,16 @@ export type ActionModel = {
   id: string;
   name: string;
   date: string;
-  // account: string;
-  // tag: string;
-  // status: string;
   description: string;
-  // campaign: string;
   created_at: string;
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
-
   tag: ItemModel;
   status: ItemModel & { priority: number };
   account: AccountModel;
   campaign: CampaignModel;
 };
-
-// export type ActionModelFull = {
-//   id: string;
-//   name: string;
-//   date: string;
-//   account?: AccountModel;
-//   tag: ItemModel;
-//   status: ItemModel;
-//   description?: string;
-//   created_at: string;
-//   updated_at: string;
-//   creator: PersonModel;
-//   responsible: PersonModel;
-// };
 
 export type CelebrationModel = {
   id: string;
