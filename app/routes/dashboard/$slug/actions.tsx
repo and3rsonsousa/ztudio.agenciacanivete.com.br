@@ -22,7 +22,7 @@ export default function Actions() {
   let currentMonth = "";
   return (
     <div className="no-scrollbars grid gap-x-4 gap-y-2 overflow-hidden overflow-y-auto p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
-      {actions.map((action) => {
+      {actions.reverse().map((action) => {
         const header =
           currentMonth !== dayjs(action.date).format("MM") ? (
             <h4 className="col-span-full py-4 first-letter:capitalize">
