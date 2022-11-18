@@ -72,20 +72,47 @@ export const getActions = async (
     account?: string;
     period?: string | null;
     all?: boolean;
+    where?: string;
   } = {}
 ) => {
-  let { user, account, period, request, all } = args;
+  let { user, account, period, request, all, where } = args;
 
   if (!request) {
     return { error: { message: "Request is undefined" } };
   }
   const { supabase } = getSupabase(request);
 
-  if (all && account) {
+  if (all) {
+    if (account) {
+      const { data, error } = await supabase
+        .from("Action")
+        .select(SQL__GET__ACTION)
+        .eq("Account.slug", account)
+        .is("deleted", null)
+        .order("date", {
+          ascending: true,
+        })
+        .order("created_at", { ascending: true });
+
+      return { data, error };
+    }
+
+    if (where === "trash") {
+      const { data, error } = await supabase
+        .from("Action")
+        .select(SQL__GET__ACTION)
+        .eq("deleted", "true")
+        .order("updated_at", {
+          ascending: false,
+        })
+        .order("created_at", { ascending: true });
+
+      return { data, error };
+    }
+
     const { data, error } = await supabase
       .from("Action")
       .select(SQL__GET__ACTION)
-      .eq("Account.slug", account)
       .is("deleted", null)
       .order("date", {
         ascending: true,
@@ -458,13 +485,13 @@ export const handleAction = async (formData: FormData, request: Request) => {
     const { supabase } = getSupabase(request);
 
     if (action === "delete-action") {
-      // const { data, error } = await supabase
-      //   .from("Action")
-      //   .update({ deleted: "true" })
-      //   .eq("id", id)
-      //   .select()
-      //   .single();
-      // return { data, error };
+      const { data, error } = await supabase
+        .from("Action")
+        .update({ deleted: "true" })
+        .eq("id", id)
+        .select()
+        .single();
+      return { data, error };
     } else if (action === "delete-action-trash") {
       table = "Action";
     } else if (action === "delete-celebration") {

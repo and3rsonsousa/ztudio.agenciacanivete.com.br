@@ -1,6 +1,22 @@
-import { Outlet, useOutletContext } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { useLoaderData } from "@remix-run/react";
+import { Actions } from "~/components/Actions";
+import { getActions } from "~/lib/data";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { data, error } = await getActions({
+    request,
+    all: true,
+    where: "trash",
+  });
+
+  return {
+    actions: data,
+  };
+};
 
 export default function TrashPage() {
+  const { actions } = useLoaderData();
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
@@ -9,7 +25,12 @@ export default function TrashPage() {
         </h2>
       </div>
 
-      <Outlet context={useOutletContext()} />
+      <div className="no-scrollbars flex-auto overflow-hidden overflow-y-auto">
+        <div className="p-4">
+          {/* {JSON.stringify(actions, undefined, 2)} */}
+          <Actions actions={actions} />
+        </div>
+      </div>
     </div>
   );
 }

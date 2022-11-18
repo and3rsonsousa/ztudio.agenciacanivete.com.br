@@ -30,6 +30,7 @@ import dayjs from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import type { SupportType } from "./InstagramGrid";
+import Exclamation from "./Exclamation";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -425,6 +426,40 @@ export const ActionGrid = ({
       <div></div>
       <div>{action.name}</div>
       <div>{dayjs(action.date).format("DD/MM")}</div>
+    </div>
+  );
+};
+
+export const Actions = ({ actions }: { actions: ActionModel[] }) => {
+  let currentMonth = "";
+  return (
+    <div className="no-scrollbars grid gap-x-4 gap-y-2 overflow-hidden overflow-y-auto p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
+      {Array.isArray(actions) && actions.length > 0 ? (
+        actions.reverse().map((action) => {
+          const header =
+            currentMonth !== dayjs(action.date).format("MM") ? (
+              <h4 className="col-span-full py-4 first-letter:capitalize">
+                {dayjs(action.date).format("MMMM [de] YYYY")}
+              </h4>
+            ) : null;
+          currentMonth = dayjs(action.date).format("MM");
+          return (
+            <>
+              {header}
+              <ActionMedium
+                key={action.id}
+                action={action}
+                hideAccount={true}
+                showDateAndTime={true}
+              />
+            </>
+          );
+        })
+      ) : (
+        <Exclamation type="alert" icon>
+          Nenhum item para exibir
+        </Exclamation>
+      )}
     </div>
   );
 };

@@ -420,7 +420,7 @@ html{
   @apply text-info-300 dark:text-info-500 w-6
 }
 .bg-alert{
-  @apply bg-alert-100 dark:bg-alert-700 text-alert-700 dark:text-alert-200
+  @apply bg-alert-100 dark:bg-alert-900 text-alert-700 dark:text-alert-200
 }
 .bg-alert svg {
   @apply text-alert-300 dark:text-alert-500 w-6

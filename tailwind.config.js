@@ -36,17 +36,17 @@ module.exports = {
 
       info: colors.slate,
       error: colors.red,
-      alert: colors.amber,
+      alert: colors.yellow,
       success: colors.emerald,
 
       post: colors.violet,
       reels: colors.fuchsia,
       meeting: colors.sky,
-      stories: colors.amber,
+      stories: colors.orange,
       task: colors.teal,
       tiktok: colors.rose,
 
-      idea: colors.yellow,
+      idea: colors.amber,
       do: colors.orange,
       doing: colors.pink,
       review: colors.violet,
