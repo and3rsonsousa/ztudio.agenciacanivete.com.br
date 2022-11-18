@@ -3,6 +3,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { DayModel } from "~/lib/models";
 import { Action } from "./Actions";
+import Button from "./Button";
 import { CampaignLine } from "./Campaign";
 import Celebration from "./Celebrations";
 
@@ -79,15 +80,18 @@ export default function Day({
     >
       <div>
         <div className="px-2 lg:px-1">
-          <button
+          <Button
             className="day-button appearance-none"
+            icon
+            small
+            link
             onClick={() => {
               context.date.setDateOfTheDay(day.date);
               setSelectedDay(day.date.format("YYYY-MM-DD"));
             }}
           >
             {day.date.format("D")}
-          </button>
+          </Button>
         </div>
 
         <div className={`mt-2 ${height > 0 ? "mb-2 pb-2" : ""}`}>

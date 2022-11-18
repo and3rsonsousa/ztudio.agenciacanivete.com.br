@@ -73,7 +73,7 @@ html{
 
 @layer components {
   .button{
-    @apply touch-none flex gap-2 items-center select-none appearance-none rounded-full px-6 py-3  font-semibold outline-none ring-offset-4 dark:ring-offset-gray-1000 transition;
+    @apply touch-none flex gap-2 items-center select-none appearance-none rounded-full px-6 py-3  font-semibold outline-none ring-offset-4 dark:ring-offset-gray-1000 transition justify-center;
     /* @apply  hover:bg-gray-200 ; */
     /* botão em modo escuro */
     @apply   dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
@@ -223,8 +223,7 @@ html{
 }
 
 .calendar-day .day-button{
-  @apply w-8 h-8 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition text-sm border border-transparent lg:w-6 lg:h-6 lg:text-xs;
-  @apply focus-block
+  @apply w-8 h-8  lg:w-6 lg:h-6 lg:text-xs;
 }
 
 .calendar-day.is-today .day-button {

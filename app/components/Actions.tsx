@@ -103,7 +103,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
             </div>
           </HoverCard.Trigger>
           <HoverCard.Portal>
-            <HoverCard.Content className="max-w-xs rounded bg-gray-800 p-4 text-sm font-light text-gray-300 antialiased dark:bg-gray-100 dark:text-gray-700">
+            <HoverCard.Content className="max-w-xs rounded bg-gray-800 p-4 text-sm font-light text-gray-300 antialiased dark:bg-gray-50 dark:text-gray-700">
               <div className="mb-1 font-medium">{action.name}</div>
               {action.description && (
                 <div className="text-xx mb-1 leading-tight line-clamp-6">

@@ -12,8 +12,9 @@ export default function Button({
   link,
   icon,
   title,
-  onClick,
+  className = "",
   type,
+  onClick,
 }: {
   children: React.ReactNode;
   small?: boolean;
@@ -23,6 +24,7 @@ export default function Button({
   link?: boolean;
   icon?: boolean;
   title?: string;
+  className?: string;
   type?: "submit" | "reset" | "button";
   onClick?: () => void;
 }) {
@@ -52,7 +54,9 @@ export default function Button({
           isHovered && !disabled ? " bg-button-hover" : "bg-button"
         } ${isPressed ? " bg-button-pressed" : "bg-button"} ${
           small ? " button-small " : large ? "button-large" : ""
-        } ${icon ? "button-icon" : ""} ${link ? "button-link" : ""}`}
+        } ${icon ? "button-icon" : ""} ${
+          link ? "button-link" : ""
+        } ${className}`}
         disabled={disabled}
       >
         {children}
