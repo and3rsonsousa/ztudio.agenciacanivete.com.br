@@ -23,7 +23,7 @@ module.exports = {
       white: "white",
       black: "black",
       transparent: "transparent",
-      gray: colors.slate,
+      gray: colors.gray,
 
       brand: {
         DEFAULT: "#8000FF",

@@ -14,7 +14,7 @@ import type {
 } from "~/lib/models";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
-import Button from "./Forms/Button";
+import Button from "./Button";
 import InstagramGrid from "./InstagramGrid";
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);

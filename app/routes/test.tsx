@@ -1,5 +1,7 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
+import { useRef } from "react";
+import { useButton } from "react-aria";
 import { getUser } from "~/lib/auth.server";
 import { getActions } from "~/lib/data";
 
@@ -22,6 +24,7 @@ export default function Test() {
 
   return (
     <div>
+      <div></div>
       <pre className="whitespace-pre-wrap">
         {JSON.stringify(error, undefined, 2)}
       </pre>

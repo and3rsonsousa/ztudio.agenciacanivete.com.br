@@ -7,7 +7,7 @@ import type { ActionModel, ItemModel } from "~/lib/models";
 import { ActionGrid } from "./Actions";
 import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
-import Button from "./Forms/Button";
+import Button from "./Button";
 
 export type SupportType = { id: string; date: string; name: string };
 export type FilterType = SupportType[];

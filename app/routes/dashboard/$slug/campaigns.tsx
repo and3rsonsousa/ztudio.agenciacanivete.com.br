@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData, useOutletContext } from "@remix-run/react";
 import { Campaign } from "~/components/Campaign";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import { getCampaigns } from "~/lib/data";
 import type { CampaignModel } from "~/lib/models";
 

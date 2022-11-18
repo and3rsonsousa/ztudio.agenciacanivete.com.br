@@ -4,7 +4,7 @@ import {
   StarIcon,
 } from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
-import Button from "./Forms/Button";
+import Button from "./Button";
 
 export default function CreateButtons({
   celebration,

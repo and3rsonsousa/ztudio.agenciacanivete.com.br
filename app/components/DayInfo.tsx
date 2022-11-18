@@ -6,7 +6,7 @@ import ActionList from "./ActionList";
 import Celebration from "./Celebrations";
 import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
-import Button from "./Forms/Button";
+import Button from "./Button";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
   const [view, setView] = useState(true);

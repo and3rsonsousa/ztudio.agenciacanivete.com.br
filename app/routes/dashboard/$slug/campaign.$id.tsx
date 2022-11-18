@@ -9,7 +9,7 @@ import {
 import ActionList from "~/components/ActionList";
 import CampaignDialog from "~/components/Dialogs/CampaignDialog";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import { getCampaign, handleAction } from "~/lib/data";
 import type { CampaignModel } from "~/lib/models";
 

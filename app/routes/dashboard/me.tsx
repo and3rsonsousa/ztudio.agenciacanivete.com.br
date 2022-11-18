@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import InputField from "~/components/Forms/InputField";
 import { getUser } from "~/lib/auth.server";
 import { getPersonByUser } from "~/lib/data";

@@ -1,7 +1,7 @@
 import type { ActionFunction } from "@remix-run/cloudflare";
 import { Form, useActionData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import InputField from "~/components/Forms/InputField";
 import { getSupabase } from "~/lib/supabase";
 

@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import CheckboxField from "~/components/Forms/CheckboxField";
 import InputField from "~/components/Forms/InputField";
 import { getAccount, getPersons, handleAction } from "~/lib/data";

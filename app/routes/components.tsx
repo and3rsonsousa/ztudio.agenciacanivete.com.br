@@ -1,10 +1,10 @@
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import DatepickerField from "~/components/Forms/DatepickerField";
 import Field from "~/components/Forms/InputField";
 
 export default function Components() {
   return (
-    <div className="container mx-auto max-w-xl px-8">
+    <div className=" container mx-auto max-w-xl px-8">
       <div className="my-16">
         <h1>Componentes</h1>
       </div>
@@ -20,7 +20,9 @@ export default function Components() {
             <Code>.button</Code>
           </div>
           <div>
-            <Button small>Fazer Login</Button>
+            <Button small type="submit">
+              Fazer Login
+            </Button>
           </div>
           <div>
             <Button>Fazer Login</Button>

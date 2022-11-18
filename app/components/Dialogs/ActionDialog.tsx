@@ -14,7 +14,7 @@ import type {
   PersonModel,
 } from "~/lib/models";
 import Exclamation from "../Exclamation";
-import Button from "../Forms/Button";
+import Button from "../Button";
 import { default as Field, default as InputField } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";

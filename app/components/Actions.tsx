@@ -28,7 +28,7 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
-import Button from "./Forms/Button";
+import Button from "./Button";
 import type { SupportType } from "./InstagramGrid";
 
 export const Action = ({ action }: { action: ActionModel }) => {
