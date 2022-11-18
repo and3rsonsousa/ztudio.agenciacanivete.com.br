@@ -1,7 +1,6 @@
-import { useNavigate } from "@remix-run/react";
 import React, { useRef } from "react";
-import { useState } from "react";
 import { FocusRing, useButton, useHover } from "react-aria";
+import Loader from "./Loader";
 
 export default function Button({
   children,
@@ -14,6 +13,7 @@ export default function Button({
   title,
   className = "",
   type,
+  loading,
   onClick,
 }: {
   children: React.ReactNode;
@@ -26,6 +26,7 @@ export default function Button({
   title?: string;
   className?: string;
   type?: "submit" | "reset" | "button";
+  loading?: boolean;
   onClick?: () => void;
 }) {
   const buttonRef = useRef(null);
@@ -59,7 +60,7 @@ export default function Button({
         } ${className}`}
         disabled={disabled}
       >
-        {children}
+        {loading ? <Loader /> : children}
       </button>
     </FocusRing>
   );

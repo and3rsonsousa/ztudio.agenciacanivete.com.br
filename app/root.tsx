@@ -16,6 +16,7 @@ import {
 import dayjs from "dayjs";
 import { useState } from "react";
 import styles from "./app.css";
+import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -42,8 +43,9 @@ export const loader: LoaderFunction = () => {
   });
 };
 
-export default function App() {
+export function App() {
   const { env } = useLoaderData();
+  const [theme] = useTheme();
   const [openDialogAction, setOpenDialogAction] = useState(false);
   const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
   const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
@@ -51,12 +53,12 @@ export default function App() {
   const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
 
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" className={theme ?? ""}>
       <head>
         <Meta />
         <Links />
       </head>
-      <body className="dark">
+      <body>
         <div className="app">
           <Outlet
             context={{
@@ -94,5 +96,13 @@ export default function App() {
         <LiveReload />
       </body>
     </html>
+  );
+}
+
+export default function AppWithProviders() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   );
 }

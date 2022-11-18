@@ -30,7 +30,11 @@ const Celebration = ({
         <fetcher.Form method="post" action="/handle-action">
           <input type="hidden" name="action" value="delete-celebration" />
           <input type="hidden" name="id" value={celebration.id} />
-          <button type="submit" className="appearance-none align-middle">
+          <button
+            type="submit"
+            className="appearance-none align-middle"
+            tabIndex={-1}
+          >
             <TrashIcon className="w-3" />
           </button>
         </fetcher.Form>

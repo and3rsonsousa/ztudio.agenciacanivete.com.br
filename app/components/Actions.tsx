@@ -31,6 +31,7 @@ import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import type { SupportType } from "./InstagramGrid";
 import Exclamation from "./Exclamation";
+import { FocusRing } from "react-aria";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -46,62 +47,66 @@ export const Action = ({ action }: { action: ActionModel }) => {
       <ContextMenu.Trigger>
         <HoverCard.Root>
           <HoverCard.Trigger>
-            <div
-              data-date={action.date}
-              data-id={action.id}
-              draggable
-              onDragStart={(e) => {
-                const ele = e.target as HTMLElement;
-                const ghost = ele.cloneNode(true) as HTMLElement;
+            <FocusRing focusRingClass="ring outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
+              <div
+                role="button"
+                tabIndex={0}
+                data-date={action.date}
+                data-id={action.id}
+                draggable
+                onDragStart={(e) => {
+                  const ele = e.target as HTMLElement;
+                  const ghost = ele.cloneNode(true) as HTMLElement;
 
-                ghost.style.width = `${ele.offsetWidth}px`;
-                ghost.style.height = `${ele.offsetHeight}px`;
-                ghost.style.position = "absolute";
-                ghost.style.top = "0";
-                ghost.style.left = "0";
-                ghost.style.offset = ".2";
-                ghost.style.zIndex = "-1";
-                ghost.classList.add("dragging");
+                  ghost.style.width = `${ele.offsetWidth}px`;
+                  ghost.style.height = `${ele.offsetHeight}px`;
+                  ghost.style.position = "absolute";
+                  ghost.style.top = "0";
+                  ghost.style.left = "0";
+                  ghost.style.offset = ".2";
+                  ghost.style.zIndex = "-1";
+                  ghost.classList.add("dragging");
 
-                document.querySelector(".app")?.appendChild(ghost);
-                e.dataTransfer?.setDragImage(
-                  ghost,
-                  ele.offsetWidth / 2,
-                  ele.offsetHeight / 2
-                );
+                  document.querySelector(".app")?.appendChild(ghost);
+                  e.dataTransfer?.setDragImage(
+                    ghost,
+                    ele.offsetWidth / 2,
+                    ele.offsetHeight / 2
+                  );
 
-                setTimeout(() => {
-                  ghost.parentNode?.removeChild(ghost);
-                }, 1000);
-              }}
-              className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
-              onClick={() => {
-                navigate(
-                  `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
-                );
-              }}
-            >
-              <div className="flex w-full items-center gap-1 overflow-hidden">
-                <div
-                  className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
-                >
-                  {action.tag.name.slice(0, 3)}
+                  setTimeout(() => {
+                    ghost.parentNode?.removeChild(ghost);
+                  }, 1000);
+                }}
+                className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
+                onClick={() => {
+                  navigate(
+                    `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
+                  );
+                }}
+              >
+                <div className="flex w-full items-center gap-1 overflow-hidden">
+                  <div
+                    className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
+                  >
+                    {action.tag.name.slice(0, 3)}
+                  </div>
+                  <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
+                    {action.name}
+                  </div>
+                  <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+                    {action.account.name.slice(0, 3)}
+                  </div>
                 </div>
-                <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
-                  {action.name}
-                </div>
-                <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
-                  {action.account.name.slice(0, 3)}
+                <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
+                  {dayjs(action.date).format(
+                    "H[h]".concat(
+                      dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+                    )
+                  )}
                 </div>
               </div>
-              <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
-                {dayjs(action.date).format(
-                  "H[h]".concat(
-                    dayjs(action.date).format("mm") !== "00" ? "mm" : ""
-                  )
-                )}
-              </div>
-            </div>
+            </FocusRing>
           </HoverCard.Trigger>
           <HoverCard.Portal>
             <HoverCard.Content className="max-w-xs rounded bg-gray-800 p-4 text-sm font-light text-gray-300 antialiased dark:bg-gray-50 dark:text-gray-700">

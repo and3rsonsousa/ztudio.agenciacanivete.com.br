@@ -12,6 +12,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
+import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
@@ -35,14 +36,10 @@ export default function Slug() {
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
-        <Link
-          to={`/dashboard/${account.slug}`}
-          className="focus-block overflow-hidden rounded border border-transparent"
-        >
-          <h2 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap  dark:text-gray-200">
-            {account.name}
-          </h2>
-        </Link>
+        <PageHeader link={`/dashboard/${account.slug}`}>
+          {account.name}
+        </PageHeader>
+
         <div className="text-sm font-semibold">
           <Link
             className="button button-link button-icon p-2"

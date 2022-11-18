@@ -22,10 +22,11 @@ import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import SearchBox from "./SearchBox";
+import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
-  const [accountsMenu, settAccountsMenu] = useState(false);
+
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
   const context: {
@@ -47,22 +48,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
   } = useOutletContext();
 
-  // const [searchQuery, setSearchQuery] = useState("");
-
-  const useIsomorphicEffect =
-    typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-  useIsomorphicEffect(() => {
-    let theme;
-    if (localStorage) {
-      theme = localStorage.getItem("theme");
-    }
-
-    if (theme) {
-      document.body.classList.add("dark");
-    }
-  }, []);
-
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const searchParams =
@@ -83,7 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="-mt-1 w-36 p-4 lg:pt-0">
             <Link
               to={`/dashboard`}
-              className="focus-block -mt2 -ml-2 block rounded border border-transparent p-2 transition"
+              className="-mt2 -ml-2 block rounded p-2 outline-none transition focus:ring focus:ring-brand"
             >
               <img src="/logo.png" alt="STUDIO" />
             </Link>
@@ -94,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}/${searchParams}`}
-                  className="focus-block block overflow-hidden text-ellipsis whitespace-nowrap rounded border border-transparent p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-800"
+                  className="block overflow-hidden text-ellipsis whitespace-nowrap rounded p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none focus:ring focus:ring-brand dark:hover:bg-gray-800"
                 >
                   {account.name}
                 </Link>
@@ -342,21 +327,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function ThemeSwitcher() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  // const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const [theme, setTheme] = useTheme();
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) =>
+      prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
+    );
+  };
 
   return (
     <DropdownMenu.Item
       className="dropdown-item item-small flex items-center gap-2"
       onSelect={() => {
-        if (theme === "dark") {
-          document.body.classList.remove("dark");
-          localStorage.removeItem("theme");
-          setTheme("");
-        } else {
-          document.body.classList.add("dark");
-          localStorage.setItem("theme", "dark");
-          setTheme("dark");
-        }
+        toggleTheme();
+        // if (theme === "dark") {
+        //   document.body.classList.remove("dark");
+        //   localStorage.removeItem("theme");
+        //   setTheme("");
+        // } else {
+        //   document.body.classList.add("dark");
+        //   localStorage.setItem("theme", "dark");
+        //   setTheme("dark");
+        // }
       }}
     >
       <div>Modo {theme === "dark" ? "claro" : "escuro"}</div>

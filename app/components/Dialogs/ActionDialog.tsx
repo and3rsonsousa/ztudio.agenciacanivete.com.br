@@ -305,7 +305,7 @@ export default function ActionDialog({
               <Button>Excluir</Button>
             </Form>
           )}
-          <Button primary type="submit">
+          <Button primary type="submit" loading={isAdding || isUpdating}>
             {action ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
