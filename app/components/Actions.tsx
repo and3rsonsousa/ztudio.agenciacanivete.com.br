@@ -24,14 +24,13 @@ import {
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import * as HoverCard from "@radix-ui/react-hover-card";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import { FocusRing } from "react-aria";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
-import type { SupportType } from "./InstagramGrid";
 import Exclamation from "./Exclamation";
-import { FocusRing } from "react-aria";
+import type { SupportType } from "./InstagramGrid";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
@@ -39,105 +38,77 @@ export const Action = ({ action }: { action: ActionModel }) => {
   const url = matches[1].data.url;
   const tags: ItemModel[] = matches[1].data.tags;
   const status: ItemModel[] = matches[1].data.status;
+  const accounts: AccountModel[] = matches[1].data.accounts;
 
   const navigate = useNavigate();
 
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <HoverCard.Root>
-          <HoverCard.Trigger>
-            <FocusRing focusRingClass="ring outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
+        <FocusRing focusRingClass="ring outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
+          <div
+            role="button"
+            tabIndex={0}
+            data-date={action.date}
+            data-id={action.id}
+            draggable
+            onDragStart={(e) => {
+              const ele = e.target as HTMLElement;
+              const ghost = ele.cloneNode(true) as HTMLElement;
+
+              ghost.style.width = `${ele.offsetWidth}px`;
+              ghost.style.height = `${ele.offsetHeight}px`;
+              ghost.style.position = "absolute";
+              ghost.style.top = "0";
+              ghost.style.left = "0";
+              ghost.style.offset = ".2";
+              ghost.style.zIndex = "-1";
+              ghost.classList.add("dragging");
+
+              document.querySelector(".app")?.appendChild(ghost);
+              e.dataTransfer?.setDragImage(
+                ghost,
+                ele.offsetWidth / 2,
+                ele.offsetHeight / 2
+              );
+
+              setTimeout(() => {
+                ghost.parentNode?.removeChild(ghost);
+              }, 1000);
+            }}
+            className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
+            onClick={() => {
+              navigate(
+                `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
+              );
+            }}
+          >
+            <div className="flex w-full items-center gap-1 overflow-hidden">
               <div
-                role="button"
-                tabIndex={0}
-                data-date={action.date}
-                data-id={action.id}
-                draggable
-                onDragStart={(e) => {
-                  const ele = e.target as HTMLElement;
-                  const ghost = ele.cloneNode(true) as HTMLElement;
-
-                  ghost.style.width = `${ele.offsetWidth}px`;
-                  ghost.style.height = `${ele.offsetHeight}px`;
-                  ghost.style.position = "absolute";
-                  ghost.style.top = "0";
-                  ghost.style.left = "0";
-                  ghost.style.offset = ".2";
-                  ghost.style.zIndex = "-1";
-                  ghost.classList.add("dragging");
-
-                  document.querySelector(".app")?.appendChild(ghost);
-                  e.dataTransfer?.setDragImage(
-                    ghost,
-                    ele.offsetWidth / 2,
-                    ele.offsetHeight / 2
-                  );
-
-                  setTimeout(() => {
-                    ghost.parentNode?.removeChild(ghost);
-                  }, 1000);
-                }}
-                className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
-                onClick={() => {
-                  navigate(
-                    `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
-                  );
-                }}
+                className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
               >
-                <div className="flex w-full items-center gap-1 overflow-hidden">
-                  <div
-                    className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
-                  >
-                    {action.tag.name.slice(0, 3)}
-                  </div>
-                  <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
-                    {action.name}
-                  </div>
-                  <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
-                    {action.account.name.slice(0, 3)}
-                  </div>
-                </div>
-                <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
-                  {dayjs(action.date).format(
-                    "H[h]".concat(
-                      dayjs(action.date).format("mm") !== "00" ? "mm" : ""
-                    )
-                  )}
-                </div>
+                {action.tag.name.slice(0, 3)}
               </div>
-            </FocusRing>
-          </HoverCard.Trigger>
-          <HoverCard.Portal>
-            <HoverCard.Content className="max-w-xs rounded bg-gray-800 p-4 text-sm font-light text-gray-300 antialiased dark:bg-gray-50 dark:text-gray-700">
-              <div className="mb-1 font-medium">{action.name}</div>
-              {action.description && (
-                <div className="text-xx mb-1 leading-tight line-clamp-6">
-                  {action.description}
-                </div>
+              <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
+                {action.name}
+              </div>
+              <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+                {action.account.name.slice(0, 3)}
+              </div>
+            </div>
+            <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
+              {dayjs(action.date).format(
+                "H[h]".concat(
+                  dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+                )
               )}
-              <div className="text-xx flex gap-4">
-                <div>
-                  {dayjs(action.date).format(
-                    "HH[h]".concat(
-                      dayjs(action.date).format("mm") === "00" ? "" : "mm"
-                    )
-                  )}
-                </div>
-                <div>{action.account?.name}</div>
-                <div className="flex items-center gap-1">
-                  <div
-                    className={`h-1 w-1 bg-${action.tag?.slug} rounded-full`}
-                  ></div>
-                  <div>{action.tag?.name}</div>
-                </div>
-              </div>
-            </HoverCard.Content>
-          </HoverCard.Portal>
-        </HoverCard.Root>
+            </div>
+          </div>
+        </FocusRing>
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content className="dropdown-content w-36">
+          {/* Editar */}
           <ContextMenu.Item asChild>
             <Link
               to={`/dashboard/${action.account.slug}/action/${action.id}`}
@@ -146,8 +117,60 @@ export const Action = ({ action }: { action: ActionModel }) => {
               <PencilSquareIcon className="w-4" /> <div>Editar</div>
             </Link>
           </ContextMenu.Item>
+          {/* Duplicar */}
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger
+              onSelect={(event) => {
+                fetcher.submit(
+                  {
+                    action: "duplicate-action",
+                    id: action.id,
+                  },
+                  {
+                    method: "post",
+                    action: "/handle-action",
+                  }
+                );
+              }}
+              className="dropdown-item item-small flex items-center gap-2"
+            >
+              <DocumentDuplicateIcon className="w-4" />
+              <div className="flex flex-auto justify-between gap-4">
+                <div>Duplicar</div>
 
-          <ContextMenu.Item
+                <div>
+                  <ChevronRightIcon className="w-4" />
+                </div>
+              </div>
+            </ContextMenu.SubTrigger>
+            <ContextMenu.SubContent className="dropdown-content">
+              <ContextMenu.Label className="dropdown-label">
+                Duplicar para a conta...
+              </ContextMenu.Label>
+              {accounts.map((account) => (
+                <ContextMenu.Item
+                  className="dropdown-item item-small"
+                  key={account.id}
+                  onSelect={(event) => {
+                    fetcher.submit(
+                      {
+                        action: "duplicate-action",
+                        id: action.id,
+                        account: account.id,
+                      },
+                      {
+                        method: "post",
+                        action: "/handle-action",
+                      }
+                    );
+                  }}
+                >
+                  <div>{account.name}</div>
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.SubContent>
+          </ContextMenu.Sub>
+          {/* <ContextMenu.Item
             onSelect={(event) => {
               fetcher.submit(
                 {
@@ -163,7 +186,8 @@ export const Action = ({ action }: { action: ActionModel }) => {
             className="dropdown-item item-small flex items-center gap-2"
           >
             <DocumentDuplicateIcon className="w-4" /> <div>Duplicar</div>
-          </ContextMenu.Item>
+          </ContextMenu.Item> */}
+          {/* excluir */}
           <ContextMenu.Item
             onSelect={(event) => {
               fetcher.submit(
@@ -182,6 +206,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
             <Trash className="w-4" /> <div>Excluir</div>
           </ContextMenu.Item>
           <hr className="dropdown-hr" />
+          {/* Tags */}
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <TagIcon className="w-4" />
@@ -225,6 +250,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
               </ContextMenu.SubContent>
             </ContextMenu.Portal>
           </ContextMenu.Sub>
+          {/* Status */}
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <CheckBadgeIcon className="w-4" />

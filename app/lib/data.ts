@@ -536,6 +536,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
     return { data, error };
   } else if (action.match(/duplicate-/)) {
     const id = formData.get("id") as string;
+    const account = formData.get("account") as string;
 
     if (action === "duplicate-action") {
       const { data: old_action } = await supabase
@@ -550,7 +551,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         date: old_action.date,
         tag: old_action.tag,
         status: old_action.status,
-        account: old_action.account,
+        account: account !== "" ? account : old_action.account,
         campaign: old_action.campaign,
         creator: old_action.creator,
         responsible: old_action.responsible,
