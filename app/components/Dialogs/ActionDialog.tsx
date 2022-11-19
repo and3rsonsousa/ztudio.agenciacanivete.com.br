@@ -211,16 +211,15 @@ export default function ActionDialog({
           title="Nome"
           value={action ? action.name : undefined}
         />
-        {action || account ? (
-          <input type="hidden" name="account" value={account.id} />
-        ) : (
-          <SelectField
-            name="account"
-            title="Cliente"
-            items={accountItems}
-            onChange={setSelectedAccount}
-          />
-        )}
+
+        <SelectField
+          name="account"
+          title="Cliente"
+          items={accountItems}
+          value={action ? action.account.id : account ? account.id : undefined}
+          onChange={setSelectedAccount}
+        />
+
         {matches[3] && matches[3].data.campaign ? (
           <input
             type="hidden"

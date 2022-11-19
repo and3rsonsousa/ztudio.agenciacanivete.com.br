@@ -23,7 +23,9 @@ export default function Index() {
           .
         </p>
         <div className="mt-16 space-x-2">
-          <Button onClick={() => navigate("/dashboard")}>Entrar</Button>
+          <Button primary onClick={() => navigate("/dashboard")}>
+            Entrar
+          </Button>
         </div>
       </div>
     </div>
