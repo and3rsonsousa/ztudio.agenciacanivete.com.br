@@ -1,4 +1,3 @@
-import { getUser } from "~/lib/auth.server";
 import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
@@ -509,8 +508,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
     } else if (action === "delete-campaign-trash") {
       table = "Campaign";
     } else if (action === "delete-person") {
-      const session = await getUser(request);
-      const access_token = session.data.session.access_token;
+      // const session = await getUser(request);
+      // const access_token = session.data.session.access_token;
 
       const { data, error } = await supabase
         .from("Person")

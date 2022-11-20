@@ -119,21 +119,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
           </ContextMenu.Item>
           {/* Duplicar */}
           <ContextMenu.Sub>
-            <ContextMenu.SubTrigger
-              onSelect={(event) => {
-                fetcher.submit(
-                  {
-                    action: "duplicate-action",
-                    id: action.id,
-                  },
-                  {
-                    method: "post",
-                    action: "/handle-action",
-                  }
-                );
-              }}
-              className="dropdown-item item-small flex items-center gap-2"
-            >
+            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <DocumentDuplicateIcon className="w-4" />
               <div className="flex flex-auto justify-between gap-4">
                 <div>Duplicar</div>
@@ -321,7 +307,7 @@ export const ActionMedium = ({
 
   return (
     <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${action.status.slug}`}
+      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 duration-500  dark:bg-gray-800  border-${action.status.slug}`}
     >
       <div className="overflow-hidden">
         <div className="text-sm font-normal dark:text-gray-300">

@@ -255,7 +255,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 <Dialog.Content forceMount className="dialog">
                   <motion.div
-                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    className="dialog-content no-scrollbars h-[90vh] w-[90vw] max-w-lg overflow-hidden overflow-y-auto p-8 font-light antialiased lg:h-[80vh]"
                     {...scaleUp()}
                   >
                     <CelebrationDialog />
@@ -283,7 +283,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 <Dialog.Content forceMount className="dialog">
                   <motion.div
-                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    className="dialog-content no-scrollbars h-[90vh] w-[90vw] max-w-lg overflow-hidden overflow-y-auto p-8 font-light antialiased lg:h-[80vh]"
                     {...scaleUp()}
                   >
                     <ActionDialog />
@@ -311,7 +311,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 <Dialog.Content forceMount className="dialog">
                   <motion.div
-                    className="dialog-content w-[36rem] max-w-lg p-4 font-light  antialiased lg:p-8 lg:pb-4"
+                    className="dialog-content no-scrollbars h-[90vh] w-[90vw] max-w-lg overflow-hidden overflow-y-auto p-8 font-light antialiased lg:h-[80vh]"
                     {...scaleUp()}
                   >
                     <CampaignDialog />
