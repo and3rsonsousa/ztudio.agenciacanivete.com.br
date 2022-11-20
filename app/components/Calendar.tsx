@@ -11,6 +11,7 @@ import type {
   CampaignModel,
   CelebrationModel,
   DayModel,
+  MonthType,
 } from "~/lib/models";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
@@ -130,33 +131,7 @@ export default function Calendar({
         <div></div>
       </div>
       {showYearView ? (
-        <div className="h-full overflow-hidden  lg:flex">
-          <div className="grid w-full grid-cols-4 overflow-y-auto">
-            {year.map((month, index) => (
-              <div key={index} className="col-span-1 flex flex-col p-4">
-                <div className="pb-4 font-semibold first-letter:capitalize">
-                  {month[0].date.format("MMMM")}
-                </div>
-                <div className="grid w-full flex-auto grid-cols-7 text-center text-sm">
-                  {month.map((day, index) => (
-                    <div
-                      key={index}
-                      className={`col-span-1 grid place-items-center ${
-                        day.date.format("YYYY-MM-DD") ===
-                        dayjs().format("YYYY-MM-DD")
-                          ? " rounded-full bg-brand font-semibold text-white"
-                          : ""
-                      }`}
-                      style={{ gridColumnStart: day.date.day() + 1 }}
-                    >
-                      {day.date.format("D")}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <YearView year={year} />
       ) : (
         <div className="h-full overflow-hidden lg:flex">
           {/* Calendar  */}
@@ -216,3 +191,39 @@ export default function Calendar({
     </div>
   );
 }
+
+const YearView = ({ year }: { year: MonthType[] }) => {
+  return (
+    <div className="h-full overflow-hidden  lg:flex">
+      <div className="grid w-full grid-cols-2 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
+        {year.map((month, index) => (
+          <div key={index} className="col-span-1 flex flex-col p-4">
+            <div className="pb-4 text-center font-semibold first-letter:capitalize">
+              {month[0].date.format("MMMM")}
+            </div>
+            <div className="grid w-full flex-auto grid-cols-7 text-center text-xs md:text-sm">
+              {month.map((day, index) => (
+                <div
+                  key={index}
+                  className={`col-span-1 `}
+                  style={{ gridColumnStart: day.date.day() + 1 }}
+                >
+                  <div
+                    className={`grid h-6 w-6 place-items-center md:h-8 md:w-8 ${
+                      day.date.format("YYYY-MM-DD") ===
+                      dayjs().format("YYYY-MM-DD")
+                        ? " rounded-full bg-brand font-semibold text-white"
+                        : ""
+                    }`}
+                  >
+                    {day.date.format("D")}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

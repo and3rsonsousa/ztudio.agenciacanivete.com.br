@@ -1,4 +1,4 @@
-import { ActionModel } from "~/lib/models";
+import type { ActionModel, MonthType } from "~/lib/models";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -33,9 +33,7 @@ export const getPeriod = ({ period }: { period?: string | null }) => {
 
 export const getYear = (currentDate: Dayjs) => {
   const firstDayOfCurrentYear = currentDate.startOf("year");
-  type MonthType = Array<{
-    date: Dayjs;
-  }>;
+
   const year: Array<MonthType> = [];
 
   function getDaysOnMonth(month: number) {

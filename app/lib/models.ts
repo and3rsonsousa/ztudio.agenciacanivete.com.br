@@ -73,3 +73,7 @@ export type DayModel = {
 export type DropdownOptions = Array<
   { id: string; text: string; href: string } | "divider" | (() => {})
 >;
+
+export type MonthType = Array<{
+  date: Dayjs;
+}>;
