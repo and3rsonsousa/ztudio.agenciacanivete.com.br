@@ -355,7 +355,7 @@ export const ActionMedium = ({
             navigate(`/dashboard/${action.account.slug}/action/${action.id}`);
           }}
         >
-          <PencilIcon className="w-3 transition hover:text-gray-300" />
+          <PencilIcon className="w-3 hover:text-gray-300" />
         </button>
         <button
           title="Duplicar ação"
@@ -372,7 +372,7 @@ export const ActionMedium = ({
             );
           }}
         >
-          <Duplicate className="w-3 transition hover:text-gray-300" />
+          <Duplicate className="w-3 hover:text-gray-300" />
         </button>
         <button
           title="Excluir ação"
@@ -389,7 +389,7 @@ export const ActionMedium = ({
             );
           }}
         >
-          <TrashIcon className="w-3 transition hover:text-gray-300" />
+          <TrashIcon className="w-3 hover:text-gray-300" />
         </button>
       </div>
     </div>

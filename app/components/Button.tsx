@@ -27,14 +27,14 @@ export default function Button({
   className?: string;
   type?: "submit" | "reset" | "button";
   loading?: boolean;
-  onClick?: () => void;
+  onClick?: (event: any) => void;
 }) {
   const buttonRef = useRef(null);
 
   const { buttonProps, isPressed } = useButton(
     {
-      onPress: () => {
-        if (onClick) onClick();
+      onPress: (event) => {
+        if (onClick) onClick(event);
       },
 
       "aria-label": title,

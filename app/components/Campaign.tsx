@@ -41,7 +41,7 @@ export function Campaign({ campaign }: { campaign: CampaignModel }) {
           {campaign.actions !== null ? "" : "Nenuma ação nessa campanha"}
         </div>
       </div>
-      <div className="flex gap-2 opacity-0 transition group-hover:opacity-100">
+      <div className="flex gap-2 opacity-0  group-hover:opacity-100">
         <div>
           <Link
             to={`/dashboard/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
@@ -88,7 +88,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
               `/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`
             )
           }
-          className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover transition`}
+          className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover `}
         >
           {campaign.name} {dayjs(campaign.date_end).format("DD/MM/YYYY")}
         </div>

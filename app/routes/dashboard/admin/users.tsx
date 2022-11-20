@@ -56,7 +56,7 @@ export default function Users() {
               >
                 {person.name}
               </Link>
-              <div className="pr-2 opacity-0 transition group-hover:opacity-100">
+              <div className="pr-2 opacity-0 group-hover:opacity-100">
                 <Form method="post">
                   <input type="hidden" name="action" value="delete-person" />
                   <input type="hidden" name="id" value={person.id} />

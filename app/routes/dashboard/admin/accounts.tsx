@@ -59,7 +59,7 @@ export default function Accounts() {
                   {account.name.slice(0, 3)}
                 </span>
               </Link>
-              <div className="hidden pr-2 opacity-0 transition group-hover:opacity-100 md:block">
+              <div className="hidden pr-2 opacity-0 group-hover:opacity-100 md:block">
                 <Form method="post">
                   <input type="hidden" name="action" value="delete-account" />
                   <input type="hidden" name="id" value={account.id} />

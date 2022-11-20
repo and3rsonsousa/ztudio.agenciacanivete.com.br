@@ -76,7 +76,7 @@ export default function Day({
         day.date.format("YYYY-MM-DD")
           ? " is-selected"
           : ""
-      } flex flex-col justify-between transition`}
+      } flex flex-col justify-between`}
       date-attr={day.date.format("YYYY-MM-DD")}
     >
       <div>

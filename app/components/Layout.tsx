@@ -68,7 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="-mt-1 w-36 p-4 lg:pt-0">
             <Link
               to={`/dashboard`}
-              className="-mt2 -ml-2 block rounded p-2 outline-none transition focus:ring focus:ring-brand"
+              className="-mt2 -ml-2 block rounded p-2 outline-none focus:ring focus:ring-brand"
             >
               <img src="/logo.png" alt="STUDIO" />
             </Link>
@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}/${searchParams}`}
-                  className="block overflow-hidden text-ellipsis whitespace-nowrap rounded p-2 text-xs font-normal transition hover:bg-gray-100 focus:outline-none focus:ring focus:ring-brand dark:hover:bg-gray-800"
+                  className="block overflow-hidden text-ellipsis whitespace-nowrap rounded p-2 text-xs font-normal hover:bg-gray-100 focus:outline-none focus:ring focus:ring-brand dark:hover:bg-gray-800"
                 >
                   {account.name}
                 </Link>
