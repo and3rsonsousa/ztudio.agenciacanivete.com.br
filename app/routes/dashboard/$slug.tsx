@@ -1,10 +1,18 @@
+import {
+  CalendarDaysIcon,
+  DocumentCheckIcon,
+  FolderIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 import {
   Link,
   Outlet,
   useLoaderData,
   useOutletContext,
+  useSearchParams,
 } from "@remix-run/react";
+import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
@@ -22,14 +30,45 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function Slug() {
   const { account } = useLoaderData<{ account: AccountModel }>();
+  const [searchParams] = useSearchParams();
+  const period = searchParams.get("period");
 
   return (
     <div className="flex h-screen flex-col">
-      <div className="flex justify-between border-b p-4 dark:border-gray-800">
-        <Link to={`/dashboard/${account.slug}`}>
-          <h2 className="mb-0 dark:text-gray-200">{account.name}</h2>
-        </Link>
+      <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
+        <PageHeader link={`/dashboard/${account.slug}`}>
+          {account.name}
+        </PageHeader>
+
+        <div className="text-sm font-semibold">
+          <Link
+            className="button button-link button-icon p-2"
+            to={`./${period ? "?period=" + period : ""}`}
+          >
+            <CalendarDaysIcon />
+            <div className="hidden md:block">Calendário</div>
+          </Link>
+          <Link className="button button-link button-icon p-2" to={`./actions`}>
+            <DocumentCheckIcon />
+            <div className="hidden md:block">Ações</div>
+          </Link>
+          <Link
+            className="button button-link button-icon p-2"
+            to={`./?instagram${period ? "&period=" + period : ""}`}
+          >
+            <HeartIcon />
+            <div className="hidden md:block">Instagram</div>
+          </Link>
+          <Link
+            className="button button-link button-icon p-2"
+            to={`./campaigns`}
+          >
+            <FolderIcon />
+            <div className="hidden md:block">Campanhas</div>
+          </Link>
+        </div>
       </div>
+
       <Outlet context={useOutletContext()} />
     </div>
   );

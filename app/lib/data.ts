@@ -1,15 +1,9 @@
-import {
-  add,
-  endOfMonth,
-  endOfWeek,
-  format,
-  parse,
-  startOfMonth,
-  startOfToday,
-  startOfWeek,
-} from "date-fns";
+import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
+const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+
+// Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
   const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").eq("id", id).single();
@@ -24,6 +18,8 @@ export const getPersons = (request: Request) => {
   const { supabase } = getSupabase(request);
   return supabase.from("Person").select("*").order("name", { ascending: true });
 };
+
+// Simplificar para 2
 
 export const getAccount = async (
   request: Request,
@@ -55,70 +51,14 @@ export const getAllAccounts = (request: Request) => {
   });
 };
 
-// export const deleteAccount = async (id: string) => {
-//   let { data, error } = await supabase.from("Account").delete().eq("id", id);
-//   if (error) {
-//     return error;
-//   }
-//   return { data };
-// };
-
-// export const addAccount = async (
-//   name: string,
-//   slug: string,
-//   users: string[]
-// ) => {
-//   let { data, error } = await supabase.from("Account").insert([
-//     {
-//       name,
-//       slug,
-//       users,
-//     },
-//   ]);
-
-//   if (error) {
-//     return { error };
-//   }
-
-//   return { data };
-// };
-
-// export const updateAccount = async (
-//   id: string,
-//   name: string,
-//   slug: string,
-//   users: string[]
-// ) => {
-//   let { data, error } = await supabase
-//     .from("Account")
-//     .update({
-//       id,
-//       name,
-//       slug,
-//       users,
-//     })
-//     .eq("id", id);
-
-//   if (error) {
-//     return { error };
-//   }
-
-//   return { data };
-// };
-
-// export const getCampaigns = (account: string) => {
-//   return supabase
-//     .from("Campaign")
-//     .select("*, Account!inner(*)")
-//     .eq("Account.slug", account)
-//     .order("date");
-// };
-
 export const getTagsStatus = async (request: Request) => {
   const { supabase } = getSupabase(request);
   const [{ data: tags }, { data: status }] = await Promise.all([
     supabase.from("Tag").select("*").order("name", { ascending: true }),
-    supabase.from("Status").select("*"),
+    supabase
+      .from("Status")
+      .select("*")
+      .order("created_at", { ascending: true }),
   ]);
 
   return { tags, status };
@@ -129,57 +69,92 @@ export const getActions = async (
     request?: Request;
     user?: string;
     account?: string;
-    period?: Date;
+    period?: string | null;
+    all?: boolean;
+    where?: string;
   } = {}
 ) => {
-  let { user, account, period, request } = args;
+  let { user, account, period, request, all, where } = args;
 
   if (!request) {
-    throw new Error("Request is undefined");
+    return { error: { message: "Request is undefined" } };
   }
-
-  let _period = period ?? startOfToday();
-  let firstDayOfCurrentMonth = parse(
-    format(_period, "MMM-yyy"),
-    "MMM-yyyy",
-    new Date()
-  );
-
-  let firstDay = add(startOfWeek(startOfMonth(firstDayOfCurrentMonth)), {
-    days: -1,
-  });
-  let lastDay = add(endOfWeek(endOfMonth(firstDayOfCurrentMonth)), {
-    hours: 1,
-  });
   const { supabase } = getSupabase(request);
 
-  if (account) {
-    return supabase
-      .from("Action")
-      .select("*, Account!inner(*)")
-      .eq("Account.slug", account)
-      .gte("date", format(firstDay, "y/M/d"))
-      .lte("date", format(lastDay, "y/M/d"))
-      .order("date", {
-        ascending: true,
-      })
-      .order("created_at", { ascending: true });
-  } else {
-    if (!user) {
-      throw new Error("User is undefined");
+  if (all) {
+    if (account) {
+      const { data, error } = await supabase
+        .from("Action")
+        .select(SQL__GET__ACTION)
+        .eq("Account.slug", account)
+        .is("deleted", null)
+        .order("date", {
+          ascending: true,
+        })
+        .order("created_at", { ascending: true });
+
+      return { data, error };
     }
 
-    return supabase
+    if (where === "trash") {
+      const { data, error } = await supabase
+        .from("Action")
+        .select(SQL__GET__ACTION)
+        .eq("deleted", "true")
+        .order("updated_at", {
+          ascending: false,
+        })
+        .order("created_at", { ascending: true });
+
+      return { data, error };
+    }
+
+    const { data, error } = await supabase
       .from("Action")
-      .select("*, Account!inner(*)")
-      .contains("Account.users", [user])
-      .gte("date", format(firstDay, "y/M/d"))
-      .lte("date", format(lastDay, "y/M/d"))
-      .filter("account", "not.is", null)
+      .select(SQL__GET__ACTION)
+      .is("deleted", null)
       .order("date", {
         ascending: true,
       })
       .order("created_at", { ascending: true });
+
+    return { data, error };
+  }
+
+  const { firstDayOfPeriod, lastDayOfPeriod } = getPeriod({ period });
+
+  if (account) {
+    const { data, error } = await supabase
+      .from("Action")
+      .select(SQL__GET__ACTION)
+      .eq("Account.slug", account)
+      .is("deleted", null)
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
+      .order("date", {
+        ascending: true,
+      })
+      .order("created_at", { ascending: true });
+
+    return { data, error };
+  } else {
+    if (!user) {
+      return { error: { message: "User is undefined" } };
+    }
+
+    const { data, error } = await supabase
+      .from("Action")
+      .select(SQL__GET__ACTION)
+      .contains("Account.users", [user])
+      .is("deleted", null)
+      .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
+      .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
+      .order("date", {
+        ascending: true,
+      })
+      .order("created_at", { ascending: true });
+
+    return { data, error };
   }
 };
 
@@ -199,12 +174,27 @@ export const getCelebrations = async (
   return supabase.from("Celebration").select("*").order("is_holiday");
 };
 
+export const getCampaign = async (request: Request, id: string) => {
+  const { supabase } = getSupabase(request);
+  const { data, error } = await supabase
+    .from("Campaign")
+    .select(
+      "*, Action!inner(*), Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+    )
+    .eq("id", id)
+    .single();
+
+  return { data, error };
+};
+
 export const getCampaigns = async (
   args: {
     request?: Request;
+    user?: string;
+    account?: string;
   } = {}
 ) => {
-  let { request } = args;
+  let { request, user, account } = args;
 
   if (!request) {
     throw new Error("Request is undefined");
@@ -212,54 +202,106 @@ export const getCampaigns = async (
 
   const { supabase } = getSupabase(request);
 
-  return supabase.from("Campaign").select("*");
+  // TODO:
+  // Filtrar campanhas pelas contas que o usuário tem acesso
+  if (account) {
+    const { data, error } = await supabase
+      .from("Campaign")
+      .select(
+        "*, Account!Campaign_account_fkey!inner(*),Status!Campaign_status_fkey!inner(*)"
+      )
+      .eq("Account.slug", account)
+      .is("deleted", null)
+      .order("date_start", {
+        ascending: true,
+      });
+
+    return { data, error };
+  } else {
+    if (!user) {
+      throw new Error("User is undefined");
+    }
+    const { data, error } = await supabase
+      .from("Campaign")
+      .select(
+        "*, Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+      )
+      .contains("Account.users", [user])
+      .is("deleted", null)
+      .order("date_start", {
+        ascending: true,
+      });
+
+    return { data, error };
+  }
 };
 
-export const getAction = (request: Request, id: string) => {
+export const getAction = async (request: Request, id: string) => {
   const { supabase } = getSupabase(request);
-  return supabase
+  const { data, error } = await supabase
     .from("Action")
     .select(
-      "*, account:Account(*), status(*), tag:Tag(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
+      "*, account:Account(*), tag:Tag(*), status:Status(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
     )
     .eq("id", id)
     .single();
-};
-
-export async function updateAction(
-  request: Request,
-  id: string,
-  values: {
-    name?: string;
-    date?: string;
-    account?: string;
-    description?: string;
-    tag?: string;
-    status?: string;
-    responsible?: string;
-    campaign?: string;
-    date_end?: string;
-  }
-) {
-  const { supabase } = getSupabase(request);
-  const { data, error } = await supabase
-    .from("Action")
-    .update(values)
-    .eq("id", id);
 
   return { data, error };
-}
+};
 
-export async function deleteItem(request: Request, item: string, id: string) {
+// export async function updateAction(
+//   request: Request,
+//   id: string,
+//   values: {
+//     name?: string;
+//     date?: string;
+//     account?: string;
+//     description?: string;
+//     tag?: string;
+//     status?: string;
+//     responsible?: string;
+//     campaign?: string;
+//     date_end?: string;
+//   }
+// ) {
+//   const { supabase } = getSupabase(request);
+//   const { data, error } = await supabase
+//     .from("Action")
+//     .update(values)
+//     .eq("id", id);
+
+//   return { data, error };
+// }
+
+async function createCelebration(formData: FormData, request: Request) {
   const { supabase } = getSupabase(request);
+
+  let name = formData.get("name");
+  let date = formData.get("date") as string;
+  if (name === "" || date === "") {
+    return {
+      error: {
+        message: "Nome ou Data está em branco",
+      },
+    };
+  }
+
+  let dateSplit = date.split("/");
+
   const { data, error } = await supabase
-    .from(item)
-    .delete()
-    .eq("id", id)
+    .from("Celebration")
+    .insert({
+      name: name,
+      date: `${dateSplit[1]}/${dateSplit[0]}`,
+      is_holiday: !!formData.get("is_holiday"),
+    })
     .select()
     .single();
 
-  return { data, error };
+  return {
+    data,
+    error,
+  };
 }
 
 export const handleAction = async (formData: FormData, request: Request) => {
@@ -314,6 +356,47 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .single();
 
       return { data, error };
+    } else if (action === "create-campaign") {
+      const creator = formData.get("creator");
+      const name = formData.get("name");
+      const account = formData.get("account");
+      const description = formData.get("description");
+      const date_start = formData.get("date_start");
+      const date_end = formData.get("date_end");
+      const status = formData.get("status");
+
+      const values = {
+        creator: creator,
+        name,
+        account,
+        description,
+        date_start,
+        date_end,
+        status,
+      };
+
+      if (name === "") {
+        return {
+          error: {
+            message: "Coloque o nome da campanha.",
+          },
+        };
+      }
+      if (account === "") {
+        return {
+          error: {
+            message: "Escolha um cliente.",
+          },
+        };
+      }
+
+      const { data, error } = await supabase
+        .from("Campaign")
+        .insert(values)
+        .select("*")
+        .single();
+
+      return { data, error };
     }
   } else if (action.match(/update-/)) {
     const id = formData.get("id") as string;
@@ -322,18 +405,21 @@ export const handleAction = async (formData: FormData, request: Request) => {
     if (action === "update-tag") {
       values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
       table = "Action";
-    } else if (action === "update-status") {
+    } else if (action === "update-action-status") {
       values = {
         status: formData.get("status") as string,
         updated_at: "NOW()",
       };
       table = "Action";
+    } else if (action === "update-campaign-status") {
+      values = {
+        status: formData.get("status") as string,
+        updated_at: "NOW()",
+      };
+      table = "Campaign";
     } else if (action === "update-date") {
       values = {
-        date: format(
-          new Date(formData.get("date") as string),
-          "y-MM-dd'T'HH:mm:ss"
-        ),
+        date: formData.get("date") as string,
         updated_at: "NOW()",
       };
       table = "Action";
@@ -366,6 +452,16 @@ export const handleAction = async (formData: FormData, request: Request) => {
         slug: formData.get("slug") as string,
         users: formData.getAll("users") as string[],
       };
+    } else if (action === "update-campaign") {
+      values = {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        date_start: formData.get("date_start") as string,
+        date_end: formData.get("date_end") as string,
+        updated_at: "NOW()",
+      };
+
+      table = "Campaign";
     }
 
     const { data, error } = await supabase
@@ -385,16 +481,61 @@ export const handleAction = async (formData: FormData, request: Request) => {
   } else if (action.match(/delete-/)) {
     let table = "";
     const id = formData.get("id") as string;
+    const { supabase } = getSupabase(request);
+
     if (action === "delete-action") {
+      const { data, error } = await supabase
+        .from("Action")
+        .update({ deleted: "true" })
+        .eq("id", id)
+        .select()
+        .single();
+      return { data, error };
+    } else if (action === "delete-action-trash") {
       table = "Action";
     } else if (action === "delete-celebration") {
       table = "Celebration";
     } else if (action === "delete-account") {
       table = "Account";
+    } else if (action === "delete-campaign") {
+      const { data, error } = await supabase
+        .from("Campaign")
+        .update({ deleted: "true" })
+        .eq("id", id)
+        .select()
+        .single();
+      return { data, error };
+    } else if (action === "delete-campaign-trash") {
+      table = "Campaign";
+    } else if (action === "delete-person") {
+      // const session = await getUser(request);
+      // const access_token = session.data.session.access_token;
+
+      const { data, error } = await supabase
+        .from("Person")
+        .delete()
+        .eq("id", id)
+        .select()
+        .single();
+
+      // if(!error) {
+      //   supabase.auth.admin.deleteUser(data)
+      // }
+
+      return { data, error };
     }
-    return await deleteItem(request, table, id);
+
+    const { data, error } = await supabase
+      .from(table)
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
+
+    return { data, error };
   } else if (action.match(/duplicate-/)) {
     const id = formData.get("id") as string;
+    const account = formData.get("account") as string;
 
     if (action === "duplicate-action") {
       const { data: old_action } = await supabase
@@ -409,7 +550,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         date: old_action.date,
         tag: old_action.tag,
         status: old_action.status,
-        account: old_action.account,
+        account: account !== "" ? account : old_action.account,
         campaign: old_action.campaign,
         creator: old_action.creator,
         responsible: old_action.responsible,
@@ -429,34 +570,3 @@ export const handleAction = async (formData: FormData, request: Request) => {
     error: { message: "No matched action" },
   };
 };
-
-async function createCelebration(formData: FormData, request: Request) {
-  const { supabase } = getSupabase(request);
-
-  let name = formData.get("name");
-  let date = formData.get("date") as string;
-  if (name === "" || date === "") {
-    return {
-      error: {
-        message: "Nome ou Data está em branco",
-      },
-    };
-  }
-
-  let dateSplit = date.split("/");
-
-  const { data, error } = await supabase
-    .from("Celebration")
-    .insert({
-      name: name,
-      date: `${dateSplit[1]}/${dateSplit[0]}`,
-      is_holiday: formData.get("is_holiday"),
-    })
-    .select()
-    .single();
-
-  return {
-    data,
-    error,
-  };
-}

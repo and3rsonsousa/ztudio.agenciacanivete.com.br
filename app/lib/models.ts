@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs";
 export type PersonModel = {
   id: string;
   name: string;
@@ -25,41 +26,35 @@ export type CampaignModel = {
   account: string;
   date_start: string;
   date_end: string;
-  actions: string[] | ActionModel[];
+  actions: ActionModel[];
+  created_at?: string;
+  updated_at?: string;
+  status: string;
+  Status?: ItemModel;
+  Account?: AccountModel;
+  Action?: ActionModel[];
 };
 
 export type ActionModel = {
   id: string;
   name: string;
   date: string;
-  account?: string;
-  tag?: string;
-  status?: string;
-  description?: string;
-  created_at?: string;
-  updated_at?: string;
-  position?: 1 | 2 | 3;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  creator: PersonModel;
+  responsible: PersonModel;
+  tag: ItemModel;
+  status: ItemModel & { priority: number };
+  account: AccountModel;
+  campaign: CampaignModel;
 };
+
 export type CelebrationModel = {
   id: string;
   name: string;
   date: string;
   is_holiday: boolean;
-};
-
-export type ActionModelFull = {
-  id: string;
-  name: string;
-  date: string;
-  account?: AccountModel;
-  tag: ItemModel;
-  status: ItemModel;
-  description?: string;
-  campaign?: CampaignModel;
-  created_at: string;
-  updated_at: string;
-  creator: PersonModel;
-  responsible: PersonModel;
 };
 
 export type ItemModel = {
@@ -69,9 +64,10 @@ export type ItemModel = {
 };
 
 export type DayModel = {
-  date: Date;
+  date: Dayjs;
   actions: ActionModel[];
   celebrations: CelebrationModel[];
+  campaigns: CampaignModel[];
 };
 
 export type DropdownOptions = Array<

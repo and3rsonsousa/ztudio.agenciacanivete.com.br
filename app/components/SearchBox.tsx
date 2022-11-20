@@ -1,9 +1,17 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
+import { useOutletContext } from "@remix-run/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { fade, scaleUp } from "~/lib/animations";
 
 export default function SearchBox() {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const context: {
+    search: {
+      openDialogSearch: boolean;
+      setOpenDialogSearch: (b?: boolean) => void;
+    };
+  } = useOutletContext();
   const [isMac, setIsMac] = useState(false);
 
   useEffect(() => {
@@ -11,7 +19,7 @@ export default function SearchBox() {
 
     function keyDown(event: KeyboardEvent) {
       if (event.metaKey && event.key === "k") {
-        setDialogOpen(!dialogOpen);
+        context.search.setOpenDialogSearch(!context.search.openDialogSearch);
       }
     }
 
@@ -20,10 +28,13 @@ export default function SearchBox() {
     return () => {
       window.removeEventListener("keydown", keyDown);
     };
-  }, [isMac, dialogOpen]);
+  }, [isMac, context]);
 
   return (
-    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
+    <Dialog.Root
+      open={context.search.openDialogSearch}
+      onOpenChange={context.search.setOpenDialogSearch}
+    >
       <Dialog.Trigger asChild>
         <button
           onClick={() => {}}
@@ -41,11 +52,24 @@ export default function SearchBox() {
           </div>
         </button>
       </Dialog.Trigger>
-      <Dialog.Overlay className="dialog-overlay">
-        <Dialog.Content className="dialog-content w-72 overflow-hidden border border-black/5 sm:w-96 lg:w-[36rem]">
-          ok
-        </Dialog.Content>
-      </Dialog.Overlay>
+      <AnimatePresence>
+        {context.search.openDialogSearch && (
+          <Dialog.Portal forceMount>
+            <Dialog.Overlay asChild forceMount>
+              <motion.div className="dialog-overlay" {...fade()}></motion.div>
+            </Dialog.Overlay>
+
+            <Dialog.Content forceMount className="dialog dialog-search">
+              <motion.div
+                className="dialog-content top-1/3 w-[36rem] max-w-lg font-light antialiased "
+                {...scaleUp()}
+              >
+                <input type="text" className="field-input" />
+              </motion.div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        )}
+      </AnimatePresence>
     </Dialog.Root>
   );
 }

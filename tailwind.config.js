@@ -1,21 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 var colors = require("tailwindcss/colors");
+var theme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     extend: {
+      screens: {
+        "3xl": "1728px",
+      },
+
       colors: {
         gray: {
-          1000: "#0a0f1c",
+          1000: "#0a0c1f",
         },
+      },
+      fontFamily: {
+        sans: ["Inter var", ...theme.fontFamily.sans],
       },
     },
     colors: {
       white: "white",
       black: "black",
       transparent: "transparent",
-      gray: colors.slate,
+      gray: colors.gray,
 
       brand: {
         DEFAULT: "#8000FF",
@@ -28,17 +36,17 @@ module.exports = {
 
       info: colors.slate,
       error: colors.red,
-      alert: colors.amber,
+      alert: colors.yellow,
       success: colors.emerald,
 
       post: colors.violet,
       reels: colors.fuchsia,
       meeting: colors.sky,
-      stories: colors.amber,
+      stories: colors.orange,
       task: colors.teal,
       tiktok: colors.rose,
 
-      idea: colors.yellow,
+      idea: colors.amber,
       do: colors.orange,
       doing: colors.pink,
       review: colors.violet,
@@ -46,5 +54,5 @@ module.exports = {
       accomplished: colors.lime,
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

@@ -1,123 +1,218 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useMatches } from "@remix-run/react";
-import {
-  add,
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  format,
-  parse,
-  setDefaultOptions,
-  startOfMonth,
-  startOfToday,
-  startOfWeek,
-} from "date-fns";
-
-import { ptBR } from "date-fns/locale";
+import { useMatches, useNavigate, useSearchParams } from "@remix-run/react";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useState } from "react";
-import type { ActionModel, CelebrationModel, DayModel } from "~/lib/models";
+import { getPeriod, getYear } from "~/lib/functions";
+import type {
+  ActionModel,
+  CampaignModel,
+  CelebrationModel,
+  DayModel,
+} from "~/lib/models";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
-import Button from "./Forms/Button";
+import Button from "./Button";
+import InstagramGrid from "./InstagramGrid";
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+dayjs.locale("pt-br");
 
-export default function Calendar({ actions }: { actions: ActionModel[] }) {
-  setDefaultOptions({ locale: ptBR });
+export default function Calendar({
+  actions,
+  campaigns,
+  grid,
+}: {
+  actions: ActionModel[];
+  campaigns: CampaignModel[];
+  grid?: boolean;
+}) {
+  const [showYearView, setShowYearView] = useState(false);
   const matches = useMatches();
+  const [searchParams] = useSearchParams();
+  let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
-  let today = startOfToday();
-  let [selectedDay, setSelectedDay] = useState(today);
-  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyy"));
-  let firstDayOfCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const today = dayjs();
+  const period = searchParams.get("period");
 
-  let newDays = eachDayOfInterval({
-    start: startOfWeek(startOfMonth(firstDayOfCurrentMonth)),
-    end: endOfWeek(endOfMonth(firstDayOfCurrentMonth)),
-  });
+  const { firstDayOfCurrentMonth, days: newDays } = getPeriod({ period });
+
+  let [selectedDay, setSelectedDay] = useState(today.format("YYYY-MM-DD"));
 
   const days = newDays.map((day) => {
-    let _day: DayModel = { date: day, actions: [], celebrations: [] };
+    let _day: DayModel = {
+      date: day,
+      actions: [],
+      celebrations: [],
+      campaigns: [],
+    };
     _day.actions = actions.filter((action) => {
       return (
-        format(new Date(action.date), "y-M-d") ===
-        format(new Date(_day.date), "y-M-d")
+        dayjs(action.date).format("YYYY-MM-DD") ===
+        _day.date.format("YYYY-MM-DD")
       );
     });
     _day.celebrations = celebrations.filter((celebration) => {
       return (
-        format(new Date(_day.date), "dd-MM") ===
-        format(new Date(celebration.date), "dd-MM")
+        _day.date.format("MM-DD") === dayjs(celebration.date).format("MM-DD")
+      );
+    });
+    _day.campaigns = campaigns.filter((campaign) => {
+      return (
+        day.isSameOrAfter(dayjs(campaign.date_start), "day") &&
+        day.isSameOrBefore(dayjs(campaign.date_end), "day")
       );
     });
     return _day;
   });
 
-  function changeMonth(value: number) {
-    if (value !== 0) {
-      let firstDayOfNextMonth = add(firstDayOfCurrentMonth, { months: value });
-      setCurrentMonth(format(firstDayOfNextMonth, "MMM-yyyy"));
-    }
-  }
+  const navigate = useNavigate();
 
-  function setSelectedDayAndCurrentMonth(day: Date) {
-    setSelectedDay(day);
-    // Ao escolher o dia define também o mês
-    // Ex: Caso seja mês de agosto, e escolha uma data de setembro ou de julho
-    // EX: o mês muda para o da data selecionada
-    // changeMonth(getMonth(day) - getMonth(firstDayOfCurrentMonth));
-  }
+  const { year } = getYear(firstDayOfCurrentMonth);
 
   return (
-    <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col">
+    <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
       <div className="flex items-center justify-between border-b dark:border-gray-800">
-        <h4 className="mb-0 p-4 first-letter:capitalize">
-          {format(firstDayOfCurrentMonth, `MMMM 'de' Y`)}
-        </h4>
-        <div>
-          <Button link onClick={() => changeMonth(-1)}>
-            <ChevronLeftIcon />
-          </Button>
-          <Button link onClick={() => changeMonth(1)}>
-            <ChevronRightIcon />
-          </Button>
-        </div>
-      </div>
+        <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
+          <h4 className="mb-0 p-4 first-letter:capitalize">
+            {showYearView
+              ? firstDayOfCurrentMonth.format("YYYY")
+              : firstDayOfCurrentMonth.format(`MMMM [de] YYYY`)}
+          </h4>
 
-      <div className="h-full overflow-hidden lg:flex">
-        {/* Calendar  */}
-        <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
-          <div className="grid grid-cols-7 border-b dark:border-gray-800">
-            {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
-              (day, index) => (
-                <div key={index} className="calendar-weekday">
-                  {day}
-                </div>
-              )
-            )}
+          <div className="item-center flex">
+            <Button
+              link
+              small
+              icon
+              onClick={() => {
+                navigate(
+                  `?period=${firstDayOfCurrentMonth
+                    .subtract(1, showYearView ? "year" : "month")
+                    .format("YYYY-MM")}`
+                );
+              }}
+            >
+              <ChevronLeftIcon />
+            </Button>
+            <Button
+              link
+              small
+              onClick={() => {
+                setShowYearView(!showYearView);
+              }}
+            >
+              <span className="uppercase">
+                {showYearView
+                  ? firstDayOfCurrentMonth.format("MMMM [de] YYYY")
+                  : firstDayOfCurrentMonth.format("YYYY")}
+              </span>
+            </Button>
+            <Button
+              link
+              small
+              icon
+              onClick={() => {
+                navigate(
+                  `?period=${firstDayOfCurrentMonth
+                    .add(1, showYearView ? "year" : "month")
+                    .format("YYYY-MM")}`
+                );
+              }}
+            >
+              <ChevronRightIcon />
+            </Button>
           </div>
-          <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
-            {days.map((day, index) => (
-              <Day
-                key={index}
-                day={day}
-                firstDayOfCurrentMonth={firstDayOfCurrentMonth}
-                selectedDay={selectedDay}
-                setSelectedDayAndCurrentMonth={setSelectedDayAndCurrentMonth}
-              />
+        </div>
+        <div></div>
+      </div>
+      {showYearView ? (
+        <div className="h-full overflow-hidden  lg:flex">
+          <div className="grid w-full grid-cols-4 overflow-y-auto">
+            {year.map((month, index) => (
+              <div key={index} className="col-span-1 flex flex-col p-4">
+                <div className="pb-4 font-semibold first-letter:capitalize">
+                  {month[0].date.format("MMMM")}
+                </div>
+                <div className="grid w-full flex-auto grid-cols-7 text-center text-sm">
+                  {month.map((day, index) => (
+                    <div
+                      key={index}
+                      className={`col-span-1 grid place-items-center ${
+                        day.date.format("YYYY-MM-DD") ===
+                        dayjs().format("YYYY-MM-DD")
+                          ? " rounded-full bg-brand font-semibold text-white"
+                          : ""
+                      }`}
+                      style={{ gridColumnStart: day.date.day() + 1 }}
+                    >
+                      {day.date.format("D")}
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
-        {/* Info */}
+      ) : (
+        <div className="h-full overflow-hidden lg:flex">
+          {/* Calendar  */}
 
-        <DayInfo
-          day={
-            days.filter(
-              (day) =>
-                format(day.date, "y-M-d") === format(selectedDay, "y-M-d")
-            )[0]
-          }
-        />
-      </div>
+          <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
+            <div className="grid grid-cols-7 border-b dark:border-gray-800">
+              {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
+                (day, index) => (
+                  <div key={index} className="calendar-weekday">
+                    {day}
+                  </div>
+                )
+              )}
+            </div>
+            <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
+              {days.map((day, index) => {
+                if (index % 7 === 0) {
+                  height = 0;
+                  for (let i = index; i < index + 7; i++) {
+                    if (days[i].campaigns.length > height) {
+                      height = days[i].campaigns.length;
+                    }
+                  }
+                }
+
+                return (
+                  <Day
+                    key={index}
+                    index={index}
+                    day={day}
+                    height={height}
+                    firstDayOfCurrentMonth={firstDayOfCurrentMonth}
+                    selectedDay={selectedDay}
+                    setSelectedDay={setSelectedDay}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          {/* Info */}
+
+          {grid ? (
+            <InstagramGrid actions={actions} />
+          ) : (
+            <DayInfo
+              day={
+                days.filter(
+                  (day) =>
+                    day.date.format("YYYY-MM-DD") ===
+                    dayjs(selectedDay).format("YYYY-MM-DD")
+                )[0]
+              }
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,11 +1,9 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { Outlet } from "@remix-run/react";
-import { useState } from "react";
+import { Outlet, useOutletContext } from "@remix-run/react";
 import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
 import {
   getAccounts,
-  getCampaigns,
   getCelebrations,
   getPersonByUser,
   getPersons,
@@ -23,46 +21,24 @@ export const loader: LoaderFunction = async ({ request }) => {
     { data: accounts },
     { tags, status },
     { data: celebrations },
-    { data: campaigns },
   ] = await Promise.all([
     getPersonByUser(userId, request),
     getPersons(request),
     getAccounts(userId, request),
     getTagsStatus(request),
     getCelebrations({ request }),
-    getCampaigns({ request }),
   ]);
 
-  return { person, persons, accounts, tags, status, celebrations, campaigns };
+  const url = request.url;
+
+  return { person, persons, accounts, tags, status, celebrations, url };
 };
 
 export default function Dashboard() {
-  const [openDialogAction, setOpenDialogAction] = useState(false);
-  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
-  const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
-  const [openDialogSearch, setOpenDialogSearch] = useState(false);
+  const context = useOutletContext();
   return (
     <Layout>
-      <Outlet
-        context={{
-          celebrations: {
-            openDialogCelebration,
-            setOpenDialogCelebration,
-          },
-          actions: {
-            openDialogAction,
-            setOpenDialogAction,
-          },
-          campaigns: {
-            openDialogCampaign,
-            setOpenDialogCampaign,
-          },
-          search: {
-            openDialogSearch,
-            setOpenDialogSearch,
-          },
-        }}
-      />
+      <Outlet context={context} />
     </Layout>
   );
 }

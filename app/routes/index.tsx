@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "@remix-run/react";
+import Button from "~/components/Button";
 
 export default function Index() {
+  const navigate = useNavigate();
   return (
     <div className="grid h-screen place-content-center selection:bg-brand selection:text-white">
       <div className="w-96 text-center">
@@ -21,16 +23,9 @@ export default function Index() {
           .
         </p>
         <div className="mt-16 space-x-2">
-          {/* <Link to={`/login?signup`} className="button button-link">
-            Criar Conta
-          </Link> */}
-          <Link
-            to={`/dashboard
-          `}
-            className="button button-primary"
-          >
+          <Button primary onClick={() => navigate("/dashboard")}>
             Entrar
-          </Link>
+          </Button>
         </div>
       </div>
     </div>

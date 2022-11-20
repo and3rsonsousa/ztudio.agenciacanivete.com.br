@@ -1,4 +1,4 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
+import { createCookieSessionStorage } from "@remix-run/cloudflare";
 
 const sessionSecret = "5tud10";
 
@@ -18,21 +18,3 @@ const { getSession, commitSession, destroySession } =
   });
 
 export { getSession, commitSession, destroySession };
-
-// export async function logout(request: Request) {
-//   let session = await getSession(request.headers.get("Cookie"));
-
-//   return redirect("/dashboard", {
-//     headers: {
-//       "Set-Cookie": await destroySession(session),
-//     },
-//   });
-// }
-
-// export async function getUserId(request: Request) {
-//   let session = await getSession(request.headers.get("Cookie"));
-//   if (session.has("userId")) {
-//     let userId = session.get("userId");
-//     return userId;
-//   }
-// }

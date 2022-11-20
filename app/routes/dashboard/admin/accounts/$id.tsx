@@ -1,7 +1,8 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import CheckboxField from "~/components/Forms/CheckboxField";
 import InputField from "~/components/Forms/InputField";
 import { getAccount, getPersons, handleAction } from "~/lib/data";
@@ -21,6 +22,10 @@ export const action: ActionFunction = async ({ request }) => {
 
   const { data, error } = await handleAction(formData, request);
 
+  if (formData.get("redirectTo")) {
+    return redirect(formData.get("redirectTo") as string);
+  }
+
   return { data, error };
 };
 
@@ -35,7 +40,7 @@ export default function UserId() {
   }>();
 
   return (
-    <div className="h-full w-1/2 max-w-md border-l p-4 dark:border-gray-800 lg:px-8">
+    <div className="h-full max-w-md flex-grow border-l p-4 dark:border-gray-800 md:w-1/2 lg:px-8">
       <h4 className="mb-4">Atualizar Cliente</h4>
       {actionData?.error && (
         <Exclamation type="error">{actionData.error.message}</Exclamation>
@@ -61,7 +66,18 @@ export default function UserId() {
           ))}
         </div>
 
-        <div className="flex justify-end">
+        <div className="my-4 flex justify-end gap-2">
+          <Form method="post">
+            <input type="hidden" name="id" value={account.id} />
+            <input type="hidden" name="action" value="delete-account" />
+            <input
+              type="hidden"
+              name="redirectTo"
+              value={`/dashboard/admin/accounts`}
+            />
+
+            <Button>Excluir</Button>
+          </Form>
           <Button type="submit" primary>
             Atualizar
           </Button>

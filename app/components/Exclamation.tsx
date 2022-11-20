@@ -8,13 +8,21 @@ const Exclamation = ({
   children,
   icon,
   type,
+  large,
+  small,
 }: {
   children: React.ReactNode;
   icon?: boolean;
   type?: "alert" | "error" | "success" | "info";
+  large?: boolean;
+  small?: boolean;
 }) => (
-  <div>
-    <div className={`exclamation bg-${type ?? "info"}`}>
+  <div className="text-center">
+    <div
+      className={`exclamation bg-${type ?? "info"} ${
+        large ? "text-base" : small ? "text-xx" : "text-sm"
+      }`}
+    >
       {icon ? (
         <div>
           {type === "success" ? (

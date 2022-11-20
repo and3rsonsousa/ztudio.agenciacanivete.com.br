@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
-import Button from "~/components/Forms/Button";
+import Button from "~/components/Button";
 import CheckboxField from "~/components/Forms/CheckboxField";
 import InputField from "~/components/Forms/InputField";
 import { getPersons } from "~/lib/data";
@@ -52,7 +52,7 @@ export default function NewAccount() {
   }>();
 
   return (
-    <div className="h-full w-1/2 max-w-md border-l p-4 dark:border-gray-800 lg:px-8">
+    <div className="h-full max-w-md flex-grow border-l p-4 dark:border-gray-800 md:w-1/2 lg:px-8">
       <h4 className="mb-4">Novo cliente</h4>
       {actionData?.error && (
         <Exclamation type="error">{actionData.error.message}</Exclamation>

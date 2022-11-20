@@ -1,107 +1,162 @@
 import {
+  ArrowSmallRightIcon,
+  CheckCircleIcon,
   ChevronRightIcon,
+  DocumentDuplicateIcon as Duplicate,
   PencilIcon,
   TrashIcon,
-  DocumentDuplicateIcon as Duplicate,
-  CheckCircleIcon,
 } from "@heroicons/react/20/solid";
 
-import { Link, useFetcher, useMatches, useNavigate } from "@remix-run/react";
-import { format } from "date-fns";
 import * as ContextMenu from "@radix-ui/react-context-menu";
-
-import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import {
-  DocumentCheckIcon,
+  Link,
+  useFetcher,
+  useMatches,
+  useNavigate,
+  useOutletContext,
+} from "@remix-run/react";
+
+import {
+  CheckBadgeIcon,
   DocumentDuplicateIcon,
+  DocumentPlusIcon,
   PencilSquareIcon,
   TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import { FocusRing } from "react-aria";
+import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
+import Button from "./Button";
+import Exclamation from "./Exclamation";
+import type { SupportType } from "./InstagramGrid";
 
 export const Action = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
-  const accounts: AccountModel[] = matches[1].data.accounts;
-  const tags: ItemModel[] = matches[1].data.tags;
-  const account = accounts.filter(
-    (account) => account.id === action.account
-  )[0];
-  const tag = tags.filter((tag) => tag.id === action.tag)[0];
-
-  const status: ItemModel[] = matches[1].data.status;
-  const navigate = useNavigate();
-
   const fetcher = useFetcher();
+  const url = matches[1].data.url;
+  const tags: ItemModel[] = matches[1].data.tags;
+  const status: ItemModel[] = matches[1].data.status;
+  const accounts: AccountModel[] = matches[1].data.accounts;
+
+  const navigate = useNavigate();
 
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <div
-          data-date={action.date}
-          data-id={action.id}
-          draggable
-          onDragStart={(e) => {
-            const ele = e.target as HTMLElement;
-            const ghost = ele.cloneNode(true) as HTMLElement;
+        <FocusRing focusRingClass="ring outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
+          <div
+            role="button"
+            tabIndex={0}
+            data-date={action.date}
+            data-id={action.id}
+            draggable
+            onDragStart={(e) => {
+              const ele = e.target as HTMLElement;
+              const ghost = ele.cloneNode(true) as HTMLElement;
 
-            ghost.style.width = `${ele.offsetWidth}px`;
-            ghost.style.height = `${ele.offsetHeight}px`;
-            ghost.style.position = "absolute";
-            ghost.style.top = "0";
-            ghost.style.left = "0";
-            ghost.style.offset = ".2";
-            ghost.style.zIndex = "-1";
-            ghost.classList.add("dragging");
+              ghost.style.width = `${ele.offsetWidth}px`;
+              ghost.style.height = `${ele.offsetHeight}px`;
+              ghost.style.position = "absolute";
+              ghost.style.top = "0";
+              ghost.style.left = "0";
+              ghost.style.offset = ".2";
+              ghost.style.zIndex = "-1";
+              ghost.classList.add("dragging");
 
-            document.querySelector(".app")?.appendChild(ghost);
-            e.dataTransfer?.setDragImage(
-              ghost,
-              ele.offsetWidth / 2,
-              ele.offsetHeight / 2
-            );
+              document.querySelector(".app")?.appendChild(ghost);
+              e.dataTransfer?.setDragImage(
+                ghost,
+                ele.offsetWidth / 2,
+                ele.offsetHeight / 2
+              );
 
-            setTimeout(() => {
-              ghost.parentNode?.removeChild(ghost);
-            }, 1000);
-          }}
-          className={`action-line duration-500 bg-${
-            status.filter((stat) => stat.id === action.status)[0].slug
-          } bg-${
-            status.filter((stat) => stat.id === action.status)[0].slug
-          }-hover flex cursor-pointer items-center justify-between gap-2`}
-          title={action.name}
-          onClick={() => {
-            navigate(`/dashboard/${account.slug}/action/${action.id}`);
-          }}
-        >
-          <div className="flex items-center gap-1 overflow-hidden">
-            <div className="text-xx hidden font-semibold uppercase opacity-50 2xl:block">
-              {tag.name.slice(0, 3)}
+              setTimeout(() => {
+                ghost.parentNode?.removeChild(ghost);
+              }, 1000);
+            }}
+            className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
+            onClick={() => {
+              navigate(
+                `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
+              );
+            }}
+          >
+            <div className="flex w-full items-center gap-1 overflow-hidden">
+              <div
+                className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
+              >
+                {action.tag.name.slice(0, 3)}
+              </div>
+              <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
+                {action.name}
+              </div>
+              <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+                {action.account.name.slice(0, 3)}
+              </div>
             </div>
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium">
-              {action.name}
+            <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
+              {dayjs(action.date).format(
+                "H[h]".concat(
+                  dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+                )
+              )}
             </div>
           </div>
-          <div className="text-xx hidden font-medium opacity-75 2xl:block">
-            {format(new Date(action.date), "H'h'")}
-            {format(new Date(action.date), "mm") !== "00"
-              ? format(new Date(action.date), "mm")
-              : ""}
-          </div>
-        </div>
+        </FocusRing>
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content className="dropdown-content w-36">
+          {/* Editar */}
           <ContextMenu.Item asChild>
             <Link
-              to={`/dashboard/${account.slug}/action/${action.id}`}
+              to={`/dashboard/${action.account.slug}/action/${action.id}`}
               className="dropdown-item item-small flex items-center gap-2"
             >
               <PencilSquareIcon className="w-4" /> <div>Editar</div>
             </Link>
           </ContextMenu.Item>
+          {/* Duplicar */}
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+              <DocumentDuplicateIcon className="w-4" />
+              <div className="flex flex-auto justify-between gap-4">
+                <div>Duplicar</div>
 
-          <ContextMenu.Item
+                <div>
+                  <ChevronRightIcon className="w-4" />
+                </div>
+              </div>
+            </ContextMenu.SubTrigger>
+            <ContextMenu.SubContent className="dropdown-content">
+              <ContextMenu.Label className="dropdown-label">
+                Duplicar para a conta...
+              </ContextMenu.Label>
+              {accounts.map((account) => (
+                <ContextMenu.Item
+                  className="dropdown-item item-small"
+                  key={account.id}
+                  onSelect={(event) => {
+                    fetcher.submit(
+                      {
+                        action: "duplicate-action",
+                        id: action.id,
+                        account: account.id,
+                      },
+                      {
+                        method: "post",
+                        action: "/handle-action",
+                      }
+                    );
+                  }}
+                >
+                  <div>{account.name}</div>
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.SubContent>
+          </ContextMenu.Sub>
+          {/* <ContextMenu.Item
             onSelect={(event) => {
               fetcher.submit(
                 {
@@ -110,13 +165,15 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 },
                 {
                   method: "post",
+                  action: "/handle-action",
                 }
               );
             }}
             className="dropdown-item item-small flex items-center gap-2"
           >
             <DocumentDuplicateIcon className="w-4" /> <div>Duplicar</div>
-          </ContextMenu.Item>
+          </ContextMenu.Item> */}
+          {/* excluir */}
           <ContextMenu.Item
             onSelect={(event) => {
               fetcher.submit(
@@ -126,6 +183,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 },
                 {
                   method: "post",
+                  action: "/handle-action",
                 }
               );
             }}
@@ -134,6 +192,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
             <Trash className="w-4" /> <div>Excluir</div>
           </ContextMenu.Item>
           <hr className="dropdown-hr" />
+          {/* Tags */}
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <TagIcon className="w-4" />
@@ -159,6 +218,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                         },
                         {
                           method: "post",
+                          action: "/handle-action",
                         }
                       );
                     }}
@@ -168,7 +228,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                       className={`h-2 w-2 rounded-full bg-${tag.slug}`}
                     ></div>
                     <div className="flex-shrink-0 flex-grow">{tag.name}</div>
-                    {action.tag === tag.id && (
+                    {action.tag.id === tag.id && (
                       <CheckCircleIcon className="w-4" />
                     )}
                   </ContextMenu.Item>
@@ -176,9 +236,10 @@ export const Action = ({ action }: { action: ActionModel }) => {
               </ContextMenu.SubContent>
             </ContextMenu.Portal>
           </ContextMenu.Sub>
+          {/* Status */}
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <DocumentCheckIcon className="w-4" />
+              <CheckBadgeIcon className="w-4" />
               <div className="flex flex-auto justify-between gap-4">
                 <div>Status</div>
 
@@ -195,12 +256,13 @@ export const Action = ({ action }: { action: ActionModel }) => {
                     onSelect={(event) => {
                       fetcher.submit(
                         {
-                          action: "update-status",
+                          action: "update-action-status",
                           id: action.id,
                           status: stat.id,
                         },
                         {
                           method: "post",
+                          action: "/handle-action",
                         }
                       );
                     }}
@@ -210,7 +272,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                       className={`h-2 w-2 rounded-full bg-${stat.slug}`}
                     ></div>
                     <div className="flex-shrink-0 flex-grow">{stat.name}</div>
-                    {action.status === stat.id && (
+                    {action.status.id === stat.id && (
                       <CheckCircleIcon className="w-4" />
                     )}
                   </ContextMenu.Item>
@@ -224,38 +286,65 @@ export const Action = ({ action }: { action: ActionModel }) => {
   );
 };
 
-export const ActionMedium = ({ action }: { action: ActionModel }) => {
+export const ActionMedium = ({
+  action,
+  showDateAndTime,
+  hideAccount,
+}: {
+  action: ActionModel;
+  showDateAndTime?: boolean;
+  hideAccount?: boolean;
+}) => {
   const matches = useMatches();
   const fetcher = useFetcher();
-  const tags: ItemModel[] = matches[1].data.tags;
   const acccounts: AccountModel[] = matches[1].data.accounts;
   const account = acccounts.filter(
-    (account) => account.id === action.account
+    (account) => account.id === action.account.id
   )[0];
-  const status: ItemModel[] = matches[1].data.status;
-  const tag = tags.filter((tag) => tag.id === action.tag)[0];
-  const stat = status.filter((stat) => stat.id === action.status)[0];
+
   const navigate = useNavigate();
-  const date = new Date(action.date);
+  const date = dayjs(action.date);
 
   return (
     <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 transition duration-500  hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-${stat.slug}`}
+      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 duration-500  dark:bg-gray-800  border-${action.status.slug}`}
     >
-      <div>
-        <div className="text-sm font-normal">{action.name}</div>
+      <div className="overflow-hidden">
+        <div className="text-sm font-normal dark:text-gray-300">
+          {action.name}
+        </div>
+        {action.campaign && (
+          <Link
+            to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
+            className="text-xx mb-2 flex items-center hover:underline"
+          >
+            <ArrowSmallRightIcon className="w-4" />
+            <span>{action.campaign.name}</span>
+          </Link>
+        )}
         {action.description ? (
-          <div className="text-xx mb-2">{action.description}</div>
+          <div className="text-xx mb-2 line-clamp-3">{action.description}</div>
         ) : null}
-        <div className="text-xx flex gap-4 text-gray-500">
-          <div>
-            {format(date, "H'h'")}
-            {format(date, "mm") !== "00" ? format(date, "mm") : ""}
+        <div className="text-xx flex gap-4 overflow-hidden opacity-75">
+          <div className="whitespace-nowrap">
+            {showDateAndTime
+              ? date.format(
+                  "D/M/YY [às] H[h]".concat(
+                    date.format("mm") !== "00" ? "mm" : ""
+                  )
+                )
+              : date.format(
+                  "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
+                )}
           </div>
-          <div>{account.name}</div>
+          {!hideAccount && (
+            <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+              {account.name}
+            </div>
+          )}
           <div className="flex items-center gap-1">
-            <div className={`h-1 w-1 rounded-full bg-${tag.slug}`}></div>
-            <div>{tag.name}</div>
+            <div className={`h-1 w-1 rounded-full bg-${action.tag.slug}`}></div>
+            <div>{action.tag.name}</div>
           </div>
         </div>
       </div>
@@ -263,7 +352,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
         <button
           title="Editar ação"
           onClick={() => {
-            navigate(`/dashboard/${account.slug}/action/${action.id}`);
+            navigate(`/dashboard/${action.account.slug}/action/${action.id}`);
           }}
         >
           <PencilIcon className="w-3 transition hover:text-gray-300" />
@@ -278,6 +367,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
               },
               {
                 method: "post",
+                action: "/handle-action",
               }
             );
           }}
@@ -294,6 +384,7 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
               },
               {
                 method: "post",
+                action: "/handle-action",
               }
             );
           }}
@@ -301,6 +392,91 @@ export const ActionMedium = ({ action }: { action: ActionModel }) => {
           <TrashIcon className="w-3 transition hover:text-gray-300" />
         </button>
       </div>
+    </div>
+  );
+};
+
+export const ActionGrid = ({
+  action,
+  index,
+}: {
+  action: ActionModel | SupportType;
+  index: number;
+}) => {
+  const context: {
+    date: {
+      setDateOfTheDay: (date: Dayjs) => void;
+    };
+    actions: {
+      openDialogAction: boolean;
+      setOpenDialogAction: (b?: boolean) => void;
+    };
+  } = useOutletContext();
+
+  return action.name === "support" ? (
+    <div
+      className={`grid aspect-square place-items-center border-b border-r bg-gray-100 text-center dark:border-gray-800  dark:bg-gray-900`}
+    >
+      <div>
+        <Button
+          link
+          large
+          icon
+          onClick={() => {
+            context.date.setDateOfTheDay(dayjs(action.date));
+            context.actions.setOpenDialogAction(true);
+          }}
+        >
+          <DocumentPlusIcon />
+        </Button>
+      </div>
+    </div>
+  ) : (
+    <div
+      className={`text-xx flex aspect-square flex-col justify-between border-b p-2 text-center leading-tight dark:border-gray-800 ${
+        (action as ActionModel).status.id ===
+        "a448e17d-05ba-4ad0-9990-773f9384d15e"
+          ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-500"
+          : ""
+      } ${index + (1 % 3) === 0 ? "" : "border-r"}`}
+    >
+      <div></div>
+      <div>{action.name}</div>
+      <div>{dayjs(action.date).format("DD/MM")}</div>
+    </div>
+  );
+};
+
+export const Actions = ({ actions }: { actions: ActionModel[] }) => {
+  let currentMonth = "";
+  return (
+    <div className="no-scrollbars grid gap-x-4 gap-y-2 overflow-hidden overflow-y-auto p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
+      {Array.isArray(actions) && actions.length > 0 ? (
+        actions.reverse().map((action) => {
+          const header =
+            currentMonth !== dayjs(action.date).format("MM") ? (
+              <h4 className="col-span-full py-4 first-letter:capitalize">
+                {dayjs(action.date).format("MMMM [de] YYYY")}
+              </h4>
+            ) : null;
+          currentMonth = dayjs(action.date).format("MM");
+          return (
+            <>
+              {header}
+              <ActionMedium
+                key={action.id}
+                action={action}
+                hideAccount={true}
+                showDateAndTime={true}
+              />
+            </>
+          );
+        })
+      ) : (
+        <Exclamation type="alert" icon>
+          Nenhum item para exibir
+        </Exclamation>
+      )}
     </div>
   );
 };

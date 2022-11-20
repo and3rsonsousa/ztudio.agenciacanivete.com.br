@@ -1,6 +1,6 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { Form } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import type { CelebrationModel } from "~/lib/models";
 
 const Celebration = ({
@@ -10,6 +10,7 @@ const Celebration = ({
   celebration: CelebrationModel;
   small?: boolean;
 }) => {
+  const fetcher = useFetcher();
   return (
     <div
       className={`group flex w-full items-center justify-between  ${
@@ -26,13 +27,17 @@ const Celebration = ({
         </div>
       </div>
       <div className="text-gray-400 opacity-0 transition hover:text-gray-700 group-hover:opacity-100">
-        <Form method="delete">
+        <fetcher.Form method="post" action="/handle-action">
           <input type="hidden" name="action" value="delete-celebration" />
           <input type="hidden" name="id" value={celebration.id} />
-          <button type="submit" className="appearance-none align-middle">
+          <button
+            type="submit"
+            className="appearance-none align-middle"
+            tabIndex={-1}
+          >
             <TrashIcon className="w-3" />
           </button>
-        </Form>
+        </fetcher.Form>
       </div>
     </div>
   );
