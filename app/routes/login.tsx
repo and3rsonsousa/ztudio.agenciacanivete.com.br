@@ -1,12 +1,12 @@
-import { redirect } from "@remix-run/cloudflare";
+import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
-import { Form, useActionData, useTransition } from "@remix-run/react";
+import { redirect } from "@remix-run/cloudflare";
+import { Form, useTransition } from "@remix-run/react";
+import { useState } from "react";
 import Button from "~/components/Button";
 import Field from "~/components/Forms/InputField";
 import { signIN } from "~/lib/auth.server";
 import { getSession } from "~/lib/session.server";
-import { useState } from "react";
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 
 export const action: ActionFunction = async ({ request }) => {
   //validar dados
