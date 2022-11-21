@@ -123,7 +123,7 @@ export default function CampaignDialog({
         )}
         <Field
           name="name"
-          title="Nome"
+          label="Nome"
           value={campaign ? campaign.name : undefined}
         />
         {campaign || account ? (
@@ -133,8 +133,8 @@ export default function CampaignDialog({
         )}
         <TextareaField
           name="description"
-          title="Descrição"
-          lines={3}
+          label="Descrição"
+          rows={3}
           value={campaign ? campaign.description : undefined}
         />
         <div className="flex gap-4">

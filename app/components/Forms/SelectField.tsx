@@ -2,6 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
+import { FocusRing } from "react-aria";
 
 export default function SelectField({
   title,
@@ -37,13 +38,15 @@ export default function SelectField({
         name={name}
         disabled={disabled}
       >
-        <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed ">
-          <Select.Value placeholder={placeholder ?? "Selecione um item"} />
-          <Select.Icon className="-mr-3">
-            {/* <ChevronUpDownIcon className="w-6" /> */}
-            <ChevronDownIcon className="w-6" />
-          </Select.Icon>
-        </Select.Trigger>
+        <FocusRing focusRingClass="ring-2 ring-brand">
+          <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed ">
+            <Select.Value placeholder={placeholder ?? "Selecione um item"} />
+            <Select.Icon className="-mr-3">
+              {/* <ChevronUpDownIcon className="w-6" /> */}
+              <ChevronDownIcon className="w-6" />
+            </Select.Icon>
+          </Select.Trigger>
+        </FocusRing>
 
         <Select.Portal>
           <Select.Content className="dropdown-content">

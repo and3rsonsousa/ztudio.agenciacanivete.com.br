@@ -208,7 +208,8 @@ export default function ActionDialog({
 
         <Field
           name="name"
-          title="Nome"
+          label="Nome"
+          placeholder="Nome a Ação"
           value={action ? action.name : undefined}
         />
 
@@ -244,9 +245,9 @@ export default function ActionDialog({
         )}
         <TextareaField
           name="description"
-          title="Descrição"
+          label="Descrição"
           value={action ? action.description : undefined}
-          lines={action ? 5 : 3}
+          rows={action ? 5 : 3}
         />
 
         <div className="grid w-full grid-cols-2 gap-4">
@@ -273,7 +274,7 @@ export default function ActionDialog({
 
           <InputField
             name="date"
-            title="Data"
+            label="Data"
             type="datetime-local"
             value={
               action

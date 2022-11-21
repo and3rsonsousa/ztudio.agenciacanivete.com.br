@@ -191,7 +191,7 @@ html{
 } 
 
 .dropdown-item {
-  @apply spacing antialiased focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200  text-gray-700 cursor-pointer;
+  @apply spacing antialiased font-normal focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200  text-gray-700 cursor-pointer;
 }
 
 .dropdown-item.item-small{
