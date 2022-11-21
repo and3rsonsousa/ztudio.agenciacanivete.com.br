@@ -14,6 +14,8 @@ export default function Button({
   className = "",
   type,
   loading,
+  isSuffix,
+  isPreffix,
   onClick,
 }: {
   children: React.ReactNode;
@@ -27,6 +29,8 @@ export default function Button({
   className?: string;
   type?: "submit" | "reset" | "button";
   loading?: boolean;
+  isSuffix?: boolean;
+  isPreffix?: boolean;
   onClick?: (event: any) => void;
 }) {
   const buttonRef = useRef(null);
@@ -46,7 +50,7 @@ export default function Button({
   const { isHovered, hoverProps } = useHover({});
 
   return (
-    <FocusRing focusRingClass="ring ring-brand">
+    <FocusRing focusClass="ring-2 ring-brand">
       <button
         {...hoverProps}
         {...buttonProps}
@@ -57,7 +61,9 @@ export default function Button({
           small ? " button-small " : large ? "button-large" : ""
         } ${icon ? "button-icon" : ""} ${
           link ? "button-link" : ""
-        } ${className}`}
+        } ${className} ${
+          isSuffix ? "h-12 rounded-r-none rounded-l-xl px-4" : ""
+        } ${isPreffix ? "h-12 rounded-l-none rounded-r-xl px-4" : ""}`}
         disabled={disabled}
       >
         {loading ? <Loader /> : children}

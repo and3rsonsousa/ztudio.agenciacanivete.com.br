@@ -5,6 +5,8 @@ import Button from "~/components/Button";
 import Field from "~/components/Forms/InputField";
 import { signIN } from "~/lib/auth.server";
 import { getSession } from "~/lib/session.server";
+import { useState } from "react";
+import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 
 export const action: ActionFunction = async ({ request }) => {
   //validar dados
@@ -22,6 +24,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
   const transition = useTransition();
   const isLoading =
     transition.state !== "idle" &&
@@ -34,8 +38,23 @@ export default function Login() {
           <img src="/logo.png" alt="STUDIO" />
         </div>
         <Form method="post">
-          <Field name="email" title="E-mail" type="email" />
-          <Field name="password" title="Senha" type="password" />
+          <Field name="email" label="E-mail" type="email" />
+          <Field
+            name="password"
+            label="Senha"
+            type={showPassword ? "text" : "password"}
+            suffix={
+              <Button
+                icon
+                isPreffix
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? <LockClosedIcon /> : <LockOpenIcon />}
+              </Button>
+            }
+          />
           <input type="hidden" name="action" value="login" />
 
           <div className="space-x-2 text-right">
