@@ -57,7 +57,6 @@ export default function TextareaField({
   const props = {
     label,
     name,
-    rows,
     placeholder,
     defaultValue: value,
     isRequired: required,
@@ -76,6 +75,7 @@ export default function TextareaField({
       <FocusRing within={true} focusClass="ring-brand ring-2 border-brand">
         <textarea
           {...inputProps}
+          rows={rows}
           ref={inputRef}
           className={`w-full rounded-xl bg-gray-100 py-3 px-5 outline-none`}
         />
