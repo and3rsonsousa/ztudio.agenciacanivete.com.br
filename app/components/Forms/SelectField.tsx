@@ -38,7 +38,7 @@ export default function SelectField({
         name={name}
         disabled={disabled}
       >
-        <FocusRing focusRingClass="ring-2 ring-brand">
+        <FocusRing focusClass="ring-2 ring-brand">
           <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed ">
             <Select.Value placeholder={placeholder ?? "Selecione um item"} />
             <Select.Icon className="-mr-3">

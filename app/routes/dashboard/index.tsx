@@ -27,6 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 const DashboardIndex = () => {
   const { actions, campaigns } = useLoaderData();
+
   return (
     <div className="h-screen">
       <Calendar actions={actions} campaigns={campaigns} />

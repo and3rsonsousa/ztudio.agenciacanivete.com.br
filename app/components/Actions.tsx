@@ -45,7 +45,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <FocusRing focusRingClass="ring outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
+        <FocusRing focusRingClass="ring-2 outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
           <div
             role="button"
             tabIndex={0}
@@ -76,12 +76,13 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 ghost.parentNode?.removeChild(ghost);
               }, 1000);
             }}
-            className={`action-line py-1 px-2 duration-500 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
+            className={`action-line py-1 px-2 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
             onClick={() => {
               navigate(
                 `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
               );
             }}
+            title={`${action.name} - ${action.account.name}`}
           >
             <div className="flex w-full items-center gap-1 overflow-hidden">
               <div
@@ -307,7 +308,7 @@ export const ActionMedium = ({
 
   return (
     <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4 duration-500  dark:bg-gray-800  border-${action.status.slug}`}
+      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4  dark:bg-gray-800  border-${action.status.slug}`}
     >
       <div className="overflow-hidden">
         <div className="text-sm font-normal dark:text-gray-300">

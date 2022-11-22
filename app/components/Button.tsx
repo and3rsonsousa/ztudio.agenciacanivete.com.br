@@ -52,7 +52,11 @@ export default function Button({
   const { isHovered, hoverProps } = useHover({});
 
   return (
-    <FocusRing focusClass="ring-2 ring-brand">
+    <FocusRing
+      focusClass={`ring-2 ring-brand ${
+        primary ? "ring-offset-2 dark:ring-offset-gray-1000" : ""
+      }`}
+    >
       <button
         {...hoverProps}
         {...buttonProps}

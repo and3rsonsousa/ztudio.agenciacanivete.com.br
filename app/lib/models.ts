@@ -51,7 +51,7 @@ export type ActionModel = {
 };
 
 export type CelebrationModel = {
-  id: string;
+  id: string | number;
   name: string;
   date: string;
   is_holiday: boolean;

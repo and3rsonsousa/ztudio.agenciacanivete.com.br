@@ -12,14 +12,12 @@ export default function Day({
   day,
   selectedDay,
   firstDayOfCurrentMonth,
-  index,
   height,
   setSelectedDay,
 }: {
   day: DayModel;
   selectedDay: string;
   firstDayOfCurrentMonth: Dayjs;
-  index: number;
   height: number;
   setSelectedDay: (date: string) => void;
 }) {
@@ -85,6 +83,7 @@ export default function Day({
             className="day-button appearance-none"
             icon
             small
+            squared
             link
             onClick={() => {
               context.date.setDateOfTheDay(day.date);
@@ -151,6 +150,7 @@ export default function Day({
           ))}
         </div>
       </div>
+
       <div className="p-1">
         {day.celebrations.map((celebration) => (
           <Celebration celebration={celebration} key={celebration.id} small />

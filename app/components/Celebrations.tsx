@@ -11,6 +11,7 @@ const Celebration = ({
   small?: boolean;
 }) => {
   const fetcher = useFetcher();
+
   return (
     <div
       className={`group flex w-full items-center justify-between  ${
@@ -27,17 +28,24 @@ const Celebration = ({
         </div>
       </div>
       <div className="text-gray-400 opacity-0 transition hover:text-gray-700 group-hover:opacity-100">
-        <fetcher.Form method="post" action="/handle-action">
-          <input type="hidden" name="action" value="delete-celebration" />
-          <input type="hidden" name="id" value={celebration.id} />
-          <button
-            type="submit"
-            className="appearance-none align-middle"
-            tabIndex={-1}
-          >
-            <TrashIcon className="w-3" />
-          </button>
-        </fetcher.Form>
+        <button
+          className="appearance-none align-middle"
+          tabIndex={-1}
+          onClick={() => {
+            fetcher.submit(
+              {
+                id: celebration.id as string,
+                action: "delete-celebration",
+              },
+              {
+                action: "/handle-action",
+                method: "delete",
+              }
+            );
+          }}
+        >
+          <TrashIcon className="w-3" />
+        </button>
       </div>
     </div>
   );

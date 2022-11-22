@@ -297,17 +297,25 @@ export default function ActionDialog({
           />
         </div>
 
-        <div className="flex items-center justify-end gap-2 pt-4">
-          {action && (
-            <Form method="post">
-              <input type="hidden" name="id" value={action.id} />
-              <input type="hidden" name="action" value="delete-action" />
-              <Button>Excluir</Button>
-            </Form>
-          )}
-          <Button primary type="submit" loading={isAdding || isUpdating}>
-            {action ? "Atualizar" : "Adicionar"}
-          </Button>
+        <div className={`h-16`}>
+          <div
+            className={`${
+              !action
+                ? "absolute right-0 bottom-0 rounded-b-xl border-t bg-gray-100/50 px-8 backdrop-blur-md"
+                : ""
+            } flex w-full items-center justify-end gap-2   py-4 `}
+          >
+            {action && (
+              <Form method="post">
+                <input type="hidden" name="id" value={action.id} />
+                <input type="hidden" name="action" value="delete-action" />
+                <Button>Excluir</Button>
+              </Form>
+            )}
+            <Button primary type="submit" loading={isAdding || isUpdating}>
+              {action ? "Atualizar" : "Adicionar"}
+            </Button>
+          </div>
         </div>
       </fetcher.Form>
     </>

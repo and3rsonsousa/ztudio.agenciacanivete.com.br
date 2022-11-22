@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPeriod, getYear } from "~/lib/functions";
 import type {
   ActionModel,
@@ -24,10 +24,12 @@ dayjs.locale("pt-br");
 export default function Calendar({
   actions,
   campaigns,
+
   grid,
 }: {
   actions: ActionModel[];
   campaigns: CampaignModel[];
+
   grid?: boolean;
 }) {
   const [showYearView, setShowYearView] = useState(false);
@@ -55,6 +57,7 @@ export default function Calendar({
         _day.date.format("YYYY-MM-DD")
       );
     });
+
     _day.celebrations = celebrations.filter((celebration) => {
       return (
         _day.date.format("MM-DD") === dayjs(celebration.date).format("MM-DD")
@@ -72,6 +75,14 @@ export default function Calendar({
   const navigate = useNavigate();
 
   const { year } = getYear(firstDayOfCurrentMonth);
+
+  useEffect(() => {
+    if (window) {
+      document
+        .querySelector(`div[date-attr="${dayjs().format("YYYY-MM-DD")}"]`)
+        ?.scrollIntoView();
+    }
+  }, []);
 
   return (
     <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
@@ -160,7 +171,6 @@ export default function Calendar({
                 return (
                   <Day
                     key={index}
-                    index={index}
                     day={day}
                     height={height}
                     firstDayOfCurrentMonth={firstDayOfCurrentMonth}

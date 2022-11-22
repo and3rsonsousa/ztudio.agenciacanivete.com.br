@@ -38,6 +38,7 @@ export default function CreateButtons({
           <Button
             link
             icon
+            squared
             onClick={() => {
               context.celebrations.setOpenDialogCelebration(true);
             }}
@@ -51,6 +52,7 @@ export default function CreateButtons({
           <Button
             link
             icon
+            squared
             onClick={() => {
               context.campaigns.setOpenDialogCampaign(true);
             }}
@@ -68,7 +70,8 @@ export default function CreateButtons({
               context.actions.setOpenDialogAction(true);
             }}
           >
-            Nova Ação <DocumentPlusIcon />
+            <div className="whitespace-nowrap">Nova Ação</div>
+            <DocumentPlusIcon />
           </Button>
         </div>
       )}
