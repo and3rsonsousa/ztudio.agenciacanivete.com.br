@@ -34,6 +34,9 @@ module.exports = {
         900: "#3B1782",
       },
 
+      brave: colors.orange[500],
+      vivid: colors.indigo[500],
+
       info: colors.slate,
       error: colors.red,
       alert: colors.yellow,

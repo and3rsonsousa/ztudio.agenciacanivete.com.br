@@ -6,6 +6,7 @@ export default function Button({
   children,
   small,
   large,
+  squared,
   primary,
   disabled,
   link,
@@ -21,6 +22,7 @@ export default function Button({
   children: React.ReactNode;
   small?: boolean;
   large?: boolean;
+  squared?: boolean;
   primary?: boolean;
   disabled?: boolean;
   link?: boolean;
@@ -59,7 +61,7 @@ export default function Button({
           isHovered && !disabled ? " bg-button-hover" : "bg-button"
         } ${isPressed ? " bg-button-pressed" : "bg-button"} ${
           small ? " button-small " : large ? "button-large" : ""
-        } ${icon ? "button-icon" : ""} ${
+        } ${icon ? "button-icon" : ""} ${squared ? "button-squared" : ""} ${
           link ? "button-link" : ""
         } ${className} ${
           isSuffix ? "h-12 rounded-r-none rounded-l-xl px-4" : ""
