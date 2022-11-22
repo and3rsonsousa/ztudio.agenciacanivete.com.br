@@ -29,7 +29,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                 </h5>
               )}
               <div className={`${!view ? "-ml-2" : ""} hidden lg:block`}>
-                <Button link small icon onClick={() => setView(!view)}>
+                <Button link small icon squared onClick={() => setView(!view)}>
                   <ChevronRightIcon />
                 </Button>
               </div>

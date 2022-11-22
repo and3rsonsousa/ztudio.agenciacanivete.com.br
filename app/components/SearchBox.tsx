@@ -3,6 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useOutletContext } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { FocusRing } from "react-aria";
 import { fade, scaleUp } from "~/lib/animations";
 
 export default function SearchBox() {
@@ -36,21 +37,23 @@ export default function SearchBox() {
       onOpenChange={context.search.setOpenDialogSearch}
     >
       <Dialog.Trigger asChild>
-        <button
-          onClick={() => {}}
-          className="header-menu-link flex w-full cursor-text items-center justify-between gap-2 rounded lg:bg-gray-100 lg:dark:bg-gray-800"
-        >
-          <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
-            <div>Pesquisar</div>
+        <FocusRing focusClass="ring-2 ring-brand">
+          <button
+            onClick={() => {}}
+            className="flex w-full cursor-text items-center justify-between gap-2 rounded p-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
+          >
+            <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
+              <div>Pesquisar</div>
 
-            <div className="font-semibold ">
-              {isMac ? <span></span> : <span>Ctrl</span>} + K
+              <div className="font-semibold ">
+                {isMac ? <span></span> : <span>Ctrl</span>} + K
+              </div>
             </div>
-          </div>
-          <div>
-            <MagnifyingGlassIcon />
-          </div>
-        </button>
+            <div>
+              <MagnifyingGlassIcon />
+            </div>
+          </button>
+        </FocusRing>
       </Dialog.Trigger>
       <AnimatePresence>
         {context.search.openDialogSearch && (

@@ -122,59 +122,39 @@ export const Action = ({ action }: { action: ActionModel }) => {
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <DocumentDuplicateIcon className="w-4" />
-              <div className="flex flex-auto justify-between gap-4">
-                <div>Duplicar</div>
-
-                <div>
-                  <ChevronRightIcon className="w-4" />
-                </div>
-              </div>
+              <div>Duplicar</div>
+              <ChevronRightIcon className="ml-auto w-4" />
             </ContextMenu.SubTrigger>
-            <ContextMenu.SubContent className="dropdown-content">
-              <ContextMenu.Label className="dropdown-label">
-                Duplicar para a conta...
-              </ContextMenu.Label>
-              {accounts.map((account) => (
-                <ContextMenu.Item
-                  className="dropdown-item item-small"
-                  key={account.id}
-                  onSelect={(event) => {
-                    fetcher.submit(
-                      {
-                        action: "duplicate-action",
-                        id: action.id,
-                        account: account.id,
-                      },
-                      {
-                        method: "post",
-                        action: "/handle-action",
-                      }
-                    );
-                  }}
-                >
-                  <div>{account.name}</div>
-                </ContextMenu.Item>
-              ))}
-            </ContextMenu.SubContent>
+            <ContextMenu.Portal>
+              <ContextMenu.SubContent className="dropdown-content">
+                <ContextMenu.Label className="dropdown-label">
+                  Duplicar para a conta...
+                </ContextMenu.Label>
+                {accounts.map((account) => (
+                  <ContextMenu.Item
+                    className="dropdown-item item-small"
+                    key={account.id}
+                    onSelect={(event) => {
+                      fetcher.submit(
+                        {
+                          action: "duplicate-action",
+                          id: action.id,
+                          account: account.id,
+                        },
+                        {
+                          method: "post",
+                          action: "/handle-action",
+                        }
+                      );
+                    }}
+                  >
+                    <div>{account.name}</div>
+                  </ContextMenu.Item>
+                ))}
+              </ContextMenu.SubContent>
+            </ContextMenu.Portal>
           </ContextMenu.Sub>
-          {/* <ContextMenu.Item
-            onSelect={(event) => {
-              fetcher.submit(
-                {
-                  action: "duplicate-action",
-                  id: action.id,
-                },
-                {
-                  method: "post",
-                  action: "/handle-action",
-                }
-              );
-            }}
-            className="dropdown-item item-small flex items-center gap-2"
-          >
-            <DocumentDuplicateIcon className="w-4" /> <div>Duplicar</div>
-          </ContextMenu.Item> */}
-          {/* excluir */}
+          {/* Excluir */}
           <ContextMenu.Item
             onSelect={(event) => {
               fetcher.submit(
@@ -197,13 +177,8 @@ export const Action = ({ action }: { action: ActionModel }) => {
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <TagIcon className="w-4" />
-              <div className="flex flex-auto justify-between gap-4">
-                <div>Tags</div>
-
-                <div className="">
-                  <ChevronRightIcon className="w-4" />
-                </div>
-              </div>
+              <div>Tags</div>
+              <ChevronRightIcon className="ml-auto w-4" />
             </ContextMenu.SubTrigger>
             <ContextMenu.Portal>
               <ContextMenu.SubContent className="dropdown-content w-36">
@@ -241,13 +216,8 @@ export const Action = ({ action }: { action: ActionModel }) => {
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
               <CheckBadgeIcon className="w-4" />
-              <div className="flex flex-auto justify-between gap-4">
-                <div>Status</div>
-
-                <div className="">
-                  <ChevronRightIcon className="w-4" />
-                </div>
-              </div>
+              <div>Status</div>
+              <ChevronRightIcon className="ml-auto w-4" />
             </ContextMenu.SubTrigger>
             <ContextMenu.Portal>
               <ContextMenu.SubContent className="dropdown-content w-36">

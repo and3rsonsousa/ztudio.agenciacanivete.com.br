@@ -16,6 +16,7 @@ import {
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { FocusRing } from "react-aria";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
 import ActionDialog from "./Dialogs/ActionDialog";
@@ -118,23 +119,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div>
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="header-menu-link items-center gap-2 lg:w-full lg:justify-between">
-                <div className="text-xs font-semibold">{person.name}</div>
-                <div>
-                  <UserIcon />
-                </div>
-              </DropdownMenu.Trigger>
+              <FocusRing focusClass="ring-2 ring-brand">
+                <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
+                  <div className="text-xs font-semibold">{person.name}</div>
+
+                  <UserIcon className="ml-auto w-4" />
+                </DropdownMenu.Trigger>
+              </FocusRing>
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content className="dropdown-content mr-4" loop>
+                  {/* Theme Switcher */}
                   <div className="flex items-center justify-between gap-2">
                     <ThemeSwitcher />
                   </div>
 
                   <hr className="dropdown-hr" />
+                  {/* Minha Conta */}
                   <DropdownMenu.Label className="dropdown-label">
                     minha conta
                   </DropdownMenu.Label>
+                  {/* Meus Dados */}
                   <DropdownMenu.Item asChild>
                     <Link
                       to="/dashboard/me"
@@ -143,6 +148,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       Meus dados
                     </Link>
                   </DropdownMenu.Item>
+                  {/* Lixeira */}
                   <DropdownMenu.Item asChild>
                     <Link
                       to="/dashboard/trash"
@@ -151,72 +157,81 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       Lixeira
                     </Link>
                   </DropdownMenu.Item>
+                  {/* Sair */}
                   <DropdownMenu.Item
                     className="dropdown-item item-small"
                     onSelect={() => navigate("/signout")}
                   >
                     Sair
                   </DropdownMenu.Item>
+                  {/* Admin */}
                   {person.admin && (
                     <>
                       <hr className="dropdown-hr" />
                       <DropdownMenu.Label className="dropdown-label">
                         admin
                       </DropdownMenu.Label>
+                      {/* Clientes / Accounts  */}
                       <DropdownMenu.Sub>
                         <DropdownMenu.SubTrigger className="dropdown-item item-small">
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center">
                             <div>Clientes</div>
-                            <ChevronRightIcon className="w-4" />
+                            <ChevronRightIcon className="ml-auto w-4" />
                           </div>
                         </DropdownMenu.SubTrigger>
-                        <DropdownMenu.SubContent className="dropdown-content">
-                          <DropdownMenu.Item asChild>
-                            <Link
-                              to={`/dashboard/admin/accounts`}
-                              className="dropdown-item item-small block"
-                            >
-                              Ver Clientes
-                            </Link>
-                          </DropdownMenu.Item>
-                          <DropdownMenu.Item asChild>
-                            <Link
-                              to={`/dashboard/admin/accounts/new`}
-                              className="dropdown-item item-small block"
-                            >
-                              Novo Cliente
-                            </Link>
-                          </DropdownMenu.Item>
-                        </DropdownMenu.SubContent>
+                        <DropdownMenu.Portal>
+                          <DropdownMenu.SubContent className="dropdown-content">
+                            <DropdownMenu.Item asChild>
+                              <Link
+                                to={`/dashboard/admin/accounts`}
+                                className="dropdown-item item-small block"
+                              >
+                                Ver Clientes
+                              </Link>
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item asChild>
+                              <Link
+                                to={`/dashboard/admin/accounts/new`}
+                                className="dropdown-item item-small block"
+                              >
+                                Novo Cliente
+                              </Link>
+                            </DropdownMenu.Item>
+                          </DropdownMenu.SubContent>
+                        </DropdownMenu.Portal>
                       </DropdownMenu.Sub>
+                      {/* Usuários */}
                       <DropdownMenu.Sub>
                         <DropdownMenu.SubTrigger className="dropdown-item item-small">
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center">
                             <div>Usuários</div>
-                            <ChevronRightIcon className="w-4" />
+                            <ChevronRightIcon className="ml-auto w-4" />
                           </div>
                         </DropdownMenu.SubTrigger>
-                        <DropdownMenu.SubContent className="dropdown-content">
-                          <DropdownMenu.Item asChild>
-                            <Link
-                              to={`/dashboard/admin/users/`}
-                              className="dropdown-item item-small block"
-                            >
-                              Ver Usuários
-                            </Link>
-                          </DropdownMenu.Item>
-                          <DropdownMenu.Item asChild>
-                            <Link
-                              to={`/dashboard/admin/users/new`}
-                              className="dropdown-item item-small block"
-                            >
-                              Novo Usuário
-                            </Link>
-                          </DropdownMenu.Item>
-                        </DropdownMenu.SubContent>
+                        <DropdownMenu.Portal>
+                          <DropdownMenu.SubContent className="dropdown-content">
+                            <DropdownMenu.Item asChild>
+                              <Link
+                                to={`/dashboard/admin/users/`}
+                                className="dropdown-item item-small block"
+                              >
+                                Ver Usuários
+                              </Link>
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item asChild>
+                              <Link
+                                to={`/dashboard/admin/users/new`}
+                                className="dropdown-item item-small block"
+                              >
+                                Novo Usuário
+                              </Link>
+                            </DropdownMenu.Item>
+                          </DropdownMenu.SubContent>
+                        </DropdownMenu.Portal>
                       </DropdownMenu.Sub>
 
                       <hr className="dropdown-hr" />
+                      {/* Roadmap */}
                       <DropdownMenu.Item asChild>
                         <Link
                           to={`/dashboard/roadmap`}
@@ -353,12 +368,13 @@ function ThemeSwitcher() {
       }}
     >
       <div>Modo {theme === "dark" ? "claro" : "escuro"}</div>
-
-      {theme === "dark" ? (
-        <SunIcon className="w-4" />
-      ) : (
-        <MoonIcon className="w-4" />
-      )}
+      <div className="ml-8">
+        {theme === "dark" ? (
+          <SunIcon className="w-4" />
+        ) : (
+          <MoonIcon className="w-4" />
+        )}
+      </div>
     </DropdownMenu.Item>
   );
 }

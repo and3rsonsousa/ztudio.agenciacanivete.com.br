@@ -100,6 +100,7 @@ export default function Calendar({
               link
               small
               icon
+              squared
               onClick={() => {
                 navigate(
                   `?period=${firstDayOfCurrentMonth
@@ -127,6 +128,7 @@ export default function Calendar({
               link
               small
               icon
+              squared
               onClick={() => {
                 navigate(
                   `?period=${firstDayOfCurrentMonth

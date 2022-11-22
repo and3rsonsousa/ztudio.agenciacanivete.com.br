@@ -5,8 +5,8 @@ import Button from "~/components/Button";
 export default function Index() {
   const navigate = useNavigate();
   return (
-    <div>
-      <div className="grid h-[70vh] place-content-center bg-gradient-to-br from-brave via-brand to-vivid selection:bg-brand selection:text-white">
+    <div className="selection:bg-brand selection:text-white">
+      <div className="grid h-[70vh] place-content-center bg-gradient-to-br from-brand via-brand-700 to-brand ">
         <div className="w-96 text-center">
           <div>
             {/* <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-32" /> */}
@@ -23,6 +23,7 @@ export default function Index() {
               href="https://agenciacanivete.com.br"
               target="_blank"
               rel="noreferrer"
+              className="link"
             >
               αɢêɴᴄɪα ᴄαɴɪᴠeᴛe
             </a>

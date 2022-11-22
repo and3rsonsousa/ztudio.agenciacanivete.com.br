@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  @apply outline-none
+}
+
 html{
   @apply font-sans font-light text-gray-700 antialiased dark:text-gray-400;
   font-feature-settings:"cv02","cv03","cv04","cv11";
@@ -13,7 +17,7 @@ html{
   }
 
   .link {
-    @apply focus:focus-inline font-semibold tracking-wide text-brand underline;
+    @apply font-semibold tracking-wide underline;
     
   }
 
@@ -59,7 +63,7 @@ html{
     @apply text-[.625rem] tracking-wide;
   }
 
-  .focus-inline {
+  /* .focus-inline {
     @apply rounded-lg bg-brand text-brand-100 outline-none ring-2 ring-brand;
   }
 
@@ -68,7 +72,7 @@ html{
     
     @apply dark:focus:border-brand dark:focus:ring-brand-900 dark:focus:text-white;
     
-  }
+  } */
 }
 
 @layer components {
@@ -132,14 +136,17 @@ html{
   }
 
   .button-squared{
-    @apply p-3;
+    /* @apply p-3; */
+    @apply w-12 h-12 p-0;
   }
-
+  
   .button-squared.button-small{
-    @apply p-1.5
+    /* @apply p-1.5 */
+    @apply w-8 h-8 p-0;
   }
   .button-squared.button-large{
-    @apply p-5
+    /* @apply p-5 */
+    @apply w-16 h-16 p-0;
   }
 
   .button-icon svg{
@@ -171,15 +178,6 @@ html{
 
 .header-menu {
   @apply flex pr-2;
-}
-
-.header-menu-link {
-  @apply flex rounded-md border border-transparent p-2 ;
-  @apply focus-block;
-}
-
-.header-menu-link svg {
-  @apply w-4;
 }
 
 .dropdown-content {

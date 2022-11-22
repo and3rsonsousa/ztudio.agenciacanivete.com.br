@@ -61,11 +61,7 @@ export default function Day({
           }
         );
       }}
-      className={`calendar-day${
-        day.date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
-          ? " is-today"
-          : ""
-      }${
+      className={`calendar-day ${
         day.date.format("MM") === firstDayOfCurrentMonth.format("MM")
           ? ""
           : " not-this-month"
@@ -85,6 +81,9 @@ export default function Day({
             small
             squared
             link
+            primary={
+              day.date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+            }
             onClick={() => {
               context.date.setDateOfTheDay(day.date);
               setSelectedDay(day.date.format("YYYY-MM-DD"));
