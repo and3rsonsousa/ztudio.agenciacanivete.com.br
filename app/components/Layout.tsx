@@ -15,7 +15,6 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useState } from "react";
 import { FocusRing } from "react-aria";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
@@ -330,6 +329,33 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {...scaleUp()}
                   >
                     <CampaignDialog />
+                  </motion.div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            )}
+          </AnimatePresence>
+        </Dialog.Root>
+
+        <Dialog.Root
+          open={context.search.openDialogSearch}
+          onOpenChange={context.search.setOpenDialogSearch}
+        >
+          <AnimatePresence>
+            {context.search.openDialogSearch && (
+              <Dialog.Portal forceMount>
+                <Dialog.Overlay asChild forceMount>
+                  <motion.div
+                    className="dialog-overlay"
+                    {...fade()}
+                  ></motion.div>
+                </Dialog.Overlay>
+
+                <Dialog.Content forceMount className="dialog dialog-search">
+                  <motion.div
+                    className="dialog-content top-1/3 w-[36rem] max-w-lg font-light antialiased "
+                    {...scaleUp()}
+                  >
+                    <input type="text" className="field-input" />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>
