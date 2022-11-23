@@ -6,17 +6,13 @@ export default function Index() {
   const navigate = useNavigate();
   return (
     <div className="selection:bg-brand selection:text-white">
-      <div className="grid h-[70vh] place-content-center bg-gradient-to-br from-brand via-brand-700 to-brand ">
-        <div className="w-96 text-center">
+      <div className="grid min-h-screen place-content-center ">
+        <div className="z-10 w-96 text-center">
           <div>
             {/* <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-32" /> */}
-            <img
-              src="/logo-studio-white.svg"
-              alt="STUDIO"
-              className="mx-auto mb-8 w-52"
-            />
+            <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-36" />
           </div>
-          <p className="text-center font-normal text-white">
+          <p className="text-center font-normal">
             Sistema de gestão de ações criado
             <br /> e mantido pela{" "}
             <a
@@ -29,13 +25,13 @@ export default function Index() {
             </a>
             .
           </p>
+          <div className="mt-8">
+            <Button primary icon onClick={() => navigate("/dashboard")}>
+              <div>Entrar</div>
+              <UserCircleIcon />
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="grid h-[30vh] place-content-center space-x-2">
-        <Button large primary icon onClick={() => navigate("/dashboard")}>
-          <div>Entrar</div>
-          <UserCircleIcon />
-        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.1 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -30,6 +30,7 @@
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
 */
 
 html {
@@ -44,6 +45,8 @@ html {
   /* 3 */
   font-family: Inter var, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
+  font-feature-settings: normal;
+  /* 5 */
 }
 
 /*
@@ -1077,20 +1080,16 @@ h5 {
   height: 2rem;
 }
 
-.h-\[70vh\] {
-  height: 70vh;
-}
-
-.h-\[30vh\] {
-  height: 30vh;
-}
-
 .h-16 {
   height: 4rem;
 }
 
 .max-h-\[90vh\] {
   max-height: 90vh;
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .w-full {
@@ -1139,10 +1138,6 @@ h5 {
 
 .w-32 {
   width: 8rem;
-}
-
-.w-52 {
-  width: 13rem;
 }
 
 .w-24 {
@@ -1443,65 +1438,6 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-brand-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 230 255 / var(--tw-bg-opacity));
-}
-
-.bg-brand-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(88 20 184 / var(--tw-bg-opacity));
-}
-
-.bg-brave {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
-}
-
-.bg-brand-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 23 130 / var(--tw-bg-opacity));
-}
-
-.bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
-}
-
-.from-brave {
-  --tw-gradient-from: #f97316;
-  --tw-gradient-to: rgb(249 115 22 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.from-brand {
-  --tw-gradient-from: #8000FF;
-  --tw-gradient-to: rgb(128 0 255 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.via-brand {
-  --tw-gradient-to: rgb(128 0 255 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), #8000FF, var(--tw-gradient-to);
-}
-
-.via-brand-900 {
-  --tw-gradient-to: rgb(59 23 130 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), #3B1782, var(--tw-gradient-to);
-}
-
-.via-brand-700 {
-  --tw-gradient-to: rgb(88 20 184 / 0);
-  --tw-gradient-stops: var(--tw-gradient-from), #5814B8, var(--tw-gradient-to);
-}
-
-.to-vivid {
-  --tw-gradient-to: #6366f1;
-}
-
-.to-brand {
-  --tw-gradient-to: #8000FF;
 }
 
 .p-4 {
