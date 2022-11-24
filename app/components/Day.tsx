@@ -3,7 +3,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { actionsByPriority } from "~/lib/functions";
 import type { DayModel } from "~/lib/models";
-import { Action } from "./Actions";
+import { ActionLine } from "./Actions";
 import Button from "./Button";
 import { CampaignLine } from "./Campaign";
 import Celebration from "./Celebrations";
@@ -145,7 +145,7 @@ export default function Day({
 
         <div>
           {actionsByPriority(day.actions).map((action, index) => (
-            <Action key={action.id} action={action} />
+            <ActionLine key={action.id} action={action} />
           ))}
         </div>
       </div>

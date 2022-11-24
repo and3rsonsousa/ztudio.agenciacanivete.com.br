@@ -298,13 +298,7 @@ export default function ActionDialog({
         </div>
 
         <div className={`h-16`}>
-          <div
-            className={`${
-              !action
-                ? "absolute right-0 bottom-0 rounded-b-xl border-t bg-gray-100/50 px-8 backdrop-blur-md"
-                : ""
-            } flex w-full items-center justify-end gap-2   py-4 `}
-          >
+          <div className={`flex w-full items-center justify-end gap-2 py-4 `}>
             {action && (
               <Form method="post">
                 <input type="hidden" name="id" value={action.id} />

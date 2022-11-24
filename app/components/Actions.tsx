@@ -32,7 +32,7 @@ import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
 
-export const Action = ({ action }: { action: ActionModel }) => {
+export const ActionLine = ({ action }: { action: ActionModel }) => {
   const matches = useMatches();
   const fetcher = useFetcher();
   const url = matches[1].data.url;
@@ -76,7 +76,7 @@ export const Action = ({ action }: { action: ActionModel }) => {
                 ghost.parentNode?.removeChild(ghost);
               }, 1000);
             }}
-            className={`action-line py-1 px-2 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2`}
+            className={`action-line p-1 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2 2xl:pl-1`}
             onClick={() => {
               navigate(
                 `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
@@ -86,9 +86,9 @@ export const Action = ({ action }: { action: ActionModel }) => {
           >
             <div className="flex w-full items-center gap-1 overflow-hidden">
               <div
-                className={`text-xx hidden rounded-l font-semibold uppercase opacity-50 2xl:block`}
+                className={` text-xx hidden w-6 shrink-0 grow-0 text-center font-semibold uppercase opacity-50 2xl:block`}
               >
-                {action.tag.name.slice(0, 3)}
+                {action.account.name.slice(0, 3)}
               </div>
               <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
                 {action.name}
