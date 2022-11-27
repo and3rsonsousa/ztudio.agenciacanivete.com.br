@@ -79,7 +79,7 @@ export default function CampaignDialog({
           <h4 className="m-0 dark:text-gray-200">
             {campaign
               ? `Editar Campanha`
-              : `Nova Ação${account ? " para ".concat(account.name) : ""}`}
+              : `Nova Campanha${account ? " para ".concat(account.name) : ""}`}
           </h4>
           {campaign ? (
             <div className="mt-1 text-xs font-normal text-gray-300 dark:text-gray-700">
@@ -137,15 +137,17 @@ export default function CampaignDialog({
           rows={3}
           value={campaign ? campaign.description : undefined}
         />
-        <div className="flex gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
           <DatepickerField
             name="date_start"
             title="Começa em"
+            full={campaign ? true : false}
             date={campaign ? dayjs(campaign.date_start) : date}
           />
           <DatepickerField
             name="date_end"
             title="Termina em"
+            full={campaign ? true : false}
             date={
               campaign
                 ? dayjs(campaign.date_end)
@@ -153,7 +155,12 @@ export default function CampaignDialog({
             }
           />
         </div>
-        <SelectField name="status" title="Status" items={statusItems} />
+        <SelectField
+          name="status"
+          title="Status"
+          items={statusItems}
+          value={campaign ? campaign.status : undefined}
+        />
 
         <div className="flex items-center justify-end gap-2 pt-4">
           {campaign && (

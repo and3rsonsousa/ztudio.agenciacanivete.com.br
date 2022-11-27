@@ -1,4 +1,4 @@
-import { json, redirect } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 // import { commitSession, destroySession, getSession } from "./session.server";
 import { getSupabase } from "./supabase";
 
@@ -55,13 +55,13 @@ export async function signIN(
 
 export async function signOUT(request: Request) {
   const { supabase, response } = getSupabase(request);
-  let { error } = await supabase.auth.signOut();
+  await supabase.auth.signOut();
 
   return redirect("/dashboard", {
     headers: response.headers,
   });
 }
-export async function getUser(request: Request) {
+export async function getUser(request: Request, shouldRedirect?: boolean) {
   const { supabase, response } = getSupabase(request);
 
   const { data } = await supabase.auth.getSession();

@@ -48,10 +48,10 @@ export default function CelebrationDialog() {
 
       <fetcher.Form method="post" ref={formRef} action="/handle-action">
         <input type="hidden" name="action" value="create-celebration" />
-        <Field name="name" title="Nome" />
+        <Field name="name" label="Nome" />
         <Field
           name="date"
-          title="Data"
+          label="Data"
           pattern="[0-9]{2}/[0-9]{2}"
           value={date.format("DD/MM")}
           placeholder="dd/mm"

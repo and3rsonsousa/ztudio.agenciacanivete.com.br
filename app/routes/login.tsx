@@ -72,7 +72,7 @@ export default function Login() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="grid w-full max-w-3xl grid-cols-2 place-items-center  p-8">
+      <div className="w-full max-w-3xl grid-cols-2 place-items-center p-8  md:grid">
         <div className="w-full p-8">
           <div className="mb-8 w-32">
             <img src="/logo.png" alt="STUDIO" />
@@ -105,7 +105,7 @@ export default function Login() {
           </Form>
         </div>
         <div className="relative w-full p-8">
-          <div className="absolute -top-12 right-0  text-[120px] font-bold text-gray-200">
+          <div className="absolute -top-12 right-0  text-[120px] font-bold text-gray-200 dark:text-gray-700">
             ”
           </div>
           <div className="relative text-xl leading-normal">{quote.quote}</div>

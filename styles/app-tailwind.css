@@ -2,13 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  @apply outline-none
+* {
+  @apply outline-none;
 }
 
-html{
-  @apply font-sans font-light text-gray-700 antialiased dark:text-gray-400;
-  font-feature-settings:"cv02","cv03","cv04","cv11";
+html {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  @apply font-sans font-light text-gray-900 antialiased dark:text-gray-300;
 }
 
 @layer base {
@@ -18,7 +21,6 @@ html{
 
   .link {
     @apply font-semibold tracking-wide underline;
-    
   }
 
   h1 {
@@ -44,7 +46,7 @@ html{
 
 @layer utilities {
   .spacing-sm {
-    @apply px-4 py-1.5
+    @apply px-4 py-1.5;
   }
 
   .spacing {
@@ -62,60 +64,23 @@ html{
   .text-xx {
     @apply text-[.625rem] tracking-wide;
   }
-
-  /* .focus-inline {
-    @apply rounded-lg bg-brand text-brand-100 outline-none ring-2 ring-brand;
-  }
-
-  .focus-block {
-    @apply focus:border-brand focus:text-brand focus:outline-none focus:ring-4 focus:ring-brand-300;
-    
-    @apply dark:focus:border-brand dark:focus:ring-brand-900 dark:focus:text-white;
-    
-  } */
 }
 
 @layer components {
-  .button{
-    @apply touch-none inline-flex gap-2 items-center select-none appearance-none rounded-full px-6 py-3  font-semibold outline-none  justify-center;
-    /* botão em modo escuro */
-    @apply   dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+  .button {
+    @apply inline-flex touch-none select-none appearance-none items-center justify-center gap-2 rounded-full px-6  py-3 font-semibold  outline-none;
+    @apply bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300;
+    @apply hover:bg-gray-200 dark:hover:bg-gray-600;
+    @apply active:bg-gray-300;
     /* botão desabilitado */
-    @apply disabled:cursor-not-allowed disabled:text-gray-300;
+    @apply disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-gray-100 disabled:active:bg-gray-100 dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+    @apply ring-brand ring-offset-white focus:ring-2;
   }
 
-  .bg-button{
-    @apply bg-gray-100 dark:bg-gray-700 dark:text-gray-300 text-gray-700
-  }
-
-  .bg-button-hover{
-    @apply bg-gray-200 dark:bg-gray-600
-  }
-  .bg-button-pressed{
-    @apply bg-gray-300
-  }
-
-  .button-primary.bg-button{
-    @apply bg-brand text-white
-  }
-
-  .button-primary.bg-button-hover{
-    @apply bg-brand-700 text-white
-  }
-  .button-primary.bg-button-pressed{
-    @apply bg-brand-900 text-white
-  }
-
-  .button-primary{
-    @apply disabled:bg-brand-300 dark:disabled:bg-brand-900 dark:disabled:text-brand-700
-  }
-
-  .old-button-primary {
-    @apply border-transparent bg-brand text-white hover:bg-brand-700 hover:text-white focus:border-brand-700 focus:text-white;
-    /* botão primário desabilitado */
-    @apply disabled:bg-brand-300 disabled:text-brand-100;
-    /* botão primário em modo escuro */
-    @apply dark:bg-brand dark:text-white dark:hover:bg-brand-700 dark:focus:border-brand-100/50 dark:disabled:bg-brand-900 dark:disabled:text-brand-700;
+  .button-primary {
+    @apply bg-brand text-white ring-offset-2 ring-offset-gray-1000 hover:bg-brand-700 active:bg-brand-900;
+    @apply dark:bg-brand dark:text-white dark:hover:bg-brand-700 dark:active:bg-brand-900;
+    @apply disabled:bg-brand-300 disabled:text-brand-100 disabled:hover:bg-brand-300 disabled:active:bg-brand-300 dark:disabled:bg-brand-900 dark:disabled:text-brand dark:disabled:hover:bg-brand-900 dark:disabled:active:bg-brand-900;
   }
 
   .button-small {
@@ -127,40 +92,39 @@ html{
   }
 
   .button-link {
-    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent  dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent ;
+    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent  dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent;
   }
-
 
   .button svg {
-    @apply w-4
+    @apply w-4;
   }
 
-  .button-squared{
+  .button-squared {
     /* @apply p-3; */
-    @apply w-12 h-12 p-0;
-  }
-  
-  .button-squared.button-small{
-    /* @apply p-1.5 */
-    @apply w-8 h-8 p-0;
-  }
-  .button-squared.button-large{
-    /* @apply p-5 */
-    @apply w-16 h-16 p-0;
+    @apply h-12 w-12 p-0;
   }
 
-  .button-icon svg{
+  .button-squared.button-small {
+    /* @apply p-1.5 */
+    @apply h-8 w-8 p-0;
+  }
+  .button-squared.button-large {
+    /* @apply p-5 */
+    @apply h-16 w-16 p-0;
+  }
+
+  .button-icon svg {
     @apply w-5;
   }
-  .button-icon.button-small svg{
-      @apply w-4;
-    }
-  .button-icon.button-large svg{
+  .button-icon.button-small svg {
+    @apply w-4;
+  }
+  .button-icon.button-large svg {
     @apply w-6;
   }
 
   .field {
-    @apply mb-4 block w-full font-normal text-gray-700;
+    @apply mb-4 block w-full font-normal;
   }
 
   .field-label {
@@ -168,286 +132,265 @@ html{
   }
 
   .field-input {
-    @apply spacing w-full rounded-xl outline-none border border-transparent bg-gray-100 font-normal placeholder:text-gray-400 dark:placeholder:text-gray-600;
-    /* @apply focus-block focus:text-gray-700; */
-    @apply disabled:text-gray-300 dark:disabled:text-gray-600 dark:disabled:bg-gray-900;
-    @apply dark:bg-gray-800 dark:text-gray-200;
-    @apply invalid:border-error-500 invalid:ring-error-500 
+    @apply rounded-xl bg-gray-100 ring-brand  focus-within:ring-2 dark:bg-gray-700;
+  }
+  .field-default {
+    @apply spacing w-full rounded-xl  bg-gray-100 ring-brand placeholder:text-gray-400 focus-within:ring-2 dark:bg-gray-700 dark:placeholder:text-gray-600;
+    @apply disabled:text-gray-300 dark:disabled:text-gray-600;
+  }
+
+  .dropdown-content {
+    @apply shadow-color z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2  backdrop-blur-md dark:bg-gray-600/75;
+  }
+
+  .dropdown-label {
+    @apply text-xx spacing-sm font-semibold uppercase text-gray-700 antialiased  dark:text-gray-300;
+  }
+
+  .dropdown-item {
+    @apply spacing cursor-pointer font-normal text-gray-700 antialiased focus:bg-brand focus:text-white  focus:outline-none dark:text-gray-200;
+  }
+
+  .dropdown-item.item-small {
+    @apply spacing-sm text-xs;
+  }
+
+  .dropdown-item a {
+    @apply block;
+  }
+
+  .dropdown-hr {
+    @apply my-2 border-gray-500/10 dark:border-gray-200/10;
   }
 }
 
-.header-menu {
-  @apply flex pr-2;
-}
-
-.dropdown-content {
-  @apply shadow-color rounded-xl border border-black/10 bg-gray-100/75 dark:bg-gray-600/75 backdrop-blur-md  py-2 z-50;
-}
-
-.dropdown-label {
-  @apply text-xx spacing-sm font-semibold uppercase antialiased text-gray-700  dark:text-gray-300 ;
-} 
-
-.dropdown-item {
-  @apply spacing antialiased font-normal focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200  text-gray-700 cursor-pointer;
-}
-
-.dropdown-item.item-small{
-  @apply spacing-sm text-xs
-}
-
-.dropdown-item a{
-  @apply block
-}
-
-.dropdown-hr {
-  @apply  border-gray-500/10 my-2 dark:border-gray-200/10
-}
-
-.calendar {
-  /* @apply p-2 */
-}
-
 .calendar-weekday {
-  @apply font-semibold tracking-wide text-xs px-2 py-4 text-center text-gray-400 dark:text-gray-600;  
+  @apply px-2 py-4 text-center text-xs font-semibold tracking-wide text-gray-400 dark:text-gray-600;
 }
 
 .calendar-day {
-  @apply py-2 border-b text-center dark:border-gray-800  lg:text-left
+  @apply border-b py-2 text-center dark:border-gray-800  lg:text-left;
 }
-.calendar-day.not-this-month .day-button{
-  @apply text-gray-300 dark:text-gray-700 
+.calendar-day.not-this-month .day-button {
+  @apply text-gray-300 dark:text-gray-700;
 }
 
-.calendar-day .day-button{
-  @apply w-8 h-8  lg:w-6 lg:h-6 lg:text-xs;
+.calendar-day .day-button {
+  @apply h-8 w-8  lg:h-6 lg:w-6 lg:text-xs;
 }
 
 .calendar-day.is-today .day-button {
   @apply font-semibold text-brand;
-  
 }
-.calendar-day.is-selected .day-button{
-  @apply font-semibold text-white bg-brand 
+.calendar-day.is-selected .day-button {
+  @apply bg-brand font-semibold text-white;
 }
 
 .no-scrollbars::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-.dialog{
-  @apply fixed z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+.dialog {
+  @apply fixed top-1/2 left-1/2 z-40 -translate-x-1/2 -translate-y-1/2;
 }
-.dialog-search{
-  @apply top-1/4
+.dialog-search {
+  @apply top-1/4;
 }
-.dialog-overlay{
-  @apply bg-gray-800/50 fixed inset-0 z-40 dark:bg-gray-1000/75
-}
-
-.dialog-content{
-  @apply  z-50  bg-white border dark:border-gray-700 rounded-xl shadow-xl dark:bg-gray-800 text-gray-700 dark:text-gray-400 focus:outline-none
+.dialog-overlay {
+  @apply fixed inset-0 z-40 bg-gray-800/50 dark:bg-gray-1000/75;
 }
 
-
-.field-checkbox{
-  @apply flex gap-4 items-center relative
-}
-.field-checkbox .field-label{
-  @apply m-0
-
-}
-.field-checkbox input{
-  
-  @apply absolute opacity-0
-  
-}
-.field-checkbox .checkbox{
-  @apply w-4 h-4 rounded bg-gray-100 dark:bg-gray-600  border border-transparent 
-}
-.field-checkbox .checkbox svg{
-  @apply opacity-0 scale-50 text-white
+.dialog-content {
+  @apply z-50  rounded-xl border bg-white text-gray-900 shadow-xl focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200;
 }
 
-.field-checkbox input:checked ~ .checkbox{
-  @apply bg-brand relative
+.field-checkbox {
+  @apply relative flex items-center gap-4;
 }
-.field-checkbox input:checked ~ .checkbox svg{
-  @apply scale-100 opacity-100
+.field-checkbox .field-label {
+  @apply m-0;
+}
+.field-checkbox input {
+  @apply absolute opacity-0;
+}
+.field-checkbox .checkbox {
+  @apply h-4 w-4 rounded border border-transparent  bg-gray-100 dark:bg-gray-600;
+}
+.field-checkbox .checkbox svg {
+  @apply scale-50 text-white opacity-0;
 }
 
-.field-checkbox input:focus ~ .checkbox{
-  @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900
+.field-checkbox input:checked ~ .checkbox {
+  @apply relative bg-brand;
+}
+.field-checkbox input:checked ~ .checkbox svg {
+  @apply scale-100 opacity-100;
 }
 
-
-
+.field-checkbox input:focus ~ .checkbox {
+  @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
+}
 
 .bg-post {
-  @apply bg-post-500 dark:bg-post-700 text-white
+  @apply bg-post-500 text-white dark:bg-post-700;
 }
 .bg-post-hover {
-  @apply hover:bg-post-500 dark:hover:bg-post-600
+  @apply hover:bg-post-500 dark:hover:bg-post-600;
 }
 .border-post {
   @apply border-post-500;
 }
 
 .bg-reels {
-  @apply bg-reels-500 dark:bg-reels-700 text-white
+  @apply bg-reels-500 text-white dark:bg-reels-700;
 }
 .bg-reels-hover {
-  @apply hover:bg-reels-500 dark:hover:bg-reels-600
+  @apply hover:bg-reels-500 dark:hover:bg-reels-600;
 }
 .border-reels {
   @apply border-reels-500;
 }
 
 .bg-meeting {
-  @apply bg-meeting-500 dark:bg-meeting-700 text-white
+  @apply bg-meeting-500 text-white dark:bg-meeting-700;
 }
 .bg-meeting-hover {
-  @apply hover:bg-meeting-500 dark:hover:bg-meeting-600
+  @apply hover:bg-meeting-500 dark:hover:bg-meeting-600;
 }
 .border-meeting {
   @apply border-meeting-500;
 }
 
 .bg-stories {
-  @apply bg-stories-500 dark:bg-stories-700 text-white
+  @apply bg-stories-500 text-white dark:bg-stories-700;
 }
 .bg-stories-hover {
-  @apply hover:bg-stories-500 dark:hover:bg-stories-600
+  @apply hover:bg-stories-500 dark:hover:bg-stories-600;
 }
 .border-stories {
   @apply border-stories-500;
 }
 
 .bg-task {
-  @apply bg-task-500 dark:bg-task-700 text-white
+  @apply bg-task-500 text-white dark:bg-task-700;
 }
 .bg-task-hover {
-  @apply hover:bg-task-500 dark:hover:bg-task-600
+  @apply hover:bg-task-500 dark:hover:bg-task-600;
 }
 .border-task {
   @apply border-task-500;
 }
 
 .bg-tiktok {
-  @apply bg-tiktok-500 dark:bg-tiktok-700 text-white
+  @apply bg-tiktok-500 text-white dark:bg-tiktok-700;
 }
 .bg-tiktok-hover {
-  @apply hover:bg-tiktok-500 dark:hover:bg-tiktok-600
+  @apply hover:bg-tiktok-500 dark:hover:bg-tiktok-600;
 }
 .border-tiktok {
-  @apply border-tiktok-500}
-
-
-
-
+  @apply border-tiktok-500;
+}
 
 .bg-idea {
-  @apply bg-idea-500 dark:bg-idea-700 text-white
+  @apply bg-idea-500 text-white dark:bg-idea-700;
 }
 .bg-idea-hover {
-  @apply hover:bg-idea-600 dark:hover:bg-idea-700
+  @apply hover:bg-idea-600 dark:hover:bg-idea-700;
 }
 .border-idea {
   @apply border-idea-400;
 }
 
 .bg-do {
-  @apply bg-do-400 dark:bg-do-700 text-white
+  @apply bg-do-400 text-white dark:bg-do-700;
 }
 .bg-do-hover {
-  @apply hover:bg-do-500 dark:hover:bg-do-600
+  @apply hover:bg-do-500 dark:hover:bg-do-600;
 }
 .border-do {
   @apply border-do-500;
 }
 
 .bg-doing {
-  @apply bg-doing-500 dark:bg-doing-700 text-white
+  @apply bg-doing-500 text-white dark:bg-doing-700;
 }
 .bg-doing-hover {
-  @apply hover:bg-doing-600 dark:hover:bg-doing-600
+  @apply hover:bg-doing-600 dark:hover:bg-doing-600;
 }
 .border-doing {
   @apply border-doing-500;
 }
 
 .bg-review {
-  @apply bg-review-500 dark:bg-review-800 text-white
+  @apply bg-review-500 text-white dark:bg-review-800;
 }
 .bg-review-hover {
-  @apply hover:bg-review-600 dark:hover:bg-review-700
+  @apply hover:bg-review-600 dark:hover:bg-review-700;
 }
 .border-review {
   @apply border-review-500;
 }
 
 .bg-done {
-  @apply bg-done-500 dark:bg-done-700 text-white
+  @apply bg-done-500 text-white dark:bg-done-700;
 }
 .bg-done-hover {
-  @apply hover:bg-done-600 dark:hover:bg-done-600
+  @apply hover:bg-done-600 dark:hover:bg-done-600;
 }
 .border-done {
-  @apply border-done-500
+  @apply border-done-500;
 }
 
 .bg-accomplished {
-  @apply bg-accomplished-500 dark:bg-accomplished-700 text-white
+  @apply bg-accomplished-500 text-white dark:bg-accomplished-700;
 }
 .bg-accomplished-hover {
-  @apply hover:bg-accomplished-600 dark:hover:bg-accomplished-600
+  @apply hover:bg-accomplished-600 dark:hover:bg-accomplished-600;
 }
-.border-accomplished{
-  @apply border-accomplished-500
-}
-
-
-.exclamation{
-  @apply inline-flex items-center gap-4 rounded-xl p-4
+.border-accomplished {
+  @apply border-accomplished-500;
 }
 
-.bg-info{
-  @apply bg-info-100 dark:bg-info-700 text-info-700 dark:text-info-200
+.exclamation {
+  @apply inline-flex items-center gap-4 rounded-xl p-4;
+}
+
+.bg-info {
+  @apply bg-info-100 text-info-700 dark:bg-info-700 dark:text-info-200;
 }
 .bg-info svg {
-  @apply text-info-300 dark:text-info-500 w-6
+  @apply w-6 text-info-300 dark:text-info-500;
 }
-.bg-alert{
-  @apply bg-alert-100 dark:bg-alert-900 text-alert-700 dark:text-alert-200
+.bg-alert {
+  @apply bg-alert-100 text-alert-700 dark:bg-alert-900 dark:text-alert-200;
 }
 .bg-alert svg {
-  @apply text-alert-300 dark:text-alert-500 w-6
+  @apply w-6 text-alert-300 dark:text-alert-500;
 }
-.bg-error{
-  @apply bg-error-100 dark:bg-error-700 text-error-700 dark:text-error-200
+.bg-error {
+  @apply bg-error-100 text-error-700 dark:bg-error-700 dark:text-error-200;
 }
 .bg-error svg {
-  @apply text-error-300 dark:text-error-500 w-6
+  @apply w-6 text-error-300 dark:text-error-500;
 }
-.bg-success{
-  @apply bg-success-100 dark:bg-success-700 text-success-700 dark:text-success-200
+.bg-success {
+  @apply bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-200;
 }
 .bg-success svg {
-  @apply text-success-300 dark:text-success-500 w-6
+  @apply w-6 text-success-300 dark:text-success-500;
 }
 
- .action-line { 
-  @apply  mx-1 mt-1 rounded
-  
-} 
+.action-line {
+  @apply mx-1 mt-1 rounded ring-brand ring-offset-2 ring-offset-white focus-within:ring-2 dark:ring-offset-gray-1000;
+}
 
 .dragover {
-  @apply bg-brand-100 dark:bg-brand-700 ring-1 ring-brand ring-inset
+  @apply bg-brand-100 ring-1 ring-inset ring-brand dark:bg-brand-700;
 }
 
-.dropped  {
-  @apply bg-error-50
+.dropped {
+  @apply bg-error-50;
 }
 
 .deleting {
-  @apply scale-90 opacity-25
+  @apply scale-90 opacity-25;
 }

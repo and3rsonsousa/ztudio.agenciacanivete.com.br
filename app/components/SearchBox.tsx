@@ -1,7 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
 import { useEffect } from "react";
-import { FocusRing } from "react-aria";
 
 export default function SearchBox() {
   const context: {
@@ -26,22 +25,20 @@ export default function SearchBox() {
   }, [context]);
 
   return (
-    <FocusRing focusClass="ring-2 ring-brand">
-      <button
-        onClick={() => {
-          context.search.setOpenDialogSearch(true);
-        }}
-        className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
-      >
-        <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
-          <div>Pesquisar</div>
+    <button
+      onClick={() => {
+        context.search.setOpenDialogSearch(true);
+      }}
+      className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
+    >
+      <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
+        <div>Pesquisar</div>
 
-          <div className="font-semibold"> + K</div>
-        </div>
-        <div className="ml-auto">
-          <MagnifyingGlassIcon className="w-4" />
-        </div>
-      </button>
-    </FocusRing>
+        <div className="font-semibold"> + K</div>
+      </div>
+      <div className="ml-auto">
+        <MagnifyingGlassIcon className="w-4" />
+      </div>
+    </button>
   );
 }

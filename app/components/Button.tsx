@@ -1,24 +1,8 @@
-import React, { useRef } from "react";
-import { FocusRing, useButton, useHover } from "react-aria";
+import React from "react";
 import Loader from "./Loader";
+import { Slot } from "@radix-ui/react-slot";
 
-export default function Button({
-  children,
-  small,
-  large,
-  squared,
-  primary,
-  disabled,
-  link,
-  icon,
-  title,
-  className = "",
-  type,
-  loading,
-  isSuffix,
-  isPreffix,
-  onClick,
-}: {
+export default function Button(props: {
   children: React.ReactNode;
   small?: boolean;
   large?: boolean;
@@ -33,47 +17,29 @@ export default function Button({
   loading?: boolean;
   isSuffix?: boolean;
   isPreffix?: boolean;
+  asChild?: boolean;
   onClick?: (event: any) => void;
 }) {
-  const buttonRef = useRef(null);
-
-  const { buttonProps, isPressed } = useButton(
-    {
-      onPress: (event) => {
-        if (onClick) onClick(event);
-      },
-
-      "aria-label": title,
-      type,
-    },
-    buttonRef
-  );
-
-  const { isHovered, hoverProps } = useHover({});
+  const Component = props.asChild ? Slot : "button";
 
   return (
-    <FocusRing
-      focusClass={`ring-2 ring-brand ${
-        primary ? "ring-offset-2 dark:ring-offset-gray-1000" : ""
-      }`}
+    <Component
+      style={{ WebkitTapHighlightColor: "transparent" }}
+      className={`button ${props.primary ? "button-primary" : ""} ${
+        props.small ? " button-small " : props.large ? "button-large" : ""
+      } ${props.icon ? "button-icon" : ""} ${
+        props.squared ? "button-squared" : ""
+      } ${props.link ? "button-link" : ""} ${props.className} ${
+        props.isSuffix ? "h-12 rounded-r-none rounded-l-xl px-4" : ""
+      } ${props.isPreffix ? "h-12 rounded-l-none rounded-r-xl px-4" : ""}`}
+      type={props.type}
+      disabled={props.disabled}
+      onClick={props.onClick}
+      title={props.title}
+      aria-label={props.title}
+      aria-disabled={props.disabled}
     >
-      <button
-        {...hoverProps}
-        {...buttonProps}
-        style={{ WebkitTapHighlightColor: "transparent" }}
-        className={`button ${primary ? "button-primary" : ""} ${
-          isHovered && !disabled ? " bg-button-hover" : "bg-button"
-        } ${isPressed ? " bg-button-pressed" : "bg-button"} ${
-          small ? " button-small " : large ? "button-large" : ""
-        } ${icon ? "button-icon" : ""} ${squared ? "button-squared" : ""} ${
-          link ? "button-link" : ""
-        } ${className} ${
-          isSuffix ? "h-12 rounded-r-none rounded-l-xl px-4" : ""
-        } ${isPreffix ? "h-12 rounded-l-none rounded-r-xl px-4" : ""}`}
-        disabled={disabled}
-      >
-        {loading ? <Loader /> : children}
-      </button>
-    </FocusRing>
+      {props.loading ? <Loader /> : props.children}
+    </Component>
   );
 }

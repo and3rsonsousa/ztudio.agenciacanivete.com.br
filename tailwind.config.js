@@ -12,7 +12,7 @@ module.exports = {
 
       colors: {
         gray: {
-          1000: "#0a0c1f",
+          1000: "#0a0c1a",
         },
       },
       fontFamily: {
@@ -23,7 +23,7 @@ module.exports = {
       white: "white",
       black: "black",
       transparent: "transparent",
-      gray: colors.gray,
+      gray: colors.slate,
 
       brand: {
         DEFAULT: "#8000FF",

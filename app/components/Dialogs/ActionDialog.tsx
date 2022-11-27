@@ -239,10 +239,11 @@ export default function ActionDialog({
                   : "Nenhum campanha para esse cliente"
                 : "Escolha um cliente primeiro"
             }
-            disabled={campaignItems?.length === 0 && selectedAccount !== ""}
+            disabled={campaignItems?.length === 0}
             value={action && action.campaign ? action.campaign.id : undefined}
           />
         )}
+
         <TextareaField
           name="description"
           label="Descrição"

@@ -1,9 +1,7 @@
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "@remix-run/react";
 import Button from "~/components/Button";
 
 export default function Index() {
-  const navigate = useNavigate();
   return (
     <div className="selection:bg-brand selection:text-white">
       <div className="grid min-h-screen place-content-center ">
@@ -26,9 +24,11 @@ export default function Index() {
             .
           </p>
           <div className="mt-8">
-            <Button primary icon onClick={() => navigate("/dashboard")}>
-              <div>Entrar</div>
-              <UserCircleIcon />
+            <Button primary icon asChild>
+              <a href="/dashboard">
+                <span>Entrar</span>
+                <UserCircleIcon />
+              </a>
             </Button>
           </div>
         </div>

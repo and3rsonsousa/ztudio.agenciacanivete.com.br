@@ -30,11 +30,7 @@ export default function DatepickerField({
 
   const formatValue = (date: Dayjs) =>
     date.format(
-      pattern ?? full
-        ? "dddd, D [de] MMMM [de] YYYY [às] H[h]".concat(
-            date.format("mm") === "00" ? "" : "mm"
-          )
-        : "ddd, D/M/YY [às] H[h]".concat(date.format("mm") === "00" ? "" : "mm")
+      pattern ?? full ? "dddd, D [de] MMMM [de] YYYY" : "ddd, D/M/YY"
     );
   let [Value, setValue] = useState(formatValue(selectedDay));
 
@@ -48,13 +44,13 @@ export default function DatepickerField({
       />
       <Popover.Root>
         <Popover.Trigger asChild>
-          <button className="field-input overflow-hidden text-ellipsis whitespace-nowrap first-letter:capitalize">
+          <button className="field-default overflow-hidden text-ellipsis whitespace-nowrap text-sm first-letter:capitalize">
             {Value}
           </button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content className="dropdown-content text-xx p-4 text-center font-light antialiased outline-none dark:text-gray-200">
-            <div className="flex justify-between ">
+            <div className="mb-2 flex justify-between">
               <button
                 onClick={() =>
                   setCurrentMonth(
@@ -90,17 +86,15 @@ export default function DatepickerField({
               ))}
               {days.map((day, i) => (
                 <button
-                  className={`p-1  ${
+                  className={`h-6 w-6 ${
                     day.format("YYYY-MM-DD") ===
                     selectedDay.format("YYYY-MM-DD")
-                      ? " rounded bg-brand font-semibold text-white "
+                      ? " rounded-full bg-brand font-semibold text-white "
                       : day.format("YYYY-MM-DD") ===
                         dayjs().format("YYYY-MM-DD")
                       ? "font-semibold text-brand"
-                      : ""
-                  }${
-                    day.format("YYYY-MM") !==
-                    firstDayOfCurrentMonth.format("YYYY-MM")
+                      : day.format("YYYY-MM") !==
+                        firstDayOfCurrentMonth.format("YYYY-MM")
                       ? " text-gray-500 "
                       : ""
                   }`}

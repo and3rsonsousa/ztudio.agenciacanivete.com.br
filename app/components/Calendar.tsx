@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useMatches, useNavigate, useSearchParams } from "@remix-run/react";
+import { Link, useMatches, useSearchParams } from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -13,9 +13,9 @@ import type {
   DayModel,
   MonthType,
 } from "~/lib/models";
+import Button from "./Button";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
-import Button from "./Button";
 import InstagramGrid from "./InstagramGrid";
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -32,15 +32,18 @@ export default function Calendar({
 
   grid?: boolean;
 }) {
-  const [showYearView, setShowYearView] = useState(false);
-  const matches = useMatches();
   const [searchParams] = useSearchParams();
+  const currentMonth = searchParams.get("month");
+  const currentYear = searchParams.get("year");
+  const showYearView = currentYear !== null;
+  const matches = useMatches();
   let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
   const today = dayjs();
-  const period = searchParams.get("period");
 
-  const { firstDayOfCurrentMonth, days: newDays } = getPeriod({ period });
+  const { firstDayOfCurrentMonth, days: newDays } = getPeriod({
+    period: currentMonth ?? currentYear,
+  });
 
   let [selectedDay, setSelectedDay] = useState(today.format("YYYY-MM-DD"));
 
@@ -72,8 +75,6 @@ export default function Calendar({
     return _day;
   });
 
-  const navigate = useNavigate();
-
   const { year } = getYear(firstDayOfCurrentMonth);
 
   useEffect(() => {
@@ -96,48 +97,39 @@ export default function Calendar({
           </h4>
 
           <div className="item-center flex">
-            <Button
-              link
-              small
-              icon
-              squared
-              onClick={() => {
-                navigate(
-                  `?period=${firstDayOfCurrentMonth
+            <Button link small icon squared asChild>
+              <a
+                href={(showYearView ? "?year=" : "?month=").concat(
+                  firstDayOfCurrentMonth
                     .subtract(1, showYearView ? "year" : "month")
-                    .format("YYYY-MM")}`
-                );
-              }}
-            >
-              <ChevronLeftIcon />
+                    .format("YYYY-MM")
+                )}
+              >
+                <ChevronLeftIcon />
+              </a>
             </Button>
-            <Button
-              link
-              small
-              onClick={() => {
-                setShowYearView(!showYearView);
-              }}
-            >
-              <span className="uppercase">
+            <Button asChild link small>
+              <a
+                href={(showYearView ? "?month=" : "?year=").concat(
+                  firstDayOfCurrentMonth.format("YYYY-MM")
+                )}
+                className="uppercase"
+              >
                 {showYearView
                   ? firstDayOfCurrentMonth.format("MMMM [de] YYYY")
                   : firstDayOfCurrentMonth.format("YYYY")}
-              </span>
+              </a>
             </Button>
-            <Button
-              link
-              small
-              icon
-              squared
-              onClick={() => {
-                navigate(
-                  `?period=${firstDayOfCurrentMonth
+            <Button link small icon squared asChild>
+              <a
+                href={(showYearView ? "?year=" : "?month=").concat(
+                  firstDayOfCurrentMonth
                     .add(1, showYearView ? "year" : "month")
-                    .format("YYYY-MM")}`
-                );
-              }}
-            >
-              <ChevronRightIcon />
+                    .format("YYYY-MM")
+                )}
+              >
+                <ChevronRightIcon />
+              </a>
             </Button>
           </div>
         </div>
@@ -205,13 +197,18 @@ export default function Calendar({
 }
 
 const YearView = ({ year }: { year: MonthType[] }) => {
+  const matches = useMatches();
+  const celebrations: CelebrationModel[] = matches[1].data.celebrations;
+
   return (
     <div className="h-full overflow-hidden  lg:flex">
       <div className="grid w-full grid-cols-2 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
         {year.map((month, index) => (
           <div key={index} className="col-span-1 flex flex-col p-4">
             <div className="pb-4 text-center font-semibold first-letter:capitalize">
-              {month[0].date.format("MMMM")}
+              <Link to={`?month=${month[0].date.format("YYYY-MM")}`}>
+                {month[0].date.format("MMMM")}
+              </Link>
             </div>
             <div className="grid w-full flex-auto grid-cols-7 text-center text-xs md:text-sm">
               {month.map((day, index) => (
@@ -221,7 +218,16 @@ const YearView = ({ year }: { year: MonthType[] }) => {
                   style={{ gridColumnStart: day.date.day() + 1 }}
                 >
                   <div
+                    data-date={day.date.format("MM/DD")}
                     className={`grid h-6 w-6 place-items-center md:h-8 md:w-8 ${
+                      celebrations.filter(
+                        (celebration) =>
+                          day.date.format("MM/DD") === celebration.date &&
+                          celebration.is_holiday
+                      ).length
+                        ? "rounded-full bg-gray-200 font-medium dark:bg-gray-700"
+                        : ""
+                    } ${
                       day.date.format("YYYY-MM-DD") ===
                       dayjs().format("YYYY-MM-DD")
                         ? " rounded-full bg-brand font-semibold text-white"

@@ -15,7 +15,6 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { FocusRing } from "react-aria";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
 import ActionDialog from "./Dialogs/ActionDialog";
@@ -51,10 +50,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const searchParams =
-    params.get("period") !== null && params.get("instagram") !== null
-      ? `?period=${params.get("period")}&instagram`
-      : params.get("period") !== null
-      ? `?period=${params.get("period")}`
+    params.get("month") !== null && params.get("instagram") !== null
+      ? `?month=${params.get("month")}&instagram`
+      : params.get("month") !== null
+      ? `?month=${params.get("month")}`
       : params.get("instagram") !== null
       ? `?instagram`
       : "";
@@ -87,11 +86,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
         </div>
-        <div className="header-menu lg:flex lg:w-full lg:flex-col lg:p-2">
+        <div className="flex pr-2 lg:flex lg:w-full lg:flex-col lg:p-2">
           <div className="lg:hidden">
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
-                <button className="header-menu-link">
+                <button>
                   <BriefcaseIcon />
                 </button>
               </DropdownMenu.Trigger>
@@ -118,13 +117,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div>
             <DropdownMenu.Root>
-              <FocusRing focusClass="ring-2 ring-brand">
-                <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
-                  <div className="text-xs font-semibold">{person.name}</div>
+              <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
+                <div className="text-xs font-semibold">{person.name}</div>
 
-                  <UserIcon className="ml-auto w-4" />
-                </DropdownMenu.Trigger>
-              </FocusRing>
+                <UserIcon className="ml-auto w-4" />
+              </DropdownMenu.Trigger>
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content className="dropdown-content mr-4" loop>
@@ -336,6 +333,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </AnimatePresence>
         </Dialog.Root>
 
+        {/* Dialog for Search */}
         <Dialog.Root
           open={context.search.openDialogSearch}
           onOpenChange={context.search.setOpenDialogSearch}
@@ -355,7 +353,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     className="dialog-content top-1/3 w-[36rem] max-w-lg font-light antialiased "
                     {...scaleUp()}
                   >
-                    <input type="text" className="field-input" />
+                    <input type="text" className="field-default" />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>

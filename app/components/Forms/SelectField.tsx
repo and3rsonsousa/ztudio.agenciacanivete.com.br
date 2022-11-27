@@ -2,7 +2,6 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
-import { FocusRing } from "react-aria";
 
 export default function SelectField({
   title,
@@ -38,20 +37,17 @@ export default function SelectField({
         name={name}
         disabled={disabled}
       >
-        <FocusRing focusClass="ring-2 ring-brand">
-          <Select.Trigger className="field-input flex items-center justify-between disabled:cursor-not-allowed ">
-            <Select.Value placeholder={placeholder ?? "Selecione um item"} />
-            <Select.Icon className="-mr-3">
-              {/* <ChevronUpDownIcon className="w-6" /> */}
-              <ChevronDownIcon className="w-6" />
-            </Select.Icon>
-          </Select.Trigger>
-        </FocusRing>
+        <Select.Trigger className="field-default flex items-center justify-between disabled:cursor-not-allowed ">
+          <Select.Value placeholder={placeholder ?? "Selecione um item"} />
+          <Select.Icon className="-mr-3">
+            <ChevronDownIcon className="w-6" />
+          </Select.Icon>
+        </Select.Trigger>
 
         <Select.Portal>
           <Select.Content className="dropdown-content">
             <Select.SelectScrollUpButton className="py-2">
-              <ChevronUpIcon className="mx-auto w-6 text-gray-700" />
+              <ChevronUpIcon className="mx-auto w-6 text-gray-700 dark:text-gray-400" />
             </Select.SelectScrollUpButton>
             <Select.Viewport>
               {items &&
@@ -67,7 +63,7 @@ export default function SelectField({
             </Select.Viewport>
 
             <Select.SelectScrollDownButton className="py-2">
-              <ChevronDownIcon className="mx-auto w-6 text-gray-700" />
+              <ChevronDownIcon className="mx-auto w-6 text-gray-700 dark:text-gray-400" />
             </Select.SelectScrollDownButton>
           </Select.Content>
         </Select.Portal>

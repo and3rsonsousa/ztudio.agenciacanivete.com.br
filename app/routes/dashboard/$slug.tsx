@@ -31,7 +31,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function Slug() {
   const { account } = useLoaderData<{ account: AccountModel }>();
   const [searchParams] = useSearchParams();
-  const period = searchParams.get("period");
+  const month = searchParams.get("month");
 
   return (
     <div className="flex h-screen flex-col">
@@ -43,7 +43,7 @@ export default function Slug() {
         <div className="text-sm font-semibold">
           <Link
             className="button button-link button-icon p-2"
-            to={`./${period ? "?period=" + period : ""}`}
+            to={`./${month ? "?month=" + month : ""}`}
           >
             <CalendarDaysIcon />
             <div className="hidden md:block">Calendário</div>
@@ -54,7 +54,7 @@ export default function Slug() {
           </Link>
           <Link
             className="button button-link button-icon p-2"
-            to={`./?instagram${period ? "&period=" + period : ""}`}
+            to={`./?instagram${month ? "&month=" + month : ""}`}
           >
             <HeartIcon />
             <div className="hidden md:block">Instagram</div>

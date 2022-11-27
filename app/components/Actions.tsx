@@ -26,7 +26,6 @@ import {
 } from "@heroicons/react/24/outline";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { FocusRing } from "react-aria";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
@@ -45,67 +44,65 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <FocusRing focusRingClass="ring-2 outline-none ring-offset-2 ring-brand dark:ring-offset-gray-1000 z-10">
-          <div
-            role="button"
-            tabIndex={0}
-            data-date={action.date}
-            data-id={action.id}
-            draggable
-            onDragStart={(e) => {
-              const ele = e.target as HTMLElement;
-              const ghost = ele.cloneNode(true) as HTMLElement;
+        <div
+          role="button"
+          tabIndex={0}
+          data-date={action.date}
+          data-id={action.id}
+          draggable
+          onDragStart={(e) => {
+            const ele = e.target as HTMLElement;
+            const ghost = ele.cloneNode(true) as HTMLElement;
 
-              ghost.style.width = `${ele.offsetWidth}px`;
-              ghost.style.height = `${ele.offsetHeight}px`;
-              ghost.style.position = "absolute";
-              ghost.style.top = "0";
-              ghost.style.left = "0";
-              ghost.style.offset = ".2";
-              ghost.style.zIndex = "-1";
-              ghost.classList.add("dragging");
+            ghost.style.width = `${ele.offsetWidth}px`;
+            ghost.style.height = `${ele.offsetHeight}px`;
+            ghost.style.position = "absolute";
+            ghost.style.top = "0";
+            ghost.style.left = "0";
+            ghost.style.offset = ".2";
+            ghost.style.zIndex = "-1";
+            ghost.classList.add("dragging");
 
-              document.querySelector(".app")?.appendChild(ghost);
-              e.dataTransfer?.setDragImage(
-                ghost,
-                ele.offsetWidth / 2,
-                ele.offsetHeight / 2
-              );
+            document.querySelector(".app")?.appendChild(ghost);
+            e.dataTransfer?.setDragImage(
+              ghost,
+              ele.offsetWidth / 2,
+              ele.offsetHeight / 2
+            );
 
-              setTimeout(() => {
-                ghost.parentNode?.removeChild(ghost);
-              }, 1000);
-            }}
-            className={`action-line p-1 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2 2xl:pl-1`}
-            onClick={() => {
-              navigate(
-                `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
-              );
-            }}
-            title={`${action.name} - ${action.account.name}`}
-          >
-            <div className="flex w-full items-center gap-1 overflow-hidden">
-              <div
-                className={` text-xx hidden w-6 shrink-0 grow-0 text-center font-semibold uppercase opacity-50 2xl:block`}
-              >
-                {action.account.name.slice(0, 3)}
-              </div>
-              <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
-                {action.name}
-              </div>
-              <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
-                {action.account.name.slice(0, 3)}
-              </div>
+            setTimeout(() => {
+              ghost.parentNode?.removeChild(ghost);
+            }, 1000);
+          }}
+          className={`action-line p-1 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2 2xl:pl-1`}
+          onClick={() => {
+            navigate(
+              `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
+            );
+          }}
+          title={`${action.name} - ${action.account.name}`}
+        >
+          <div className="flex w-full items-center gap-1 overflow-hidden">
+            <div
+              className={` text-xx hidden w-6 shrink-0 grow-0 text-center font-semibold uppercase opacity-50 2xl:block`}
+            >
+              {action.account.name.slice(0, 3)}
             </div>
-            <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
-              {dayjs(action.date).format(
-                "H[h]".concat(
-                  dayjs(action.date).format("mm") !== "00" ? "mm" : ""
-                )
-              )}
+            <div className="hidden w-full  overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium sm:block ">
+              {action.name}
+            </div>
+            <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+              {action.account.name.slice(0, 3)}
             </div>
           </div>
-        </FocusRing>
+          <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
+            {dayjs(action.date).format(
+              "H[h]".concat(
+                dayjs(action.date).format("mm") !== "00" ? "mm" : ""
+              )
+            )}
+          </div>
+        </div>
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content className="dropdown-content w-36">
