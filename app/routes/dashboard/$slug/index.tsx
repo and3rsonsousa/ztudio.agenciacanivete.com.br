@@ -3,7 +3,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getActions, getCampaigns, handleAction } from "~/lib/data";
 export const loader: LoaderFunction = async ({ request, params }) => {
-  let period = new URL(request.url).searchParams.get("period");
+  let period = new URL(request.url).searchParams.get("month");
 
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({

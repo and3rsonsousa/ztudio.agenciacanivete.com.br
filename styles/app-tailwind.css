@@ -78,7 +78,7 @@ body {
   }
 
   .button-primary {
-    @apply bg-brand text-white ring-offset-2 ring-offset-gray-1000 hover:bg-brand-700 active:bg-brand-900;
+    @apply bg-brand text-white ring-offset-2 hover:bg-brand-700 active:bg-brand-900 dark:ring-offset-gray-1000;
     @apply dark:bg-brand dark:text-white dark:hover:bg-brand-700 dark:active:bg-brand-900;
     @apply disabled:bg-brand-300 disabled:text-brand-100 disabled:hover:bg-brand-300 disabled:active:bg-brand-300 dark:disabled:bg-brand-900 dark:disabled:text-brand dark:disabled:hover:bg-brand-900 dark:disabled:active:bg-brand-900;
   }
@@ -92,7 +92,7 @@ body {
   }
 
   .button-link {
-    @apply border-transparent bg-transparent hover:border-transparent hover:bg-transparent  dark:border-transparent dark:bg-transparent dark:hover:border-transparent dark:hover:bg-transparent;
+    @apply bg-transparent dark:bg-transparent dark:hover:bg-gray-800;
   }
 
   .button svg {
@@ -384,7 +384,7 @@ body {
 }
 
 .dragover {
-  @apply bg-brand-100 ring-1 ring-inset ring-brand dark:bg-brand-700;
+  @apply bg-brand-100 ring-1 ring-inset ring-brand dark:bg-brand-900/50;
 }
 
 .dropped {

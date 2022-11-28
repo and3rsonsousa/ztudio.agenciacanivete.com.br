@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { useMatches } from "@remix-run/react";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -53,13 +53,14 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
         {/* Header */}
         <div className="flex items-center justify-between">
           {view && <h5 className="text-xs">Instagram Grid</h5>}
-          <div className={!view ? "-ml-2" : ""}>
+          <div className={!view ? "-ml-2" : " space-x-1"}>
             {view && (
               <Button
                 title="Preencher as lacunas"
                 link={!fill}
                 small
                 icon
+                squared
                 primary={fill}
                 onClick={() => setFill(!fill)}
               >
@@ -70,10 +71,11 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
               title={view ? "Mostrar" : "Ocultar"}
               link
               small
+              squared
               icon
               onClick={() => setView(!view)}
             >
-              <ChevronRightIcon />
+              {view ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </Button>
           </div>
         </div>

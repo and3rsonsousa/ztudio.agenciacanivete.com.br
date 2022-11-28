@@ -699,7 +699,6 @@ h5 {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   --tw-ring-offset-width: 2px;
-  --tw-ring-offset-color: #0a0c1a;
 }
 
 .button-primary:hover {
@@ -713,6 +712,7 @@ h5 {
 }
 
 .dark .button-primary {
+  --tw-ring-offset-color: #0a0c1a;
   --tw-bg-opacity: 1;
   background-color: rgb(128 0 255 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
@@ -783,23 +783,16 @@ h5 {
 }
 
 .button-link {
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.button-link:hover {
-  border-color: transparent;
   background-color: transparent;
 }
 
 .dark .button-link {
-  border-color: transparent;
   background-color: transparent;
 }
 
 .dark .button-link:hover {
-  border-color: transparent;
-  background-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .button svg {
@@ -1449,6 +1442,12 @@ h5 {
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1591,6 +1590,11 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .p-4 {
@@ -1826,6 +1830,10 @@ h5 {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.opacity-25 {
+  opacity: 0.25;
 }
 
 .outline-none {
@@ -2547,8 +2555,7 @@ body {
 }
 
 .dark .dragover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(88 20 184 / var(--tw-bg-opacity));
+  background-color: rgb(59 23 130 / 0.5);
 }
 
 .dropped {
@@ -2701,6 +2708,11 @@ body {
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
+.dark .dark\:bg-gray-1000 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 12 26 / var(--tw-bg-opacity));
+}
+
 .dark .dark\:text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
@@ -2724,6 +2736,11 @@ body {
 .dark .dark\:text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
+}
+
+.dark .dark\:text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(71 85 105 / var(--tw-text-opacity));
 }
 
 .dark .dark\:placeholder\:text-gray-500::-moz-placeholder {

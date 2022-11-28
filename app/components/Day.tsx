@@ -76,13 +76,23 @@ export default function Day({
       <div>
         <div className="px-2 lg:px-1">
           <Button
-            className="day-button appearance-none"
             icon
             small
             squared
-            link
+            className={
+              day.date.format("MM") !== firstDayOfCurrentMonth.format("MM") &&
+              dayjs(selectedDay).format("YYYY-MM-DD") !==
+                day.date.format("YYYY-MM-DD")
+                ? "opacity-25"
+                : ""
+            }
+            link={
+              dayjs(selectedDay).format("YYYY-MM-DD") !==
+              day.date.format("YYYY-MM-DD")
+            }
             primary={
-              day.date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+              dayjs(selectedDay).format("YYYY-MM-DD") ===
+              day.date.format("YYYY-MM-DD")
             }
             onClick={() => {
               context.date.setDateOfTheDay(day.date);
