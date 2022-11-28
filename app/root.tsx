@@ -53,7 +53,7 @@ export function App() {
   const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
 
   return (
-    <html lang="pt-br" className={theme ?? "dark"}>
+    <html lang="pt-br" className={theme ?? "light"}>
       <head>
         <Meta />
         <Links />
