@@ -544,13 +544,15 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .eq("id", id)
         .single();
 
+      console.log({ account });
+
       const new_action = {
         name: old_action.name,
         description: old_action.description,
         date: old_action.date,
         tag: old_action.tag,
         status: old_action.status,
-        account: account !== "" ? account : old_action.account,
+        account: account ? account : old_action.account,
         campaign: old_action.campaign,
         creator: old_action.creator,
         responsible: old_action.responsible,
@@ -561,6 +563,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .insert(new_action)
         .select("*")
         .single();
+
+      if (error) throw new Error(error.message);
 
       return { data, error };
     }

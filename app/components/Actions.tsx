@@ -26,12 +26,16 @@ import {
 } from "@heroicons/react/24/outline";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import { AnimatePresence, motion } from "framer-motion";
+import { scaleUp } from "~/lib/animations";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
+import { useState } from "react";
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
+  const [showContextMenu, setShowContextMenu] = useState(false);
   const matches = useMatches();
   const fetcher = useFetcher();
   const url = matches[1].data.url;
@@ -42,7 +46,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
   const navigate = useNavigate();
 
   return (
-    <ContextMenu.Root>
+    <ContextMenu.Root onOpenChange={setShowContextMenu}>
       <ContextMenu.Trigger>
         <div
           role="button"
@@ -104,152 +108,242 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           </div>
         </div>
       </ContextMenu.Trigger>
-      <ContextMenu.Portal>
-        <ContextMenu.Content className="dropdown-content w-36">
-          {/* Editar */}
-          <ContextMenu.Item asChild>
-            <Link
-              to={`/dashboard/${action.account.slug}/action/${action.id}`}
-              className="dropdown-item item-small flex items-center gap-2"
-            >
-              <PencilSquareIcon className="w-4" /> <div>Editar</div>
-            </Link>
-          </ContextMenu.Item>
-          {/* Duplicar */}
-          <ContextMenu.Sub>
-            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <DocumentDuplicateIcon className="w-4" />
-              <div>Duplicar</div>
-              <ChevronRightIcon className="ml-auto w-4" />
-            </ContextMenu.SubTrigger>
-            <ContextMenu.Portal>
-              <ContextMenu.SubContent className="dropdown-content">
-                <ContextMenu.Label className="dropdown-label">
-                  Duplicar para a conta...
-                </ContextMenu.Label>
-                {accounts.map((account) => (
+      <AnimatePresence>
+        {showContextMenu && (
+          <ContextMenu.Portal forceMount>
+            <ContextMenu.Content asChild forceMount loop>
+              <motion.div className="dropdown-content w-36" {...scaleUp(0.2)}>
+                {action.status.id !==
+                  "a448e17d-05ba-4ad0-9990-773f9384d15e" && (
+                  <>
+                    <ContextMenu.Item
+                      onSelect={(event) => {
+                        fetcher.submit(
+                          {
+                            action: "update-action-status",
+                            id: action.id,
+                            status: "a448e17d-05ba-4ad0-9990-773f9384d15e",
+                          },
+                          {
+                            method: "post",
+                            action: "/handle-action",
+                          }
+                        );
+                      }}
+                      className="dropdown-item item-small flex items-center gap-2"
+                    >
+                      <div
+                        className={`bg-accomplished mx-1 h-2 w-2 rounded-full`}
+                      ></div>
+                      <div className="flex-shrink-0 flex-grow">Concluído</div>
+                    </ContextMenu.Item>
+                    <hr className="dropdown-hr" />
+                  </>
+                )}
+                {/* Editar */}
+                <ContextMenu.Item asChild>
+                  <Link
+                    to={`/dashboard/${action.account.slug}/action/${action.id}`}
+                    className="dropdown-item item-small flex items-center gap-2"
+                  >
+                    <PencilSquareIcon className="w-4" /> <div>Editar</div>
+                  </Link>
+                </ContextMenu.Item>
+                {/* Duplicar */}
+                <div className="flex">
                   <ContextMenu.Item
-                    className="dropdown-item item-small"
-                    key={account.id}
-                    onSelect={(event) => {
+                    onSelect={() =>
                       fetcher.submit(
                         {
                           action: "duplicate-action",
                           id: action.id,
-                          account: account.id,
                         },
                         {
                           method: "post",
                           action: "/handle-action",
                         }
-                      );
-                    }}
-                  >
-                    <div>{account.name}</div>
-                  </ContextMenu.Item>
-                ))}
-              </ContextMenu.SubContent>
-            </ContextMenu.Portal>
-          </ContextMenu.Sub>
-          {/* Excluir */}
-          <ContextMenu.Item
-            onSelect={(event) => {
-              fetcher.submit(
-                {
-                  action: "delete-action",
-                  id: action.id,
-                },
-                {
-                  method: "post",
-                  action: "/handle-action",
-                }
-              );
-            }}
-            className="dropdown-item item-small flex items-center gap-2"
-          >
-            <Trash className="w-4" /> <div>Excluir</div>
-          </ContextMenu.Item>
-          <hr className="dropdown-hr" />
-          {/* Tags */}
-          <ContextMenu.Sub>
-            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <TagIcon className="w-4" />
-              <div>Tags</div>
-              <ChevronRightIcon className="ml-auto w-4" />
-            </ContextMenu.SubTrigger>
-            <ContextMenu.Portal>
-              <ContextMenu.SubContent className="dropdown-content w-36">
-                {tags.map((tag) => (
-                  <ContextMenu.Item
-                    key={tag.id}
-                    onSelect={(event) => {
-                      fetcher.submit(
-                        {
-                          action: "update-tag",
-                          id: action.id,
-                          tag: tag.id,
-                        },
-                        {
-                          method: "post",
-                          action: "/handle-action",
-                        }
-                      );
-                    }}
+                      )
+                    }
                     className="dropdown-item item-small flex items-center gap-2"
                   >
-                    <div
-                      className={`h-2 w-2 rounded-full bg-${tag.slug}`}
-                    ></div>
-                    <div className="flex-shrink-0 flex-grow">{tag.name}</div>
-                    {action.tag.id === tag.id && (
-                      <CheckCircleIcon className="w-4" />
-                    )}
+                    <DocumentDuplicateIcon className="w-4 shrink-0" />
+                    <div>Duplicar</div>
                   </ContextMenu.Item>
-                ))}
-              </ContextMenu.SubContent>
-            </ContextMenu.Portal>
-          </ContextMenu.Sub>
-          {/* Status */}
-          <ContextMenu.Sub>
-            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <CheckBadgeIcon className="w-4" />
-              <div>Status</div>
-              <ChevronRightIcon className="ml-auto w-4" />
-            </ContextMenu.SubTrigger>
-            <ContextMenu.Portal>
-              <ContextMenu.SubContent className="dropdown-content w-36">
-                {status.map((stat) => (
-                  <ContextMenu.Item
-                    key={stat.id}
-                    onSelect={(event) => {
-                      fetcher.submit(
-                        {
-                          action: "update-action-status",
-                          id: action.id,
-                          status: stat.id,
-                        },
-                        {
-                          method: "post",
-                          action: "/handle-action",
-                        }
-                      );
-                    }}
-                    className="dropdown-item item-small flex items-center gap-2"
-                  >
-                    <div
-                      className={`h-2 w-2 rounded-full bg-${stat.slug}`}
-                    ></div>
-                    <div className="flex-shrink-0 flex-grow">{stat.name}</div>
-                    {action.status.id === stat.id && (
-                      <CheckCircleIcon className="w-4" />
-                    )}
-                  </ContextMenu.Item>
-                ))}
-              </ContextMenu.SubContent>
-            </ContextMenu.Portal>
-          </ContextMenu.Sub>
-        </ContextMenu.Content>
-      </ContextMenu.Portal>
+                  <ContextMenu.Sub>
+                    <ContextMenu.SubTrigger className="dropdown-item ml-auto py-1.5 pr-4 pl-2">
+                      <ChevronRightIcon className="w-4" />
+                    </ContextMenu.SubTrigger>
+                    <ContextMenu.Portal>
+                      <ContextMenu.SubContent className="dropdown-content">
+                        <ContextMenu.Label className="dropdown-label">
+                          Duplicar para a conta...
+                        </ContextMenu.Label>
+                        {accounts.map((account) => (
+                          <ContextMenu.Item
+                            className="dropdown-item item-small"
+                            key={account.id}
+                            onSelect={(event) => {
+                              fetcher.submit(
+                                {
+                                  action: "duplicate-action",
+                                  id: action.id,
+                                  account: account.id,
+                                },
+                                {
+                                  method: "post",
+                                  action: "/handle-action",
+                                }
+                              );
+                            }}
+                          >
+                            <div>{account.name}</div>
+                          </ContextMenu.Item>
+                        ))}
+                      </ContextMenu.SubContent>
+                    </ContextMenu.Portal>
+                  </ContextMenu.Sub>
+                </div>
+                {/* <ContextMenu.Sub>
+                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+                    <DocumentDuplicateIcon className="w-4" />
+                    <div>Duplicar</div>
+                    <ChevronRightIcon className="ml-auto w-4" />
+                  </ContextMenu.SubTrigger>
+                  <ContextMenu.Portal>
+                    <ContextMenu.SubContent className="dropdown-content">
+                      <ContextMenu.Label className="dropdown-label">
+                        Duplicar para a conta...
+                      </ContextMenu.Label>
+                      {accounts.map((account) => (
+                        <ContextMenu.Item
+                          className="dropdown-item item-small"
+                          key={account.id}
+                          onSelect={(event) => {
+                            fetcher.submit(
+                              {
+                                action: "duplicate-action",
+                                id: action.id,
+                                account: account.id,
+                              },
+                              {
+                                method: "post",
+                                action: "/handle-action",
+                              }
+                            );
+                          }}
+                        >
+                          <div>{account.name}</div>
+                        </ContextMenu.Item>
+                      ))}
+                    </ContextMenu.SubContent>
+                  </ContextMenu.Portal>
+                </ContextMenu.Sub> */}
+                {/* Excluir */}
+                <ContextMenu.Item
+                  onSelect={(event) => {
+                    fetcher.submit(
+                      {
+                        action: "delete-action",
+                        id: action.id,
+                      },
+                      {
+                        method: "post",
+                        action: "/handle-action",
+                      }
+                    );
+                  }}
+                  className="dropdown-item item-small flex items-center gap-2"
+                >
+                  <Trash className="w-4" /> <div>Excluir</div>
+                </ContextMenu.Item>
+                <hr className="dropdown-hr" />
+                {/* Tags */}
+                <ContextMenu.Sub>
+                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+                    <TagIcon className="w-4" />
+                    <div>Tags</div>
+                    <ChevronRightIcon className="ml-auto w-4" />
+                  </ContextMenu.SubTrigger>
+                  <ContextMenu.Portal>
+                    <ContextMenu.SubContent className="dropdown-content w-36">
+                      {tags.map((tag) => (
+                        <ContextMenu.Item
+                          key={tag.id}
+                          onSelect={(event) => {
+                            fetcher.submit(
+                              {
+                                action: "update-tag",
+                                id: action.id,
+                                tag: tag.id,
+                              },
+                              {
+                                method: "post",
+                                action: "/handle-action",
+                              }
+                            );
+                          }}
+                          className="dropdown-item item-small flex items-center gap-2"
+                        >
+                          <div
+                            className={`h-2 w-2 rounded-full bg-${tag.slug}`}
+                          ></div>
+                          <div className="flex-shrink-0 flex-grow">
+                            {tag.name}
+                          </div>
+                          {action.tag.id === tag.id && (
+                            <CheckCircleIcon className="w-4" />
+                          )}
+                        </ContextMenu.Item>
+                      ))}
+                    </ContextMenu.SubContent>
+                  </ContextMenu.Portal>
+                </ContextMenu.Sub>
+                {/* Status */}
+                <ContextMenu.Sub>
+                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+                    <CheckBadgeIcon className="w-4" />
+                    <div>Status</div>
+                    <ChevronRightIcon className="ml-auto w-4" />
+                  </ContextMenu.SubTrigger>
+                  <ContextMenu.Portal>
+                    <ContextMenu.SubContent className="dropdown-content w-36">
+                      {status.map((stat) => (
+                        <ContextMenu.Item
+                          key={stat.id}
+                          onSelect={(event) => {
+                            fetcher.submit(
+                              {
+                                action: "update-action-status",
+                                id: action.id,
+                                status: stat.id,
+                              },
+                              {
+                                method: "post",
+                                action: "/handle-action",
+                              }
+                            );
+                          }}
+                          className="dropdown-item item-small flex items-center gap-2"
+                        >
+                          <div
+                            className={`h-2 w-2 rounded-full bg-${stat.slug}`}
+                          ></div>
+                          <div className="flex-shrink-0 flex-grow">
+                            {stat.name}
+                          </div>
+                          {action.status.id === stat.id && (
+                            <CheckCircleIcon className="w-4" />
+                          )}
+                        </ContextMenu.Item>
+                      ))}
+                    </ContextMenu.SubContent>
+                  </ContextMenu.Portal>
+                </ContextMenu.Sub>
+              </motion.div>
+            </ContextMenu.Content>
+          </ContextMenu.Portal>
+        )}
+      </AnimatePresence>
     </ContextMenu.Root>
   );
 };

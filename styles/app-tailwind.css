@@ -196,7 +196,7 @@ body {
   @apply top-1/4;
 }
 .dialog-overlay {
-  @apply fixed inset-0 z-40 bg-gray-800/50 dark:bg-gray-1000/75;
+  @apply fixed inset-0 z-40 bg-gray-800/25 backdrop-blur-lg dark:bg-gray-1000/75;
 }
 
 .dialog-content {
@@ -393,4 +393,12 @@ body {
 
 .deleting {
   @apply scale-90 opacity-25;
+}
+
+[data-side="right"] {
+  @apply origin-top-left;
+}
+
+[data-side="left"] {
+  @apply origin-top-right;
 }
