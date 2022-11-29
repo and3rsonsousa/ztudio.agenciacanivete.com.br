@@ -544,8 +544,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .eq("id", id)
         .single();
 
-      console.log({ account });
-
       const new_action = {
         name: old_action.name,
         description: old_action.description,

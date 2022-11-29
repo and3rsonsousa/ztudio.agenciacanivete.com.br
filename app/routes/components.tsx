@@ -82,11 +82,7 @@ export default function Components() {
           </Code>
         </div>
         <div>
-          <Field
-            name="teste"
-            label="Text"
-            onChange={(string) => console.log(string)}
-          />
+          <Field name="teste" label="Text" />
           <DatepickerField name="" title="Data" />
         </div>
       </div>
