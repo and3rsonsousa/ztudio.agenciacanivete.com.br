@@ -19,19 +19,23 @@ export default function TextareaField({
   onChange?: (value: string) => void;
 }) {
   const inputRef = useRef(null);
-  const props = {
-    label,
-    name,
-    placeholder,
-    defaultValue: value,
-    isRequired: required,
-  };
 
   return (
     <div className="field">
       <label className="field-label">{label}</label>
 
-      <textarea rows={rows} ref={inputRef} className={`field-default`} />
+      <textarea
+        name={name}
+        placeholder={placeholder}
+        defaultValue={value}
+        required={required}
+        onChange={(e) => {
+          if (onChange) onChange(e.target.value);
+        }}
+        rows={rows}
+        ref={inputRef}
+        className={`field-default`}
+      />
     </div>
   );
 }

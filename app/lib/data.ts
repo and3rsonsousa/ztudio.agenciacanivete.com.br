@@ -240,38 +240,12 @@ export const getAction = async (request: Request, id: string) => {
   const { supabase } = getSupabase(request);
   const { data, error } = await supabase
     .from("Action")
-    .select(
-      "*, account:Account(*), tag:Tag(*), status:Status(*), creator:Action_creator_fkey(*), responsible:Action_responsible_fkey(*),campaign:Campaign(*)"
-    )
+    .select(SQL__GET__ACTION)
     .eq("id", id)
     .single();
 
   return { data, error };
 };
-
-// export async function updateAction(
-//   request: Request,
-//   id: string,
-//   values: {
-//     name?: string;
-//     date?: string;
-//     account?: string;
-//     description?: string;
-//     tag?: string;
-//     status?: string;
-//     responsible?: string;
-//     campaign?: string;
-//     date_end?: string;
-//   }
-// ) {
-//   const { supabase } = getSupabase(request);
-//   const { data, error } = await supabase
-//     .from("Action")
-//     .update(values)
-//     .eq("id", id);
-
-//   return { data, error };
-// }
 
 async function createCelebration(formData: FormData, request: Request) {
   const { supabase } = getSupabase(request);

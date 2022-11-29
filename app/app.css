@@ -1870,6 +1870,10 @@ h5 {
   -webkit-line-clamp: 3;
 }
 
+.\@container {
+  container-type: inline-size;
+}
+
 .text-xx {
   font-size: .625rem;
   letter-spacing: 0.025em;
@@ -2699,6 +2703,12 @@ body {
   opacity: 1;
 }
 
+@container (min-width: 120px) {
+  .\@\[120px\]\:block {
+    display: block;
+  }
+}
+
 .dark .dark\:divide-gray-800 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-divide-opacity));
@@ -2960,16 +2970,8 @@ body {
 }
 
 @media (min-width: 1536px) {
-  .\32xl\:block {
-    display: block;
-  }
-
   .\32xl\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
-  .\32xl\:pl-1 {
-    padding-left: 0.25rem;
   }
 }
 

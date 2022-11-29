@@ -78,7 +78,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
               ghost.parentNode?.removeChild(ghost);
             }, 1000);
           }}
-          className={`action-line p-1 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2 2xl:pl-1`}
+          className={`action-line p-1 bg-${action.status.slug} bg-${action.status.slug}-hover relative flex cursor-pointer items-center justify-between gap-2 @container`}
           onClick={() => {
             navigate(
               `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
@@ -88,7 +88,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
         >
           <div className="flex w-full items-center gap-1 overflow-hidden">
             <div
-              className={` text-xx hidden w-6 shrink-0 grow-0 text-center font-semibold uppercase opacity-50 2xl:block`}
+              className={` text-xx hidden w-6 shrink-0 grow-0 text-center font-semibold uppercase opacity-50 @[120px]:block`}
             >
               {action.account.name.slice(0, 3)}
             </div>
@@ -99,7 +99,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
               {action.account.name.slice(0, 3)}
             </div>
           </div>
-          <div className="text-xx hidden text-center font-medium opacity-75 2xl:block">
+          <div className="text-xx hidden text-center font-medium opacity-75 @[120px]:block">
             {dayjs(action.date).format(
               "H[h]".concat(
                 dayjs(action.date).format("mm") !== "00" ? "mm" : ""

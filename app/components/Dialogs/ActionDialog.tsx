@@ -114,7 +114,7 @@ export default function ActionDialog({
 
   useEffect(() => {
     function getDirty() {
-      setDirty(true);
+      // setDirty(true);
     }
 
     window.addEventListener("keydown", getDirty);
