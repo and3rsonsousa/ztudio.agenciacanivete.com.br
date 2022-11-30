@@ -1,5 +1,21 @@
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import Button from "~/components/Button";
+import { getUser } from "~/lib/auth.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const {
+    data: { session },
+    response,
+  } = await getUser(request, true);
+
+  if (session !== null) {
+    throw redirect(`/dashboard`, { headers: response.headers });
+  }
+
+  return { session };
+};
 
 export default function Index() {
   return (

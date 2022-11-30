@@ -1,4 +1,4 @@
-import { redirect } from "@remix-run/cloudflare";
+import { redirect, Session } from "@remix-run/cloudflare";
 // import { commitSession, destroySession, getSession } from "./session.server";
 import { getSupabase } from "./supabase";
 
@@ -61,14 +61,10 @@ export async function signOUT(request: Request) {
     headers: response.headers,
   });
 }
-export async function getUser(request: Request, shouldRedirect?: boolean) {
+export async function getUser(request: Request, stayOnPage?: boolean) {
   const { supabase, response } = getSupabase(request);
 
   const { data } = await supabase.auth.getSession();
 
-  if (data.session) {
-    return { data };
-  } else {
-    throw redirect(`/login`, { headers: response.headers });
-  }
+  return { data, response };
 }

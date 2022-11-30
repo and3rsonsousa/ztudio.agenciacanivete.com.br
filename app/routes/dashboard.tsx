@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { Outlet, useOutletContext } from "@remix-run/react";
 import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
@@ -11,9 +12,16 @@ import {
 } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { data } = await getUser(request);
+  const {
+    data: { session },
+    response,
+  } = await getUser(request);
 
-  const userId = data.session.user.id;
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
+  }
+
+  const userId = session.user.id;
 
   const [
     { data: person },
