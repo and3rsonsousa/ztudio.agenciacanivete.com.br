@@ -1,5 +1,4 @@
-import { redirect, Session } from "@remix-run/cloudflare";
-// import { commitSession, destroySession, getSession } from "./session.server";
+import { redirect } from "@remix-run/cloudflare";
 import { getSupabase } from "./supabase";
 
 export async function signUP(

@@ -17,22 +17,20 @@ import {
 } from "@remix-run/react";
 
 import {
-  CheckBadgeIcon,
   DocumentDuplicateIcon,
   DocumentPlusIcon,
   PencilSquareIcon,
-  TagIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import { scaleUp } from "~/lib/animations";
 import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
-import { useState } from "react";
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -116,6 +114,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                 {action.status.id !==
                   "a448e17d-05ba-4ad0-9990-773f9384d15e" && (
                   <>
+                    {/* Caso o item não esteja concluído, exibe a opção de concluir mais rápido */}
                     <ContextMenu.Item
                       onSelect={(event) => {
                         fetcher.submit(
@@ -203,41 +202,6 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                     </ContextMenu.Portal>
                   </ContextMenu.Sub>
                 </div>
-                {/* <ContextMenu.Sub>
-                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    <DocumentDuplicateIcon className="w-4" />
-                    <div>Duplicar</div>
-                    <ChevronRightIcon className="ml-auto w-4" />
-                  </ContextMenu.SubTrigger>
-                  <ContextMenu.Portal>
-                    <ContextMenu.SubContent className="dropdown-content">
-                      <ContextMenu.Label className="dropdown-label">
-                        Duplicar para a conta...
-                      </ContextMenu.Label>
-                      {accounts.map((account) => (
-                        <ContextMenu.Item
-                          className="dropdown-item item-small"
-                          key={account.id}
-                          onSelect={(event) => {
-                            fetcher.submit(
-                              {
-                                action: "duplicate-action",
-                                id: action.id,
-                                account: account.id,
-                              },
-                              {
-                                method: "post",
-                                action: "/handle-action",
-                              }
-                            );
-                          }}
-                        >
-                          <div>{account.name}</div>
-                        </ContextMenu.Item>
-                      ))}
-                    </ContextMenu.SubContent>
-                  </ContextMenu.Portal>
-                </ContextMenu.Sub> */}
                 {/* Excluir */}
                 <ContextMenu.Item
                   onSelect={(event) => {
@@ -260,8 +224,11 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                 {/* Tags */}
                 <ContextMenu.Sub>
                   <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    <TagIcon className="w-4" />
-                    <div>Tags</div>
+                    {/* <TagIcon className="w-4" /> */}
+                    <div
+                      className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
+                    ></div>
+                    <div>{action.tag.name}</div>
                     <ChevronRightIcon className="ml-auto w-4" />
                   </ContextMenu.SubTrigger>
                   <ContextMenu.Portal>
@@ -301,8 +268,11 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                 {/* Status */}
                 <ContextMenu.Sub>
                   <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    <CheckBadgeIcon className="w-4" />
-                    <div>Status</div>
+                    {/* <CheckBadgeIcon className="w-4" /> */}
+                    <div
+                      className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
+                    ></div>
+                    <div>{action.status.name}</div>
                     <ChevronRightIcon className="ml-auto w-4" />
                   </ContextMenu.SubTrigger>
                   <ContextMenu.Portal>

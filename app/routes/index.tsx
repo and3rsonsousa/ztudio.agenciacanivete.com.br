@@ -23,7 +23,6 @@ export default function Index() {
       <div className="grid min-h-screen place-content-center ">
         <div className="z-10 w-96 text-center">
           <div>
-            {/* <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-32" /> */}
             <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-36" />
           </div>
           <p className="text-center font-normal">
