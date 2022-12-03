@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 
-import type { HtmlMetaDescriptor } from "@remix-run/cloudflare";
 import {
   Link,
   Outlet,

@@ -1,5 +1,4 @@
 import type {
-  HtmlMetaDescriptor,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
