@@ -5,6 +5,8 @@ import {
   HeartIcon,
 } from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
+
+import type { HtmlMetaDescriptor } from "@remix-run/cloudflare";
 import {
   Link,
   Outlet,
@@ -16,12 +18,9 @@ import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
-export const meta: MetaFunction = ({ data }) => {
-  return {
-    title: `${data.account.name} / STUDIO`,
-  };
-};
-
+export const meta: MetaFunction = ({ data }) => ({
+  title: `${data.account.name} / STUDIO`,
+});
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data: account } = await getAccount(request, params.slug);
 
