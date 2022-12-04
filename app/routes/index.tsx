@@ -10,9 +10,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     response,
   } = await getUser(request, true);
 
-  if (session !== null) {
-    throw redirect(`/dashboard`, { headers: response.headers });
-  }
+  console.log(session);
+
+  // if (session !== null) {
+  //   throw redirect(`/dashboard`, { headers: response.headers });
+  // }
 
   return { session };
 };
