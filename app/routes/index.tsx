@@ -1,18 +1,18 @@
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Button from "~/components/Button";
 
-export function meta({ matches }: { matches: any[] }) {
-  const root = matches.find((match) => match.route.id === "root");
+// export function meta({ matches }: { matches: any[] }) {
+//   const root = matches.find((match) => match.route.id === "root");
 
-  const meta = root.meta;
+//   const meta = root.meta;
 
-  return [
-    ...meta,
-    {
-      title: "STUDIO - Plan fast, Work less",
-    },
-  ];
-}
+//   return [
+//     ...meta,
+//     {
+//       title: "STUDIO - Plan fast, Work less",
+//     },
+//   ];
+// }
 
 export default function Index() {
   return (
