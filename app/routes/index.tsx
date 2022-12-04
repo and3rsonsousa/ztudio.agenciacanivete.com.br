@@ -1,6 +1,7 @@
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
+import { useLoaderData } from "@remix-run/react";
 import Button from "~/components/Button";
 import { getUser } from "~/lib/auth.server";
 
@@ -20,10 +21,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
+  const { session } = useLoaderData();
   return (
     <div className="selection:bg-brand selection:text-white">
       <div className="grid min-h-screen place-content-center ">
         <div className="z-10 w-96 text-center">
+          <pre>{JSON.stringify(session, undefined, 2)}</pre>
           <div>
             <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-36" />
           </div>
