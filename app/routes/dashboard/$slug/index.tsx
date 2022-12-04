@@ -2,6 +2,22 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getActions, getCampaigns, handleAction } from "~/lib/data";
+
+// export function meta({ data, matches }: { data: any; matches: any[] }) {
+//   const root = matches.find((match) => match.route.id === "root");
+
+//   const meta = root.meta;
+
+//   console.log(matches);
+
+//   return [
+//     ...meta,
+//     {
+//       // title: `${data.account.name} - STUDIO`,
+//     },
+//   ];
+// }
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("month");
 

@@ -15,12 +15,21 @@ import {
 } from "@remix-run/react";
 import dayjs from "dayjs";
 import { useState } from "react";
+
 import styles from "./app.css";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
+// V2
+// export function meta() {
+//   return [
+//     { charset: "utf-8" },
+//     { viewport: "width=device-width,initial-scale=1" },
+//   ];
+// }
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "STUDIO",
+  title: "STUDIO - Plan fast. Work less.",
   viewport: "width=device-width,initial-scale=1",
 });
 
