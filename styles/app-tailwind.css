@@ -7,11 +7,11 @@
 }
 
 html {
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 body {
   @apply font-sans font-light text-gray-900 antialiased dark:text-gray-300;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 @layer base {
