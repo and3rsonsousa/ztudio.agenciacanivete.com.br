@@ -4,7 +4,7 @@ import { Actions } from "~/components/Actions";
 import { getActions } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { data, error } = await getActions({
+  const { data } = await getActions({
     request,
     all: true,
     where: "trash",
