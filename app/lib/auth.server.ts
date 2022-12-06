@@ -68,6 +68,7 @@ export async function getUser(request: Request) {
   if (data.session) {
     return { data, response };
   } else {
-    throw redirect("/login", { headers: response.headers });
+    // throw redirect("/login", { headers: response.headers });
+    throw new Error("Doidice");
   }
 }
