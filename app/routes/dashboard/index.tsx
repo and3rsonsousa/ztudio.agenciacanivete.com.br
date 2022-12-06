@@ -4,19 +4,6 @@ import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 
-// export function meta({ matches }: { matches: any[] }) {
-//   const root = matches.find((match) => match.route.id === "root");
-
-//   const meta = root.meta;
-
-//   return [
-//     ...meta,
-//     {
-//       title: "Dashboard - STUDIO",
-//     },
-//   ];
-// }
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("month");
   const {
