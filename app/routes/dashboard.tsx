@@ -12,14 +12,14 @@ import {
 } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const {
-    data: { session },
-    response,
-  } = await getUser(request);
+  // const {
+  //   data: { session },
+  //   response,
+  // } = await getUser(request);
 
-  if (session === null) {
-    throw redirect(`/login`, { headers: response.headers });
-  }
+  // if (session === null) {
+  //   throw redirect(`/login`, { headers: response.headers });
+  // }
   return {};
 
   // const userId = session.user.id;
