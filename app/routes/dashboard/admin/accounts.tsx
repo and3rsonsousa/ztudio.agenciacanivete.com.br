@@ -14,21 +14,21 @@ export const action: ActionFunction = async ({ request }) => {
 export const loader: LoaderFunction = async ({ request }) => {
   const {
     data: { session },
+    response,
   } = await getUser(request);
 
-  if (session) {
-    const { data: person } = await getPersonByUser(session.user.id, request);
-
-    if (!person.admin) {
-      return redirect("/dashboard");
-    }
-
-    const { data: accounts } = await getAccounts(session.user.id, request);
-
-    return { accounts };
-  } else {
-    throw new Error("Session not defined");
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
   }
+  const { data: person } = await getPersonByUser(session.user.id, request);
+
+  if (!person.admin) {
+    return redirect("/dashboard");
+  }
+
+  const { data: accounts } = await getAccounts(session.user.id, request);
+
+  return { accounts };
 };
 
 export default function Accounts() {

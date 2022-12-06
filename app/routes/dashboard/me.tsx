@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import { LoaderFunction, redirect } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
@@ -9,14 +9,17 @@ import type { PersonModel } from "~/lib/models";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const {
-    data: {
-      session: { user },
-    },
+    data: { session },
+    response,
   } = await getUser(request);
 
-  const { data: person } = await getPersonByUser(user.id, request);
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
+  }
 
-  return { user, person };
+  const { data: person } = await getPersonByUser(session.user.id, request);
+
+  return { person };
 };
 
 export default function Me() {
@@ -36,9 +39,9 @@ export default function Me() {
           </Exclamation>
         </div>
         <Form method="post">
-          <InputField title="Nome" name="name" value={person.name} />
-          <InputField title="Email" name="email" value={person.email} />
-          <InputField title="Senha" name="password" />
+          <InputField label="Nome" name="name" value={person.name} />
+          <InputField label="Email" name="email" value={person.email} />
+          <InputField label="Senha" name="password" />
           <div className="flex justify-end">
             <Button primary type="submit">
               Atualizar

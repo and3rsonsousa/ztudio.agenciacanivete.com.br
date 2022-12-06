@@ -14,12 +14,15 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const {
-    data: {
-      session: { user },
-    },
+    data: { session },
+    response,
   } = await getUser(request);
 
-  const { data: person } = await getPersonByUser(user.id, request);
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
+  }
+
+  const { data: person } = await getPersonByUser(session.user.id, request);
 
   if (!person.admin) {
     return redirect("/dashboard");
