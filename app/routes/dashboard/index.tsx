@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import { LoaderFunction, redirect } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
@@ -8,7 +8,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("month");
   const {
     data: { session },
+    response,
   } = await getUser(request);
+
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
+  }
 
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
@@ -24,11 +29,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 const DashboardIndex = () => {
-  const { actions, campaigns } = useLoaderData();
+  // const { actions, campaigns } = useLoaderData();
 
   return (
     <div className="h-screen">
-      <Calendar actions={actions} campaigns={campaigns} />
+      {/* <Calendar actions={actions} campaigns={campaigns} /> */}
     </div>
   );
 };

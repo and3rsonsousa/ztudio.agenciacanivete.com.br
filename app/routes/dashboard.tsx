@@ -11,36 +11,36 @@ import {
   getTagsStatus,
 } from "~/lib/data";
 
-export const loader: LoaderFunction = async ({ request }) => {
-  // const {
-  //   data: { session },
-  //   response,
-  // } = await getUser(request);
+// export const loader: LoaderFunction = async ({ request }) => {
+// const {
+//   data: { session },
+//   response,
+// } = await getUser(request);
 
-  // if (session === null) {
-  //   throw redirect(`/login`, { headers: response.headers });
-  // }
-  return {};
+// if (session === null) {
+//   throw redirect(`/login`, { headers: response.headers });
+// }
+// return {};
 
-  // const userId = session.user.id;
+// const userId = session.user.id;
 
-  // const [
-  //   { data: person },
-  //   { data: persons },
-  //   { data: accounts },
-  //   { tags, status },
-  //   { data: celebrations },
-  // ] = await Promise.all([
-  //   getPersonByUser(userId, request),
-  //   getPersons(request),
-  //   getAccounts(userId, request),
-  //   getTagsStatus(request),
-  //   getCelebrations({ request }),
-  // ]);
+// const [
+//   { data: person },
+//   { data: persons },
+//   { data: accounts },
+//   { tags, status },
+//   { data: celebrations },
+// ] = await Promise.all([
+//   getPersonByUser(userId, request),
+//   getPersons(request),
+//   getAccounts(userId, request),
+//   getTagsStatus(request),
+//   getCelebrations({ request }),
+// ]);
 
-  // const url = request.url;
-  // return { person, persons, accounts, tags, status, celebrations, url };
-};
+// const url = request.url;
+// return { person, persons, accounts, tags, status, celebrations, url };
+// };
 
 export default function Dashboard() {
   return <div>Teste</div>;

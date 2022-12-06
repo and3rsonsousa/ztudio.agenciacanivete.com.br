@@ -19,14 +19,6 @@ import { useState } from "react";
 import styles from "./app.css";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
-// V2
-// export function meta() {
-//   return [
-//     { charset: "utf-8" },
-//     { viewport: "width=device-width,initial-scale=1" },
-//   ];
-// }
-
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "STUDIO - Plan fast. Work less.",
@@ -113,5 +105,28 @@ export default function AppWithProviders() {
     <ThemeProvider>
       <App />
     </ThemeProvider>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: any }) {
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div className="grid min-h-screen place-content-center">
+          <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
+            {error.message}
+          </div>
+          <div className="p-8">
+            <pre className="whitespace-pre-line  text-xs">{error.stack}</pre>
+          </div>
+        </div>
+        <Scripts />
+      </body>
+    </html>
   );
 }
