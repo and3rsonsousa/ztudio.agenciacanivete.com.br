@@ -41,10 +41,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const context = useOutletContext();
-  return (
-    <Layout>
-      <Outlet context={context} />
-    </Layout>
-  );
+  return <div>Teste</div>;
 }
+// export default function Dashboard() {
+//   const context = useOutletContext();
+//   return (
+//     <Layout>
+//       <Outlet context={context} />
+//     </Layout>
+//   );
+// }
