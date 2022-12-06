@@ -60,7 +60,7 @@ export async function signOUT(request: Request) {
     headers: response.headers,
   });
 }
-export async function getUser(request: Request, stayOnPage?: boolean) {
+export async function getUser(request: Request) {
   const { supabase, response } = getSupabase(request);
 
   const { data } = await supabase.auth.getSession();

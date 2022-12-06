@@ -5,29 +5,30 @@ import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 
-// export const loader: LoaderFunction = async ({ request, params }) => {
-//   let period = new URL(request.url).searchParams.get("month");
-//   const {
-//     data: { session },
-//     response,
-//   } = await getUser(request);
+export const loader: LoaderFunction = async ({ request, params }) => {
+  let period = new URL(request.url).searchParams.get("month");
+  const {
+    data: { session },
+    response,
+  } = await getUser(request);
 
-//   if (session === null) {
-//     throw redirect(`/login`, { headers: response.headers });
-//   }
+  //   if (session === null) {
+  //     throw redirect(`/login`, { headers: response.headers });
+  //   }
 
-//   const [{ data: actions }, { data: campaigns }] = await Promise.all([
-//     getActions({
-//       request,
-//       account: params.account,
-//       user: session?.user.id,
-//       period,
-//     }),
-//     getCampaigns({ request, user: session?.user.id }),
-//   ]);
+  //   const [{ data: actions }, { data: campaigns }] = await Promise.all([
+  //     getActions({
+  //       request,
+  //       account: params.account,
+  //       user: session?.user.id,
+  //       period,
+  //     }),
+  //     getCampaigns({ request, user: session?.user.id }),
+  //   ]);
 
-//   return { actions, campaigns };
-// };
+  //   return { actions, campaigns };
+  return {};
+};
 
 const DashboardIndex = () => {
   // const { actions, campaigns } = useLoaderData();
