@@ -92,7 +92,7 @@ body {
   }
 
   .button-link {
-    @apply bg-transparent dark:bg-transparent dark:hover:bg-gray-800;
+    @apply bg-transparent hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800;
   }
 
   .button svg {

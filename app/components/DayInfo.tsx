@@ -1,4 +1,8 @@
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 import { useParams } from "@remix-run/react";
 import { useState } from "react";
 import type { DayModel } from "~/lib/models";
@@ -30,7 +34,11 @@ const DayInfo = ({ day }: { day: DayModel }) => {
               )}
               <div className={`${!view ? "-ml-2" : ""} hidden lg:block`}>
                 <Button link small icon squared onClick={() => setView(!view)}>
-                  <ChevronRightIcon />
+                  {view ? (
+                    <ArrowRightIcon className="mr-0.5" />
+                  ) : (
+                    <ArrowLeftIcon className="ml-0.5" />
+                  )}
                 </Button>
               </div>
             </div>
