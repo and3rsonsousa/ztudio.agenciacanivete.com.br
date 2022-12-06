@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } = await getUser(request);
 
   if (session === null) {
-    throw redirect(`/login`, { headers: response.headers });
+    return redirect(`/login`, { headers: response.headers });
   }
 
   const { data: person } = await getPersonByUser(session.user.id, request);

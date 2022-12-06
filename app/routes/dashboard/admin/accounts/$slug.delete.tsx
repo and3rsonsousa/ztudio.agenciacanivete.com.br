@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   ]);
 
   if (!account) {
-    throw redirect(`/dashboard/admin/accounts`);
+    return redirect(`/dashboard/admin/accounts`);
   }
 
   return { account, actions };

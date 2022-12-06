@@ -11,32 +11,29 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     data: { session },
   } = await getUser(request);
 
-  console.log(session);
+  if (session === null) {
+    return redirect(`/login`);
+  }
 
-  // if (session === null) {
-  //   throw redirect(`/login`);
-  // }
+  const [{ data: actions }, { data: campaigns }] = await Promise.all([
+    getActions({
+      request,
+      account: params.account,
+      user: session?.user.id,
+      period,
+    }),
+    getCampaigns({ request, user: session?.user.id }),
+  ]);
 
-  //   const [{ data: actions }, { data: campaigns }] = await Promise.all([
-  //     getActions({
-  //       request,
-  //       account: params.account,
-  //       user: session?.user.id,
-  //       period,
-  //     }),
-  //     getCampaigns({ request, user: session?.user.id }),
-  //   ]);
-
-  //   return { actions, campaigns };
-  return {};
+  return { actions, campaigns };
 };
 
 const DashboardIndex = () => {
-  // const { actions, campaigns } = useLoaderData();
+  const { actions, campaigns } = useLoaderData();
 
   return (
     <div className="h-screen">
-      {/* <Calendar actions={actions} campaigns={campaigns} /> */}
+      <Calendar actions={actions} campaigns={campaigns} />
     </div>
   );
 };

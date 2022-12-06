@@ -1,11 +1,12 @@
-import { LoaderFunction, redirect } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { PersonModel } from "~/lib/models";
+import { redirect } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import InputField from "~/components/Forms/InputField";
 import { getUser } from "~/lib/auth.server";
 import { getPersonByUser } from "~/lib/data";
-import type { PersonModel } from "~/lib/models";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const {
@@ -14,7 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } = await getUser(request);
 
   if (session === null) {
-    throw redirect(`/login`, { headers: response.headers });
+    return redirect(`/login`, { headers: response.headers });
   }
 
   const { data: person } = await getPersonByUser(session.user.id, request);
