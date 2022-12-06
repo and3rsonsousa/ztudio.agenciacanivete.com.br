@@ -14,20 +14,22 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const {
-    data: {
-      session: { user },
-    },
+    data: { session },
   } = await getUser(request);
 
-  const { data: person } = await getPersonByUser(user.id, request);
+  if (session) {
+    const { data: person } = await getPersonByUser(session.user.id, request);
 
-  if (!person.admin) {
-    return redirect("/dashboard");
+    if (!person.admin) {
+      return redirect("/dashboard");
+    }
+
+    const { data: accounts } = await getAccounts(session.user.id, request);
+
+    return { accounts };
+  } else {
+    throw new Error("Session not defined");
   }
-
-  const { data: accounts } = await getAccounts(user.id, request);
-
-  return { accounts };
 };
 
 export default function Accounts() {
@@ -44,15 +46,16 @@ export default function Accounts() {
         </div>
       </div>
       <div className="flex h-full overflow-hidden">
-        <div className="no-scrollbars w-24 max-w-md divide-y overflow-hidden overflow-y-auto dark:divide-gray-800 md:w-1/2">
+        <div className="no-scrollbars w-24 max-w-md divide-y overflow-hidden overflow-y-auto dark:divide-gray-800 md:w-1/3">
           {accounts.map((account) => (
             <div
               key={account.id}
               className="group flex  items-center justify-between"
             >
               <Link
-                to={`/dashboard/admin/accounts/${account.id}`}
-                className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
+                to={`/dashboard/admin/accounts/${account.slug}`}
+                // className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
+                className="dropdown-item w-full"
               >
                 <span className="hidden md:block">{account.name}</span>
                 <span className="block w-full text-center uppercase md:hidden">
@@ -63,22 +66,13 @@ export default function Accounts() {
                 <Form method="post">
                   <input type="hidden" name="action" value="delete-account" />
                   <input type="hidden" name="id" value={account.id} />
-                  <Button
-                    small
-                    link
-                    icon
-                    onClick={(event) => {
-                      if (
-                        !window.confirm(
-                          `Deseja mesmo deletar o cliente "${account.name}"`
-                        )
-                      ) {
-                        event.preventDefault();
-                      }
-                    }}
+                  <Link
+                    tabIndex={-1}
+                    to={`./${account.slug}/delete`}
+                    className="button button-link button-small button-squared"
                   >
                     <TrashIcon />
-                  </Button>
+                  </Link>
                 </Form>
               </div>
             </div>

@@ -10,7 +10,7 @@ import type { AccountModel, PersonModel } from "~/lib/models";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const [{ data: account }, { data: persons }] = await Promise.all([
-    getAccount(request, undefined, params.id as string),
+    getAccount(request, params.slug),
     getPersons(request),
   ]);
 
@@ -49,8 +49,8 @@ export default function UserId() {
         <input type="hidden" name="action" value="update-account" />
         <input type="hidden" name="id" value={account.id} />
 
-        <InputField name="name" title="Nome" value={account.name} />
-        <InputField name="slug" title="Slug" value={account.slug} />
+        <InputField name="name" label="Nome" value={account.name} />
+        <InputField name="slug" label="Slug" value={account.slug} />
 
         <div className="mt-8">
           {persons.map((person) => (
@@ -58,7 +58,6 @@ export default function UserId() {
               key={person.id}
               name="users"
               title={person.name}
-              value={person.user}
               checked={
                 account.users.filter((user) => user === person.user).length > 0
               }

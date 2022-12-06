@@ -470,7 +470,18 @@ export const handleAction = async (formData: FormData, request: Request) => {
     } else if (action === "delete-celebration") {
       table = "Celebration";
     } else if (action === "delete-account") {
-      table = "Account";
+      const [
+        { data: accountData, error: accountError },
+        { data: actionData, error: actionError },
+      ] = await Promise.all([
+        supabase.from("Account").delete().eq("id", id),
+        supabase.from("Action").delete().eq("account", id),
+      ]);
+
+      return {
+        data: { accountData, actionData },
+        error: { accountError, actionError },
+      };
     } else if (action === "delete-campaign") {
       const { data, error } = await supabase
         .from("Campaign")
@@ -482,19 +493,12 @@ export const handleAction = async (formData: FormData, request: Request) => {
     } else if (action === "delete-campaign-trash") {
       table = "Campaign";
     } else if (action === "delete-person") {
-      // const session = await getUser(request);
-      // const access_token = session.data.session.access_token;
-
       const { data, error } = await supabase
         .from("Person")
         .delete()
         .eq("id", id)
         .select()
         .single();
-
-      // if(!error) {
-      //   supabase.auth.admin.deleteUser(data)
-      // }
 
       return { data, error };
     }
