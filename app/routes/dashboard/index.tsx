@@ -12,9 +12,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     response,
   } = await getUser(request);
 
-  //   if (session === null) {
-  //     throw redirect(`/login`, { headers: response.headers });
-  //   }
+  if (session === null) {
+    throw redirect(`/login`, { headers: response.headers });
+  }
 
   //   const [{ data: actions }, { data: campaigns }] = await Promise.all([
   //     getActions({
