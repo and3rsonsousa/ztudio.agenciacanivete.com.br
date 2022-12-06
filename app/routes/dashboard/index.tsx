@@ -9,11 +9,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let period = new URL(request.url).searchParams.get("month");
   const {
     data: { session },
-    response,
   } = await getUser(request);
 
   if (session === null) {
-    throw redirect(`/login`, { headers: response.headers });
+    throw redirect(`/login`);
   }
 
   //   const [{ data: actions }, { data: campaigns }] = await Promise.all([
