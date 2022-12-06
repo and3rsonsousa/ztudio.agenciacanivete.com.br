@@ -1,5 +1,4 @@
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { redirect } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";

@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     response,
   } = await getUser(request);
 
-  if (session === null) {
+  if (!session) {
     return redirect(`/login`, { headers: response.headers });
   }
 
