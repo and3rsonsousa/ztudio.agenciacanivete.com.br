@@ -65,5 +65,6 @@ export async function getUser(request: Request) {
 
   const { data } = await supabase.auth.getSession();
 
-  return { data, response };
+  if (data.session) return { data, response };
+  else throw redirect("/login", { headers: response.headers });
 }
