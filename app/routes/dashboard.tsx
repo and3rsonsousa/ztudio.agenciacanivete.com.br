@@ -33,9 +33,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     ]);
     const url = request.url;
     return { person, persons, accounts, tags, status, celebrations, url };
+  } else {
+    throw new Response("Not authorized");
   }
-
-  return {};
 };
 
 export default function Dashboard() {
