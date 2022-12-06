@@ -2,7 +2,6 @@ import { LockClosedIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
-import Button from "~/components/Button";
 import { getUser } from "~/lib/auth.server";
 import { getAccounts, getPersonByUser, handleAction } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
