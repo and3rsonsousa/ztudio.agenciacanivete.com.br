@@ -14,10 +14,11 @@ import {
 export const loader: LoaderFunction = async ({ request }) => {
   const {
     data: { session },
+    response,
   } = await getUser(request);
 
   if (!session) {
-    return redirect("/login");
+    return redirect("/login", { headers: response.headers });
   } else {
     //   const userId = session.user.id;
     //   const [
