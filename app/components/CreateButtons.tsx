@@ -18,15 +18,15 @@ export default function CreateButtons({
   const context: {
     actions: {
       openDialogAction: boolean;
-      setOpenDialogAction: (b?: boolean) => void;
+      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     };
     campaigns: {
       openDialogCampaign: boolean;
-      setOpenDialogCampaign: (b?: boolean) => void;
+      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
     };
     celebrations: {
       openDialogCelebration: boolean;
-      setOpenDialogCelebration: (b?: boolean) => void;
+      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
 
@@ -69,6 +69,7 @@ export default function CreateButtons({
             onClick={() => {
               context.actions.setOpenDialogAction(true);
             }}
+            title="Cmd + Shift + K"
           >
             <div className="whitespace-nowrap">Nova Ação</div>
             <DocumentPlusIcon />

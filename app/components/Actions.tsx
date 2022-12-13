@@ -441,7 +441,7 @@ export const ActionGrid = ({
     };
     actions: {
       openDialogAction: boolean;
-      setOpenDialogAction: (b?: boolean) => void;
+      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
 

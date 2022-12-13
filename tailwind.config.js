@@ -42,7 +42,7 @@ module.exports = {
       alert: colors.yellow,
       success: colors.emerald,
 
-      post: colors.violet,
+      post: colors.indigo,
       reels: colors.fuchsia,
       meeting: colors.sky,
       stories: colors.orange,

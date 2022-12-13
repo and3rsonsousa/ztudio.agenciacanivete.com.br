@@ -1,16 +1,12 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useParams } from "@remix-run/react";
 import { useState } from "react";
 import type { DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
+import Button from "./Button";
 import Celebration from "./Celebrations";
 import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
-import Button from "./Button";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
   const [view, setView] = useState(true);

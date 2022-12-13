@@ -1,6 +1,7 @@
 import {
   BriefcaseIcon,
   ChevronRightIcon,
+  MagnifyingGlassIcon,
   MoonIcon,
   SunIcon,
   UserIcon,
@@ -15,12 +16,12 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect } from "react";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
 import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
-import SearchBox from "./SearchBox";
 import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -31,19 +32,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const context: {
     search: {
       openDialogSearch: boolean;
-      setOpenDialogSearch: (b?: boolean) => void;
+      setOpenDialogSearch: React.Dispatch<React.SetStateAction<boolean>>;
     };
     actions: {
       openDialogAction: boolean;
-      setOpenDialogAction: (b?: boolean) => void;
+      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     };
     campaigns: {
       openDialogCampaign: boolean;
-      setOpenDialogCampaign: (b?: boolean) => void;
+      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
     };
     celebrations: {
       openDialogCelebration: boolean;
-      setOpenDialogCelebration: (b?: boolean) => void;
+      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
 
@@ -57,6 +58,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       : params.get("instagram") !== null
       ? `?instagram`
       : "";
+
+  useEffect(() => {
+    function keyDown(event: KeyboardEvent) {
+      if (event.metaKey && event.key === "k") {
+        if (event.shiftKey) {
+          context.actions.setOpenDialogAction((prev: boolean) => !prev);
+        } else {
+          context.search.setOpenDialogSearch(!context.search.openDialogSearch);
+        }
+      }
+    }
+
+    window.addEventListener("keydown", keyDown);
+
+    return () => {
+      window.removeEventListener("keydown", keyDown);
+    };
+  }, [context]);
 
   return (
     <div className="flex h-screen w-full flex-col  lg:flex-row">
@@ -112,7 +131,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="lg:p-2">
-            <SearchBox />
+            <button
+              onClick={() => {
+                context.search.setOpenDialogSearch(true);
+              }}
+              className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
+            >
+              <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
+                <div>Pesquisar</div>
+
+                <div className="font-semibold"> + K</div>
+              </div>
+              <div className="ml-auto">
+                <MagnifyingGlassIcon className="w-4" />
+              </div>
+            </button>
           </div>
 
           <div>

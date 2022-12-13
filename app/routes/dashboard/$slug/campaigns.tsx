@@ -16,7 +16,7 @@ export default function CampaignsPage() {
   const { campaigns } = useLoaderData<{ campaigns: CampaignModel[] }>();
   const context: {
     campaigns: {
-      setOpenDialogCampaign: (b?: boolean) => void;
+      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
 
