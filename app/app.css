@@ -1314,6 +1314,10 @@ h5 {
   width: 50%;
 }
 
+.w-7 {
+  width: 1.75rem;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
@@ -1435,12 +1439,12 @@ h5 {
   justify-content: space-between;
 }
 
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-1 {
   gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-4 {
@@ -1640,12 +1644,12 @@ h5 {
   padding: 1rem;
 }
 
-.p-1 {
-  padding: 0.25rem;
-}
-
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .py-1\.5 {
@@ -1790,12 +1794,20 @@ h5 {
   line-height: 2.25rem;
 }
 
-.font-bold {
-  font-weight: 700;
+.text-\[8px\] {
+  font-size: 8px;
 }
 
-.font-semibold {
-  font-weight: 600;
+.text-\[10px\] {
+  font-size: 10px;
+}
+
+.text-\[9px\] {
+  font-size: 9px;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .font-medium {
@@ -1804,6 +1816,10 @@ h5 {
 
 .font-normal {
   font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .font-light {
@@ -1828,6 +1844,10 @@ h5 {
 
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
 }
 
 .text-white {
@@ -1870,6 +1890,31 @@ h5 {
   color: rgb(254 202 202 / var(--tw-text-opacity));
 }
 
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-do-700 {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity));
+}
+
+.text-do-200 {
+  --tw-text-opacity: 1;
+  color: rgb(254 215 170 / var(--tw-text-opacity));
+}
+
+.text-do-300 {
+  --tw-text-opacity: 1;
+  color: rgb(253 186 116 / var(--tw-text-opacity));
+}
+
+.text-do-100 {
+  --tw-text-opacity: 1;
+  color: rgb(255 237 213 / var(--tw-text-opacity));
+}
+
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1889,6 +1934,14 @@ h5 {
 
 .opacity-25 {
   opacity: 0.25;
+}
+
+.opacity-60 {
+  opacity: 0.6;
+}
+
+.bg-blend-overlay {
+  background-blend-mode: overlay;
 }
 
 .outline-none {
@@ -2588,14 +2641,26 @@ body {
 }
 
 .action-line {
+  position: relative;
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   margin-top: 0.25rem;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   border-radius: 0.25rem;
+  padding: 0.25rem;
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(128 0 255 / var(--tw-ring-opacity));
   --tw-ring-offset-width: 2px;
   --tw-ring-offset-color: white;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .action-line:focus-within {
@@ -2628,7 +2693,7 @@ body {
   background-color: rgb(254 242 242 / var(--tw-bg-opacity));
 }
 
-.deleting {
+.busy {
   --tw-scale-x: .9;
   --tw-scale-y: .9;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -2753,6 +2818,12 @@ body {
 
 @container (min-width: 120px) {
   .\@\[120px\]\:block {
+    display: block;
+  }
+}
+
+@container (min-width: 150px) {
+  .\@\[150px\]\:block {
     display: block;
   }
 }

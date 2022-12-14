@@ -15,6 +15,7 @@ export type UserModel = {
 export type AccountModel = {
   id: string;
   name: string;
+  short: string;
   slug: string;
   users: string[];
 };
