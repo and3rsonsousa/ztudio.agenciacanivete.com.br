@@ -17,6 +17,7 @@ import {
 } from "@remix-run/react";
 
 import {
+  ClockIcon,
   DocumentDuplicateIcon,
   DocumentPlusIcon,
   PencilSquareIcon,
@@ -220,6 +221,57 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                 >
                   <Trash className="w-4" /> <div>Excluir</div>
                 </ContextMenu.Item>
+                {/* Adiar */}
+                <ContextMenu.Sub>
+                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+                    <ClockIcon className="w-4" />
+                    <div>Adiar</div>
+                    <ChevronRightIcon className="ml-auto w-4" />
+                  </ContextMenu.SubTrigger>
+                  <ContextMenu.Portal>
+                    <ContextMenu.SubContent className="dropdown-content w-36">
+                      {[
+                        {
+                          id: 1,
+                          name: "30 minutos",
+                          value: 30,
+                          unit: "minute",
+                        },
+                        { id: 3, name: "3 horas", value: 3, unit: "hour" },
+                        { id: 4, name: "9 horas", value: 9, unit: "hour" },
+                        { id: 5, name: "1 dia", value: 1, unit: "day" },
+                        { id: 6, name: "3 dias", value: 3, unit: "day" },
+                        { id: 7, name: "1 semana", value: 1, unit: "week" },
+                        { id: 7, name: "Próximo mês", value: 1, unit: "month" },
+                      ].map((delay) => (
+                        <ContextMenu.Item
+                          key={delay.id}
+                          onSelect={(event) => {
+                            fetcher.submit(
+                              {
+                                action: "update-delay",
+                                id: action.id,
+                                date: dayjs(action.date)
+                                  .add(
+                                    delay.value,
+                                    delay.unit as dayjs.ManipulateType
+                                  )
+                                  .format("YYYY-MM-DD[T]HH:mm"),
+                              },
+                              {
+                                method: "post",
+                                action: "/handle-action",
+                              }
+                            );
+                          }}
+                          className="dropdown-item item-small"
+                        >
+                          <div>{delay.name}</div>
+                        </ContextMenu.Item>
+                      ))}
+                    </ContextMenu.SubContent>
+                  </ContextMenu.Portal>
+                </ContextMenu.Sub>
                 <hr className="dropdown-hr" />
                 {/* Tags */}
                 <ContextMenu.Sub>

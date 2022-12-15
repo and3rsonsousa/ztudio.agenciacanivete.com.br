@@ -379,6 +379,9 @@ export const handleAction = async (formData: FormData, request: Request) => {
     if (action === "update-tag") {
       values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
       table = "Action";
+    } else if (action === "update-delay") {
+      values = { date: formData.get("date") as string, updated_at: "NOW()" };
+      table = "Action";
     } else if (action === "update-action-status") {
       values = {
         status: formData.get("status") as string,
