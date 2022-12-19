@@ -51,13 +51,13 @@ export default function Slug() {
             <DocumentCheckIcon />
             <div className="hidden md:block">Ações</div>
           </Link>
-          <Link
+          {/* <Link
             className="button button-link button-icon p-2"
             to={`./?instagram${month ? "&month=" + month : ""}`}
           >
             <HeartIcon />
             <div className="hidden md:block">Instagram</div>
-          </Link>
+          </Link> */}
           <Link
             className="button button-link button-icon p-2"
             to={`./campaigns`}
