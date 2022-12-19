@@ -2725,6 +2725,10 @@ body {
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
+.focus-within\:z-50:focus-within {
+  z-index: 50;
+}
+
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
@@ -2768,6 +2772,15 @@ body {
 
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
+}
+
+.group:focus-within .group-focus-within\:translate-y-0 {
+  --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:focus-within .group-focus-within\:opacity-100 {
+  opacity: 1;
 }
 
 .group:hover .group-hover\:translate-y-0 {

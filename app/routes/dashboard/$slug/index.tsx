@@ -42,7 +42,6 @@ export default function SlugIndex() {
 
   return (
     <>
-      {/* <pre>{JSON.stringify(actions, undefined, 2)}</pre> */}
       <Calendar actions={actions} campaigns={campaigns} grid={true} />
     </>
   );

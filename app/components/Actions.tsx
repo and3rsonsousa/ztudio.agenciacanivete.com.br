@@ -2,9 +2,6 @@ import {
   ArrowSmallRightIcon,
   CheckCircleIcon,
   ChevronRightIcon,
-  DocumentDuplicateIcon as Duplicate,
-  PencilIcon,
-  TrashIcon,
 } from "@heroicons/react/20/solid";
 
 import * as ContextMenu from "@radix-ui/react-context-menu";
@@ -36,11 +33,8 @@ import type { SupportType } from "./InstagramGrid";
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const matches = useMatches();
-  const fetcher = useFetcher();
   const url = matches[1].data.url;
-  const tags: ItemModel[] = matches[1].data.tags;
-  const status: ItemModel[] = matches[1].data.status;
-  const accounts: AccountModel[] = matches[1].data.accounts;
+  const fetcher = useFetcher();
 
   const navigate = useNavigate();
 
@@ -117,7 +111,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                   <>
                     {/* Caso o item não esteja concluído, exibe a opção de concluir mais rápido */}
                     <ContextMenu.Item
-                      onSelect={(event) => {
+                      onSelect={(event: Event) => {
                         fetcher.submit(
                           {
                             action: "update-action-status",
@@ -138,229 +132,9 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                       <div className="flex-shrink-0 flex-grow">Concluído</div>
                     </ContextMenu.Item>
                     <hr className="dropdown-hr" />
+                    <Dropdown action={action} />
                   </>
                 )}
-                {/* Editar */}
-                <ContextMenu.Item asChild>
-                  <Link
-                    to={`/dashboard/${action.account.slug}/action/${action.id}`}
-                    className="dropdown-item item-small flex items-center gap-2"
-                  >
-                    <PencilSquareIcon className="w-4" /> <div>Editar</div>
-                  </Link>
-                </ContextMenu.Item>
-                {/* Duplicar */}
-                <div className="flex">
-                  <ContextMenu.Item
-                    onSelect={() =>
-                      fetcher.submit(
-                        {
-                          action: "duplicate-action",
-                          id: action.id,
-                        },
-                        {
-                          method: "post",
-                          action: "/handle-action",
-                        }
-                      )
-                    }
-                    className="dropdown-item item-small flex items-center gap-2"
-                  >
-                    <DocumentDuplicateIcon className="w-4 shrink-0" />
-                    <div>Duplicar</div>
-                  </ContextMenu.Item>
-                  <ContextMenu.Sub>
-                    <ContextMenu.SubTrigger className="dropdown-item ml-auto py-1.5 pr-4 pl-2">
-                      <ChevronRightIcon className="w-4" />
-                    </ContextMenu.SubTrigger>
-                    <ContextMenu.Portal>
-                      <ContextMenu.SubContent className="dropdown-content">
-                        <ContextMenu.Label className="dropdown-label">
-                          Duplicar para a conta...
-                        </ContextMenu.Label>
-                        {accounts.map((account) => (
-                          <ContextMenu.Item
-                            className="dropdown-item item-small"
-                            key={account.id}
-                            onSelect={(event) => {
-                              fetcher.submit(
-                                {
-                                  action: "duplicate-action",
-                                  id: action.id,
-                                  account: account.id,
-                                },
-                                {
-                                  method: "post",
-                                  action: "/handle-action",
-                                }
-                              );
-                            }}
-                          >
-                            <div>{account.name}</div>
-                          </ContextMenu.Item>
-                        ))}
-                      </ContextMenu.SubContent>
-                    </ContextMenu.Portal>
-                  </ContextMenu.Sub>
-                </div>
-                {/* Excluir */}
-                <ContextMenu.Item
-                  onSelect={(event) => {
-                    fetcher.submit(
-                      {
-                        action: "delete-action",
-                        id: action.id,
-                      },
-                      {
-                        method: "post",
-                        action: "/handle-action",
-                      }
-                    );
-                  }}
-                  className="dropdown-item item-small flex items-center gap-2"
-                >
-                  <Trash className="w-4" /> <div>Excluir</div>
-                </ContextMenu.Item>
-                {/* Adiar */}
-                <ContextMenu.Sub>
-                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    <ClockIcon className="w-4" />
-                    <div>Adiar</div>
-                    <ChevronRightIcon className="ml-auto w-4" />
-                  </ContextMenu.SubTrigger>
-                  <ContextMenu.Portal>
-                    <ContextMenu.SubContent className="dropdown-content w-36">
-                      {[
-                        {
-                          id: 1,
-                          name: "30 minutos",
-                          value: 30,
-                          unit: "minute",
-                        },
-                        { id: 3, name: "3 horas", value: 3, unit: "hour" },
-                        { id: 4, name: "9 horas", value: 9, unit: "hour" },
-                        { id: 5, name: "1 dia", value: 1, unit: "day" },
-                        { id: 6, name: "3 dias", value: 3, unit: "day" },
-                        { id: 7, name: "1 semana", value: 1, unit: "week" },
-                        { id: 7, name: "Próximo mês", value: 1, unit: "month" },
-                      ].map((delay) => (
-                        <ContextMenu.Item
-                          key={delay.id}
-                          onSelect={(event) => {
-                            fetcher.submit(
-                              {
-                                action: "update-delay",
-                                id: action.id,
-                                date: dayjs(action.date)
-                                  .add(
-                                    delay.value,
-                                    delay.unit as dayjs.ManipulateType
-                                  )
-                                  .format("YYYY-MM-DD[T]HH:mm"),
-                              },
-                              {
-                                method: "post",
-                                action: "/handle-action",
-                              }
-                            );
-                          }}
-                          className="dropdown-item item-small"
-                        >
-                          <div>{delay.name}</div>
-                        </ContextMenu.Item>
-                      ))}
-                    </ContextMenu.SubContent>
-                  </ContextMenu.Portal>
-                </ContextMenu.Sub>
-                <hr className="dropdown-hr" />
-                {/* Tags */}
-                <ContextMenu.Sub>
-                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    {/* <TagIcon className="w-4" /> */}
-                    <div
-                      className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
-                    ></div>
-                    <div>{action.tag.name}</div>
-                    <ChevronRightIcon className="ml-auto w-4" />
-                  </ContextMenu.SubTrigger>
-                  <ContextMenu.Portal>
-                    <ContextMenu.SubContent className="dropdown-content w-36">
-                      {tags.map((tag) => (
-                        <ContextMenu.Item
-                          key={tag.id}
-                          onSelect={(event) => {
-                            fetcher.submit(
-                              {
-                                action: "update-tag",
-                                id: action.id,
-                                tag: tag.id,
-                              },
-                              {
-                                method: "post",
-                                action: "/handle-action",
-                              }
-                            );
-                          }}
-                          className="dropdown-item item-small flex items-center gap-2"
-                        >
-                          <div
-                            className={`h-2 w-2 rounded-full bg-${tag.slug}`}
-                          ></div>
-                          <div className="flex-shrink-0 flex-grow">
-                            {tag.name}
-                          </div>
-                          {action.tag.id === tag.id && (
-                            <CheckCircleIcon className="w-4" />
-                          )}
-                        </ContextMenu.Item>
-                      ))}
-                    </ContextMenu.SubContent>
-                  </ContextMenu.Portal>
-                </ContextMenu.Sub>
-                {/* Status */}
-                <ContextMenu.Sub>
-                  <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-                    {/* <CheckBadgeIcon className="w-4" /> */}
-                    <div
-                      className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
-                    ></div>
-                    <div>{action.status.name}</div>
-                    <ChevronRightIcon className="ml-auto w-4" />
-                  </ContextMenu.SubTrigger>
-                  <ContextMenu.Portal>
-                    <ContextMenu.SubContent className="dropdown-content w-36">
-                      {status.map((stat) => (
-                        <ContextMenu.Item
-                          key={stat.id}
-                          onSelect={(event) => {
-                            fetcher.submit(
-                              {
-                                action: "update-action-status",
-                                id: action.id,
-                                status: stat.id,
-                              },
-                              {
-                                method: "post",
-                                action: "/handle-action",
-                              }
-                            );
-                          }}
-                          className="dropdown-item item-small flex items-center gap-2"
-                        >
-                          <div
-                            className={`h-2 w-2 rounded-full bg-${stat.slug}`}
-                          ></div>
-                          <div className="flex-shrink-0 flex-grow">
-                            {stat.name}
-                          </div>
-                          {action.status.id === stat.id && (
-                            <CheckCircleIcon className="w-4" />
-                          )}
-                        </ContextMenu.Item>
-                      ))}
-                    </ContextMenu.SubContent>
-                  </ContextMenu.Portal>
-                </ContextMenu.Sub>
               </motion.div>
             </ContextMenu.Content>
           </ContextMenu.Portal>
@@ -380,103 +154,70 @@ export const ActionMedium = ({
   hideAccount?: boolean;
 }) => {
   const matches = useMatches();
-  const fetcher = useFetcher();
   const acccounts: AccountModel[] = matches[1].data.accounts;
   const account = acccounts.filter(
     (account) => account.id === action.account.id
   )[0];
 
-  const navigate = useNavigate();
   const date = dayjs(action.date);
 
   return (
-    <div
-      className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4  dark:bg-gray-800  border-${action.status.slug}`}
-    >
-      <div className="overflow-hidden">
-        <div className="text-sm font-normal dark:text-gray-300">
-          {action.name}
-        </div>
-        {action.campaign && (
-          <Link
-            to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
-            className="text-xx mb-2 flex items-center hover:underline"
-          >
-            <ArrowSmallRightIcon className="w-4" />
-            <span>{action.campaign.name}</span>
-          </Link>
-        )}
-        {action.description ? (
-          <div className="text-xx mb-2 line-clamp-3">{action.description}</div>
-        ) : null}
-        <div className="text-xx flex gap-4 overflow-hidden opacity-75">
-          <div className="whitespace-nowrap">
-            {showDateAndTime
-              ? date.format(
-                  "D/M/YY [às] H[h]".concat(
-                    date.format("mm") !== "00" ? "mm" : ""
-                  )
-                )
-              : date.format(
-                  "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
-                )}
-          </div>
-          {!hideAccount && (
-            <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
-              {account.name}
+    <ContextMenu.Root>
+      <ContextMenu.Trigger>
+        <div
+          className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4  focus-within:z-50 dark:bg-gray-800 border-${action.status.slug}`}
+        >
+          <div className="overflow-hidden">
+            <div className="text-sm font-normal dark:text-gray-300">
+              {action.name}
             </div>
-          )}
-          <div className="flex items-center gap-1">
-            <div className={`h-1 w-1 rounded-full bg-${action.tag.slug}`}></div>
-            <div>{action.tag.name}</div>
+            {action.campaign && (
+              <Link
+                to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
+                className="text-xx mb-2 flex items-center hover:underline"
+              >
+                <ArrowSmallRightIcon className="w-4" />
+                <span>{action.campaign.name}</span>
+              </Link>
+            )}
+            {action.description ? (
+              <div className="text-xx mb-2 line-clamp-3">
+                {action.description}
+              </div>
+            ) : null}
+            <div className="text-xx flex gap-4 overflow-hidden opacity-75">
+              <div className="whitespace-nowrap">
+                {showDateAndTime
+                  ? date.format(
+                      "D/M/YY [às] H[h]".concat(
+                        date.format("mm") !== "00" ? "mm" : ""
+                      )
+                    )
+                  : date.format(
+                      "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
+                    )}
+              </div>
+              {!hideAccount && (
+                <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+                  {account.name}
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                <div
+                  className={`h-1 w-1 rounded-full bg-${action.tag.slug}`}
+                ></div>
+                <div>{action.tag.name}</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="absolute -top-2 -right-2 flex translate-y-4  justify-between gap-2 rounded bg-gray-800 p-2 text-gray-400 opacity-0 transition group-hover:translate-y-0  group-hover:opacity-100">
-        <button
-          title="Editar ação"
-          onClick={() => {
-            navigate(`/dashboard/${action.account.slug}/action/${action.id}`);
-          }}
-        >
-          <PencilIcon className="w-3 hover:text-gray-300" />
-        </button>
-        <button
-          title="Duplicar ação"
-          onClick={() => {
-            fetcher.submit(
-              {
-                action: "duplicate-action",
-                id: action.id,
-              },
-              {
-                method: "post",
-                action: "/handle-action",
-              }
-            );
-          }}
-        >
-          <Duplicate className="w-3 hover:text-gray-300" />
-        </button>
-        <button
-          title="Excluir ação"
-          onClick={() => {
-            fetcher.submit(
-              {
-                action: "delete-action",
-                id: action.id,
-              },
-              {
-                method: "post",
-                action: "/handle-action",
-              }
-            );
-          }}
-        >
-          <TrashIcon className="w-3 hover:text-gray-300" />
-        </button>
-      </div>
-    </div>
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <ContextMenu.Content className="dropdown-content mt-4 w-36">
+          <Dropdown action={action} />
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
   );
 };
 
@@ -563,5 +304,228 @@ export const Actions = ({ actions }: { actions: ActionModel[] }) => {
         </Exclamation>
       )}
     </div>
+  );
+};
+
+const Dropdown = ({ action }: { action: ActionModel }) => {
+  const fetcher = useFetcher();
+  const matches = useMatches();
+  const tags: ItemModel[] = matches[1].data.tags;
+  const status: ItemModel[] = matches[1].data.status;
+  const accounts: AccountModel[] = matches[1].data.accounts;
+
+  return (
+    <>
+      {/* Editar */}
+      <ContextMenu.Item asChild>
+        <Link
+          to={`/dashboard/${action.account.slug}/action/${action.id}`}
+          className="dropdown-item item-small flex items-center gap-2"
+        >
+          <PencilSquareIcon className="w-4" /> <div>Editar</div>
+        </Link>
+      </ContextMenu.Item>
+      {/* Duplicar */}
+      <div className="flex">
+        <ContextMenu.Item
+          onSelect={() =>
+            fetcher.submit(
+              {
+                action: "duplicate-action",
+                id: action.id,
+              },
+              {
+                method: "post",
+                action: "/handle-action",
+              }
+            )
+          }
+          className="dropdown-item item-small flex items-center gap-2"
+        >
+          <DocumentDuplicateIcon className="w-4 shrink-0" />
+          <div>Duplicar</div>
+        </ContextMenu.Item>
+        <ContextMenu.Sub>
+          <ContextMenu.SubTrigger className="dropdown-item ml-auto py-1.5 pr-4 pl-2">
+            <ChevronRightIcon className="w-4" />
+          </ContextMenu.SubTrigger>
+          <ContextMenu.Portal>
+            <ContextMenu.SubContent className="dropdown-content">
+              <ContextMenu.Label className="dropdown-label">
+                Duplicar para a conta...
+              </ContextMenu.Label>
+              {accounts.map((account) => (
+                <ContextMenu.Item
+                  className="dropdown-item item-small"
+                  key={account.id}
+                  onSelect={(event: Event) => {
+                    fetcher.submit(
+                      {
+                        action: "duplicate-action",
+                        id: action.id,
+                        account: account.id,
+                      },
+                      {
+                        method: "post",
+                        action: "/handle-action",
+                      }
+                    );
+                  }}
+                >
+                  <div>{account.name}</div>
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.SubContent>
+          </ContextMenu.Portal>
+        </ContextMenu.Sub>
+      </div>
+      {/* Excluir */}
+      <ContextMenu.Item
+        onSelect={(event: Event) => {
+          fetcher.submit(
+            {
+              action: "delete-action",
+              id: action.id,
+            },
+            {
+              method: "post",
+              action: "/handle-action",
+            }
+          );
+        }}
+        className="dropdown-item item-small flex items-center gap-2"
+      >
+        <Trash className="w-4" /> <div>Excluir</div>
+      </ContextMenu.Item>
+      {/* Adiar */}
+      <ContextMenu.Sub>
+        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+          <ClockIcon className="w-4" />
+          <div>Adiar</div>
+          <ChevronRightIcon className="ml-auto w-4" />
+        </ContextMenu.SubTrigger>
+        <ContextMenu.Portal>
+          <ContextMenu.SubContent className="dropdown-content w-36">
+            {[
+              {
+                id: 1,
+                name: "30 minutos",
+                value: 30,
+                unit: "minute",
+              },
+              { id: 3, name: "3 horas", value: 3, unit: "hour" },
+              { id: 4, name: "9 horas", value: 9, unit: "hour" },
+              { id: 5, name: "1 dia", value: 1, unit: "day" },
+              { id: 6, name: "3 dias", value: 3, unit: "day" },
+              { id: 7, name: "1 semana", value: 1, unit: "week" },
+              { id: 7, name: "Próximo mês", value: 1, unit: "month" },
+            ].map((delay) => (
+              <ContextMenu.Item
+                key={delay.id}
+                onSelect={(event: Event) => {
+                  fetcher.submit(
+                    {
+                      action: "update-delay",
+                      id: action.id,
+                      date: dayjs(action.date)
+                        .add(delay.value, delay.unit as dayjs.ManipulateType)
+                        .format("YYYY-MM-DD[T]HH:mm"),
+                    },
+                    {
+                      method: "post",
+                      action: "/handle-action",
+                    }
+                  );
+                }}
+                className="dropdown-item item-small"
+              >
+                <div>{delay.name}</div>
+              </ContextMenu.Item>
+            ))}
+          </ContextMenu.SubContent>
+        </ContextMenu.Portal>
+      </ContextMenu.Sub>
+      <hr className="dropdown-hr" />
+      {/* Tags */}
+      <ContextMenu.Sub>
+        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+          {/* <TagIcon className="w-4" /> */}
+          <div
+            className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
+          ></div>
+          <div>{action.tag.name}</div>
+          <ChevronRightIcon className="ml-auto w-4" />
+        </ContextMenu.SubTrigger>
+        <ContextMenu.Portal>
+          <ContextMenu.SubContent className="dropdown-content w-36">
+            {tags.map((tag) => (
+              <ContextMenu.Item
+                key={tag.id}
+                onSelect={(event: Event) => {
+                  fetcher.submit(
+                    {
+                      action: "update-tag",
+                      id: action.id,
+                      tag: tag.id,
+                    },
+                    {
+                      method: "post",
+                      action: "/handle-action",
+                    }
+                  );
+                }}
+                className="dropdown-item item-small flex items-center gap-2"
+              >
+                <div className={`h-2 w-2 rounded-full bg-${tag.slug}`}></div>
+                <div className="flex-shrink-0 flex-grow">{tag.name}</div>
+                {action.tag.id === tag.id && (
+                  <CheckCircleIcon className="w-4" />
+                )}
+              </ContextMenu.Item>
+            ))}
+          </ContextMenu.SubContent>
+        </ContextMenu.Portal>
+      </ContextMenu.Sub>
+      {/* Status */}
+      <ContextMenu.Sub>
+        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+          {/* <CheckBadgeIcon className="w-4" /> */}
+          <div
+            className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
+          ></div>
+          <div>{action.status.name}</div>
+          <ChevronRightIcon className="ml-auto w-4" />
+        </ContextMenu.SubTrigger>
+        <ContextMenu.Portal>
+          <ContextMenu.SubContent className="dropdown-content w-36">
+            {status.map((stat) => (
+              <ContextMenu.Item
+                key={stat.id}
+                onSelect={(event: Event) => {
+                  fetcher.submit(
+                    {
+                      action: "update-action-status",
+                      id: action.id,
+                      status: stat.id,
+                    },
+                    {
+                      method: "post",
+                      action: "/handle-action",
+                    }
+                  );
+                }}
+                className="dropdown-item item-small flex items-center gap-2"
+              >
+                <div className={`h-2 w-2 rounded-full bg-${stat.slug}`}></div>
+                <div className="flex-shrink-0 flex-grow">{stat.name}</div>
+                {action.status.id === stat.id && (
+                  <CheckCircleIcon className="w-4" />
+                )}
+              </ContextMenu.Item>
+            ))}
+          </ContextMenu.SubContent>
+        </ContextMenu.Portal>
+      </ContextMenu.Sub>
+    </>
   );
 };

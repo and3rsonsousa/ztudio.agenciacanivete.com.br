@@ -2,7 +2,6 @@ import {
   CalendarDaysIcon,
   DocumentCheckIcon,
   FolderIcon,
-  HeartIcon,
 } from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 
@@ -51,13 +50,6 @@ export default function Slug() {
             <DocumentCheckIcon />
             <div className="hidden md:block">Ações</div>
           </Link>
-          {/* <Link
-            className="button button-link button-icon p-2"
-            to={`./?instagram${month ? "&month=" + month : ""}`}
-          >
-            <HeartIcon />
-            <div className="hidden md:block">Instagram</div>
-          </Link> */}
           <Link
             className="button button-link button-icon p-2"
             to={`./campaigns`}
