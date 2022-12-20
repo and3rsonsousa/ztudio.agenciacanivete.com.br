@@ -271,10 +271,10 @@ body {
 }
 
 .bg-task {
-  @apply bg-task-500 text-white dark:bg-task-700;
+  @apply bg-task-500 text-white dark:bg-task-600;
 }
 .bg-task-hover {
-  @apply hover:bg-task-500 dark:hover:bg-task-600;
+  @apply hover:bg-task-400 dark:hover:bg-task-500;
 }
 .border-task {
   @apply border-task-500;
@@ -381,6 +381,10 @@ body {
 
 .action-line {
   @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded p-1 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
+}
+
+.action-medium {
+  @apply relative mb-2 flex flex-nowrap justify-between gap-4 rounded-xl bg-gray-50 p-4  ring-brand ring-offset-2 ring-offset-white transition hover:bg-gray-100 focus:ring-2 dark:bg-gray-800 dark:ring-offset-gray-1000 dark:hover:bg-gray-700;
 }
 
 .dragover {

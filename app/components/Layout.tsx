@@ -139,8 +139,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
                 <div>Pesquisar</div>
-
-                <div className="font-semibold"> + K</div>
               </div>
               <div className="ml-auto">
                 <MagnifyingGlassIcon className="w-4" />

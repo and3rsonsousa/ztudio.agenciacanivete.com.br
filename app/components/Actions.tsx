@@ -5,6 +5,8 @@ import {
 } from "@heroicons/react/20/solid";
 
 import * as ContextMenu from "@radix-ui/react-context-menu";
+
+import type { FetcherWithComponents } from "@remix-run/react";
 import {
   Link,
   useFetcher,
@@ -132,9 +134,10 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                       <div className="flex-shrink-0 flex-grow">Concluído</div>
                     </ContextMenu.Item>
                     <hr className="dropdown-hr" />
-                    <Dropdown action={action} />
                   </>
                 )}
+
+                <ContextMenuItems action={action} fetcher={fetcher} />
               </motion.div>
             </ContextMenu.Content>
           </ContextMenu.Portal>
@@ -153,6 +156,7 @@ export const ActionMedium = ({
   showDateAndTime?: boolean;
   hideAccount?: boolean;
 }) => {
+  const fetcher = useFetcher();
   const matches = useMatches();
   const acccounts: AccountModel[] = matches[1].data.accounts;
   const account = acccounts.filter(
@@ -164,28 +168,26 @@ export const ActionMedium = ({
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <div
-          className={`action-medium group relative mb-2 flex flex-nowrap justify-between gap-4 rounded border-l-4 bg-gray-50 p-4  focus-within:z-50 dark:bg-gray-800 border-${action.status.slug}`}
-        >
+        <div tabIndex={0} className={`action-medium group `}>
           <div className="overflow-hidden">
-            <div className="text-sm font-normal dark:text-gray-300">
-              {action.name}
-            </div>
-            {action.campaign && (
-              <Link
-                to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
-                className="text-xx mb-2 flex items-center hover:underline"
-              >
-                <ArrowSmallRightIcon className="w-4" />
-                <span>{action.campaign.name}</span>
-              </Link>
-            )}
-            {action.description ? (
-              <div className="text-xx mb-2 line-clamp-3">
-                {action.description}
+            <div className="mb-1">
+              <div className="text-sm font-normal dark:text-gray-300">
+                {action.name}
               </div>
+              {action.campaign && (
+                <Link
+                  to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
+                  className="text-xx mb-2 flex items-center hover:underline"
+                >
+                  <ArrowSmallRightIcon className="w-4" />
+                  <span>{action.campaign.name}</span>
+                </Link>
+              )}
+            </div>
+            {action.description?.trim().length ? (
+              <div className="text-xx line-clamp-3">{action.description}</div>
             ) : null}
-            <div className="text-xx flex gap-4 overflow-hidden opacity-75">
+            <div className="text-xx mt-1 flex gap-4 overflow-hidden">
               <div className="whitespace-nowrap">
                 {showDateAndTime
                   ? date.format(
@@ -204,9 +206,15 @@ export const ActionMedium = ({
               )}
               <div className="flex items-center gap-1">
                 <div
-                  className={`h-1 w-1 rounded-full bg-${action.tag.slug}`}
-                ></div>
-                <div>{action.tag.name}</div>
+                  className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
+                >
+                  {action.tag.name.toLowerCase().replace(/[aeiou]/g, "")}
+                </div>
+                <div
+                  className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
+                >
+                  {action.status.name.toLowerCase().replace(/[aeiou]/g, "")}
+                </div>
               </div>
             </div>
           </div>
@@ -214,7 +222,7 @@ export const ActionMedium = ({
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content className="dropdown-content mt-4 w-36">
-          <Dropdown action={action} />
+          <ContextMenuItems action={action} fetcher={fetcher} />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>
@@ -307,8 +315,13 @@ export const Actions = ({ actions }: { actions: ActionModel[] }) => {
   );
 };
 
-const Dropdown = ({ action }: { action: ActionModel }) => {
-  const fetcher = useFetcher();
+const ContextMenuItems = ({
+  action,
+  fetcher,
+}: {
+  action: ActionModel;
+  fetcher: FetcherWithComponents<any>;
+}) => {
   const matches = useMatches();
   const tags: ItemModel[] = matches[1].data.tags;
   const status: ItemModel[] = matches[1].data.status;
@@ -328,7 +341,7 @@ const Dropdown = ({ action }: { action: ActionModel }) => {
       {/* Duplicar */}
       <div className="flex">
         <ContextMenu.Item
-          onSelect={() =>
+          onSelect={() => {
             fetcher.submit(
               {
                 action: "duplicate-action",
@@ -338,8 +351,8 @@ const Dropdown = ({ action }: { action: ActionModel }) => {
                 method: "post",
                 action: "/handle-action",
               }
-            )
-          }
+            );
+          }}
           className="dropdown-item item-small flex items-center gap-2"
         >
           <DocumentDuplicateIcon className="w-4 shrink-0" />
@@ -418,7 +431,7 @@ const Dropdown = ({ action }: { action: ActionModel }) => {
               { id: 5, name: "1 dia", value: 1, unit: "day" },
               { id: 6, name: "3 dias", value: 3, unit: "day" },
               { id: 7, name: "1 semana", value: 1, unit: "week" },
-              { id: 7, name: "Próximo mês", value: 1, unit: "month" },
+              { id: 8, name: "Próximo mês", value: 1, unit: "month" },
             ].map((delay) => (
               <ContextMenu.Item
                 key={delay.id}
