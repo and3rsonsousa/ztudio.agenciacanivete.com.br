@@ -270,8 +270,8 @@ export const ActionGrid = ({
       className={`text-xx flex aspect-square flex-col justify-between border-b p-2 text-center leading-tight dark:border-gray-800 ${
         (action as ActionModel).status.id ===
         "a448e17d-05ba-4ad0-9990-773f9384d15e"
-          ? " bg-gray-50 text-gray-400 dark:bg-gray-1000 dark:text-gray-600"
-          : " bg-white dark:bg-gray-900"
+          ? " bg-gray-50 text-gray-400 dark:bg-gray-1000 dark:text-gray-400"
+          : " bg-white dark:bg-gray-900 dark:text-gray-200"
       } ${index + (1 % 3) === 0 ? "" : "border-r"}`}
     >
       <div></div>
