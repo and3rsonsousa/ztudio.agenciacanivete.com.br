@@ -119,11 +119,11 @@ export default function Day({
                       dayjs(campaign.date_start).format("YYYY-MM-DD")
                         ? // Caso o último dia esteja na mesma linha
                           dayjs(campaign.date_end).diff(day.date, "days") < 7
-                          ? " ml-1 rounded"
-                          : " ml-1 rounded-l"
+                          ? " ml-1 rounded-md"
+                          : " ml-1 rounded-l-md"
                         : // Caso não seja o primeiro dia, mas representa o último
                         dayjs(campaign.date_end).diff(day.date, "days") < 7
-                        ? " rounded-r "
+                        ? " rounded-r-md "
                         : ""
                     }`}
                     style={{

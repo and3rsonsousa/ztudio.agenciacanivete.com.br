@@ -380,7 +380,7 @@ body {
 }
 
 .action-line {
-  @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded p-1 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
+  @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded-md p-1 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
 }
 
 .action-medium {
