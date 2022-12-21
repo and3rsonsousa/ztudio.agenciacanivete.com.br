@@ -60,3 +60,10 @@ export function actionsByPriority(actions: ActionModel[]) {
     a.status.priority > b.status.priority ? -1 : 1
   );
 }
+
+export function shortWord(word: string) {
+  return `${word[0]}${word
+    .substring(1)
+    .toLowerCase()
+    .replace(/[aeiouáí]/g, "")}`;
+}

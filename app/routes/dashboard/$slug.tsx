@@ -33,7 +33,7 @@ export default function Slug() {
 
   return (
     <div className="flex h-screen flex-col">
-      <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
+      <div className="flex items-center justify-between p-4">
         <PageHeader link={`/dashboard/${account.slug}`}>
           {account.name}
         </PageHeader>

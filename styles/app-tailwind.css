@@ -165,11 +165,11 @@ body {
 }
 
 .calendar-weekday {
-  @apply px-2 py-4 text-center text-xs font-semibold tracking-wide text-gray-400 dark:text-gray-600;
+  @apply px-2 py-4 text-center text-xs font-semibold tracking-wide;
 }
 
 .calendar-day {
-  @apply border-b py-2 text-center dark:border-gray-800  lg:text-left;
+  @apply py-2 text-center lg:text-left;
 }
 .calendar-day.not-this-month .day-button {
   @apply text-gray-300 dark:text-gray-700;
@@ -196,11 +196,11 @@ body {
   @apply top-1/4;
 }
 .dialog-overlay {
-  @apply fixed inset-0 z-40 bg-gray-800/25 backdrop-blur-lg;
+  @apply fixed inset-0 z-40 bg-gray-700/50 backdrop-blur-lg;
 }
 
 .dialog-content {
-  @apply z-50  rounded-xl border bg-white text-gray-900 shadow-xl focus:outline-none dark:border-gray-700 dark:bg-gray-1000 dark:text-gray-200;
+  @apply z-50  rounded-xl  bg-white text-gray-900 shadow-xl focus:outline-none  dark:bg-gray-1000 dark:text-gray-200;
 }
 
 .field-checkbox {
@@ -230,121 +230,121 @@ body {
   @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
 }
 
-.bg-post {
-  @apply bg-post-500 text-white dark:bg-post-700;
+.bg-feed {
+  @apply bg-feed-500 text-white dark:bg-feed-600;
 }
-.bg-post-hover {
-  @apply hover:bg-post-500 dark:hover:bg-post-600;
+.bg-feed-hover {
+  @apply hover:bg-feed-600 dark:hover:bg-feed-700;
 }
-.border-post {
-  @apply border-post-500;
+.border-feed {
+  @apply border-feed-500;
 }
 
 .bg-reels {
-  @apply bg-reels-500 text-white dark:bg-reels-700;
+  @apply bg-reels-500 text-white dark:bg-reels-600;
 }
 .bg-reels-hover {
-  @apply hover:bg-reels-500 dark:hover:bg-reels-600;
+  @apply hover:bg-reels-600 dark:hover:bg-reels-700;
 }
 .border-reels {
   @apply border-reels-500;
 }
 
 .bg-meeting {
-  @apply bg-meeting-500 text-white dark:bg-meeting-700;
+  @apply bg-meeting-500 text-white dark:bg-meeting-600;
 }
 .bg-meeting-hover {
-  @apply hover:bg-meeting-500 dark:hover:bg-meeting-600;
+  @apply hover:bg-meeting-600 dark:hover:bg-meeting-700;
 }
 .border-meeting {
   @apply border-meeting-500;
 }
 
 .bg-stories {
-  @apply bg-stories-500 text-white dark:bg-stories-700;
+  @apply bg-stories-500 text-white;
 }
 .bg-stories-hover {
-  @apply hover:bg-stories-500 dark:hover:bg-stories-600;
+  @apply hover:bg-stories-600;
 }
 .border-stories {
   @apply border-stories-500;
 }
 
 .bg-task {
-  @apply bg-task-500 text-white dark:bg-task-600;
+  @apply bg-task-500 text-white;
 }
 .bg-task-hover {
-  @apply hover:bg-task-400 dark:hover:bg-task-500;
+  @apply hover:bg-task-600;
 }
 .border-task {
   @apply border-task-500;
 }
 
 .bg-tiktok {
-  @apply bg-tiktok-500 text-white dark:bg-tiktok-700;
+  @apply bg-tiktok-500 text-white;
 }
 .bg-tiktok-hover {
-  @apply hover:bg-tiktok-500 dark:hover:bg-tiktok-600;
+  @apply hover:bg-tiktok-600;
 }
 .border-tiktok {
   @apply border-tiktok-500;
 }
 
 .bg-idea {
-  @apply bg-idea-500 text-white dark:bg-idea-700;
+  @apply bg-idea-500 text-white dark:bg-idea-600;
 }
 .bg-idea-hover {
   @apply hover:bg-idea-600 dark:hover:bg-idea-700;
 }
 .border-idea {
-  @apply border-idea-400;
+  @apply border-idea-500;
 }
 
 .bg-do {
-  @apply bg-do-400 text-white dark:bg-do-700;
+  @apply bg-do-400 text-white dark:bg-do-500;
 }
 .bg-do-hover {
   @apply hover:bg-do-500 dark:hover:bg-do-600;
 }
 .border-do {
-  @apply border-do-500;
+  @apply border-do-400;
 }
 
 .bg-doing {
-  @apply bg-doing-500 text-white dark:bg-doing-700;
+  @apply bg-doing-500 text-white dark:bg-doing-600;
 }
 .bg-doing-hover {
-  @apply hover:bg-doing-600 dark:hover:bg-doing-600;
+  @apply hover:bg-doing-600 dark:hover:bg-doing-700;
 }
 .border-doing {
   @apply border-doing-500;
 }
 
 .bg-review {
-  @apply bg-review-500 text-white dark:bg-review-800;
+  @apply bg-review-500 text-white;
 }
 .bg-review-hover {
-  @apply hover:bg-review-600 dark:hover:bg-review-700;
+  @apply hover:bg-review-600;
 }
 .border-review {
   @apply border-review-500;
 }
 
 .bg-done {
-  @apply bg-done-500 text-white dark:bg-done-700;
+  @apply bg-done-500 text-white;
 }
 .bg-done-hover {
-  @apply hover:bg-done-600 dark:hover:bg-done-600;
+  @apply hover:bg-done-600;
 }
 .border-done {
   @apply border-done-500;
 }
 
 .bg-accomplished {
-  @apply bg-accomplished-500 text-white dark:bg-accomplished-700;
+  @apply bg-accomplished-500 text-white dark:bg-accomplished-600;
 }
 .bg-accomplished-hover {
-  @apply hover:bg-accomplished-600 dark:hover:bg-accomplished-600;
+  @apply hover:bg-accomplished-600 dark:hover:bg-accomplished-700;
 }
 .border-accomplished {
   @apply border-accomplished-500;
@@ -380,11 +380,11 @@ body {
 }
 
 .action-line {
-  @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded-md p-1 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
+  @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded-md py-1 px-2 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
 }
 
 .action-medium {
-  @apply relative mb-2 flex flex-nowrap justify-between gap-4 rounded-xl bg-gray-50 p-4  ring-brand ring-offset-2 ring-offset-white transition hover:bg-gray-100 focus:ring-2 dark:bg-gray-800 dark:ring-offset-gray-1000 dark:hover:bg-gray-800;
+  @apply relative mb-2 flex flex-nowrap justify-between gap-4 rounded-xl bg-gray-100 p-4  ring-brand ring-offset-2 ring-offset-white transition hover:bg-gray-100 focus:ring-2 dark:bg-gray-800 dark:ring-offset-gray-1000 dark:hover:bg-gray-800;
 }
 
 .dragover {

@@ -88,7 +88,7 @@ export default function Calendar({
   return (
     <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
       {/* header */}
-      <div className="flex items-center justify-between border-b dark:border-gray-800">
+      <div className="flex items-center justify-between ">
         <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
           <h4 className="mb-0 p-4 first-letter:capitalize">
             {showYearView
@@ -141,8 +141,8 @@ export default function Calendar({
         <div className="h-full overflow-hidden lg:flex">
           {/* Calendar  */}
 
-          <div className="flex w-full flex-col dark:border-gray-800 lg:border-r">
-            <div className="grid grid-cols-7 border-b dark:border-gray-800">
+          <div className="flex w-full flex-col ">
+            <div className="grid grid-cols-7 rounded-xl bg-gray-100 dark:bg-gray-900">
               {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
                 (day, index) => (
                   <div key={index} className="calendar-weekday">

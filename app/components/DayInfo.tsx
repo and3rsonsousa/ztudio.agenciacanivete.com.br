@@ -14,13 +14,13 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
   return (
     <div
-      className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden border-t pt-16 lg:mt-0 ${
+      className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden pt-16 lg:mt-0 ${
         view ? "lg:w-80" : "lg:w-12"
-      } lg:border-0 lg:pt-0`}
+      } lg:pt-0`}
     >
       {day !== undefined ? (
         <>
-          <div className="border-b p-4 dark:border-gray-800">
+          <div className="px-4 py-2">
             {/* Header */}
             <div className="flex items-center justify-between">
               {view && (

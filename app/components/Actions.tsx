@@ -31,6 +31,7 @@ import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
+import { shortWord } from "~/lib/functions";
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -168,7 +169,16 @@ export const ActionMedium = ({
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <div tabIndex={0} className={`action-medium group `}>
+        <div tabIndex={0} className={`action-medium group`}>
+          {/* <div className="absolute top-1/2 -left-1 -translate-y-1/2">
+            <div
+              className={` h-6 w-1 rounded-tl-full bg-${action.status.slug}  `}
+            ></div>
+            <div
+              className={` h-6 w-1 rounded-bl-full bg-${action.tag.slug}  `}
+            ></div>
+          </div> */}
+
           <div className="overflow-hidden">
             <div className="mb-1">
               <div className="text-sm font-normal dark:text-gray-300">
@@ -208,12 +218,12 @@ export const ActionMedium = ({
                 <div
                   className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
                 >
-                  {action.tag.name.toLowerCase().replace(/[aeiou]/g, "")}
+                  {shortWord(action.tag.name)}
                 </div>
                 <div
                   className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
                 >
-                  {action.status.name.toLowerCase().replace(/[aeiou]/g, "")}
+                  {shortWord(action.status.name)}
                 </div>
               </div>
             </div>
