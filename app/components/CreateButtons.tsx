@@ -65,7 +65,9 @@ export default function CreateButtons({
       )}
       {action && (
         <div
-          className={`${showSmallAction ? "fixed right-4 bottom-4" : "ml-4"} `}
+          className={`${
+            showSmallAction ? "fixed right-4 bottom-4 z-10" : "ml-4"
+          } `}
         >
           <Button
             primary

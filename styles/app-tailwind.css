@@ -190,13 +190,13 @@ body {
   display: none;
 }
 .dialog {
-  @apply fixed top-1/2 left-1/2 z-40 -translate-x-1/2 -translate-y-1/2;
+  @apply fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2;
 }
 .dialog-search {
   @apply top-1/4;
 }
 .dialog-overlay {
-  @apply fixed inset-0 z-40 bg-gray-700/50 backdrop-blur-lg;
+  @apply fixed inset-0 z-50 bg-gray-700/50 backdrop-blur-lg;
 }
 
 .dialog-content {
