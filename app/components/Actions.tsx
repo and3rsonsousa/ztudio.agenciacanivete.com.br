@@ -242,9 +242,11 @@ export const ActionMedium = ({
 export const ActionGrid = ({
   action,
   index,
+  total,
 }: {
   action: ActionModel | SupportType;
   index: number;
+  total: number;
 }) => {
   const context: {
     date: {
@@ -255,10 +257,13 @@ export const ActionGrid = ({
       setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
+  const fetcher = useFetcher();
 
   return action.name === "support" ? (
     <div
-      className={`grid aspect-square place-items-center border-b border-r bg-gray-100 text-center dark:border-gray-800  dark:bg-gray-1000`}
+      className={`grid aspect-square place-items-center border border-gray-1000 bg-gray-100 text-center dark:bg-gray-700 ${
+        index === 0 ? "rounded-tl-xl" : ""
+      }`}
     >
       <div>
         <Button
@@ -276,18 +281,39 @@ export const ActionGrid = ({
       </div>
     </div>
   ) : (
-    <div
-      className={`text-xx flex aspect-square flex-col justify-between border-b p-2 text-center leading-tight dark:border-gray-800 ${
-        (action as ActionModel).status.id ===
-        "a448e17d-05ba-4ad0-9990-773f9384d15e"
-          ? " bg-gray-50 text-gray-400 dark:bg-gray-1000 dark:text-gray-400"
-          : " bg-white dark:bg-gray-900 dark:text-gray-200"
-      } ${index + (1 % 3) === 0 ? "" : "border-r"}`}
-    >
-      <div></div>
-      <div>{action.name}</div>
-      <div>{dayjs(action.date).format("DD/MM")}</div>
-    </div>
+    <ContextMenu.Root>
+      <ContextMenu.Trigger>
+        <div
+          className={`text-xx flex aspect-square flex-col justify-between border border-gray-1000 p-2 text-center leading-tight  ${
+            (action as ActionModel).status.id ===
+            "a448e17d-05ba-4ad0-9990-773f9384d15e"
+              ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-400"
+              : " bg-white dark:bg-gray-800 dark:text-gray-200"
+          } 
+          ${index === 0 ? "rounded-tl-xl" : ""} 
+          ${
+            (total >= 3 && index === 2) || (total < 3 && index + 1 === total)
+              ? "rounded-tr-xl"
+              : ""
+          } 
+          ${
+            total - index === 3 || (total < 3 && index === 0)
+              ? "rounded-bl-xl"
+              : ""
+          } 
+          ${total - index === 1 ? "rounded-br-xl" : ""}`}
+        >
+          <div></div>
+          <div>{action.name}</div>
+          <div>{dayjs(action.date).format("DD/MM")}</div>
+        </div>
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <ContextMenu.Content className="dropdown-content">
+          <ContextMenuItems action={action as ActionModel} fetcher={fetcher} />
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
   );
 };
 
