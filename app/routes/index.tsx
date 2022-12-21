@@ -18,7 +18,7 @@ export default function Index() {
   return (
     <div className="selection:bg-brand selection:text-white">
       <div className="grid min-h-screen place-content-center ">
-        <div className="z-10 w-96 text-center">
+        <div className="w-96 text-center">
           <div>
             <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-36" />
           </div>
