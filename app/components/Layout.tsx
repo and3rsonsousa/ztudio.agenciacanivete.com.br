@@ -46,6 +46,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       openDialogCelebration: boolean;
       setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
     };
+    sidebar: {
+      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
+    };
   } = useOutletContext();
 
   const navigate = useNavigate();
@@ -61,11 +64,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
-      if (event.metaKey && event.key === "k") {
-        if (event.shiftKey) {
-          context.actions.setOpenDialogAction((prev: boolean) => !prev);
-        } else {
-          context.search.setOpenDialogSearch(!context.search.openDialogSearch);
+      if (event.metaKey) {
+        if (event.key === "k") {
+          if (event.shiftKey) {
+            context.actions.setOpenDialogAction((prev: boolean) => !prev);
+          } else {
+            context.search.setOpenDialogSearch(
+              !context.search.openDialogSearch
+            );
+          }
+        } else if (event.key === "b") {
+          context.sidebar.setSidebarView((prev: boolean) => !prev);
         }
       }
     }

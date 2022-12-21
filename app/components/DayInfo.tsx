@@ -1,6 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useParams } from "@remix-run/react";
-import { useState } from "react";
+import { useOutletContext, useParams } from "@remix-run/react";
 import type { DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
 import Button from "./Button";
@@ -9,13 +8,18 @@ import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
-  const [view, setView] = useState(true);
+  const context: {
+    sidebar: {
+      sidebarView: boolean;
+      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+  } = useOutletContext();
   const { slug } = useParams();
 
   return (
     <div
       className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden pt-16 lg:mt-0 ${
-        view ? "lg:w-80" : "lg:w-12"
+        context.sidebar.sidebarView ? "lg:w-80" : "lg:w-12"
       } lg:pt-0`}
     >
       {day !== undefined ? (
@@ -23,14 +27,26 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           <div className="px-4 py-2">
             {/* Header */}
             <div className="flex items-center justify-between">
-              {view && (
+              {context.sidebar.sidebarView && (
                 <h5 className="text-xs">
                   {day.date.format("D [de] MMMM [de] YYYY")}
                 </h5>
               )}
-              <div className={`${!view ? "-ml-2" : ""} hidden lg:block`}>
-                <Button link small icon squared onClick={() => setView(!view)}>
-                  {view ? (
+              <div
+                className={`${
+                  !context.sidebar.sidebarView ? "-ml-2" : ""
+                } hidden lg:block`}
+              >
+                <Button
+                  link
+                  small
+                  icon
+                  squared
+                  onClick={() =>
+                    context.sidebar.setSidebarView(!context.sidebar.sidebarView)
+                  }
+                >
+                  {context.sidebar.sidebarView ? (
                     <ArrowRightIcon className="mr-0.5" />
                   ) : (
                     <ArrowLeftIcon className="ml-0.5" />
@@ -40,7 +56,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             </div>
 
             {/* Celebrations */}
-            {view && day.celebrations.length > 0 ? (
+            {context.sidebar.sidebarView && day.celebrations.length > 0 ? (
               <div className=" mt-4 flex flex-col">
                 {day.celebrations.map((celebration, index) => (
                   <Celebration celebration={celebration} key={index} />
@@ -48,7 +64,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
               </div>
             ) : null}
           </div>
-          {view && (
+          {context.sidebar.sidebarView && (
             <ActionList
               actions={day.actions}
               hideAccount={slug !== undefined}
@@ -62,7 +78,9 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </div>
       )}
 
-      {view && <CreateButtons action campaign celebration />}
+      {context.sidebar.sidebarView && (
+        <CreateButtons action campaign celebration />
+      )}
     </div>
   );
 };
