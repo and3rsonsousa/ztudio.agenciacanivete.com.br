@@ -17,7 +17,7 @@ const Exclamation = ({
   large?: boolean;
   small?: boolean;
 }) => (
-  <div className="text-center">
+  <div className="text-left">
     <div
       className={`exclamation bg-${type ?? "info"} ${
         large ? "text-base" : small ? "text-xx" : "text-sm"

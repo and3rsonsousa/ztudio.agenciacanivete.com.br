@@ -78,9 +78,12 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         </div>
       )}
 
-      {context.sidebar.sidebarView && (
-        <CreateButtons action campaign celebration />
-      )}
+      <CreateButtons
+        action
+        campaign
+        celebration
+        showSmallAction={!context.sidebar.sidebarView}
+      />
     </div>
   );
 };

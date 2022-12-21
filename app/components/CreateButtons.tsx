@@ -10,10 +10,12 @@ export default function CreateButtons({
   celebration,
   campaign,
   action,
+  showSmallAction,
 }: {
   celebration?: boolean;
   campaign?: boolean;
   action?: boolean;
+  showSmallAction?: boolean;
 }) {
   const context: {
     actions: {
@@ -33,7 +35,7 @@ export default function CreateButtons({
   return (
     <div className="flex items-center justify-end gap-2 border-t p-4 dark:border-gray-800">
       {/* Dialog for Celebrations */}
-      {celebration && (
+      {celebration && !showSmallAction && (
         <div>
           <Button
             link
@@ -47,7 +49,7 @@ export default function CreateButtons({
           </Button>
         </div>
       )}
-      {campaign && (
+      {campaign && !showSmallAction && (
         <div>
           <Button
             link
@@ -62,16 +64,22 @@ export default function CreateButtons({
         </div>
       )}
       {action && (
-        <div className="ml-4">
+        <div
+          className={`${showSmallAction ? "fixed right-4 bottom-4" : "ml-4"} `}
+        >
           <Button
             primary
             icon
+            squared={showSmallAction}
+            large={showSmallAction}
             onClick={() => {
               context.actions.setOpenDialogAction(true);
             }}
             title="Cmd + Shift + K"
           >
-            <div className="whitespace-nowrap">Nova Ação</div>
+            {!showSmallAction && (
+              <div className="whitespace-nowrap">Nova Ação</div>
+            )}
             <DocumentPlusIcon />
           </Button>
         </div>

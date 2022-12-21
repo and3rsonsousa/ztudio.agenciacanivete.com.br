@@ -96,7 +96,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
         </div>
       </div>
       {context.sidebar.sidebarView &&
-        (actions ? (
+        (filtered.length ? (
           <div className="no-scrollbars grid h-full grid-cols-3 flex-col content-start overflow-auto px-4">
             {filtered.map((action, i) => (
               <ActionGrid
@@ -109,7 +109,9 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
           </div>
         ) : (
           <div className=" flex-auto p-8">
-            <Exclamation icon>Escolha um mês que contenha ações.</Exclamation>
+            <Exclamation icon>
+              Nenhuma ação para o Feed do Instagram no mês selecionado.
+            </Exclamation>
           </div>
         ))}
       {context.sidebar.sidebarView && (
