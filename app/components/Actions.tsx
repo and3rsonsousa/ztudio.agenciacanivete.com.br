@@ -95,7 +95,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
               {action.account.name.slice(0, 3)}
             </div>
           </div>
-          <div className="text-xx hidden text-center font-medium opacity-75 @[150px]:block">
+          <div className="text-xx hidden text-center font-medium opacity-75 @[140px]:block">
             {dayjs(action.date).format(
               "H[h]".concat(
                 dayjs(action.date).format("mm") !== "00" ? "mm" : ""

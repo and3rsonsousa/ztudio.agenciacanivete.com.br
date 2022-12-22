@@ -50,6 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
     };
     sidebar: {
+      sidebarView: boolean;
       setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
@@ -86,15 +87,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen w-full flex-col  lg:flex-row">
       {/* Header */}
-      <div className="no-scrollbars flex flex-shrink-0 items-center justify-between  lg:flex lg:w-48 lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4">
+      <div
+        className={`no-scrollbars flex flex-shrink-0 items-center justify-between lg:flex lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
+          context.sidebar.sidebarView ? "lg:w-48" : "lg:w-16"
+        }`}
+      >
         <div className="lg:w-full">
           {/* Logo */}
-          <div className="-mt-1 w-36 p-4 lg:pt-0">
+          <div className={`-mt-1 max-w-[8rem] p-2 lg:pt-0`}>
             <Link
               to={`/dashboard`}
-              className="-mt2 -ml-2 block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
+              className=" block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
             >
-              <img src="/logo.png" alt="STUDIO" />
+              {context.sidebar.sidebarView ? (
+                <img src="/logo.png" alt="STUDIO" />
+              ) : (
+                <img src="/ico.png" className="mx-auto h-6" alt="STUDIO" />
+              )}
             </Link>
           </div>
           {/* Clientes large view */}
@@ -103,13 +112,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}/${searchParams}`}
-                  className={`block overflow-hidden text-ellipsis whitespace-nowrap rounded-lg p-2 text-xs font-normal  focus:outline-none focus:ring-2 focus:ring-brand  ${
+                  className={`${
+                    context.sidebar.sidebarView
+                      ? "overflow-hidden text-ellipsis whitespace-nowrap  text-xs"
+                      : "text-xx text-center uppercase"
+                  } block  rounded-lg p-2  font-normal focus:outline-none focus:ring-2 focus:ring-brand ${
                     currentAccount === account.slug
                       ? "bg-brand text-white"
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                 >
-                  {account.name}
+                  {context.sidebar.sidebarView ? account.name : account.short}
                 </Link>
               </div>
             ))}
@@ -147,10 +160,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               }}
               className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
             >
-              <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
-                <div>Pesquisar</div>
-              </div>
-              <div className="ml-auto">
+              {context.sidebar.sidebarView && (
+                <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
+                  <div>Pesquisar</div>
+                </div>
+              )}
+              <div
+                className={`${
+                  context.sidebar.sidebarView ? "ml-auto" : "-ml-1"
+                }`}
+              >
                 <MagnifyingGlassIcon className="w-4" />
               </div>
             </button>
@@ -159,9 +178,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
-                <div className="text-xs font-semibold">{person.name}</div>
+                {context.sidebar.sidebarView && (
+                  <div className="text-xs font-semibold">{person.name}</div>
+                )}
 
-                <UserIcon className="ml-auto w-4" />
+                <UserIcon
+                  className={`${
+                    context.sidebar.sidebarView ? "ml-auto" : "ml-2"
+                  } w-4`}
+                />
               </DropdownMenu.Trigger>
 
               <DropdownMenu.Portal>
