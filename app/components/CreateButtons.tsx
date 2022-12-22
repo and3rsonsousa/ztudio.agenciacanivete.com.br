@@ -33,7 +33,7 @@ export default function CreateButtons({
   } = useOutletContext();
 
   return (
-    <div className="flex items-center justify-end gap-2 border-t p-4 dark:border-gray-800">
+    <div className="flex items-center justify-end gap-2 p-4 ">
       {/* Dialog for Celebrations */}
       {celebration && !showSmallAction && (
         <div>

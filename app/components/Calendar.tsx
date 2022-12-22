@@ -138,11 +138,11 @@ export default function Calendar({
       {showYearView ? (
         <YearView year={year} />
       ) : (
-        <div className="h-full overflow-hidden lg:flex">
+        <div className=" h-full overflow-hidden lg:flex">
           {/* Calendar  */}
 
-          <div className="flex w-full flex-col ">
-            <div className="grid grid-cols-7 rounded-xl bg-gray-100 dark:bg-gray-900">
+          <div className="relative flex w-full flex-col">
+            <div className="grid grid-cols-7 rounded-xl">
               {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
                 (day, index) => (
                   <div key={index} className="calendar-weekday">
@@ -151,6 +151,9 @@ export default function Calendar({
                 )
               )}
             </div>
+
+            <div className="absolute top-12 left-0 z-20 h-4 w-full bg-gradient-to-b dark:from-gray-1000"></div>
+
             <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
               {days.map((day, index) => {
                 if (index % 7 === 0) {

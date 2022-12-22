@@ -165,7 +165,7 @@ body {
 }
 
 .calendar-weekday {
-  @apply px-2 py-4 text-center text-xs font-semibold tracking-wide;
+  @apply px-2 py-4 text-xs font-semibold tracking-wide;
 }
 
 .calendar-day {

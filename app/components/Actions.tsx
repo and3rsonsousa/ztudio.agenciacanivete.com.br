@@ -261,7 +261,7 @@ export const ActionGrid = ({
 
   return action.name === "support" ? (
     <div
-      className={`grid aspect-square place-items-center border border-gray-1000 bg-gray-100 text-center dark:bg-gray-700 ${
+      className={`grid aspect-square place-items-center border border-gray-1000 bg-gray-100 text-center dark:bg-gray-900 ${
         index === 0 ? "rounded-tl-xl" : ""
       }`}
     >

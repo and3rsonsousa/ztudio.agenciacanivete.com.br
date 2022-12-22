@@ -13,6 +13,7 @@ import {
   useMatches,
   useNavigate,
   useOutletContext,
+  useParams,
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -26,6 +27,8 @@ import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
+  const urlParams = useParams();
+  const currentAccount = urlParams.slug;
 
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
@@ -54,13 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const searchParams =
-    params.get("month") !== null && params.get("instagram") !== null
-      ? `?month=${params.get("month")}&instagram`
-      : params.get("month") !== null
-      ? `?month=${params.get("month")}`
-      : params.get("instagram") !== null
-      ? `?instagram`
-      : "";
+    params.get("month") !== null ? `?month=${params.get("month")}` : "";
 
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
@@ -106,7 +103,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div key={account.id}>
                 <Link
                   to={`/dashboard/${account.slug}/${searchParams}`}
-                  className="block overflow-hidden text-ellipsis whitespace-nowrap rounded p-2 text-xs font-normal hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-brand dark:hover:bg-gray-800"
+                  className={`block overflow-hidden text-ellipsis whitespace-nowrap rounded-lg p-2 text-xs font-normal  focus:outline-none focus:ring-2 focus:ring-brand  ${
+                    currentAccount === account.slug
+                      ? "bg-brand text-white"
+                      : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
                 >
                   {account.name}
                 </Link>
