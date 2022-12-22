@@ -40,18 +40,21 @@ export default function Slug() {
 
         <div className="text-sm font-semibold">
           <Link
-            className="button button-link button-icon p-2"
+            className="button button-link button-icon button-small"
             to={`./${month ? "?month=" + month : ""}`}
           >
             <CalendarDaysIcon />
             <div className="hidden md:block">Calendário</div>
           </Link>
-          <Link className="button button-link button-icon p-2" to={`./actions`}>
+          <Link
+            className="button button-link button-icon button-small"
+            to={`./actions`}
+          >
             <DocumentCheckIcon />
             <div className="hidden md:block">Ações</div>
           </Link>
           <Link
-            className="button button-link button-icon p-2"
+            className="button button-link button-icon button-small"
             to={`./campaigns`}
           >
             <FolderIcon />
