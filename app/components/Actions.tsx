@@ -169,7 +169,10 @@ export const ActionMedium = ({
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
-        <div tabIndex={0} className={`action-medium group`}>
+        <div
+          tabIndex={0}
+          className={`action-medium group ${action.status.slug}`}
+        >
           {/* <div className="absolute top-1/2 -left-1 -translate-y-1/2">
             <div
               className={` h-6 w-1 rounded-tl-full bg-${action.status.slug}  `}
@@ -181,9 +184,7 @@ export const ActionMedium = ({
 
           <div className="overflow-hidden">
             <div className="mb-1">
-              <div className="text-sm font-normal dark:text-gray-300">
-                {action.name}
-              </div>
+              <div className="font-norma text-sm">{action.name}</div>
               {action.campaign && (
                 <Link
                   to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}

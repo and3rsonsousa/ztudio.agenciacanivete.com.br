@@ -88,7 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen w-full flex-col  lg:flex-row">
       {/* Header */}
       <div
-        className={`no-scrollbars flex flex-shrink-0 items-center justify-between lg:flex lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
+        className={`no-scrollbars relative flex flex-shrink-0 items-center justify-between lg:flex lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
           context.sidebar.sidebarView ? "lg:w-48" : "lg:w-16"
         }`}
       >
