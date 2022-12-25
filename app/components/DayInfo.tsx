@@ -73,9 +73,11 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           )}
         </>
       ) : (
-        <div className="flex flex-auto p-8">
-          <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
-        </div>
+        context.sidebar.sidebarView && (
+          <div className="flex flex-auto p-8">
+            <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
+          </div>
+        )
       )}
 
       <CreateButtons
