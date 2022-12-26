@@ -1976,6 +1976,14 @@ h5 {
   outline-offset: 2px;
 }
 
+.ring-offset-2 {
+  --tw-ring-offset-width: 2px;
+}
+
+.ring-offset-white {
+  --tw-ring-offset-color: white;
+}
+
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -2882,6 +2890,10 @@ body {
 .dark .dark\:text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.dark .dark\:ring-offset-gray-1000 {
+  --tw-ring-offset-color: #0a0c1a;
 }
 
 .dark .dark\:placeholder\:text-gray-500::-moz-placeholder {

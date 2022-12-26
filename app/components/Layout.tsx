@@ -118,7 +118,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       : "text-xx text-center uppercase"
                   } block  rounded-lg p-2  font-normal focus:outline-none focus:ring-2 focus:ring-brand ${
                     currentAccount === account.slug
-                      ? "bg-brand text-white"
+                      ? "bg-brand text-white ring-offset-2 ring-offset-white dark:ring-offset-gray-1000"
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                 >
