@@ -86,7 +86,7 @@ export default function Calendar({
   }, []);
 
   return (
-    <div className="calendar overflow-hidden lg:flex lg:h-full lg:flex-auto lg:flex-col">
+    <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col lg:overflow-hidden">
       {/* header */}
       <div className="flex items-center justify-between ">
         <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
