@@ -1,8 +1,10 @@
 import {
   BriefcaseIcon,
   ChevronRightIcon,
+  DocumentPlusIcon,
   MagnifyingGlassIcon,
   MoonIcon,
+  PlusIcon,
   SunIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
@@ -20,6 +22,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
+import Button from "./Button";
 import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
@@ -88,7 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen w-full flex-col  lg:flex-row">
       {/* Header */}
       <div
-        className={`no-scrollbars relative flex flex-shrink-0 items-center justify-between lg:flex lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
+        className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between bg-gray-1000/75 backdrop-blur-xl lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4  ${
           context.sidebar.sidebarView ? "lg:w-48" : "lg:w-16"
         }`}
       >
@@ -107,6 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
           {/* Clientes large view */}
+
           <div className="hidden p-2 lg:block">
             {accounts.map((account) => (
               <div key={account.id}>
@@ -114,9 +118,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   to={`/dashboard/${account.slug}/${searchParams}`}
                   className={`${
                     context.sidebar.sidebarView
-                      ? "overflow-hidden text-ellipsis whitespace-nowrap  text-xs"
-                      : "text-xx text-center uppercase"
-                  } block  rounded-lg p-2  font-normal focus:outline-none focus:ring-2 focus:ring-brand ${
+                      ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
+                      : "text-xx text-center font-bold uppercase"
+                  } block  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
                     currentAccount === account.slug
                       ? "bg-brand text-white ring-offset-2 ring-offset-white dark:ring-offset-gray-1000"
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -129,15 +133,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="flex pr-2 lg:flex lg:w-full lg:flex-col lg:p-2">
+          {/* Clientes mobile */}
           <div className="lg:hidden">
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
-                <button>
-                  <BriefcaseIcon />
+                <button className="p-2">
+                  <BriefcaseIcon className="w-4" />
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
-                <DropdownMenu.Content className="dropdown-content">
+                <DropdownMenu.Content className="dropdown-content mr-2">
                   {accounts.map((account) => (
                     <DropdownMenu.Item key={account.id} asChild>
                       <Link
@@ -152,7 +157,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </div>
-
+          {/* Search */}
           <div className="lg:p-2">
             <button
               onClick={() => {
@@ -179,7 +184,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
                 {context.sidebar.sidebarView && (
-                  <div className="text-xs font-semibold">{person.name}</div>
+                  <div className="hidden text-xs font-semibold lg:block">
+                    {person.name}
+                  </div>
                 )}
 
                 <UserIcon
@@ -308,11 +315,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
           </div>
+          {/* Create Action on Mobile */}
+          <div className="ml-2 lg:hidden">
+            <Button
+              primary
+              className="p-2 text-sm sm:p-1.5 sm:px-4"
+              onClick={() => context.actions.setOpenDialogAction(true)}
+            >
+              <span className="hidden sm:block">Nova Ação</span>
+              <PlusIcon />
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-auto">{children}</div>
+      <div className="mt-12 flex-auto lg:mt-0">{children}</div>
 
       <>
         {/* Dialog for Celebration */}

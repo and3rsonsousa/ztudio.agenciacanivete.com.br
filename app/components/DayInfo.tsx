@@ -18,7 +18,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
   return (
     <div
-      className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden pt-16 lg:mt-0 ${
+      className={`flex flex-shrink-0 flex-col overflow-hidden ${
         context.sidebar.sidebarView ? "lg:w-80" : "lg:w-12"
       } lg:pt-0`}
     >

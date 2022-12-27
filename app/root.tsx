@@ -51,7 +51,7 @@ export function App() {
   const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
   const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
   const [openDialogSearch, setOpenDialogSearch] = useState(false);
-  const [sidebarView, setSidebarView] = useState(false);
+  const [sidebarView, setSidebarView] = useState(true);
   const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
 
   return (

@@ -10,15 +10,11 @@ html {
 }
 
 body {
-  @apply font-sans font-light text-gray-900 antialiased dark:text-gray-300;
+  @apply bg-white font-sans font-light text-gray-900 antialiased dark:bg-gray-1000 dark:text-gray-300;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 @layer base {
-  .app {
-    @apply bg-white dark:bg-gray-1000;
-  }
-
   .link {
     @apply font-semibold tracking-wide underline;
   }
@@ -140,7 +136,7 @@ body {
   }
 
   .dropdown-content {
-    @apply shadow-color z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2  backdrop-blur-md dark:bg-gray-600/75;
+    @apply shadow-color z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2 backdrop-blur-xl dark:bg-gray-600/25;
   }
 
   .dropdown-label {
