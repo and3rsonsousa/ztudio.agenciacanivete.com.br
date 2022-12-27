@@ -1715,6 +1715,18 @@ h5 {
   background-color: rgb(10 12 26 / 0.75);
 }
 
+.bg-gray-800\/75 {
+  background-color: rgb(31 41 55 / 0.75);
+}
+
+.bg-gray-900\/75 {
+  background-color: rgb(17 24 39 / 0.75);
+}
+
+.bg-gray-800\/50 {
+  background-color: rgb(31 41 55 / 0.5);
+}
+
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
