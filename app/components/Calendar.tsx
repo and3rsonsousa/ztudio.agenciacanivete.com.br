@@ -142,7 +142,7 @@ export default function Calendar({
           {/* Calendar  */}
 
           <div className="relative flex w-full flex-col">
-            <div className="grid grid-cols-7 rounded-xl">
+            <div className="relative grid grid-cols-7 rounded-xl">
               {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
                 (day, index) => (
                   <div key={index} className="calendar-weekday">
@@ -150,9 +150,10 @@ export default function Calendar({
                   </div>
                 )
               )}
+              <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
             </div>
 
-            <div className="absolute top-12 left-0 z-20 h-4 w-full bg-gradient-to-b dark:from-gray-1000"></div>
+            {/* <div className="absolute top-12 left-0 z-20 h-4 w-full bg-gradient-to-b dark:from-gray-1000"></div> */}
 
             <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
               {days.map((day, index) => {
