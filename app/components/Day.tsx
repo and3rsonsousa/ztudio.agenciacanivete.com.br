@@ -165,10 +165,15 @@ export default function Day({
                 (category, index) =>
                   category.actions?.length !== 0 && (
                     <div key={index}>
-                      <div
-                        className={`text-xx mb-1 px-1 font-bold uppercase tracking-widest text-gray-500 text-${category.tag.slug}`}
-                      >
-                        {category.tag?.name}
+                      <div className="mb-1 flex items-center gap-2">
+                        <div
+                          className={`mb-1/2 h-1 w-1 rounded-full bg-${category.tag.slug}`}
+                        ></div>
+                        <div
+                          className={`text-[10px] font-bold uppercase tracking-[1px] text-gray-500`}
+                        >
+                          {category.tag?.name}
+                        </div>
                       </div>
                       {category.actions?.map((action, index) => (
                         <ActionLine key={index} action={action} />

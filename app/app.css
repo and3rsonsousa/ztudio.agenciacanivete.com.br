@@ -1359,6 +1359,10 @@ h5 {
   height: 4rem;
 }
 
+.h-1 {
+  height: 0.25rem;
+}
+
 .max-h-\[90vh\] {
   max-height: 90vh;
 }
@@ -1958,6 +1962,14 @@ h5 {
   line-height: 2.25rem;
 }
 
+.text-\[8px\] {
+  font-size: 8px;
+}
+
+.text-\[10px\] {
+  font-size: 10px;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -2004,6 +2016,18 @@ h5 {
 
 .tracking-tight {
   letter-spacing: -0.025em;
+}
+
+.tracking-\[1px\] {
+  letter-spacing: 1px;
+}
+
+.tracking-\[2px\] {
+  letter-spacing: 2px;
+}
+
+.tracking-\[4px\] {
+  letter-spacing: 4px;
 }
 
 .text-white {
