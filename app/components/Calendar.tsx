@@ -1,4 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  FunnelIcon,
+} from "@heroicons/react/24/outline";
+import { FunnelIcon as FunnelIconSolid } from "@heroicons/react/20/solid";
 import { Link, useMatches, useSearchParams } from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
@@ -11,11 +16,13 @@ import type {
   CampaignModel,
   CelebrationModel,
   DayModel,
+  ItemModel,
   MonthType,
 } from "~/lib/models";
 import Button from "./Button";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
+import SelectField from "./Forms/SelectField";
 import InstagramGrid from "./InstagramGrid";
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -33,12 +40,14 @@ export default function Calendar({
   grid?: boolean;
 }) {
   const [searchParams] = useSearchParams();
+  const [filter, setFilter] = useState("all");
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
   const matches = useMatches();
   let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
+  const tags = matches[1].data.tags;
   const today = dayjs();
 
   const { firstDayOfCurrentMonth, days: newDays } = getPeriod({
@@ -57,7 +66,10 @@ export default function Calendar({
     _day.actions = actions.filter((action) => {
       return (
         dayjs(action.date).format("YYYY-MM-DD") ===
-        _day.date.format("YYYY-MM-DD")
+          _day.date.format("YYYY-MM-DD") &&
+        (filter === "all" ||
+          filter === "category" ||
+          action.tag.slug === filter)
       );
     });
 
@@ -90,11 +102,14 @@ export default function Calendar({
       {/* header */}
       <div className="flex items-center justify-between ">
         <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
+          {/* Mês e ano */}
           <h4 className="mb-0 p-4 first-letter:capitalize">
             {showYearView
               ? firstDayOfCurrentMonth.format("YYYY")
               : firstDayOfCurrentMonth.format(`MMMM [de] YYYY`)}
           </h4>
+
+          {/* Botões para mês e ano */}
 
           <div className="item-center flex">
             <Button link small icon squared asChild>
@@ -133,7 +148,37 @@ export default function Calendar({
             </Button>
           </div>
         </div>
-        <div></div>
+
+        <div className="-mb-4 flex px-4">
+          <div className={`bg-${filter} mt-2 h-8 w-8 rounded-full p-2`}>
+            {["all", "category"].indexOf(filter) < 0 ? (
+              <FunnelIconSolid className="w-4" />
+            ) : (
+              <FunnelIcon className=" w-4" />
+            )}
+          </div>
+          <SelectField
+            name="filter"
+            items={[
+              [
+                { title: "Mostrar todos", value: "all" },
+                { title: "Por categoria", value: "category" },
+              ],
+              [
+                ...tags.map((tag: ItemModel) => ({
+                  title: tag.name,
+                  value: tag.slug,
+                })),
+              ],
+            ]}
+            onChange={(value) => {
+              setFilter(value);
+            }}
+            small
+            value="all"
+            link
+          />
+        </div>
       </div>
       {showYearView ? (
         <YearView year={year} />

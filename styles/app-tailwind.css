@@ -56,6 +56,9 @@ body {
   .shadow-color {
     @apply shadow-2xl shadow-gray-500/25;
   }
+  .shadow-color-dark {
+    @apply shadow-2xl shadow-gray-1000/75;
+  }
 
   .text-xx {
     @apply text-[.625rem] tracking-wide;
@@ -134,9 +137,19 @@ body {
     @apply spacing w-full rounded-xl  bg-gray-100 ring-brand placeholder:text-gray-400 focus-within:ring-2 dark:bg-gray-800 dark:placeholder:text-gray-600;
     @apply disabled:text-gray-300 dark:disabled:text-gray-600;
   }
+  .field-default.field-small {
+  }
+  .field-default.field-link {
+    @apply spacing w-full rounded-xl  bg-transparent ring-brand placeholder:text-gray-400 focus-within:ring-2 dark:bg-transparent dark:placeholder:text-gray-600;
+    @apply disabled:text-gray-300 dark:disabled:text-gray-600;
+  }
+
+  .select-field button span {
+    @apply block overflow-hidden text-ellipsis whitespace-nowrap;
+  }
 
   .dropdown-content {
-    @apply shadow-color z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2 backdrop-blur-xl dark:bg-gray-600/25;
+    @apply shadow-color dark:shadow-color-dark z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2 backdrop-blur-xl dark:bg-gray-700/25;
   }
 
   .dropdown-label {
