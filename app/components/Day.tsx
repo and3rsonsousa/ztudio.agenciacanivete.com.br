@@ -1,8 +1,8 @@
-import { useFetcher, useOutletContext } from "@remix-run/react";
+import { useFetcher, useMatches, useOutletContext } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { actionsByPriority } from "~/lib/functions";
-import type { DayModel } from "~/lib/models";
+import { actionsByCategory, actionsByPriority } from "~/lib/functions";
+import type { DayModel, ItemModel } from "~/lib/models";
 import { ActionLine } from "./Actions";
 import Button from "./Button";
 import { CampaignLine } from "./Campaign";
@@ -14,14 +14,18 @@ export default function Day({
   firstDayOfCurrentMonth,
   height,
   setSelectedDay,
+  filter,
 }: {
   day: DayModel;
   selectedDay: string;
   firstDayOfCurrentMonth: Dayjs;
   height: number;
   setSelectedDay: (date: string) => void;
+  filter: string;
 }) {
   const fetcher = useFetcher();
+  const matches = useMatches();
+  const tags: ItemModel[] = matches[1].data.tags;
   const context: {
     date: {
       setDateOfTheDay: (value: Dayjs) => void;
@@ -103,6 +107,8 @@ export default function Day({
           </Button>
         </div>
 
+        {/* Campanhas Campaigns */}
+
         <div className={`mt-2 ${height > 0 ? "mb-2 pb-2" : ""}`}>
           <div style={{ height: 24 * height + (height - 1) * 4 + "px" }}>
             {day.campaigns.map((campaign) => (
@@ -153,10 +159,26 @@ export default function Day({
           </div>
         </div>
 
-        <div>
-          {actionsByPriority(day.actions).map((action, index) => (
-            <ActionLine key={action.id} action={action} />
-          ))}
+        <div className="space-y-4">
+          {filter === "category"
+            ? actionsByCategory(day.actions, tags).map(
+                (category, index) =>
+                  category.actions?.length !== 0 && (
+                    <div key={index}>
+                      <div
+                        className={`text-xx mb-1 px-1 font-bold uppercase tracking-widest text-gray-500 text-${category.tag.slug}`}
+                      >
+                        {category.tag?.name}
+                      </div>
+                      {category.actions?.map((action, index) => (
+                        <ActionLine key={index} action={action} />
+                      ))}
+                    </div>
+                  )
+              )
+            : actionsByPriority(day.actions).map((action, index) => (
+                <ActionLine key={index} action={action} />
+              ))}
         </div>
       </div>
 

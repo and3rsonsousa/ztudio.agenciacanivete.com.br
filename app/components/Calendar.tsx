@@ -40,7 +40,7 @@ export default function Calendar({
   grid?: boolean;
 }) {
   const [searchParams] = useSearchParams();
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("category");
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
@@ -175,7 +175,7 @@ export default function Calendar({
               setFilter(value);
             }}
             small
-            value="all"
+            value={filter}
             link
           />
         </div>
@@ -219,6 +219,7 @@ export default function Calendar({
                     firstDayOfCurrentMonth={firstDayOfCurrentMonth}
                     selectedDay={selectedDay}
                     setSelectedDay={setSelectedDay}
+                    filter={filter}
                   />
                 );
               })}

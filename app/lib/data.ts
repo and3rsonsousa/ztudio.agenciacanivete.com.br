@@ -54,11 +54,8 @@ export const getAllAccounts = (request: Request) => {
 export const getTagsStatus = async (request: Request) => {
   const { supabase } = getSupabase(request);
   const [{ data: tags }, { data: status }] = await Promise.all([
-    supabase.from("Tag").select("*").order("name", { ascending: true }),
-    supabase
-      .from("Status")
-      .select("*")
-      .order("created_at", { ascending: true }),
+    supabase.from("Tag").select("*").order("priority", { ascending: true }),
+    supabase.from("Status").select("*").order("priority", { ascending: true }),
   ]);
 
   return { tags, status };

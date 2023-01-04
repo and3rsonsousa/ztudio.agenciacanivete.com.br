@@ -1,8 +1,8 @@
-import type { ActionModel, MonthType } from "~/lib/models";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import type { ActionModel, ItemModel, MonthType } from "~/lib/models";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -59,6 +59,25 @@ export function actionsByPriority(actions: ActionModel[]) {
   return actions.sort((a, b) =>
     a.status.priority > b.status.priority ? -1 : 1
   );
+}
+
+export function actionsByCategory(actions: ActionModel[], tags: ItemModel[]) {
+  const categories = tags.map((tag, index) => {
+    let category: { tag: ItemModel; actions: ActionModel[] } = {
+      tag: tag,
+      actions: [],
+    };
+
+    let _actions = actionsByPriority(
+      actions.filter((action) => action.tag.slug === tag.slug)
+    );
+
+    category.actions = _actions;
+
+    return category;
+  });
+
+  return categories;
 }
 
 export function shortWord(word: string) {

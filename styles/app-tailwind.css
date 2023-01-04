@@ -239,6 +239,9 @@ body {
   @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
 }
 
+.text-feed {
+  @apply text-feed-700 dark:text-feed-400;
+}
 .bg-feed {
   @apply bg-feed-500 text-white dark:bg-feed-600;
 }
@@ -249,6 +252,9 @@ body {
   @apply border-feed-500;
 }
 
+.text-reels {
+  @apply text-reels-700 dark:text-reels-400;
+}
 .bg-reels {
   @apply bg-reels-500 text-white dark:bg-reels-600;
 }
@@ -259,6 +265,9 @@ body {
   @apply border-reels-500;
 }
 
+.text-meeting {
+  @apply text-meeting-700 dark:text-meeting-400;
+}
 .bg-meeting {
   @apply bg-meeting-500 text-white dark:bg-meeting-600;
 }
@@ -269,6 +278,9 @@ body {
   @apply border-meeting-500;
 }
 
+.text-stories {
+  @apply text-stories-700 dark:text-stories-400;
+}
 .bg-stories {
   @apply bg-stories-500 text-white;
 }
@@ -279,6 +291,9 @@ body {
   @apply border-stories-500;
 }
 
+.text-task {
+  @apply text-task-700 dark:text-task-400;
+}
 .bg-task {
   @apply bg-task-500 text-white;
 }
@@ -289,6 +304,9 @@ body {
   @apply border-task-500;
 }
 
+.text-tiktok {
+  @apply text-tiktok-700 dark:text-tiktok-400;
+}
 .bg-tiktok {
   @apply bg-tiktok-500 text-white;
 }
