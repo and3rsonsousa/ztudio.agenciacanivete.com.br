@@ -32,6 +32,8 @@ export default function Day({
   const tags: ItemModel[] = matches[1].data.tags;
   const accounts: AccountModel[] = matches[1].data.accounts;
 
+  console.log({ tags, accounts });
+
   const context: {
     date: {
       setDateOfTheDay: (value: Dayjs) => void;

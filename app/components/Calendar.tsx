@@ -31,7 +31,6 @@ dayjs.locale("pt-br");
 export default function Calendar({
   actions,
   campaigns,
-
   grid,
 }: {
   actions: ActionModel[];
