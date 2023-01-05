@@ -161,7 +161,7 @@ export default function Calendar({
               [
                 { title: "Mostrar todos", value: "all" },
                 { title: "Por categoria", value: "all-category" },
-                { title: "Por Cliente", value: "all-account" },
+                // { title: "Por Cliente", value: "all-account" },
               ],
               [
                 ...tags.map((tag: ItemModel) => ({
