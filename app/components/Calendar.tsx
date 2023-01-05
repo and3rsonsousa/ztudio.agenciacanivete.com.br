@@ -160,8 +160,8 @@ export default function Calendar({
             items={[
               [
                 { title: "Mostrar todos", value: "all" },
-                { title: "Por categoria", value: "all-category" },
-                // { title: "Por Cliente", value: "all-account" },
+                { title: "Por categoria", value: "allcategory" },
+                // { title: "Por Cliente", value: "allaccount" },
               ],
               [
                 ...tags.map((tag: ItemModel) => ({

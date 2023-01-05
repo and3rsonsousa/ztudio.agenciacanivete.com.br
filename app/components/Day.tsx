@@ -168,7 +168,7 @@ export default function Day({
         </div>
 
         <div className={`space-y-4`}>
-          {filter === "all-category"
+          {filter === "allcategory"
             ? actionsByCategory(day.actions, tags).map(
                 (category, index) =>
                   category.actions?.length !== 0 && (
@@ -189,7 +189,7 @@ export default function Day({
                     </div>
                   )
               )
-            : filter === "all-account"
+            : filter === "allaccount"
             ? actionsByAccount(day.actions, accounts).map(
                 (account, index) =>
                   account.actions?.length !== 0 && (
