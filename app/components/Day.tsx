@@ -1,8 +1,12 @@
 import { useFetcher, useMatches, useOutletContext } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { actionsByCategory, actionsByPriority } from "~/lib/functions";
-import type { DayModel, ItemModel } from "~/lib/models";
+import {
+  actionsByAccount,
+  actionsByCategory,
+  actionsByPriority,
+} from "~/lib/functions";
+import type { AccountModel, DayModel, ItemModel } from "~/lib/models";
 import { ActionLine } from "./Actions";
 import Button from "./Button";
 import { CampaignLine } from "./Campaign";
@@ -26,6 +30,8 @@ export default function Day({
   const fetcher = useFetcher();
   const matches = useMatches();
   const tags: ItemModel[] = matches[1].data.tags;
+  const accounts: AccountModel[] = matches[1].data.accounts;
+
   const context: {
     date: {
       setDateOfTheDay: (value: Dayjs) => void;
@@ -160,7 +166,7 @@ export default function Day({
         </div>
 
         <div className={`space-y-4`}>
-          {filter === "category"
+          {filter === "all-category"
             ? actionsByCategory(day.actions, tags).map(
                 (category, index) =>
                   category.actions?.length !== 0 && (
@@ -176,6 +182,27 @@ export default function Day({
                         </div>
                       </div>
                       {category.actions?.map((action, index) => (
+                        <ActionLine key={index} action={action} />
+                      ))}
+                    </div>
+                  )
+              )
+            : filter === "all-account"
+            ? actionsByAccount(day.actions, accounts).map(
+                (account, index) =>
+                  account.actions?.length !== 0 && (
+                    <div key={index}>
+                      <div className="mb-1 flex items-center gap-2">
+                        <div
+                          className={`mb-1/2 h-1 w-1 rounded-full bg-brand`}
+                        ></div>
+                        <div
+                          className={`text-[10px] font-bold uppercase tracking-[1px] text-gray-500`}
+                        >
+                          {account.account?.short}
+                        </div>
+                      </div>
+                      {account.actions?.map((action, index) => (
                         <ActionLine key={index} action={action} />
                       ))}
                     </div>

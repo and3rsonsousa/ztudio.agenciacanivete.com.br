@@ -41,7 +41,7 @@ export default function Calendar({
 }) {
   const [searchParams] = useSearchParams();
   // const [filter, setFilter] = useState("all");
-  const [filter, setFilter] = useState("category");
+  const [filter, setFilter] = useState("all-category");
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
@@ -68,9 +68,7 @@ export default function Calendar({
       return (
         dayjs(action.date).format("YYYY-MM-DD") ===
           _day.date.format("YYYY-MM-DD") &&
-        (filter === "all" ||
-          filter === "category" ||
-          action.tag.slug === filter)
+        (filter.includes("all") || action.tag.slug === filter)
       );
     });
 
@@ -152,7 +150,7 @@ export default function Calendar({
 
         <div className="-mb-4 flex px-4">
           <div className={`bg-${filter} mt-2 h-8 w-8 rounded-full p-2`}>
-            {["all", "category"].indexOf(filter) < 0 ? (
+            {["all"].indexOf(filter) < 0 ? (
               <FunnelIconSolid className="w-4" />
             ) : (
               <FunnelIcon className=" w-4" />
@@ -163,7 +161,8 @@ export default function Calendar({
             items={[
               [
                 { title: "Mostrar todos", value: "all" },
-                { title: "Por categoria", value: "category" },
+                { title: "Por categoria", value: "all-category" },
+                { title: "Por Cliente", value: "all-account" },
               ],
               [
                 ...tags.map((tag: ItemModel) => ({

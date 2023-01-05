@@ -2,7 +2,12 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import type { ActionModel, ItemModel, MonthType } from "~/lib/models";
+import type {
+  AccountModel,
+  ActionModel,
+  ItemModel,
+  MonthType,
+} from "~/lib/models";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -78,6 +83,23 @@ export function actionsByCategory(actions: ActionModel[], tags: ItemModel[]) {
   });
 
   return categories;
+}
+export function actionsByAccount(
+  actions: ActionModel[],
+  accounts: AccountModel[]
+) {
+  const _accounts = accounts.map((_account, index) => {
+    let accountGroup: { account: AccountModel; actions: ActionModel[] } = {
+      account: _account,
+      actions: [],
+    };
+    let _actions = actionsByPriority(
+      actions.filter((action) => action.account.id === _account.id)
+    );
+    accountGroup.actions = _actions;
+    return accountGroup;
+  });
+  return _accounts;
 }
 
 export function shortWord(word: string) {
