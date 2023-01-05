@@ -77,8 +77,7 @@ export default function SelectField({
             <Select.Viewport>
               {_items?.length
                 ? _items.map((__items, index) => (
-                    // <Select.Group key={index}>
-                    <>
+                    <Select.Group key={index}>
                       {index > 0 && <hr className="dropdown-hr" />}
                       {(__items as SelectItemModel[]).map((item, index) => (
                         <Select.Item
@@ -89,13 +88,12 @@ export default function SelectField({
                           } flex justify-between`}
                         >
                           <Select.ItemText>{item.title}</Select.ItemText>
-                          {/* <Select.ItemIndicator>
+                          <Select.ItemIndicator>
                             <CheckCircleIcon className="ml-2 w-4" />
-                          </Select.ItemIndicator> */}
+                          </Select.ItemIndicator>
                         </Select.Item>
                       ))}
-                    </>
-                    // </Select.Group>
+                    </Select.Group>
                   ))
                 : null}
             </Select.Viewport>

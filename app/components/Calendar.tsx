@@ -155,13 +155,13 @@ export default function Calendar({
               <FunnelIcon className=" w-4" />
             )}
           </div>
-          {/* <SelectField
+          <SelectField
             name="filter"
             items={[
               [
                 { title: "Mostrar todos", value: "all" },
                 { title: "Por categoria", value: "allcategory" },
-                // { title: "Por Cliente", value: "allaccount" },
+                { title: "Por Cliente", value: "allaccount" },
               ],
               [
                 ...tags.map((tag: ItemModel) => ({
@@ -176,7 +176,7 @@ export default function Calendar({
             small
             value={filter}
             link
-          /> */}
+          />
         </div>
       </div>
       {showYearView ? (

@@ -77,7 +77,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           }}
           onDragEnd={(e) => {
             let ele = e.target as HTMLElement;
-            ele.classList.remove("dragging");
+            ele.classList.remove("dragging-base");
           }}
           className={`action-line bg-${action.status.slug} bg-${action.status.slug}-hover  @container`}
           onClick={() => {
