@@ -89,9 +89,9 @@ export default function SelectField({
                           } flex justify-between`}
                         >
                           <Select.ItemText>{item.title}</Select.ItemText>
-                          <Select.ItemIndicator>
+                          {/* <Select.ItemIndicator>
                             <CheckCircleIcon className="ml-2 w-4" />
-                          </Select.ItemIndicator>
+                          </Select.ItemIndicator> */}
                         </Select.Item>
                       ))}
                     </>
