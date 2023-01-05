@@ -52,30 +52,28 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           draggable
           onDragStart={(e) => {
             const ele = e.target as HTMLElement;
-            ele.classList.add("dragging");
+            ele.classList.add("dragging-base");
 
-            // const ghost = ele.cloneNode(true) as HTMLElement;
-            // ghost.style.width = `${ele.offsetWidth}px`;
-            // ghost.style.height = `${ele.offsetHeight}px`;
-            // ghost.style.position = "absolute";
-            // ghost.style.top = "0px";
-            // ghost.style.left = "0px";
-            // // ghost.style.offset = ".2";
-            // ghost.style.zIndex = "-1";
-            // ghost.style.pointerEvents = "none"
-            // ghost.style.transform = "scale(1.2)";
+            const ghost = ele.cloneNode(true) as HTMLElement;
+            ghost.style.width = `${ele.offsetWidth}px`;
+            ghost.style.height = `${ele.offsetHeight}px`;
+            ghost.style.position = "absolute";
+            ghost.style.top = "0px";
+            ghost.style.left = "0px";
+            // ghost.style.offset = ".2";
+            ghost.style.zIndex = "-1";
+            ghost.style.pointerEvents = "none";
 
-            // document.body.appendChild(ghost);
-            // e.dataTransfer?.setDragImage(
-            //   ghost,
+            document.body.appendChild(ghost);
+            e.dataTransfer?.setDragImage(
+              ghost,
+              ele.offsetWidth / 2,
+              ele.offsetHeight / 2
+            );
 
-            //   ele.offsetWidth / 2,
-            //   ele.offsetHeight / 2
-            // );
-
-            // setTimeout(() => {
-            //   ghost.parentNode?.removeChild(ghost);
-            // });
+            setTimeout(() => {
+              ghost.parentNode?.removeChild(ghost);
+            });
           }}
           onDragEnd={(e) => {
             let ele = e.target as HTMLElement;
