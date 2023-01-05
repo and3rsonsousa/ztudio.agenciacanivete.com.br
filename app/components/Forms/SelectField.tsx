@@ -83,7 +83,7 @@ export default function SelectField({
                       {(__items as SelectItemModel[]).map((item, index) => (
                         <Select.Item
                           value={item.value}
-                          key={index}
+                          key={item.value}
                           className={`dropdown-item${
                             small ? " item-small" : ""
                           } flex justify-between`}
