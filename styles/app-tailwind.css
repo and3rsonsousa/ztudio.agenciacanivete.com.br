@@ -417,6 +417,10 @@ body {
   @apply opacity-50 hover:opacity-100;
 }
 
+.dragging {
+  @apply scale-90 opacity-50;
+}
+
 .dragover {
   @apply bg-brand-100 ring-1 ring-inset ring-brand dark:bg-brand-900/50;
 }

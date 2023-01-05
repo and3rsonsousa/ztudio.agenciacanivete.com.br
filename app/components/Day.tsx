@@ -159,7 +159,7 @@ export default function Day({
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className={`space-y-4`}>
           {filter === "category"
             ? actionsByCategory(day.actions, tags).map(
                 (category, index) =>
