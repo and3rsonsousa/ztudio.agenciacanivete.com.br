@@ -75,8 +75,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             );
           }
         } else if (event.key === "b") {
-          console.log(window.innerWidth);
-
           if (window.innerWidth >= 1024)
             context.sidebar.setSidebarView((prev: boolean) => !prev);
         }

@@ -16,7 +16,7 @@ import {
 import dayjs from "dayjs";
 import { useState } from "react";
 
-import styles from "./app.css";
+import styles from "./styles.css";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 export const meta: MetaFunction = () => ({

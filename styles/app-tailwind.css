@@ -239,83 +239,56 @@ body {
   @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
 }
 
-.text-feed {
-  @apply text-feed-700 dark:text-feed-400;
-}
 .bg-feed {
   @apply bg-feed-500 text-white dark:bg-feed-600;
 }
 .bg-feed-hover {
   @apply hover:bg-feed-600 dark:hover:bg-feed-700;
 }
-.border-feed {
-  @apply border-feed-500;
-}
 
-.text-reels {
-  @apply text-reels-700 dark:text-reels-400;
-}
 .bg-reels {
   @apply bg-reels-500 text-white dark:bg-reels-600;
 }
 .bg-reels-hover {
   @apply hover:bg-reels-600 dark:hover:bg-reels-700;
 }
-.border-reels {
-  @apply border-reels-500;
-}
 
-.text-meeting {
-  @apply text-meeting-700 dark:text-meeting-400;
-}
-.bg-meeting {
-  @apply bg-meeting-500 text-white dark:bg-meeting-600;
-}
-.bg-meeting-hover {
-  @apply hover:bg-meeting-600 dark:hover:bg-meeting-700;
-}
-.border-meeting {
-  @apply border-meeting-500;
-}
-
-.text-stories {
-  @apply text-stories-700 dark:text-stories-400;
-}
-.bg-stories {
-  @apply bg-stories-500 text-white;
-}
-.bg-stories-hover {
-  @apply hover:bg-stories-600;
-}
-.border-stories {
-  @apply border-stories-500;
-}
-
-.text-task {
-  @apply text-task-700 dark:text-task-400;
-}
 .bg-task {
   @apply bg-task-500 text-white;
 }
 .bg-task-hover {
   @apply hover:bg-task-600;
 }
-.border-task {
-  @apply border-task-500;
+
+.bg-stories {
+  @apply bg-stories-500 text-white;
+}
+.bg-stories-hover {
+  @apply hover:bg-stories-600;
 }
 
-.text-tiktok {
-  @apply text-tiktok-700 dark:text-tiktok-400;
+.bg-meeting {
+  @apply bg-meeting-500 text-white dark:bg-meeting-600;
 }
+.bg-meeting-hover {
+  @apply hover:bg-meeting-600 dark:hover:bg-meeting-700;
+}
+
+.bg-print {
+  @apply bg-print-500 text-white  dark:bg-print-600;
+}
+.bg-print-hover {
+  @apply hover:bg-print-600 dark:hover:bg-print-700;
+}
+
 .bg-tiktok {
-  @apply bg-tiktok-500 text-white;
+  @apply bg-tiktok-500 text-white dark:bg-tiktok-600;
 }
 .bg-tiktok-hover {
-  @apply hover:bg-tiktok-600;
+  @apply hover:bg-tiktok-600 dark:hover:bg-tiktok-700;
 }
-.border-tiktok {
-  @apply border-tiktok-500;
-}
+
+/* Status */
 
 .bg-idea {
   @apply bg-idea-500 text-white dark:bg-idea-600;

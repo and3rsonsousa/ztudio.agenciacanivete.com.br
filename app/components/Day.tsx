@@ -176,7 +176,7 @@ export default function Day({
                           className={`mb-1/2 h-1 w-1 rounded-full bg-${category.tag.slug}`}
                         ></div>
                         <div
-                          className={`text-[10px] font-bold uppercase tracking-[1px] text-gray-500`}
+                          className={`text-xx font-bold uppercase tracking-[1px] text-gray-300`}
                         >
                           {category.tag?.name}
                         </div>

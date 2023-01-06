@@ -106,5 +106,5 @@ export function shortWord(word: string) {
   return `${word[0]}${word
     .substring(1)
     .toLowerCase()
-    .replace(/[aeiouáí]/g, "")}`;
+    .replace(/[aãáeéêiíoóãôuú]/g, "")}`;
 }

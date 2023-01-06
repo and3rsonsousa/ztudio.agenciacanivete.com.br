@@ -40,7 +40,7 @@ export default function Calendar({
 }) {
   const [searchParams] = useSearchParams();
   // const [filter, setFilter] = useState("all");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("allcategory");
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
