@@ -1084,6 +1084,13 @@ h5 {
   position: relative;
 }
 
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
 .top-1\/2 {
   top: 50%;
 }
@@ -1775,6 +1782,14 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-white\/80 {
+  background-color: rgb(255 255 255 / 0.8);
+}
+
+.bg-white\/50 {
+  background-color: rgb(255 255 255 / 0.5);
 }
 
 .bg-gradient-to-r {
@@ -2999,6 +3014,18 @@ body {
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
+.dark .dark\:bg-gray-100\/80 {
+  background-color: rgb(243 244 246 / 0.8);
+}
+
+.dark .dark\:bg-gray-1000\/80 {
+  background-color: rgb(10 12 26 / 0.8);
+}
+
+.dark .dark\:bg-gray-1000\/50 {
+  background-color: rgb(10 12 26 / 0.5);
+}
+
 .dark .dark\:from-gray-1000 {
   --tw-gradient-from: #0a0c1a;
   --tw-gradient-to: rgb(10 12 26 / 0);
@@ -3110,6 +3137,10 @@ body {
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:p-8 {
+    padding: 2rem;
   }
 
   .md\:px-8 {

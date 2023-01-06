@@ -51,6 +51,7 @@ export function App() {
   const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
   const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
   const [openDialogSearch, setOpenDialogSearch] = useState(false);
+  const [openShortcut, setOpenShortcut] = useState(false);
   const [sidebarView, setSidebarView] = useState(true);
   const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
 
@@ -69,24 +70,28 @@ export function App() {
                 setDateOfTheDay,
               },
               celebrations: {
-                openDialogCelebration,
+                open: openDialogCelebration,
                 setOpenDialogCelebration,
               },
               actions: {
-                openDialogAction,
+                open: openDialogAction,
                 setOpenDialogAction,
               },
               campaigns: {
-                openDialogCampaign,
+                open: openDialogCampaign,
                 setOpenDialogCampaign,
               },
               search: {
-                openDialogSearch,
+                open: openDialogSearch,
                 setOpenDialogSearch,
               },
               sidebar: {
                 sidebarView,
                 setSidebarView,
+              },
+              shortcut: {
+                open: openShortcut,
+                setOpenShortcut,
               },
             }}
           />

@@ -1,7 +1,6 @@
 import {
   BriefcaseIcon,
   ChevronRightIcon,
-  DocumentPlusIcon,
   MagnifyingGlassIcon,
   MoonIcon,
   PlusIcon,
@@ -37,24 +36,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const accounts: AccountModel[] = matches[1].data.accounts;
   const context: {
     search: {
-      openDialogSearch: boolean;
+      open: boolean;
       setOpenDialogSearch: React.Dispatch<React.SetStateAction<boolean>>;
     };
     actions: {
-      openDialogAction: boolean;
+      open: boolean;
       setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     };
     campaigns: {
-      openDialogCampaign: boolean;
+      open: boolean;
       setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
     };
     celebrations: {
-      openDialogCelebration: boolean;
+      open: boolean;
       setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
     };
     sidebar: {
       sidebarView: boolean;
       setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    shortcut: {
+      open: boolean;
+      setOpenShortcut: React.Dispatch<React.SetStateAction<boolean>>;
     };
   } = useOutletContext();
 
@@ -65,21 +68,38 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
-      if (event.metaKey) {
-        if (event.key === "k") {
-          if (event.shiftKey) {
-            context.actions.setOpenDialogAction((prev: boolean) => !prev);
-          } else {
-            context.search.setOpenDialogSearch(
-              !context.search.openDialogSearch
-            );
-          }
-        } else if (event.key === "b") {
-          if (window.innerWidth >= 1024)
-            context.sidebar.setSidebarView((prev: boolean) => !prev);
-        }
+      if (event.metaKey && event.key === "k") {
+        context.shortcut.setOpenShortcut((prev: boolean) => !prev);
+        //   if () {
+        //     if (event.shiftKey) {
+        //       context.actions.setOpenDialogAction((prev: boolean) => !prev);
+        //     } else {
+        //       context.search.setOpenDialogSearch(
+        //         !context.search.openDialogSearch
+        //       );
+        //     }
+        //   } else if (event.key === "b") {
+        //     if (window.innerWidth >= 1024)
+        //       context.sidebar.setSidebarView((prev: boolean) => !prev);
+        //   }
       }
     }
+    // function keyDown(event: KeyboardEvent) {
+    //   if (event.metaKey) {
+    //     if (event.key === "k") {
+    //       if (event.shiftKey) {
+    //         context.actions.setOpenDialogAction((prev: boolean) => !prev);
+    //       } else {
+    //         context.search.setOpenDialogSearch(
+    //           !context.search.openDialogSearch
+    //         );
+    //       }
+    //     } else if (event.key === "b") {
+    //       if (window.innerWidth >= 1024)
+    //         context.sidebar.setSidebarView((prev: boolean) => !prev);
+    //     }
+    //   }
+    // }
 
     window.addEventListener("keydown", keyDown);
 
@@ -332,15 +352,90 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Content */}
       <div className="mt-12 flex-auto lg:mt-0">{children}</div>
+      {/* Shortcut */}
+      <Dialog.Root
+        open={context.shortcut.open}
+        onOpenChange={context.shortcut.setOpenShortcut}
+      >
+        <AnimatePresence>
+          {context.shortcut.open && (
+            <Dialog.Portal forceMount>
+              {/* <Dialog.Overlay asChild forceMount>
+                <motion.div
+                  className="dialog-overlay"
+                  {...fade(0.02)}
+                ></motion.div>
+              </Dialog.Overlay> */}
+
+              <Dialog.Content forceMount className="dialog">
+                <motion.div
+                  className="inset-0 rounded-xl bg-white/50 p-4 font-light antialiased backdrop-blur-xl dark:bg-gray-1000/50 md:p-8"
+                  {...fade(0.05)}
+                >
+                  <div className="mb-4 text-2xl font-medium">Shortcuts</div>
+                  <div className="grid-cols-2 gap-8 md:grid">
+                    {[
+                      {
+                        title: "Ações",
+                        shorcuts: [
+                          { shortcut: "A", does: "Nova Ação" },
+                          { shortcut: "C", does: "Nova Data Comemorativa" },
+                          { shortcut: "N", does: "Nova Campanha" },
+                          {
+                            shortcut: "S",
+                            does: "Ocultar/Mostrar barras laterais",
+                          },
+                        ],
+                      },
+                      {
+                        title: "Filtros",
+                        shorcuts: [
+                          { shortcut: "0", does: "Filtrar: Mostrar Todos" },
+                          { shortcut: "1", does: "Filtrar: Por categoria" },
+                          { shortcut: "2", does: "Filtrar: Por cliente" },
+                          { shortcut: "3", does: "Filtrar: Feed" },
+                          { shortcut: "4", does: "Filtrar: Reels" },
+                          { shortcut: "5", does: "Filtrar: Tarefa" },
+                          { shortcut: "6", does: "Filtrar: Stories" },
+                          { shortcut: "7", does: "Filtrar: Reunião" },
+                          { shortcut: "8", does: "Filtrar: Impresso" },
+                          { shortcut: "9", does: "Filtrar: Tiktok" },
+                        ],
+                      },
+                    ].map((column, index) => (
+                      <div key={index} className=" text-xs">
+                        <div className="mb-2 text-xs font-bold uppercase">
+                          {column.title}
+                        </div>
+                        {column.shorcuts.map((shortcut, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between py-1"
+                          >
+                            <div className="w-8 font-bold">
+                              {shortcut.shortcut}
+                            </div>
+                            <div className="opacity-75">{shortcut.does}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          )}
+        </AnimatePresence>
+      </Dialog.Root>
 
       <>
         {/* Dialog for Celebration */}
         <Dialog.Root
-          open={context.celebrations.openDialogCelebration}
+          open={context.celebrations.open}
           onOpenChange={context.celebrations.setOpenDialogCelebration}
         >
           <AnimatePresence>
-            {context.celebrations.openDialogCelebration && (
+            {context.celebrations.open && (
               <Dialog.Portal forceMount>
                 <Dialog.Overlay asChild forceMount>
                   <motion.div
@@ -364,11 +459,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Dialog for Actions */}
         <Dialog.Root
-          open={context.actions.openDialogAction}
+          open={context.actions.open}
           onOpenChange={context.actions.setOpenDialogAction}
         >
           <AnimatePresence>
-            {context.actions.openDialogAction && (
+            {context.actions.open && (
               <Dialog.Portal forceMount>
                 <Dialog.Overlay asChild forceMount>
                   <motion.div
@@ -392,11 +487,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Dialog for Campaign */}
         <Dialog.Root
-          open={context.campaigns.openDialogCampaign}
+          open={context.campaigns.open}
           onOpenChange={context.campaigns.setOpenDialogCampaign}
         >
           <AnimatePresence>
-            {context.campaigns.openDialogCampaign && (
+            {context.campaigns.open && (
               <Dialog.Portal forceMount>
                 <Dialog.Overlay asChild forceMount>
                   <motion.div
@@ -420,11 +515,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Dialog for Search */}
         <Dialog.Root
-          open={context.search.openDialogSearch}
+          open={context.search.open}
           onOpenChange={context.search.setOpenDialogSearch}
         >
           <AnimatePresence>
-            {context.search.openDialogSearch && (
+            {context.search.open && (
               <Dialog.Portal forceMount>
                 <Dialog.Overlay asChild forceMount>
                   <motion.div

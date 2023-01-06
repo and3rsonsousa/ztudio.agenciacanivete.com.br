@@ -17,18 +17,18 @@ export const scaleUp = (duration = 0.5) => ({
   },
 });
 
-export const fade = () => ({
+export const fade = (duration = 0.1) => ({
   initial: { opacity: 0 },
   animate: {
     opacity: 1,
     transition: {
-      duration: 0.1,
+      duration,
     },
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.1,
+      duration,
     },
   },
 });
