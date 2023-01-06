@@ -18,7 +18,7 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fade, scaleUp } from "~/lib/animations";
 import type { AccountModel, PersonModel } from "~/lib/models";
 import Button from "./Button";
@@ -61,6 +61,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
   } = useOutletContext();
 
+  const [showShortcuts, setShowShorcuts] = useState(false);
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const searchParams =
@@ -69,6 +70,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
       if (event.metaKey && event.key === "k") {
+        if (event.shiftKey) {
+          setShowShorcuts((prev: boolean) => !prev);
+        } else {
+          setTimeout(() => {
+            context.shortcut.setOpenShortcut(false);
+          }, 2000);
+        }
         context.shortcut.setOpenShortcut((prev: boolean) => !prev);
         //   if () {
         //     if (event.shiftKey) {
@@ -353,24 +361,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <div className="mt-12 flex-auto lg:mt-0">{children}</div>
       {/* Shortcut */}
-      <Dialog.Root
-        open={context.shortcut.open}
-        onOpenChange={context.shortcut.setOpenShortcut}
-      >
+      <Dialog.Root open={showShortcuts} onOpenChange={setShowShorcuts}>
         <AnimatePresence>
-          {context.shortcut.open && (
+          {showShortcuts && (
             <Dialog.Portal forceMount>
-              {/* <Dialog.Overlay asChild forceMount>
-                <motion.div
-                  className="dialog-overlay"
-                  {...fade(0.02)}
-                ></motion.div>
-              </Dialog.Overlay> */}
-
               <Dialog.Content forceMount className="dialog">
                 <motion.div
-                  className="inset-0 rounded-xl bg-white/50 p-4 font-light antialiased backdrop-blur-xl dark:bg-gray-1000/50 md:p-8"
-                  {...fade(0.05)}
+                  className="rounded-xl bg-white/50 p-4 font-light antialiased backdrop-blur-xl dark:bg-gray-1000/50 md:p-8"
+                  {...fade(0.1)}
                 >
                   <div className="mb-4 text-2xl font-medium">Shortcuts</div>
                   <div className="grid-cols-2 gap-8 md:grid">
@@ -456,7 +454,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
-
         {/* Dialog for Actions */}
         <Dialog.Root
           open={context.actions.open}
@@ -484,7 +481,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
-
         {/* Dialog for Campaign */}
         <Dialog.Root
           open={context.campaigns.open}
@@ -512,7 +508,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
-
         {/* Dialog for Search */}
         <Dialog.Root
           open={context.search.open}
@@ -540,6 +535,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
+        {context.shortcut.open && (
+          <Shortcut
+            context={context}
+            close={context.shortcut.setOpenShortcut}
+          />
+        )}
       </>
     </div>
   );
@@ -581,4 +582,78 @@ function ThemeSwitcher() {
       </div>
     </DropdownMenu.Item>
   );
+}
+
+function Shortcut({
+  context,
+  close,
+}: {
+  context: {
+    search: {
+      open: boolean;
+      setOpenDialogSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    actions: {
+      open: boolean;
+      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    campaigns: {
+      open: boolean;
+      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    celebrations: {
+      open: boolean;
+      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    sidebar: {
+      sidebarView: boolean;
+      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    shortcut: {
+      open: boolean;
+      setOpenShortcut: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+  };
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  useEffect(() => {
+    function keyDown(event: KeyboardEvent) {
+      event.preventDefault();
+      const key = event.key.toUpperCase();
+
+      switch (key) {
+        case "A":
+          context.actions.setOpenDialogAction((prev) => !prev);
+          break;
+        case "C":
+          context.celebrations.setOpenDialogCelebration((prev) => !prev);
+          break;
+        case "N":
+          context.campaigns.setOpenDialogCampaign((prev) => !prev);
+          break;
+        case "S":
+          context.sidebar.setSidebarView((prev) => !prev);
+          break;
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+          alert("Not implemented");
+          break;
+      }
+      close(false);
+    }
+
+    window.addEventListener("keydown", keyDown);
+
+    return () => window.removeEventListener("keydown", keyDown);
+  }, [close]);
+
+  return <div></div>;
 }
