@@ -653,7 +653,7 @@ function Shortcut({
     window.addEventListener("keydown", keyDown);
 
     return () => window.removeEventListener("keydown", keyDown);
-  }, [close]);
+  }, [close, context]);
 
   return <div></div>;
 }
