@@ -380,7 +380,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           { shortcut: "C", does: "Nova Data Comemorativa" },
                           { shortcut: "N", does: "Nova Campanha" },
                           {
-                            shortcut: "S",
+                            shortcut: "B",
                             does: "Ocultar/Mostrar barras laterais",
                           },
                         ],
@@ -631,7 +631,7 @@ function Shortcut({
         case "N":
           context.campaigns.setOpenDialogCampaign((prev) => !prev);
           break;
-        case "S":
+        case "B":
           context.sidebar.setSidebarView((prev) => !prev);
           break;
         case "0":
