@@ -417,7 +417,7 @@ body {
   @apply opacity-50 hover:opacity-100;
 }
 
-.dragging-base {
+.dragging {
   @apply scale-90 opacity-50;
 }
 

@@ -52,7 +52,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           draggable
           onDragStart={(e) => {
             const ele = e.target as HTMLElement;
-            ele.classList.add("dragging-base");
+            ele.classList.add("dragging");
 
             const ghost = ele.cloneNode(true) as HTMLElement;
             ghost.style.width = `${ele.offsetWidth}px`;
@@ -77,7 +77,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           }}
           onDragEnd={(e) => {
             let ele = e.target as HTMLElement;
-            ele.classList.remove("dragging-base");
+            ele.classList.remove("dragging");
           }}
           className={`action-line bg-${action.status.slug} bg-${action.status.slug}-hover  @container`}
           onClick={() => {
