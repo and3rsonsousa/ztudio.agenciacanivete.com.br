@@ -1084,13 +1084,6 @@ h5 {
   position: relative;
 }
 
-.inset-0 {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-}
-
 .top-1\/2 {
   top: 50%;
 }
@@ -1286,6 +1279,10 @@ h5 {
   margin-top: 3rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .ml-8 {
   margin-left: 2rem;
 }
@@ -1296,10 +1293,6 @@ h5 {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
 }
 
 .-mr-3 {
@@ -1775,6 +1768,10 @@ h5 {
   background-color: rgb(31 41 55 / 0.5);
 }
 
+.bg-white\/50 {
+  background-color: rgb(255 255 255 / 0.5);
+}
+
 .bg-gray-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
@@ -1782,14 +1779,6 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-white\/80 {
-  background-color: rgb(255 255 255 / 0.8);
-}
-
-.bg-white\/50 {
-  background-color: rgb(255 255 255 / 0.5);
 }
 
 .bg-gradient-to-r {
@@ -2129,6 +2118,20 @@ h5 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.line-clamp-5 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
 
 .\@container {
@@ -3012,14 +3015,6 @@ body {
 .dark .dark\:bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
-.dark .dark\:bg-gray-100\/80 {
-  background-color: rgb(243 244 246 / 0.8);
-}
-
-.dark .dark\:bg-gray-1000\/80 {
-  background-color: rgb(10 12 26 / 0.8);
 }
 
 .dark .dark\:bg-gray-1000\/50 {

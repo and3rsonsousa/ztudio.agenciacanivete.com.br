@@ -310,7 +310,7 @@ export const ActionGrid = ({
           ${total - index === 1 ? "rounded-br-xl" : ""}`}
         >
           <div></div>
-          <div>{action.name}</div>
+          <div className="line-clamp-5">{action.name}</div>
           <div>{dayjs(action.date).format("DD/MM")}</div>
         </div>
       </ContextMenu.Trigger>

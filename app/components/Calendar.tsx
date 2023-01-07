@@ -4,7 +4,7 @@ import {
   FunnelIcon,
 } from "@heroicons/react/24/outline";
 import { FunnelIcon as FunnelIconSolid } from "@heroicons/react/20/solid";
-import { Link, useMatches, useSearchParams } from "@remix-run/react";
+import { Link, useMatches, useParams, useSearchParams } from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -39,7 +39,7 @@ export default function Calendar({
   grid?: boolean;
 }) {
   const [searchParams] = useSearchParams();
-  // const [filter, setFilter] = useState("all");
+  const { slug } = useParams();
   const [filter, setFilter] = useState("allcategory");
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
@@ -161,7 +161,9 @@ export default function Calendar({
               [
                 { title: "Mostrar todos", value: "all" },
                 { title: "Por categoria", value: "allcategory" },
-                { title: "Por Cliente", value: "allaccount" },
+                slug
+                  ? undefined
+                  : { title: "Por Cliente", value: "allaccount" },
               ],
               [
                 ...tags.map((tag: ItemModel) => ({

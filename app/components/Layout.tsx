@@ -29,8 +29,7 @@ import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
-  const urlParams = useParams();
-  const currentAccount = urlParams.slug;
+  const { slug } = useParams();
 
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
@@ -150,7 +149,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
                       : "text-xx text-center font-bold uppercase"
                   } block  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
-                    currentAccount === account.slug
+                    slug === account.slug
                       ? "bg-brand text-white ring-offset-2 ring-offset-white dark:ring-offset-gray-1000"
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
