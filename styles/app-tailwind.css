@@ -291,10 +291,10 @@ body {
 /* Status */
 
 .bg-idea {
-  @apply bg-idea-500 text-white dark:bg-idea-600;
+  @apply bg-idea-500 text-white;
 }
 .bg-idea-hover {
-  @apply hover:bg-idea-600 dark:hover:bg-idea-700;
+  @apply hover:bg-idea-600;
 }
 .border-idea {
   @apply border-idea-500;

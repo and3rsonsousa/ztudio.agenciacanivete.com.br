@@ -2120,13 +2120,6 @@ h5 {
   -webkit-line-clamp: 3;
 }
 
-.line-clamp-4 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-}
-
 .line-clamp-5 {
   overflow: hidden;
   display: -webkit-box;
@@ -2500,19 +2493,9 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.dark .bg-idea {
-  --tw-bg-opacity: 1;
-  background-color: rgb(202 138 4 / var(--tw-bg-opacity));
-}
-
 .bg-idea-hover:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
-}
-
-.dark .bg-idea-hover:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(161 98 7 / var(--tw-bg-opacity));
 }
 
 .border-idea {

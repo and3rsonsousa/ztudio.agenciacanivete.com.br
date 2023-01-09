@@ -375,9 +375,12 @@ const ContextMenuItems = ({
       <ContextMenu.Item asChild>
         <Link
           to={`/dashboard/${action.account.slug}/action/${action.id}`}
-          className="dropdown-item item-small flex items-center gap-2"
+          className="dropdown-item item-small flex items-center justify-between gap-2"
         >
-          <PencilSquareIcon className="w-4" /> <div>Editar</div>
+          <div className="flex items-center gap-2">
+            <PencilSquareIcon className="w-4" /> <div>Editar</div>
+          </div>
+          <div className="opacity-50">E</div>
         </Link>
       </ContextMenu.Item>
       {/* Duplicar */}
@@ -448,9 +451,13 @@ const ContextMenuItems = ({
             }
           );
         }}
-        className="dropdown-item item-small flex items-center gap-2"
+        className="dropdown-item item-small flex items-center justify-between gap-2"
+        textValue="Xclude"
       >
-        <Trash className="w-4" /> <div>Excluir</div>
+        <div className="flex items-center gap-2">
+          <Trash className="w-4" /> <div>Excluir</div>
+        </div>
+        <div className="opacity-50">X</div>
       </ContextMenu.Item>
       {/* Adiar */}
       <ContextMenu.Sub>
@@ -503,7 +510,10 @@ const ContextMenuItems = ({
       <hr className="dropdown-hr" />
       {/* Tags */}
       <ContextMenu.Sub>
-        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+        <ContextMenu.SubTrigger
+          textValue="Tag"
+          className="dropdown-item item-small flex items-center gap-2"
+        >
           {/* <TagIcon className="w-4" /> */}
           <div
             className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
@@ -543,7 +553,10 @@ const ContextMenuItems = ({
       </ContextMenu.Sub>
       {/* Status */}
       <ContextMenu.Sub>
-        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
+        <ContextMenu.SubTrigger
+          textValue="Status"
+          className="dropdown-item item-small flex items-center gap-2"
+        >
           {/* <CheckBadgeIcon className="w-4" /> */}
           <div
             className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
