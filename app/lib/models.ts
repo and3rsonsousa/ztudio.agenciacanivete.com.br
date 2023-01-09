@@ -45,10 +45,11 @@ export type ActionModel = {
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
-  tag: ItemModel;
+  tag: ItemModel & { priority: number };
   status: ItemModel & { priority: number };
   account: AccountModel;
   campaign: CampaignModel;
+  attributes: ItemModel & { priority: number };
 };
 
 export type CelebrationModel = {
@@ -62,6 +63,7 @@ export type ItemModel = {
   id: string;
   name: string;
   slug: string;
+  short?: string;
 };
 
 export type DayModel = {

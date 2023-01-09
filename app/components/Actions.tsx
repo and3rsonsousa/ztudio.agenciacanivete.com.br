@@ -31,7 +31,6 @@ import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
-import { shortWord } from "~/lib/functions";
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -203,6 +202,7 @@ export const ActionMedium = ({
             {action.description?.trim().length ? (
               <div className="text-xx line-clamp-3">{action.description}</div>
             ) : null}
+            {/* Horário - Cliente - Tag - Status */}
             <div className="text-xx mt-1 flex gap-4 overflow-hidden">
               <div className="whitespace-nowrap">
                 {showDateAndTime
@@ -224,15 +224,16 @@ export const ActionMedium = ({
                 <div
                   className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
                 >
-                  {shortWord(action.tag.name)}
+                  {action.tag.short}
                 </div>
                 <div
                   className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
                 >
-                  {shortWord(action.status.name)}
+                  {action.status.short}
                 </div>
               </div>
             </div>
+            <div className="text-xx mt-1 flex gap-4 overflow-hidden">{}</div>
           </div>
         </div>
       </ContextMenu.Trigger>
