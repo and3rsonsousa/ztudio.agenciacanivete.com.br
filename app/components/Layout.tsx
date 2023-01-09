@@ -376,8 +376,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         title: "Ações",
                         shorcuts: [
                           { shortcut: "A", does: "Nova Ação" },
-                          { shortcut: "C", does: "Nova Data Comemorativa" },
-                          { shortcut: "N", does: "Nova Campanha" },
+                          { shortcut: "D", does: "Nova Data Comemorativa" },
+                          { shortcut: "C", does: "Nova Campanha" },
                           {
                             shortcut: "B",
                             does: "Ocultar/Mostrar barras laterais",
@@ -624,10 +624,10 @@ function Shortcut({
         case "A":
           context.actions.setOpenDialogAction((prev) => !prev);
           break;
-        case "C":
+        case "D":
           context.celebrations.setOpenDialogCelebration((prev) => !prev);
           break;
-        case "N":
+        case "C":
           context.campaigns.setOpenDialogCampaign((prev) => !prev);
           break;
         case "B":
