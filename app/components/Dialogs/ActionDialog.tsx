@@ -59,6 +59,7 @@ export default function ActionDialog({
   const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: ItemModel[] = matches[1].data.tags;
   const status: ItemModel[] = matches[1].data.status;
+  const attributes: ItemModel[] = matches[1].data.attributes;
   const persons: PersonModel[] = matches[1].data.persons;
   const campaigns: CampaignModel[] =
     matches[2].data.campaigns ?? matches[3].data.campaigns;
@@ -251,7 +252,7 @@ export default function ActionDialog({
           rows={action ? 5 : 3}
         />
 
-        <div className="grid w-full grid-cols-2 gap-4">
+        <div className="grid w-full gap-4 md:grid-cols-2">
           <SelectField
             name="tag"
             title="Tags"
@@ -272,6 +273,18 @@ export default function ActionDialog({
               value: stat.id,
             }))}
           />
+
+          {/* <SelectField
+            name="status"
+            title="Status"
+            value={
+              action ? action.status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
+            }
+            items={status.map((stat) => ({
+              title: stat.name,
+              value: stat.id,
+            }))}
+          /> */}
 
           <InputField
             name="date"

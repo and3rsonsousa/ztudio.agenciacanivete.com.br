@@ -1,7 +1,7 @@
 import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
-const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*),attributes:Attribute!Action_attributes_fkey(*)`;
+const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
 
 // Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
@@ -59,6 +59,24 @@ export const getTagsStatus = async (request: Request) => {
   ]);
 
   return { tags, status };
+};
+
+export const getTagsStatusAttributes = async (request: Request) => {
+  const { supabase } = getSupabase(request);
+  const [{ data: tags }, { data: status }, { data: attributes }] =
+    await Promise.all([
+      supabase.from("Tag").select("*").order("priority", { ascending: true }),
+      supabase
+        .from("Status")
+        .select("*")
+        .order("priority", { ascending: true }),
+      supabase
+        .from("Attribute")
+        .select("*")
+        .order("priority", { ascending: true }),
+    ]);
+
+  return { tags, status, attributes };
 };
 
 export const getActions = async (

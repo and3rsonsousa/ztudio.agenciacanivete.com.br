@@ -8,7 +8,7 @@ import {
   getCelebrations,
   getPersonByUser,
   getPersons,
-  getTagsStatus,
+  getTagsStatusAttributes,
 } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -26,17 +26,26 @@ export const loader: LoaderFunction = async ({ request }) => {
     { data: person },
     { data: persons },
     { data: accounts },
-    { tags, status },
+    { tags, status, attributes },
     { data: celebrations },
   ] = await Promise.all([
     getPersonByUser(userId, request),
     getPersons(request),
     getAccounts(userId, request),
-    getTagsStatus(request),
+    getTagsStatusAttributes(request),
     getCelebrations({ request }),
   ]);
   const url = request.url;
-  return { person, persons, accounts, tags, status, celebrations, url };
+  return {
+    person,
+    persons,
+    accounts,
+    tags,
+    status,
+    attributes,
+    celebrations,
+    url,
+  };
 };
 
 export default function Dashboard() {
