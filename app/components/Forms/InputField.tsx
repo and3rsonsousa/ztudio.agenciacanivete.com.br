@@ -40,6 +40,9 @@ export default function InputField(props: {
             disabled={props.disabled}
             type={props.type}
             name={props.name}
+            onChange={(event) => {
+              if (props.onChange) props.onChange(event);
+            }}
           />
 
           {props.suffix}

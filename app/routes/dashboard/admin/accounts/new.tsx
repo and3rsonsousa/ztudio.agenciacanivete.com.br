@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
+import Exclamation from "~/components/Exclamation";
 import CheckboxField from "~/components/Forms/CheckboxField";
 import InputField from "~/components/Forms/InputField";
 import { getPersons } from "~/lib/data";
@@ -58,13 +58,26 @@ export default function NewAccount() {
         <Exclamation type="error">{actionData.error.message}</Exclamation>
       )}
       <Form method="post" className="mt-4">
-        <InputField name="name" title="Nome" />
-        <InputField name="slug" title="Slug" />
+        <InputField
+          name="name"
+          label="Nome"
+          onChange={(event) => {
+            const ele = document.querySelector(
+              "input[name='slug']"
+            ) as HTMLInputElement;
+            // if (ele.value === "") {
+            //   console.log(event.target.value);
+            // }
+
+            ele.value = event.target.value.replace(" ", "").toLowerCase();
+          }}
+        />
+        <InputField name="slug" label="Slug" />
         <div>
           {persons.map((person) => (
             <CheckboxField
               name="users"
-              title={person.name}
+              label={person.name}
               value={person.user}
               key={person.user}
             />

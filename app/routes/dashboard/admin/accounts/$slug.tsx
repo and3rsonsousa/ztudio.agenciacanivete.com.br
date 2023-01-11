@@ -57,7 +57,7 @@ export default function UserId() {
             <CheckboxField
               key={person.id}
               name="users"
-              title={person.name}
+              label={person.name}
               checked={
                 account.users.filter((user) => user === person.user).length > 0
               }

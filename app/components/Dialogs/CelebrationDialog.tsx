@@ -56,7 +56,7 @@ export default function CelebrationDialog() {
           value={date.format("DD/MM")}
           placeholder="dd/mm"
         />
-        <Checkbox title="Feriado" name="is_holiday" />
+        <Checkbox label="Feriado" name="is_holiday" />
         <div className="flex items-center justify-end pt-4">
           <Button primary type="submit">
             Adicionar

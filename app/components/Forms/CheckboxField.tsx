@@ -2,13 +2,15 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 
 export default function CheckboxField({
   name,
-  title,
+  label,
   checked,
+  value,
   onChange,
 }: {
   name: string;
-  title: string;
+  label: string;
   checked?: boolean;
+  value?: string;
   onChange?: () => void;
 }) {
   return (
@@ -18,11 +20,12 @@ export default function CheckboxField({
         type="checkbox"
         defaultChecked={checked}
         onChange={onChange}
+        value={value}
       />
       <div className="checkbox">
         <CheckIcon />
       </div>
-      <span className="field-label">{title}</span>
+      <span className="field-label">{label}</span>
     </label>
   );
 }
