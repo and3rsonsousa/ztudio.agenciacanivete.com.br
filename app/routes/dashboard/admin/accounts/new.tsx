@@ -73,6 +73,7 @@ export default function NewAccount() {
           }}
         />
         <InputField name="slug" label="Slug" />
+        <InputField name="short" label="Abreviação" />
         <div>
           {persons.map((person) => (
             <CheckboxField

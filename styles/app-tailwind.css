@@ -288,6 +288,13 @@ body {
   @apply hover:bg-tiktok-600 dark:hover:bg-tiktok-700;
 }
 
+.bg-financial {
+  @apply bg-financial-500 text-white dark:bg-financial-600;
+}
+.bg-financial-hover {
+  @apply hover:bg-financial-600 dark:hover:bg-financial-700;
+}
+
 /* Status */
 
 .bg-idea {
