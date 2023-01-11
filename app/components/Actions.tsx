@@ -22,7 +22,7 @@ import {
   PencilSquareIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -603,8 +603,8 @@ const ContextMenuItems = ({
 const IsLate = ({ action }: { action: ActionModel }) =>
   dayjs(action.date).isBefore(dayjs()) &&
   action.status.slug !== "accomplished" ? (
-    // <div className="absolute -left-1 top-2 h-2 w-2 rounded-full  border-white bg-error-500 dark:border-gray-1000"></div>
-    <div className="absolute -left-1.5  -rotate-12 font-black text-error-500">
-      !
-    </div>
-  ) : null;
+    <div className="absolute -left-2 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-white bg-error-500 dark:border-gray-1000"></div>
+  ) : // <div className="absolute -left-1.5 -rotate-12 animate-pulse font-black text-error-500">
+  //   !
+  // </div>
+  null;

@@ -1132,6 +1132,10 @@ h5 {
   top: -3rem;
 }
 
+.-left-2 {
+  left: -0.5rem;
+}
+
 .z-20 {
   z-index: 20;
 }
@@ -1343,6 +1347,10 @@ h5 {
   height: 1.5rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-12 {
   height: 3rem;
 }
@@ -1403,16 +1411,16 @@ h5 {
   width: 1rem;
 }
 
+.w-3 {
+  width: 0.75rem;
+}
+
 .w-8 {
   width: 2rem;
 }
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-3 {
-  width: 0.75rem;
 }
 
 .w-\[90vw\] {
@@ -1495,6 +1503,32 @@ h5 {
 .-rotate-12 {
   --tw-rotate: -12deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes spin {
