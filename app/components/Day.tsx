@@ -106,7 +106,7 @@ export default function Day({
               day.date.format("YYYY-MM-DD")
             }
             onClick={() => {
-              context.date.setDateOfTheDay(day.date);
+              context.date.setDay(day.date);
               setSelectedDay(day.date.format("YYYY-MM-DD"));
             }}
           >

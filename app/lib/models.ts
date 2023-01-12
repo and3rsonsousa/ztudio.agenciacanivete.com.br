@@ -83,12 +83,12 @@ export type MonthType = Array<{
 
 export type ContextType = {
   date: {
-    dateOfTheDay: Dayjs;
-    setDateOfTheDay: React.Dispatch<React.SetStateAction<Dayjs>>;
+    day: Dayjs;
+    setDay: React.Dispatch<React.SetStateAction<Dayjs>>;
   };
   filter: {
     option: string;
-    setFilter: React.Dispatch<React.SetStateAction<string>>;
+    setOption: React.Dispatch<React.SetStateAction<string>>;
   };
   actions: {
     open: boolean;

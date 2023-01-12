@@ -276,7 +276,7 @@ export const ActionGrid = ({
           squared
           icon
           onClick={() => {
-            context.date.setDateOfTheDay(dayjs(action.date));
+            context.date.setDay(dayjs(action.date));
             context.actions.setOpen(true);
           }}
         >

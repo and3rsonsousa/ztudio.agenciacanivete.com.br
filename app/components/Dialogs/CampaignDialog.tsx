@@ -32,7 +32,7 @@ export default function CampaignDialog({
   const matches = useMatches();
   const [searchParams] = useSearchParams();
   const context: ContextType = useOutletContext();
-  const date = context.date.dateOfTheDay;
+  const date = context.date.day;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const status: ItemModel[] = matches[1].data.status;

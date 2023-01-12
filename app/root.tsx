@@ -48,47 +48,48 @@ export const loader: LoaderFunction = () => {
 export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
-  const [openDialogAction, setOpen] = useState(false);
-  const [openDialogCelebration, setOpen] = useState(false);
-  const [openDialogCampaign, setOpen] = useState(false);
-  const [openDialogSearch, setOpen] = useState(false);
-  const [openShortcut, setOpen] = useState(false);
-  const [open, setOpen] = useState(true);
-  const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
-  const [filter, setFilter] = useState("all");
+  const [day, setDay] = useState(dayjs());
+  const [option, setOption] = useState("all");
+  const [openDialogAction, setopenDialogAction] = useState(false);
+  const [openDialogCelebration, setopenDialogCelebration] = useState(false);
+  const [openDialogCampaign, setopenDialogCampaign] = useState(false);
+  const [openDialogSearch, setopenDialogSearch] = useState(false);
+  const [openShortcut, setopenShortcut] = useState(false);
+  const [sidebar, setsidebar] = useState(true);
 
   const context: ContextType = {
     date: {
-      dateOfTheDay,
-      setDateOfTheDay,
+      day,
+      setDay,
     },
-    celebrations: {
-      open: openDialogCelebration,
-      setOpen: setOpen,
+    filter: {
+      option,
+      setOption,
     },
     actions: {
       open: openDialogAction,
-      setOpen: setOpen,
+      setOpen: setopenDialogAction,
+    },
+    celebrations: {
+      open: openDialogCelebration,
+      setOpen: setopenDialogCelebration,
     },
     campaigns: {
       open: openDialogCampaign,
-      setOpen,
+      setOpen: setopenDialogCampaign,
     },
     search: {
       open: openDialogSearch,
-      setOpen,
+      setOpen: setopenDialogSearch,
     },
-    sidebar: {
-      open,
-      setOpen,
-    },
+
     shortcut: {
       open: openShortcut,
-      setOpen,
+      setOpen: setopenShortcut,
     },
-    filter: {
-      option: filter,
-      setFilter,
+    sidebar: {
+      open: sidebar,
+      setOpen: setsidebar,
     },
   };
 

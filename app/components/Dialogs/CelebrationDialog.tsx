@@ -9,7 +9,7 @@ import Loader from "../Loader";
 
 export default function CelebrationDialog() {
   const context: ContextType = useOutletContext();
-  const date = context.date.dateOfTheDay;
+  const date = context.date.day;
   const fetcher = useFetcher();
   const isAdding =
     fetcher.state === "submitting" &&

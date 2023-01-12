@@ -178,7 +178,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </button>
           </div>
-
+          {/* User Menu */}
           <div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
@@ -398,7 +398,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Celebration */}
         <Dialog.Root
           open={context.celebrations.open}
-          onOpenChange={context.celebrations.setOpen}
+          onOpenChange={(v: boolean) => {
+            console.log(v);
+            context.celebrations.setOpen(v);
+          }}
         >
           <AnimatePresence>
             {context.celebrations.open && (

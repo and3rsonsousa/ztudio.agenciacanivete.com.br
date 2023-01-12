@@ -47,7 +47,7 @@ export default function ActionDialog({
 
   const context: ContextType = useOutletContext();
 
-  const date = context.date.dateOfTheDay;
+  const date = context.date.day;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: ItemModel[] = matches[1].data.tags;
