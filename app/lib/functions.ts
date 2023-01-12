@@ -66,16 +66,22 @@ export function actionsByPriority(actions: ActionModel[]) {
     .sort((a, b) => (a.status.priority > b.status.priority ? 1 : -1));
 }
 
-export function actionsByCategory(actions: ActionModel[], tags: ItemModel[]) {
+export function actionsByCategory(
+  actions: ActionModel[],
+  tags: ItemModel[],
+  priority?: boolean
+) {
   const categories = tags.map((tag, index) => {
     let category: { tag: ItemModel; actions: ActionModel[] } = {
       tag: tag,
       actions: [],
     };
 
-    let _actions = actionsByPriority(
-      actions.filter((action) => action.tag.slug === tag.slug)
-    );
+    let _actions = priority
+      ? actionsByPriority(
+          actions.filter((action) => action.tag.slug === tag.slug)
+        )
+      : actions.filter((action) => action.tag.slug === tag.slug);
 
     category.actions = _actions;
 
@@ -86,16 +92,19 @@ export function actionsByCategory(actions: ActionModel[], tags: ItemModel[]) {
 }
 export function actionsByAccount(
   actions: ActionModel[],
-  accounts: AccountModel[]
+  accounts: AccountModel[],
+  priority?: boolean
 ) {
-  const _accounts = accounts.map((_account, index) => {
+  const _accounts = accounts.map((_account) => {
     let accountGroup: { account: AccountModel; actions: ActionModel[] } = {
       account: _account,
       actions: [],
     };
-    let _actions = actionsByPriority(
-      actions.filter((action) => action.account.id === _account.id)
-    );
+    let _actions = priority
+      ? actionsByPriority(
+          actions.filter((action) => action.account.id === _account.id)
+        )
+      : actions.filter((action) => action.account.id === _account.id);
     accountGroup.actions = _actions;
     return accountGroup;
   });

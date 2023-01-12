@@ -209,7 +209,11 @@ export default function Day({
                     </div>
                   )
               )
-            : actionsByPriority(day.actions).map((action, index) => (
+            : filter === "priority"
+            ? actionsByPriority(day.actions).map((action, index) => (
+                <ActionLine key={index} action={action} />
+              ))
+            : day.actions.map((action, index) => (
                 <ActionLine key={index} action={action} />
               ))}
         </div>

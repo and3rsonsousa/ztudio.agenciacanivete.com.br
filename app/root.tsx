@@ -49,13 +49,14 @@ export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
   const [day, setDay] = useState(dayjs());
-  const [option, setOption] = useState("allaccount");
+  const [option, setOption] = useState("all");
   const [openDialogAction, setopenDialogAction] = useState(false);
   const [openDialogCelebration, setopenDialogCelebration] = useState(false);
   const [openDialogCampaign, setopenDialogCampaign] = useState(false);
   const [openDialogSearch, setopenDialogSearch] = useState(false);
   const [openShortcut, setopenShortcut] = useState(false);
   const [sidebar, setsidebar] = useState(true);
+  const [priority, setPriority] = useState(true);
 
   const context: ContextType = {
     date: {

@@ -1,9 +1,12 @@
 import {
+  CheckIcon,
+  FunnelIcon as FunnelIconSolid,
+} from "@heroicons/react/20/solid";
+import {
   ChevronLeftIcon,
   ChevronRightIcon,
   FunnelIcon,
 } from "@heroicons/react/24/outline";
-import { FunnelIcon as FunnelIconSolid } from "@heroicons/react/20/solid";
 import {
   Link,
   useMatches,
@@ -31,6 +34,7 @@ import Day from "./Day";
 import DayInfo from "./DayInfo";
 import SelectField from "./Forms/SelectField";
 import InstagramGrid from "./InstagramGrid";
+
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.locale("pt-br");
@@ -156,7 +160,64 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className="-mb-4 flex px-4">
+        <div className="-mb-4 flex gap-2 px-4">
+          <div className="mt-2 flex">
+            <div className="px-2 text-center md:px-4">
+              <div className="font-medium">{actions.length}</div>
+              <div className="text-[8px] font-bold uppercase tracking-[1px]">
+                Ações
+              </div>
+            </div>
+            <div className="px-2 text-center text-success-500 md:px-4">
+              <div className="font-medium">
+                {Math.floor(
+                  (actions.filter(
+                    (action) => action.status.slug === "accomplished"
+                  ).length /
+                    actions.length) *
+                    100
+                )}
+                %
+              </div>
+              <div className="text-[8px] font-bold uppercase tracking-[1px]">
+                concluídos
+              </div>
+            </div>
+            <div
+              className={`px-2 text-center ${
+                actions.filter(
+                  (action) =>
+                    dayjs(action.date).isBefore(dayjs()) &&
+                    action.status.slug !== "accomplished"
+                ).length > 0
+                  ? "text-error-500"
+                  : null
+              } md:px-4`}
+            >
+              <div className="font-medium ">
+                {actions.filter(
+                  (action) =>
+                    dayjs(action.date).isBefore(dayjs()) &&
+                    action.status.slug !== "accomplished"
+                ).length ?? "TUDO OK"}
+              </div>
+              <div className="text-[8px] font-bold uppercase tracking-[1px]">
+                atrasadas
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 mr-4">
+            <label className="field field-checkbox item-center flex gap-2">
+              <input type="checkbox" />
+              <div className="checkbox">
+                <CheckIcon />
+              </div>
+              <div className="field-label whitespace-nowrap text-[10px] uppercase tracking-[1px]">
+                <span className="hidden md:inline">Organizar por </span>
+                prioridade
+              </div>
+            </label>
+          </div>
           <div
             className={`bg-${
               context.filter.option !== "all"

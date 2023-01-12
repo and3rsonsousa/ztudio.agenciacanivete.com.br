@@ -148,6 +148,33 @@ body {
     @apply block overflow-hidden text-ellipsis whitespace-nowrap;
   }
 
+  .field-checkbox {
+    @apply relative flex items-center gap-4;
+  }
+  .field-checkbox .field-label {
+    @apply m-0;
+  }
+  .field-checkbox input {
+    @apply absolute opacity-0;
+  }
+  .field-checkbox .checkbox {
+    @apply h-4 w-4 rounded border border-transparent  bg-gray-100 dark:bg-gray-600;
+  }
+  .field-checkbox .checkbox svg {
+    @apply scale-50 text-white opacity-0;
+  }
+
+  .field-checkbox input:checked ~ .checkbox {
+    @apply relative bg-brand;
+  }
+  .field-checkbox input:checked ~ .checkbox svg {
+    @apply scale-100 opacity-100;
+  }
+
+  .field-checkbox input:focus ~ .checkbox {
+    @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
+  }
+
   .dropdown-content {
     @apply shadow-color dark:shadow-color-dark z-50 rounded-xl border border-black/10 bg-gray-100/75 py-2 backdrop-blur-xl dark:bg-gray-700/25;
   }
@@ -210,33 +237,6 @@ body {
 
 .dialog-content {
   @apply z-50  rounded-xl  bg-white text-gray-900 shadow-xl focus:outline-none  dark:bg-gray-1000 dark:text-gray-200;
-}
-
-.field-checkbox {
-  @apply relative flex items-center gap-4;
-}
-.field-checkbox .field-label {
-  @apply m-0;
-}
-.field-checkbox input {
-  @apply absolute opacity-0;
-}
-.field-checkbox .checkbox {
-  @apply h-4 w-4 rounded border border-transparent  bg-gray-100 dark:bg-gray-600;
-}
-.field-checkbox .checkbox svg {
-  @apply scale-50 text-white opacity-0;
-}
-
-.field-checkbox input:checked ~ .checkbox {
-  @apply relative bg-brand;
-}
-.field-checkbox input:checked ~ .checkbox svg {
-  @apply scale-100 opacity-100;
-}
-
-.field-checkbox input:focus ~ .checkbox {
-  @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
 }
 
 .bg-feed {
