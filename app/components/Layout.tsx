@@ -489,7 +489,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </AnimatePresence>
         </Dialog.Root>
         {context.shortcut.open && (
-          <Shortcut context={context} close={context.shortcut.setOpen} />
+          <Shortcut
+            context={context}
+            close={(value: boolean) => {
+              context.shortcut.setOpen(value);
+              setShowShorcuts(value);
+            }}
+          />
         )}
       </>
     </div>
@@ -539,7 +545,7 @@ function Shortcut({
   close,
 }: {
   context: ContextType;
-  close: React.Dispatch<React.SetStateAction<boolean>>;
+  close: (value: boolean) => void;
 }) {
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
