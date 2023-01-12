@@ -49,7 +49,7 @@ export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
   const [day, setDay] = useState(dayjs());
-  const [option, setOption] = useState("all");
+  const [option, setOption] = useState("allaccount");
   const [openDialogAction, setopenDialogAction] = useState(false);
   const [openDialogCelebration, setopenDialogCelebration] = useState(false);
   const [openDialogCampaign, setopenDialogCampaign] = useState(false);

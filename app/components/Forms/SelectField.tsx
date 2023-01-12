@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/20/solid";
 
 import * as Select from "@radix-ui/react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SelectItemModel = { title: string; value: string };
 
@@ -31,21 +31,24 @@ export default function SelectField({
   onChange?: (value: string) => void;
 }) {
   const [selectedValue, setValue] = useState(value);
-
   const _items = Array.isArray(items[0]) ? items : [items];
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
 
   return (
     <label className="select-field field relative">
       {title && <span className="field-label">{title}</span>}
       <Select.Root
         value={selectedValue}
-        onValueChange={(value) => {
-          if (onChange) {
-            onChange(value);
-          }
+        onValueChange={setValue}
+        // onValueChange={(value) => {
+        //   if (onChange) {
+        //     onChange(value);
+        //   }
 
-          setValue(value);
-        }}
+        //   setValue(value);
+        // }}
         name={name}
         disabled={disabled}
       >

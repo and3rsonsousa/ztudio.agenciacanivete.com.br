@@ -4,7 +4,13 @@ import {
   FunnelIcon,
 } from "@heroicons/react/24/outline";
 import { FunnelIcon as FunnelIconSolid } from "@heroicons/react/20/solid";
-import { Link, useMatches, useParams, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  useMatches,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -15,6 +21,7 @@ import type {
   ActionModel,
   CampaignModel,
   CelebrationModel,
+  ContextType,
   DayModel,
   ItemModel,
   MonthType,
@@ -40,7 +47,7 @@ export default function Calendar({
 }) {
   const [searchParams] = useSearchParams();
   const { slug } = useParams();
-  const [filter, setFilter] = useState("all");
+  const context: ContextType = useOutletContext();
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
@@ -67,7 +74,8 @@ export default function Calendar({
       return (
         dayjs(action.date).format("YYYY-MM-DD") ===
           _day.date.format("YYYY-MM-DD") &&
-        (filter.includes("all") || action.tag.slug === filter)
+        (context.filter.option.includes("all") ||
+          action.tag.slug === context.filter.option)
       );
     });
 
@@ -148,15 +156,24 @@ export default function Calendar({
         </div>
 
         <div className="-mb-4 flex px-4">
-          <div className={`bg-${filter} mt-2 h-8 w-8 rounded-full p-2`}>
-            {["all"].indexOf(filter) < 0 ? (
-              <FunnelIconSolid className="w-4" />
+          <div
+            className={`bg-${
+              context.filter.option !== "all"
+                ? context.filter.option.includes("all")
+                  ? "info"
+                  : context.filter.option
+                : null
+            } mt-2 h-8 w-8 rounded-full p-2`}
+          >
+            {context.filter.option === "all" ? (
+              <FunnelIcon className="w-4" />
             ) : (
-              <FunnelIcon className=" w-4" />
+              <FunnelIconSolid className="w-4" />
             )}
           </div>
+
           <SelectField
-            name="filter"
+            name="FilterActions"
             items={[
               [
                 { title: "Mostrar todos", value: "all" },
@@ -173,10 +190,10 @@ export default function Calendar({
               ],
             ]}
             onChange={(value) => {
-              setFilter(value);
+              context.filter.setOption(value);
             }}
             small
-            value={filter}
+            value={context.filter.option}
             link
           />
         </div>
@@ -220,7 +237,7 @@ export default function Calendar({
                     firstDayOfCurrentMonth={firstDayOfCurrentMonth}
                     selectedDay={selectedDay}
                     setSelectedDay={setSelectedDay}
-                    filter={filter}
+                    filter={context.filter.option}
                   />
                 );
               })}

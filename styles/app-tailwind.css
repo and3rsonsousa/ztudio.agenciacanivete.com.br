@@ -364,26 +364,14 @@ body {
 .bg-info {
   @apply bg-info-100 text-info-700 dark:bg-info-700 dark:text-info-200;
 }
-.bg-info svg {
-  @apply w-6 text-info-300 dark:text-info-500;
-}
 .bg-alert {
   @apply bg-alert-100 text-alert-700 dark:bg-alert-900 dark:text-alert-200;
-}
-.bg-alert svg {
-  @apply w-6 text-alert-300 dark:text-alert-500;
 }
 .bg-error {
   @apply bg-error-100 text-error-700 dark:bg-error-700 dark:text-error-200;
 }
-.bg-error svg {
-  @apply w-6 text-error-300 dark:text-error-500;
-}
 .bg-success {
   @apply bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-200;
-}
-.bg-success svg {
-  @apply w-6 text-success-300 dark:text-success-500;
 }
 
 .action-line {

@@ -1447,6 +1447,14 @@ h5 {
   width: 50%;
 }
 
+.w-12 {
+  width: 3rem;
+}
+
+.w-14 {
+  width: 3.5rem;
+}
+
 .max-w-\[8rem\] {
   max-width: 8rem;
 }
@@ -2728,17 +2736,6 @@ body {
   color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
-.bg-info svg {
-  width: 1.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(203 213 225 / var(--tw-text-opacity));
-}
-
-.dark .bg-info svg {
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
-}
-
 .bg-alert {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
@@ -2751,17 +2748,6 @@ body {
   background-color: rgb(113 63 18 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(254 240 138 / var(--tw-text-opacity));
-}
-
-.bg-alert svg {
-  width: 1.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(253 224 71 / var(--tw-text-opacity));
-}
-
-.dark .bg-alert svg {
-  --tw-text-opacity: 1;
-  color: rgb(234 179 8 / var(--tw-text-opacity));
 }
 
 .bg-error {
@@ -2778,17 +2764,6 @@ body {
   color: rgb(254 202 202 / var(--tw-text-opacity));
 }
 
-.bg-error svg {
-  width: 1.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(252 165 165 / var(--tw-text-opacity));
-}
-
-.dark .bg-error svg {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
-}
-
 .bg-success {
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
@@ -2801,17 +2776,6 @@ body {
   background-color: rgb(4 120 87 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(167 243 208 / var(--tw-text-opacity));
-}
-
-.bg-success svg {
-  width: 1.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(110 231 183 / var(--tw-text-opacity));
-}
-
-.dark .bg-success svg {
-  --tw-text-opacity: 1;
-  color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 .action-line {

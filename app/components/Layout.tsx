@@ -52,36 +52,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }, 2000);
         }
         context.shortcut.setOpen((prev: boolean) => !prev);
-        //   if () {
-        //     if (event.shiftKey) {
-        //       context.actions.setOpen((prev: boolean) => !prev);
-        //     } else {
-        //       context.search.setOpen(
-        //         !context.search.openDialogSearch
-        //       );
-        //     }
-        //   } else if (event.key === "b") {
-        //     if (window.innerWidth >= 1024)
-        //       context.sidebar.setOpen((prev: boolean) => !prev);
-        //   }
       }
     }
-    // function keyDown(event: KeyboardEvent) {
-    //   if (event.metaKey) {
-    //     if (event.key === "k") {
-    //       if (event.shiftKey) {
-    //         context.actions.setOpen((prev: boolean) => !prev);
-    //       } else {
-    //         context.search.setOpen(
-    //           !context.search.openDialogSearch
-    //         );
-    //       }
-    //     } else if (event.key === "b") {
-    //       if (window.innerWidth >= 1024)
-    //         context.sidebar.setOpen((prev: boolean) => !prev);
-    //     }
-    //   }
-    // }
 
     window.addEventListener("keydown", keyDown);
 
@@ -356,16 +328,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       {
                         title: "Filtros",
                         shorcuts: [
-                          { shortcut: "0", does: "Filtrar: Mostrar Todos" },
-                          { shortcut: "1", does: "Filtrar: Por categoria" },
-                          { shortcut: "2", does: "Filtrar: Por cliente" },
-                          { shortcut: "3", does: "Filtrar: Feed" },
-                          { shortcut: "4", does: "Filtrar: Reels" },
-                          { shortcut: "5", does: "Filtrar: Tarefa" },
-                          { shortcut: "6", does: "Filtrar: Stories" },
-                          { shortcut: "7", does: "Filtrar: Reunião" },
-                          { shortcut: "8", does: "Filtrar: Impresso" },
-                          { shortcut: "9", does: "Filtrar: Tiktok" },
+                          {
+                            shortcut: ",",
+                            does: "Filtrar: Mostrar Todos",
+                          },
+                          {
+                            shortcut: ".",
+                            does: "Filtrar: Por categoria",
+                          },
+                          {
+                            shortcut: "/",
+                            does: "Filtrar: Por cliente",
+                          },
+                          { shortcut: "1", does: "Filtrar: Feed" },
+                          { shortcut: "2", does: "Filtrar: Reels" },
+                          { shortcut: "3", does: "Filtrar: Tarefa" },
+                          { shortcut: "4", does: "Filtrar: Stories" },
+                          { shortcut: "5", does: "Filtrar: Reunião" },
+                          { shortcut: "6", does: "Filtrar: Impresso" },
+                          { shortcut: "7", does: "Filtrar: Tiktok" },
+                          { shortcut: "8", does: "Filtrar: Financeiro" },
                         ],
                       },
                     ].map((column, index) => (
@@ -378,7 +360,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             key={index}
                             className="flex items-center justify-between py-1"
                           >
-                            <div className="w-8 font-bold">
+                            <div className="w-14 font-bold">
                               {shortcut.shortcut}
                             </div>
                             <div className="opacity-75">{shortcut.does}</div>
@@ -577,15 +559,42 @@ function Shortcut({
         case "B":
           context.sidebar.setOpen((prev) => !prev);
           break;
-        case "0":
+        case "S":
+          context.search.setOpen((prev) => !prev);
+          break;
+        case ",":
+          context.filter.setOption("all");
+          break;
+        case ".":
+          context.filter.setOption("allcategory");
+          break;
+        case "/":
+          context.filter.setOption("allaccount");
+          break;
         case "1":
+          context.filter.setOption("feed");
+          break;
         case "2":
+          context.filter.setOption("reels");
+          break;
         case "3":
+          context.filter.setOption("task");
+          break;
         case "4":
+          context.filter.setOption("stories");
+          break;
         case "5":
+          context.filter.setOption("meeting");
+          break;
         case "6":
+          context.filter.setOption("print");
+          break;
         case "7":
+          context.filter.setOption("tiktok");
+          break;
         case "8":
+          context.filter.setOption("financial");
+          break;
         case "9":
           alert("Not implemented");
           break;
