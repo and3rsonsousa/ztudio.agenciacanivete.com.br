@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useOutletContext, useParams } from "@remix-run/react";
-import type { DayModel } from "~/lib/models";
+import type { ContextType, DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
 import Button from "./Button";
 import Celebration from "./Celebrations";
@@ -8,18 +8,13 @@ import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
-  const context: {
-    sidebar: {
-      sidebarView: boolean;
-      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
   const { slug } = useParams();
 
   return (
     <div
       className={`flex flex-shrink-0 flex-col overflow-hidden ${
-        context.sidebar.sidebarView ? "lg:w-80" : "lg:w-12"
+        context.sidebar.open ? "lg:w-80" : "lg:w-12"
       } lg:pt-0`}
     >
       {day !== undefined ? (
@@ -27,14 +22,14 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           <div className="px-4 py-2">
             {/* Header */}
             <div className="flex items-center justify-between">
-              {context.sidebar.sidebarView && (
+              {context.sidebar.open && (
                 <h5 className="text-xs">
                   {day.date.format("D [de] MMMM [de] YYYY")}
                 </h5>
               )}
               <div
                 className={`${
-                  !context.sidebar.sidebarView ? "-ml-2" : ""
+                  !context.sidebar.open ? "-ml-2" : ""
                 } hidden lg:block`}
               >
                 <Button
@@ -42,11 +37,9 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                   small
                   icon
                   squared
-                  onClick={() =>
-                    context.sidebar.setSidebarView(!context.sidebar.sidebarView)
-                  }
+                  onClick={() => context.sidebar.setOpen(!context.sidebar.open)}
                 >
-                  {context.sidebar.sidebarView ? (
+                  {context.sidebar.open ? (
                     <ArrowRightIcon className="mr-0.5" />
                   ) : (
                     <ArrowLeftIcon className="ml-0.5" />
@@ -56,7 +49,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             </div>
 
             {/* Celebrations */}
-            {context.sidebar.sidebarView && day.celebrations.length > 0 ? (
+            {context.sidebar.open && day.celebrations.length > 0 ? (
               <div className=" mt-4 flex flex-col">
                 {day.celebrations.map((celebration, index) => (
                   <Celebration celebration={celebration} key={index} />
@@ -64,7 +57,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
               </div>
             ) : null}
           </div>
-          {context.sidebar.sidebarView && (
+          {context.sidebar.open && (
             <ActionList
               actions={day.actions}
               hideAccount={slug !== undefined}
@@ -73,7 +66,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
           )}
         </>
       ) : (
-        context.sidebar.sidebarView && (
+        context.sidebar.open && (
           <div className="flex flex-auto p-8">
             <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
           </div>
@@ -84,7 +77,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         action
         campaign
         celebration
-        showSmallAction={!context.sidebar.sidebarView}
+        showSmallAction={!context.sidebar.open}
       />
     </div>
   );

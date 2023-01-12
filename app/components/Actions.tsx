@@ -22,12 +22,16 @@ import {
   PencilSquareIcon,
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
-import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { scaleUp } from "~/lib/animations";
-import type { AccountModel, ActionModel, ItemModel } from "~/lib/models";
+import type {
+  AccountModel,
+  ActionModel,
+  ContextType,
+  ItemModel,
+} from "~/lib/models";
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
@@ -256,15 +260,7 @@ export const ActionGrid = ({
   index: number;
   total: number;
 }) => {
-  const context: {
-    date: {
-      setDateOfTheDay: (date: Dayjs) => void;
-    };
-    actions: {
-      openDialogAction: boolean;
-      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
   const fetcher = useFetcher();
 
   return action.name === "support" ? (
@@ -281,7 +277,7 @@ export const ActionGrid = ({
           icon
           onClick={() => {
             context.date.setDateOfTheDay(dayjs(action.date));
-            context.actions.setOpenDialogAction(true);
+            context.actions.setOpen(true);
           }}
         >
           <DocumentPlusIcon />

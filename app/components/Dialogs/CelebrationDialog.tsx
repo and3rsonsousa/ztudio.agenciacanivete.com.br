@@ -1,21 +1,14 @@
 import { useFetcher, useOutletContext } from "@remix-run/react";
-import type { Dayjs } from "dayjs";
 import { useEffect, useRef } from "react";
-import Exclamation from "../Exclamation";
+import type { ContextType } from "~/lib/models";
 import Button from "../Button";
+import Exclamation from "../Exclamation";
 import Checkbox from "../Forms/CheckboxField";
 import Field from "../Forms/InputField";
 import Loader from "../Loader";
 
 export default function CelebrationDialog() {
-  const context: {
-    date: {
-      dateOfTheDay: Dayjs;
-    };
-    celebrations: {
-      setOpenDialogCelebration: any;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
   const date = context.date.dateOfTheDay;
   const fetcher = useFetcher();
   const isAdding =
@@ -30,7 +23,7 @@ export default function CelebrationDialog() {
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.celebrations?.setOpenDialogCelebration(false);
+      context.celebrations?.setOpen(false);
     }
   }, [isAdding, context, fetcher]);
 

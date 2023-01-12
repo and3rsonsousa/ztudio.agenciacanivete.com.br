@@ -5,7 +5,7 @@ import { Campaign } from "~/components/Campaign";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import { getCampaigns } from "~/lib/data";
-import type { CampaignModel } from "~/lib/models";
+import type { CampaignModel, ContextType } from "~/lib/models";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data, error } = await getCampaigns({ request, account: params.slug });
@@ -14,11 +14,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function CampaignsPage() {
   const { campaigns } = useLoaderData<{ campaigns: CampaignModel[] }>();
-  const context: {
-    campaigns: {
-      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   return (
     <div>
@@ -31,7 +27,7 @@ export default function CampaignsPage() {
             primary
             small
             onClick={() => {
-              context.campaigns.setOpenDialogCampaign(true);
+              context.campaigns.setOpen(true);
             }}
           >
             <div>Nova Campanha</div>

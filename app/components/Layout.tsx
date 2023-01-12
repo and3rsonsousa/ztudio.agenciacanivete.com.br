@@ -20,7 +20,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { fade, scaleUp } from "~/lib/animations";
-import type { AccountModel, PersonModel } from "~/lib/models";
+import type { AccountModel, ContextType, PersonModel } from "~/lib/models";
 import Button from "./Button";
 import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
@@ -33,32 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const person: PersonModel = matches[1].data.person;
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const context: {
-    search: {
-      open: boolean;
-      setOpenDialogSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    actions: {
-      open: boolean;
-      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    campaigns: {
-      open: boolean;
-      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    celebrations: {
-      open: boolean;
-      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    sidebar: {
-      sidebarView: boolean;
-      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    shortcut: {
-      open: boolean;
-      setOpenShortcut: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   const [showShortcuts, setShowShorcuts] = useState(false);
   const navigate = useNavigate();
@@ -73,21 +48,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           setShowShorcuts((prev: boolean) => !prev);
         } else {
           setTimeout(() => {
-            context.shortcut.setOpenShortcut(false);
+            context.shortcut.setOpen(false);
           }, 2000);
         }
-        context.shortcut.setOpenShortcut((prev: boolean) => !prev);
+        context.shortcut.setOpen((prev: boolean) => !prev);
         //   if () {
         //     if (event.shiftKey) {
-        //       context.actions.setOpenDialogAction((prev: boolean) => !prev);
+        //       context.actions.setOpen((prev: boolean) => !prev);
         //     } else {
-        //       context.search.setOpenDialogSearch(
+        //       context.search.setOpen(
         //         !context.search.openDialogSearch
         //       );
         //     }
         //   } else if (event.key === "b") {
         //     if (window.innerWidth >= 1024)
-        //       context.sidebar.setSidebarView((prev: boolean) => !prev);
+        //       context.sidebar.setOpen((prev: boolean) => !prev);
         //   }
       }
     }
@@ -95,15 +70,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     //   if (event.metaKey) {
     //     if (event.key === "k") {
     //       if (event.shiftKey) {
-    //         context.actions.setOpenDialogAction((prev: boolean) => !prev);
+    //         context.actions.setOpen((prev: boolean) => !prev);
     //       } else {
-    //         context.search.setOpenDialogSearch(
+    //         context.search.setOpen(
     //           !context.search.openDialogSearch
     //         );
     //       }
     //     } else if (event.key === "b") {
     //       if (window.innerWidth >= 1024)
-    //         context.sidebar.setSidebarView((prev: boolean) => !prev);
+    //         context.sidebar.setOpen((prev: boolean) => !prev);
     //     }
     //   }
     // }
@@ -120,7 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <div
         className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between bg-gray-800/50 backdrop-blur-xl lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:bg-transparent lg:py-4  ${
-          context.sidebar.sidebarView ? "lg:w-48" : "lg:w-16"
+          context.sidebar.open ? "lg:w-48" : "lg:w-16"
         }`}
       >
         <div className="lg:w-full">
@@ -130,7 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               to={`/dashboard`}
               className=" block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
             >
-              {context.sidebar.sidebarView ? (
+              {context.sidebar.open ? (
                 <img src="/logo.png" alt="STUDIO" />
               ) : (
                 <img src="/ico.png" className="mx-auto h-6" alt="STUDIO" />
@@ -145,7 +120,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Link
                   to={`/dashboard/${account.slug}/${searchParams}`}
                   className={`${
-                    context.sidebar.sidebarView
+                    context.sidebar.open
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
                       : "text-xx text-center font-bold uppercase"
                   } block  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
@@ -154,7 +129,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                 >
-                  {context.sidebar.sidebarView ? account.name : account.short}
+                  {context.sidebar.open ? account.name : account.short}
                 </Link>
               </div>
             ))}
@@ -189,20 +164,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="lg:p-2">
             <button
               onClick={() => {
-                context.search.setOpenDialogSearch(true);
+                context.search.setOpen(true);
               }}
               className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
             >
-              {context.sidebar.sidebarView && (
+              {context.sidebar.open && (
                 <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
                   <div>Pesquisar</div>
                 </div>
               )}
-              <div
-                className={`${
-                  context.sidebar.sidebarView ? "ml-auto" : "-ml-1"
-                }`}
-              >
+              <div className={`${context.sidebar.open ? "ml-auto" : "-ml-1"}`}>
                 <MagnifyingGlassIcon className="w-4" />
               </div>
             </button>
@@ -211,16 +182,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div>
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
-                {context.sidebar.sidebarView && (
+                {context.sidebar.open && (
                   <div className="hidden text-xs font-semibold lg:block">
                     {person.name}
                   </div>
                 )}
 
                 <UserIcon
-                  className={`${
-                    context.sidebar.sidebarView ? "ml-auto" : "ml-2"
-                  } w-4`}
+                  className={`${context.sidebar.open ? "ml-auto" : "ml-2"} w-4`}
                 />
               </DropdownMenu.Trigger>
 
@@ -348,7 +317,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Button
               primary
               className="p-2 text-sm sm:p-1.5 sm:px-4"
-              onClick={() => context.actions.setOpenDialogAction(true)}
+              onClick={() => context.actions.setOpen(true)}
             >
               <span className="hidden sm:block">Nova Ação</span>
               <PlusIcon />
@@ -429,7 +398,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Celebration */}
         <Dialog.Root
           open={context.celebrations.open}
-          onOpenChange={context.celebrations.setOpenDialogCelebration}
+          onOpenChange={context.celebrations.setOpen}
         >
           <AnimatePresence>
             {context.celebrations.open && (
@@ -456,7 +425,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Actions */}
         <Dialog.Root
           open={context.actions.open}
-          onOpenChange={context.actions.setOpenDialogAction}
+          onOpenChange={context.actions.setOpen}
         >
           <AnimatePresence>
             {context.actions.open && (
@@ -483,7 +452,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Campaign */}
         <Dialog.Root
           open={context.campaigns.open}
-          onOpenChange={context.campaigns.setOpenDialogCampaign}
+          onOpenChange={context.campaigns.setOpen}
         >
           <AnimatePresence>
             {context.campaigns.open && (
@@ -510,7 +479,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Search */}
         <Dialog.Root
           open={context.search.open}
-          onOpenChange={context.search.setOpenDialogSearch}
+          onOpenChange={context.search.setOpen}
         >
           <AnimatePresence>
             {context.search.open && (
@@ -535,10 +504,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </AnimatePresence>
         </Dialog.Root>
         {context.shortcut.open && (
-          <Shortcut
-            context={context}
-            close={context.shortcut.setOpenShortcut}
-          />
+          <Shortcut context={context} close={context.shortcut.setOpen} />
         )}
       </>
     </div>
@@ -587,32 +553,7 @@ function Shortcut({
   context,
   close,
 }: {
-  context: {
-    search: {
-      open: boolean;
-      setOpenDialogSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    actions: {
-      open: boolean;
-      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    campaigns: {
-      open: boolean;
-      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    celebrations: {
-      open: boolean;
-      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    sidebar: {
-      sidebarView: boolean;
-      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    shortcut: {
-      open: boolean;
-      setOpenShortcut: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  };
+  context: ContextType;
   close: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   useEffect(() => {
@@ -622,16 +563,16 @@ function Shortcut({
 
       switch (key) {
         case "A":
-          context.actions.setOpenDialogAction((prev) => !prev);
+          context.actions.setOpen((prev) => !prev);
           break;
         case "D":
-          context.celebrations.setOpenDialogCelebration((prev) => !prev);
+          context.celebrations.setOpen((prev) => !prev);
           break;
         case "C":
-          context.campaigns.setOpenDialogCampaign((prev) => !prev);
+          context.campaigns.setOpen((prev) => !prev);
           break;
         case "B":
-          context.sidebar.setSidebarView((prev) => !prev);
+          context.sidebar.setOpen((prev) => !prev);
           break;
         case "0":
         case "1":

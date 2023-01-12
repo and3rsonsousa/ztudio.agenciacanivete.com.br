@@ -3,7 +3,7 @@ import { ChevronLeftIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { useMatches, useOutletContext } from "@remix-run/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import type { ActionModel, ItemModel } from "~/lib/models";
+import type { ActionModel, ContextType, ItemModel } from "~/lib/models";
 import { ActionGrid } from "./Actions";
 import Button from "./Button";
 import CreateButtons from "./CreateButtons";
@@ -13,12 +13,7 @@ export type SupportType = { id: string; date: string; name: string };
 export type FilterType = SupportType[];
 
 export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
-  const context: {
-    sidebar: {
-      sidebarView: boolean;
-      setSidebarView: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
   const [fill, setFill] = useState(true);
   const matches = useMatches();
   const { tags } = matches[1].data;
@@ -51,19 +46,15 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
   return (
     <div
       className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden  pt-16 lg:mt-0 ${
-        context.sidebar.sidebarView ? "lg:w-80" : "lg:w-12"
+        context.sidebar.open ? "lg:w-80" : "lg:w-12"
       }  lg:pt-0`}
     >
       <div className="px-4 py-2">
         {/* Header */}
         <div className="flex items-center justify-between">
-          {context.sidebar.sidebarView && (
-            <h5 className="text-xs">Instagram Grid</h5>
-          )}
-          <div
-            className={!context.sidebar.sidebarView ? "-ml-2" : " space-x-1"}
-          >
-            {context.sidebar.sidebarView && (
+          {context.sidebar.open && <h5 className="text-xs">Instagram Grid</h5>}
+          <div className={!context.sidebar.open ? "-ml-2" : " space-x-1"}>
+            {context.sidebar.open && (
               <Button
                 title="Preencher as lacunas"
                 link={!fill}
@@ -77,16 +68,14 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
               </Button>
             )}
             <Button
-              title={context.sidebar.sidebarView ? "Mostrar" : "Ocultar"}
+              title={context.sidebar.open ? "Mostrar" : "Ocultar"}
               link
               small
               squared
               icon
-              onClick={() =>
-                context.sidebar.setSidebarView(!context.sidebar.sidebarView)
-              }
+              onClick={() => context.sidebar.setOpen(!context.sidebar.open)}
             >
-              {context.sidebar.sidebarView ? (
+              {context.sidebar.open ? (
                 <ChevronRightIcon />
               ) : (
                 <ChevronLeftIcon />
@@ -95,7 +84,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
           </div>
         </div>
       </div>
-      {context.sidebar.sidebarView &&
+      {context.sidebar.open &&
         (filtered.length ? (
           <div className="no-scrollbars grid h-full grid-cols-3 flex-col content-start overflow-auto px-4">
             {filtered.map((action, i) => (
@@ -114,9 +103,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
             </Exclamation>
           </div>
         ))}
-      {context.sidebar.sidebarView && (
-        <CreateButtons action campaign celebration />
-      )}
+      {context.sidebar.open && <CreateButtons action campaign celebration />}
     </div>
   );
 }

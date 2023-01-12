@@ -10,11 +10,12 @@ import type {
   AccountModel,
   ActionModel,
   CampaignModel,
+  ContextType,
   ItemModel,
   PersonModel,
 } from "~/lib/models";
-import Exclamation from "../Exclamation";
 import Button from "../Button";
+import Exclamation from "../Exclamation";
 import { default as Field, default as InputField } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
@@ -44,22 +45,14 @@ export default function ActionDialog({
   const formRef = useRef<HTMLFormElement>(null);
   const [searchParams] = useSearchParams();
 
-  const context: {
-    date: {
-      dateOfTheDay: Dayjs;
-    };
-    actions: {
-      openDialogAction: boolean;
-      setOpenDialogAction: any;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   const date = context.date.dateOfTheDay;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
   const tags: ItemModel[] = matches[1].data.tags;
   const status: ItemModel[] = matches[1].data.status;
-  const attributes: ItemModel[] = matches[1].data.attributes;
+  // const attributes: ItemModel[] = matches[1].data.attributes;
   const persons: PersonModel[] = matches[1].data.persons;
   const campaigns: CampaignModel[] =
     matches[2].data.campaigns ?? matches[3].data.campaigns;
@@ -109,7 +102,7 @@ export default function ActionDialog({
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.actions.setOpenDialogAction(false);
+      context.actions.setOpen(false);
     }
   }, [isAdding, context, fetcher]);
 

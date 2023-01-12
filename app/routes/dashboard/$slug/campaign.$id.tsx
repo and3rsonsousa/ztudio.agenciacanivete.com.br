@@ -11,7 +11,7 @@ import CampaignDialog from "~/components/Dialogs/CampaignDialog";
 import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import { getCampaign, handleAction } from "~/lib/data";
-import type { CampaignModel } from "~/lib/models";
+import type { CampaignModel, ContextType } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
@@ -31,9 +31,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function CampaignsPage() {
   const { campaign } = useLoaderData<{ campaign: CampaignModel }>();
   const actionData = useActionData();
-  const context: {
-    actions: { setOpenDialogAction: (b: boolean) => void };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   return (
     <div className="h-full overflow-hidden p-4 lg:p-8">
@@ -56,7 +54,7 @@ export default function CampaignsPage() {
               small
               primary
               onClick={() => {
-                context.actions.setOpenDialogAction(true);
+                context.actions.setOpen(true);
               }}
             >
               <div>Nova Ação</div>

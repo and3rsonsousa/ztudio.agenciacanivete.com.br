@@ -18,6 +18,7 @@ import { useState } from "react";
 
 import styles from "./styles.css";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
+import type { ContextType } from "./lib/models";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -47,13 +48,49 @@ export const loader: LoaderFunction = () => {
 export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
-  const [openDialogAction, setOpenDialogAction] = useState(false);
-  const [openDialogCelebration, setOpenDialogCelebration] = useState(false);
-  const [openDialogCampaign, setOpenDialogCampaign] = useState(false);
-  const [openDialogSearch, setOpenDialogSearch] = useState(false);
-  const [openShortcut, setOpenShortcut] = useState(false);
-  const [sidebarView, setSidebarView] = useState(true);
+  const [openDialogAction, setOpen] = useState(false);
+  const [openDialogCelebration, setOpen] = useState(false);
+  const [openDialogCampaign, setOpen] = useState(false);
+  const [openDialogSearch, setOpen] = useState(false);
+  const [openShortcut, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [dateOfTheDay, setDateOfTheDay] = useState(dayjs());
+  const [filter, setFilter] = useState("all");
+
+  const context: ContextType = {
+    date: {
+      dateOfTheDay,
+      setDateOfTheDay,
+    },
+    celebrations: {
+      open: openDialogCelebration,
+      setOpen: setOpen,
+    },
+    actions: {
+      open: openDialogAction,
+      setOpen: setOpen,
+    },
+    campaigns: {
+      open: openDialogCampaign,
+      setOpen,
+    },
+    search: {
+      open: openDialogSearch,
+      setOpen,
+    },
+    sidebar: {
+      open,
+      setOpen,
+    },
+    shortcut: {
+      open: openShortcut,
+      setOpen,
+    },
+    filter: {
+      option: filter,
+      setFilter,
+    },
+  };
 
   return (
     <html lang="pt-br" className={theme ?? "dark"}>
@@ -63,38 +100,7 @@ export function App() {
       </head>
       <body>
         <div className="app">
-          <Outlet
-            context={{
-              date: {
-                dateOfTheDay,
-                setDateOfTheDay,
-              },
-              celebrations: {
-                open: openDialogCelebration,
-                setOpenDialogCelebration,
-              },
-              actions: {
-                open: openDialogAction,
-                setOpenDialogAction,
-              },
-              campaigns: {
-                open: openDialogCampaign,
-                setOpenDialogCampaign,
-              },
-              search: {
-                open: openDialogSearch,
-                setOpenDialogSearch,
-              },
-              sidebar: {
-                sidebarView,
-                setSidebarView,
-              },
-              shortcut: {
-                open: openShortcut,
-                setOpenShortcut,
-              },
-            }}
-          />
+          <Outlet context={context} />
         </div>
         <ScrollRestoration />
         <script

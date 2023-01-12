@@ -6,7 +6,12 @@ import {
   actionsByCategory,
   actionsByPriority,
 } from "~/lib/functions";
-import type { AccountModel, DayModel, ItemModel } from "~/lib/models";
+import type {
+  AccountModel,
+  ContextType,
+  DayModel,
+  ItemModel,
+} from "~/lib/models";
 import { ActionLine } from "./Actions";
 import Button from "./Button";
 import { CampaignLine } from "./Campaign";
@@ -32,11 +37,7 @@ export default function Day({
   const tags: ItemModel[] = matches[1].data.tags;
   const accounts: AccountModel[] = matches[1].data.accounts;
 
-  const context: {
-    date: {
-      setDateOfTheDay: (value: Dayjs) => void;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   return (
     <div

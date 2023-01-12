@@ -11,6 +11,7 @@ import { useEffect, useRef } from "react";
 import type {
   AccountModel,
   CampaignModel,
+  ContextType,
   ItemModel,
   PersonModel,
 } from "~/lib/models";
@@ -30,14 +31,7 @@ export default function CampaignDialog({
   const fetcher = useFetcher();
   const matches = useMatches();
   const [searchParams] = useSearchParams();
-  const context: {
-    date: {
-      dateOfTheDay: Dayjs;
-    };
-    campaigns: {
-      setOpenDialogCampaign: (b: boolean) => void;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
   const date = context.date.dateOfTheDay;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
@@ -68,7 +62,7 @@ export default function CampaignDialog({
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.campaigns?.setOpenDialogCampaign(false);
+      context.campaigns?.setOpen(false);
     }
   }, [isAdding, context, fetcher]);
 

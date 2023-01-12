@@ -4,6 +4,7 @@ import {
   StarIcon,
 } from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
+import { ContextType } from "~/lib/models";
 import Button from "./Button";
 
 export default function CreateButtons({
@@ -17,20 +18,7 @@ export default function CreateButtons({
   action?: boolean;
   showSmallAction?: boolean;
 }) {
-  const context: {
-    actions: {
-      openDialogAction: boolean;
-      setOpenDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    campaigns: {
-      openDialogCampaign: boolean;
-      setOpenDialogCampaign: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-    celebrations: {
-      openDialogCelebration: boolean;
-      setOpenDialogCelebration: React.Dispatch<React.SetStateAction<boolean>>;
-    };
-  } = useOutletContext();
+  const context: ContextType = useOutletContext();
 
   return (
     <div className="flex items-center justify-end gap-2 p-4 ">
@@ -42,7 +30,7 @@ export default function CreateButtons({
             icon
             squared
             onClick={() => {
-              context.celebrations.setOpenDialogCelebration(true);
+              context.celebrations.setOpen(true);
             }}
           >
             <StarIcon />
@@ -56,7 +44,7 @@ export default function CreateButtons({
             icon
             squared
             onClick={() => {
-              context.campaigns.setOpenDialogCampaign(true);
+              context.campaigns.setOpen(true);
             }}
           >
             <FolderPlusIcon />
@@ -75,7 +63,7 @@ export default function CreateButtons({
             squared={showSmallAction}
             large={showSmallAction}
             onClick={() => {
-              context.actions.setOpenDialogAction(true);
+              context.actions.setOpen(true);
             }}
             title="Cmd + Shift + K"
           >

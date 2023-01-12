@@ -80,3 +80,38 @@ export type DropdownOptions = Array<
 export type MonthType = Array<{
   date: Dayjs;
 }>;
+
+export type ContextType = {
+  date: {
+    dateOfTheDay: Dayjs;
+    setDateOfTheDay: React.Dispatch<React.SetStateAction<Dayjs>>;
+  };
+  filter: {
+    option: string;
+    setFilter: React.Dispatch<React.SetStateAction<string>>;
+  };
+  actions: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  celebrations: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  campaigns: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  search: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  shortcut: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  sidebar: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+};
