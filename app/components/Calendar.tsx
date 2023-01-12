@@ -90,6 +90,7 @@ export default function Calendar({
         day.isSameOrBefore(dayjs(campaign.date_end), "day")
       );
     });
+
     return _day;
   });
 

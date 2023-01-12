@@ -61,9 +61,9 @@ export const getYear = (currentDate: Dayjs) => {
 };
 
 export function actionsByPriority(actions: ActionModel[]) {
-  return actions.sort((a, b) =>
-    a.status.priority > b.status.priority ? 1 : -1
-  );
+  return actions
+    .reverse()
+    .sort((a, b) => (a.status.priority > b.status.priority ? 1 : -1));
 }
 
 export function actionsByCategory(actions: ActionModel[], tags: ItemModel[]) {
