@@ -161,50 +161,8 @@ export default function Calendar({
         </div>
 
         <div className="-mb-4 flex gap-2 px-4">
-          <div className="mt-2 flex">
-            <div className="px-2 text-center md:px-4">
-              <div className="font-medium">{actions.length}</div>
-              <div className="text-[8px] font-bold uppercase tracking-[1px]">
-                Ações
-              </div>
-            </div>
-            <div className="px-2 text-center text-success-500 md:px-4">
-              <div className="font-medium">
-                {Math.floor(
-                  (actions.filter(
-                    (action) => action.status.slug === "accomplished"
-                  ).length /
-                    actions.length) *
-                    100
-                )}
-                %
-              </div>
-              <div className="text-[8px] font-bold uppercase tracking-[1px]">
-                concluídos
-              </div>
-            </div>
-            <div
-              className={`px-2 text-center ${
-                actions.filter(
-                  (action) =>
-                    dayjs(action.date).isBefore(dayjs()) &&
-                    action.status.slug !== "accomplished"
-                ).length > 0
-                  ? "text-error-500"
-                  : null
-              } md:px-4`}
-            >
-              <div className="font-medium ">
-                {actions.filter(
-                  (action) =>
-                    dayjs(action.date).isBefore(dayjs()) &&
-                    action.status.slug !== "accomplished"
-                ).length ?? "TUDO OK"}
-              </div>
-              <div className="text-[8px] font-bold uppercase tracking-[1px]">
-                atrasadas
-              </div>
-            </div>
+          <div className="mt-2">
+            <DataFlow actions={actions} />
           </div>
           <div className="mt-4 mr-4">
             <label className="field field-checkbox item-center flex gap-2">
@@ -372,6 +330,48 @@ const YearView = ({ year }: { year: MonthType[] }) => {
           </div>
         ))}
       </div>
+    </div>
+  );
+};
+
+const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
+  const total = actions.length;
+  const accomplished = actions.filter(
+    (action) => action.status.slug === "accomplished"
+  ).length;
+  const late = actions.filter(
+    (action) =>
+      dayjs(action.date).isBefore(dayjs()) &&
+      action.status.slug !== "accomplished"
+  ).length;
+  return (
+    <div className="flex">
+      <div className="px-2 text-center md:px-4">
+        <div className="font-medium">{total}</div>
+        <div className="text-[8px] font-bold uppercase tracking-[1px]">
+          Ações
+        </div>
+      </div>
+      <div
+        className={`px-2 text-center ${
+          accomplished > total / 2 ? "text-success-500" : "text-alert-500"
+        } md:px-4`}
+      >
+        <div className="font-medium">
+          {Math.floor((accomplished / total) * 100)}%
+        </div>
+        <div className="text-[8px] font-bold uppercase tracking-[1px]">
+          concluídos
+        </div>
+      </div>
+      {late && (
+        <div className={`px-2 text-center text-error-500 md:px-4`}>
+          <div className="font-medium ">{late}</div>
+          <div className="text-[8px] font-bold uppercase tracking-[1px]">
+            atrasadas
+          </div>
+        </div>
+      )}
     </div>
   );
 };

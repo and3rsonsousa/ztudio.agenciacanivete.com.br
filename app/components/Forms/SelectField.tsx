@@ -41,14 +41,13 @@ export default function SelectField({
       {title && <span className="field-label">{title}</span>}
       <Select.Root
         value={selectedValue}
-        onValueChange={setValue}
-        // onValueChange={(value) => {
-        //   if (onChange) {
-        //     onChange(value);
-        //   }
-
-        //   setValue(value);
-        // }}
+        // onValueChange={setValue}
+        onValueChange={(value) => {
+          if (onChange) {
+            onChange(value);
+          }
+          setValue(value);
+        }}
         name={name}
         disabled={disabled}
       >
