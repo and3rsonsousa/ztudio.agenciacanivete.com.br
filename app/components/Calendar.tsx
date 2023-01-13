@@ -30,6 +30,7 @@ import type {
   MonthType,
 } from "~/lib/models";
 import Button from "./Button";
+import DataFlow from "./DataFlow";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
 import SelectField from "./Forms/SelectField";
@@ -52,6 +53,7 @@ export default function Calendar({
   const [searchParams] = useSearchParams();
   const { slug } = useParams();
   const context: ContextType = useOutletContext();
+
   const currentMonth = searchParams.get("month");
   const currentYear = searchParams.get("year");
   const showYearView = currentYear !== null;
@@ -330,48 +332,6 @@ const YearView = ({ year }: { year: MonthType[] }) => {
           </div>
         ))}
       </div>
-    </div>
-  );
-};
-
-const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
-  const total = actions.length;
-  const accomplished = actions.filter(
-    (action) => action.status.slug === "accomplished"
-  ).length;
-  const late = actions.filter(
-    (action) =>
-      dayjs(action.date).isBefore(dayjs()) &&
-      action.status.slug !== "accomplished"
-  ).length;
-  return (
-    <div className="flex">
-      <div className="px-2 text-center md:px-4">
-        <div className="font-medium">{total}</div>
-        <div className="text-[8px] font-bold uppercase tracking-[1px]">
-          Ações
-        </div>
-      </div>
-      <div
-        className={`px-2 text-center ${
-          accomplished > total / 2 ? "text-success-500" : "text-alert-500"
-        } md:px-4`}
-      >
-        <div className="font-medium">
-          {Math.floor((accomplished / total) * 100)}%
-        </div>
-        <div className="text-[8px] font-bold uppercase tracking-[1px]">
-          concluídos
-        </div>
-      </div>
-      {late && (
-        <div className={`px-2 text-center text-error-500 md:px-4`}>
-          <div className="font-medium ">{late}</div>
-          <div className="text-[8px] font-bold uppercase tracking-[1px]">
-            atrasadas
-          </div>
-        </div>
-      )}
     </div>
   );
 };

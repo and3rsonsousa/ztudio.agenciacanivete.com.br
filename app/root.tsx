@@ -16,9 +16,9 @@ import {
 import dayjs from "dayjs";
 import { useState } from "react";
 
-import styles from "./styles.css";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import type { ContextType } from "./lib/models";
+import styles from "./styles.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -48,6 +48,21 @@ export const loader: LoaderFunction = () => {
 export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
+
+  // const [context, setContext] = useState<ContextType>({
+  //   date: dayjs(),
+  //   filter: "all",
+  //   sidebar: true,
+  //   priority: false,
+  //   dialogs: {
+  //     actions: false,
+  //     celebrations: false,
+  //     campaigns: false,
+  //     search: false,
+  //     shortcut: false,
+  //   },
+  // });
+
   const [day, setDay] = useState(dayjs());
   const [option, setOption] = useState("all");
   const [openDialogAction, setopenDialogAction] = useState(false);
@@ -66,6 +81,10 @@ export function App() {
     filter: {
       option,
       setOption,
+    },
+    priority: {
+      option: priority,
+      setPriority,
     },
     actions: {
       open: openDialogAction,

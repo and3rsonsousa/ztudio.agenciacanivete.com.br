@@ -81,6 +81,20 @@ export type MonthType = Array<{
   date: Dayjs;
 }>;
 
+// export type ContextType = {
+//   date: Dayjs;
+//   filter: string;
+//   priority: boolean;
+//   sidebar: boolean;
+//   dialogs: {
+//     actions: boolean;
+//     celebrations: boolean;
+//     campaigns: boolean;
+//     search: boolean;
+//     shortcut: boolean;
+//   };
+// };
+
 export type ContextType = {
   date: {
     day: Dayjs;
@@ -89,6 +103,10 @@ export type ContextType = {
   filter: {
     option: string;
     setOption: React.Dispatch<React.SetStateAction<string>>;
+  };
+  priority: {
+    option: boolean;
+    setPriority: React.Dispatch<React.SetStateAction<boolean>>;
   };
   actions: {
     open: boolean;

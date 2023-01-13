@@ -5,6 +5,7 @@ import ActionList from "./ActionList";
 import Button from "./Button";
 import Celebration from "./Celebrations";
 import CreateButtons from "./CreateButtons";
+import DataFlow from "./DataFlow";
 import Exclamation from "./Exclamation";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
@@ -58,11 +59,16 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             ) : null}
           </div>
           {context.sidebar.open && (
-            <ActionList
-              actions={day.actions}
-              hideAccount={slug !== undefined}
-              showDateAndTime={slug !== undefined}
-            />
+            <>
+              <div className="mx-auto">
+                <DataFlow actions={day.actions} />
+              </div>
+              <ActionList
+                actions={day.actions}
+                hideAccount={slug !== undefined}
+                showDateAndTime={slug !== undefined}
+              />
+            </>
           )}
         </>
       ) : (
