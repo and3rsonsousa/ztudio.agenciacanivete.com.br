@@ -19,6 +19,7 @@ import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useEffect, useState } from "react";
+import { SHORTCUTS } from "~/lib/constants";
 import { getPeriod, getYear } from "~/lib/functions";
 import type {
   ActionModel,
@@ -76,11 +77,12 @@ export default function Calendar({
       celebrations: [],
       campaigns: [],
     };
+
     _day.actions = actions.filter((action) => {
       return (
         dayjs(action.date).format("YYYY-MM-DD") ===
           _day.date.format("YYYY-MM-DD") &&
-        (context.filter.option.includes("all") ||
+        (context.filter.option === "all" ||
           action.tag.slug === context.filter.option)
       );
     });
@@ -171,13 +173,13 @@ export default function Calendar({
               <input
                 type="checkbox"
                 checked={context.priority.option}
-                onChange={() => context.priority.setPriority((prev) => !prev)}
+                onChange={() => context.priority.set((prev) => !prev)}
               />
               <div className="checkbox">
                 <CheckIcon />
               </div>
               <div className="field-label whitespace-nowrap text-[10px] uppercase tracking-[1px]">
-                <span className="hidden md:inline">Organizar por </span>
+                <span className="hidden md:inline">Ordenar por </span>
                 prioridade
               </div>
             </label>
@@ -202,13 +204,24 @@ export default function Calendar({
             name="FilterActions"
             items={[
               [
-                { title: "Mostrar todos", value: "all" },
-                { title: "Por categoria", value: "allcategory" },
+                {
+                  title: SHORTCUTS.ARRANGE_ALL.does,
+                  value: SHORTCUTS.ARRANGE_ALL.value,
+                },
+                {
+                  title: SHORTCUTS.ARRANGE_CATEGORIES.does,
+                  value: SHORTCUTS.ARRANGE_CATEGORIES.value,
+                },
+
                 slug
                   ? undefined
-                  : { title: "Por Cliente", value: "allaccount" },
+                  : {
+                      title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
+                      value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
+                    },
               ],
               [
+                { title: "Todas", value: "all" },
                 ...tags.map((tag: ItemModel) => ({
                   title: tag.name,
                   value: tag.slug,
@@ -216,12 +229,17 @@ export default function Calendar({
               ],
             ]}
             onChange={(value) => {
-              context.filter.setOption(value);
+              if (value.includes("arrange")) {
+                context.arrange.set(value);
+              } else {
+                context.filter.set(value);
+              }
             }}
             small
             value={context.filter.option}
             link
           />
+          <div></div>
         </div>
       </div>
       {showYearView ? (
@@ -263,7 +281,7 @@ export default function Calendar({
                     firstDayOfCurrentMonth={firstDayOfCurrentMonth}
                     selectedDay={selectedDay}
                     setSelectedDay={setSelectedDay}
-                    filter={context.filter.option}
+                    arrange={context.arrange.option}
                   />
                 );
               })}

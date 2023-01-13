@@ -66,7 +66,7 @@ export default function NewAccount() {
               "input[name='slug']"
             ) as HTMLInputElement;
             // if (ele.value === "") {
-            //   console.log(event.target.value);
+
             // }
 
             ele.value = event.target.value.replace(" ", "").toLowerCase();

@@ -30,7 +30,7 @@ export default function CreateButtons({
             icon
             squared
             onClick={() => {
-              context.celebrations.setOpen(true);
+              context.celebrations.set(true);
             }}
           >
             <StarIcon />
@@ -44,7 +44,7 @@ export default function CreateButtons({
             icon
             squared
             onClick={() => {
-              context.campaigns.setOpen(true);
+              context.campaigns.set(true);
             }}
           >
             <FolderPlusIcon />
@@ -63,7 +63,7 @@ export default function CreateButtons({
             squared={showSmallAction}
             large={showSmallAction}
             onClick={() => {
-              context.actions.setOpen(true);
+              context.actions.set(true);
             }}
             title="Cmd + Shift + K"
           >

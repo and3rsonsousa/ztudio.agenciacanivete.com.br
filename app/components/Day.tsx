@@ -23,14 +23,14 @@ export default function Day({
   firstDayOfCurrentMonth,
   height,
   setSelectedDay,
-  filter,
+  arrange,
 }: {
   day: DayModel;
   selectedDay: string;
   firstDayOfCurrentMonth: Dayjs;
   height: number;
   setSelectedDay: (date: string) => void;
-  filter: string;
+  arrange: string;
 }) {
   const fetcher = useFetcher();
   const matches = useMatches();
@@ -106,7 +106,7 @@ export default function Day({
               day.date.format("YYYY-MM-DD")
             }
             onClick={() => {
-              context.date.setDay(day.date);
+              context.date.set(day.date);
               setSelectedDay(day.date.format("YYYY-MM-DD"));
             }}
           >
@@ -167,7 +167,7 @@ export default function Day({
         </div>
 
         <div className={`space-y-4`}>
-          {filter === "allcategory"
+          {arrange === "arrange_category"
             ? actionsByCategory(day.actions, tags, context.priority.option).map(
                 (category, index) =>
                   category.actions?.length !== 0 && (
@@ -188,7 +188,7 @@ export default function Day({
                     </div>
                   )
               )
-            : filter === "allaccount"
+            : arrange === "arrange_account"
             ? actionsByAccount(
                 day.actions,
                 accounts,

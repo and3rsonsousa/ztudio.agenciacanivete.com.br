@@ -20,6 +20,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { fade, scaleUp } from "~/lib/animations";
+import { SHORTCUTS } from "~/lib/constants";
 import type { AccountModel, ContextType, PersonModel } from "~/lib/models";
 import Button from "./Button";
 import ActionDialog from "./Dialogs/ActionDialog";
@@ -48,10 +49,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           setShowShorcuts((prev: boolean) => !prev);
         } else {
           setTimeout(() => {
-            context.shortcut.setOpen(false);
+            context.shortcut.set(false);
           }, 2000);
         }
-        context.shortcut.setOpen((prev: boolean) => !prev);
+        context.shortcut.set((prev: boolean) => !prev);
       }
     }
 
@@ -136,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="lg:p-2">
             <button
               onClick={() => {
-                context.search.setOpen(true);
+                context.search.set(true);
               }}
               className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
             >
@@ -289,7 +290,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Button
               primary
               className="p-2 text-sm sm:p-1.5 sm:px-4"
-              onClick={() => context.actions.setOpen(true)}
+              onClick={() => context.actions.set(true)}
             >
               <span className="hidden sm:block">Nova Ação</span>
               <PlusIcon />
@@ -316,38 +317,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       {
                         title: "Ações",
                         shorcuts: [
-                          { shortcut: "A", does: "Nova Ação" },
-                          { shortcut: "D", does: "Nova Data Comemorativa" },
-                          { shortcut: "C", does: "Nova Campanha" },
-                          {
-                            shortcut: "B",
-                            does: "Ocultar/Mostrar barras laterais",
-                          },
+                          { ...SHORTCUTS.NEW_ACTION },
+                          { ...SHORTCUTS.NEW_CELEBRATION },
+                          { ...SHORTCUTS.NEW_CAMPAIGN },
+                          { ...SHORTCUTS.SIDEBAR },
+                          { ...SHORTCUTS.PRIORITY },
                         ],
                       },
                       {
                         title: "Filtros",
                         shorcuts: [
-                          {
-                            shortcut: ",",
-                            does: "Filtrar: Mostrar Todos",
-                          },
-                          {
-                            shortcut: ".",
-                            does: "Filtrar: Por categoria",
-                          },
-                          {
-                            shortcut: "/",
-                            does: "Filtrar: Por cliente",
-                          },
-                          { shortcut: "1", does: "Filtrar: Feed" },
-                          { shortcut: "2", does: "Filtrar: Reels" },
-                          { shortcut: "3", does: "Filtrar: Tarefa" },
-                          { shortcut: "4", does: "Filtrar: Stories" },
-                          { shortcut: "5", does: "Filtrar: Reunião" },
-                          { shortcut: "6", does: "Filtrar: Impresso" },
-                          { shortcut: "7", does: "Filtrar: Tiktok" },
-                          { shortcut: "8", does: "Filtrar: Financeiro" },
+                          { ...SHORTCUTS.ARRANGE_ALL },
+                          { ...SHORTCUTS.ARRANGE_CATEGORIES },
+                          { ...SHORTCUTS.ARRANGE_ACCOUNTS },
+                          { ...SHORTCUTS.FILTER_FEED },
+                          { ...SHORTCUTS.FILTER_REELS },
+                          { ...SHORTCUTS.FILTER_TASK },
+                          { ...SHORTCUTS.FILTER_STORIES },
+                          { ...SHORTCUTS.FILTER_MEETING },
+                          { ...SHORTCUTS.FILTER_PRINT },
+                          { ...SHORTCUTS.FILTER_TIKTOK },
+                          { ...SHORTCUTS.FILTER_FINANCIAL },
                         ],
                       },
                     ].map((column, index) => (
@@ -381,8 +371,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Dialog.Root
           open={context.celebrations.open}
           onOpenChange={(v: boolean) => {
-            console.log(v);
-            context.celebrations.setOpen(v);
+            context.celebrations.set(v);
           }}
         >
           <AnimatePresence>
@@ -410,7 +399,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Actions */}
         <Dialog.Root
           open={context.actions.open}
-          onOpenChange={context.actions.setOpen}
+          onOpenChange={context.actions.set}
         >
           <AnimatePresence>
             {context.actions.open && (
@@ -437,7 +426,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Campaign */}
         <Dialog.Root
           open={context.campaigns.open}
-          onOpenChange={context.campaigns.setOpen}
+          onOpenChange={context.campaigns.set}
         >
           <AnimatePresence>
             {context.campaigns.open && (
@@ -464,7 +453,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Dialog for Search */}
         <Dialog.Root
           open={context.search.open}
-          onOpenChange={context.search.setOpen}
+          onOpenChange={context.search.set}
         >
           <AnimatePresence>
             {context.search.open && (
@@ -492,7 +481,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Shortcut
             context={context}
             close={(value: boolean) => {
-              context.shortcut.setOpen(value);
+              context.shortcut.set(value);
               setShowShorcuts(value);
             }}
           />
@@ -553,55 +542,61 @@ function Shortcut({
       const key = event.key.toUpperCase();
 
       switch (key) {
-        case "A":
-          context.actions.setOpen((prev) => !prev);
+        case SHORTCUTS.NEW_ACTION.shortcut:
+          context.actions.set((prev) => !prev);
           break;
-        case "D":
-          context.celebrations.setOpen((prev) => !prev);
+        case SHORTCUTS.NEW_CELEBRATION.shortcut:
+          context.celebrations.set((prev) => !prev);
           break;
-        case "C":
-          context.campaigns.setOpen((prev) => !prev);
+        case SHORTCUTS.NEW_CAMPAIGN.shortcut:
+          context.campaigns.set((prev) => !prev);
           break;
-        case "B":
-          context.sidebar.setOpen((prev) => !prev);
+        case SHORTCUTS.SIDEBAR.shortcut:
+          context.sidebar.set((prev) => !prev);
           break;
-        case "S":
-          context.search.setOpen((prev) => !prev);
+        case SHORTCUTS.SEARCH.shortcut:
+          context.search.set((prev) => !prev);
           break;
-        case ",":
-          context.filter.setOption("all");
+        case SHORTCUTS.PRIORITY.shortcut:
+          context.priority.set((value) => !value);
           break;
-        case ".":
-          context.filter.setOption("allcategory");
+        case SHORTCUTS.ARRANGE_ALL.shortcut:
+          context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
           break;
-        case "/":
-          context.filter.setOption("allaccount");
+        case SHORTCUTS.ARRANGE_CATEGORIES.shortcut:
+          context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
           break;
-        case "1":
-          context.filter.setOption("feed");
+        case SHORTCUTS.ARRANGE_ACCOUNTS.shortcut:
+          context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
           break;
-        case "2":
-          context.filter.setOption("reels");
+        case SHORTCUTS.FILTER_ALL.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_ALL.value);
           break;
-        case "3":
-          context.filter.setOption("task");
+        case SHORTCUTS.FILTER_FEED.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_FEED.value);
           break;
-        case "4":
-          context.filter.setOption("stories");
+        case SHORTCUTS.FILTER_REELS.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_REELS.value);
           break;
-        case "5":
-          context.filter.setOption("meeting");
+        case SHORTCUTS.FILTER_TASK.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_TASK.value);
           break;
-        case "6":
-          context.filter.setOption("print");
+        case SHORTCUTS.FILTER_STORIES.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_STORIES.value);
           break;
-        case "7":
-          context.filter.setOption("tiktok");
+        case SHORTCUTS.FILTER_MEETING.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_MEETING.value);
           break;
-        case "8":
-          context.filter.setOption("financial");
+        case SHORTCUTS.FILTER_PRINT.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_PRINT.value);
           break;
-        case "9":
+        case SHORTCUTS.FILTER_TIKTOK.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
+          break;
+        case SHORTCUTS.FILTER_FINANCIAL.shortcut:
+          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
+          break;
+        default:
           alert("Not implemented");
           break;
       }

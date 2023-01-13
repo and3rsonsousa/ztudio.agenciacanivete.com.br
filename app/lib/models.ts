@@ -81,55 +81,45 @@ export type MonthType = Array<{
   date: Dayjs;
 }>;
 
-// export type ContextType = {
-//   date: Dayjs;
-//   filter: string;
-//   priority: boolean;
-//   sidebar: boolean;
-//   dialogs: {
-//     actions: boolean;
-//     celebrations: boolean;
-//     campaigns: boolean;
-//     search: boolean;
-//     shortcut: boolean;
-//   };
-// };
-
 export type ContextType = {
   date: {
     day: Dayjs;
-    setDay: React.Dispatch<React.SetStateAction<Dayjs>>;
+    set: React.Dispatch<React.SetStateAction<Dayjs>>;
   };
   filter: {
     option: string;
-    setOption: React.Dispatch<React.SetStateAction<string>>;
+    set: React.Dispatch<React.SetStateAction<string>>;
   };
   priority: {
     option: boolean;
-    setPriority: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  arrange: {
+    option: string;
+    set: React.Dispatch<React.SetStateAction<string>>;
   };
   actions: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
   celebrations: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
   campaigns: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
   search: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
   shortcut: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
   sidebar: {
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    set: React.Dispatch<React.SetStateAction<boolean>>;
   };
 };

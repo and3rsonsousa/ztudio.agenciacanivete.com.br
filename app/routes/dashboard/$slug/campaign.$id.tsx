@@ -54,7 +54,7 @@ export default function CampaignsPage() {
               small
               primary
               onClick={() => {
-                context.actions.setOpen(true);
+                context.actions.set(true);
               }}
             >
               <div>Nova Ação</div>

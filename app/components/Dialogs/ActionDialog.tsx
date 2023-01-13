@@ -102,7 +102,7 @@ export default function ActionDialog({
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.actions.setOpen(false);
+      context.actions.set(false);
     }
   }, [isAdding, context, fetcher]);
 

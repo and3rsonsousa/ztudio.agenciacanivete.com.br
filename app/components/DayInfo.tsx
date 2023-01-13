@@ -38,7 +38,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                   small
                   icon
                   squared
-                  onClick={() => context.sidebar.setOpen(!context.sidebar.open)}
+                  onClick={() => context.sidebar.set(!context.sidebar.open)}
                 >
                   {context.sidebar.open ? (
                     <ArrowRightIcon className="mr-0.5" />

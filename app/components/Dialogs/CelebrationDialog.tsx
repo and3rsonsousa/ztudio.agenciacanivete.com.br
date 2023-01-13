@@ -23,7 +23,7 @@ export default function CelebrationDialog() {
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.celebrations?.setOpen(false);
+      context.celebrations?.set(false);
     }
   }, [isAdding, context, fetcher]);
 

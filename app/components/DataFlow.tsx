@@ -4,6 +4,9 @@ import type { ActionModel, ItemModel } from "~/lib/models";
 
 const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
   const matches = useMatches();
+  if (actions.length === 0) {
+    return null;
+  }
   const status: ItemModel[] = matches[1].data.status;
   const stats = status.map((stat) => ({
     stat,

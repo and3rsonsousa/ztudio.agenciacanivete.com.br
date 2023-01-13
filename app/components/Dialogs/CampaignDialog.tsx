@@ -62,7 +62,7 @@ export default function CampaignDialog({
       fetcher.data &&
       !fetcher.data.error
     ) {
-      context.campaigns?.setOpen(false);
+      context.campaigns?.set(false);
     }
   }, [isAdding, context, fetcher]);
 

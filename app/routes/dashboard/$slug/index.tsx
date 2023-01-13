@@ -8,8 +8,6 @@ import { getActions, getCampaigns, handleAction } from "~/lib/data";
 
 //   const meta = root.meta;
 
-//   console.log(matches);
-
 //   return [
 //     ...meta,
 //     {

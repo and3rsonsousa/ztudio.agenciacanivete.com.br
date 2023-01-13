@@ -73,7 +73,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
               small
               squared
               icon
-              onClick={() => context.sidebar.setOpen(!context.sidebar.open)}
+              onClick={() => context.sidebar.set(!context.sidebar.open)}
             >
               {context.sidebar.open ? (
                 <ChevronRightIcon />

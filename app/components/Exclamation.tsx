@@ -26,11 +26,17 @@ const Exclamation = ({
       {icon ? (
         <div>
           {type === "success" ? (
-            <HandThumbUpIcon />
+            <HandThumbUpIcon
+              className={large ? `w-8` : small ? "w-4" : "w-6"}
+            />
           ) : type === "error" ? (
-            <HandThumbDownIcon />
+            <HandThumbDownIcon
+              className={large ? `w-8` : small ? "w-4" : "w-6"}
+            />
           ) : (
-            <ExclamationTriangleIcon />
+            <ExclamationTriangleIcon
+              className={large ? `w-8` : small ? "w-4" : "w-6"}
+            />
           )}
         </div>
       ) : null}

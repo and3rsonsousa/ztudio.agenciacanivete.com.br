@@ -27,7 +27,7 @@ export default function CampaignsPage() {
             primary
             small
             onClick={() => {
-              context.campaigns.setOpen(true);
+              context.campaigns.set(true);
             }}
           >
             <div>Nova Campanha</div>

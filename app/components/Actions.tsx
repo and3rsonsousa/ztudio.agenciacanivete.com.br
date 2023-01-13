@@ -276,8 +276,8 @@ export const ActionGrid = ({
           squared
           icon
           onClick={() => {
-            context.date.setDay(dayjs(action.date));
-            context.actions.setOpen(true);
+            context.date.set(dayjs(action.date));
+            context.actions.set(true);
           }}
         >
           <DocumentPlusIcon />

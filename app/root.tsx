@@ -50,52 +50,57 @@ export function App() {
   const [theme] = useTheme();
 
   const [day, setDay] = useState(dayjs());
-  const [option, setOption] = useState("all");
-  const [openDialogAction, setopenDialogAction] = useState(false);
-  const [openDialogCelebration, setopenDialogCelebration] = useState(false);
-  const [openDialogCampaign, setopenDialogCampaign] = useState(false);
-  const [openDialogSearch, setopenDialogSearch] = useState(false);
-  const [openShortcut, setopenShortcut] = useState(false);
-  const [sidebar, setsidebar] = useState(true);
+  const [filter, setFilter] = useState("all");
+  const [arrange, setArrange] = useState("arrange_all");
   const [priority, setPriority] = useState(true);
+  const [openDialogAction, setDialogAction] = useState(false);
+  const [openDialogCelebration, setDialogCelebration] = useState(false);
+  const [openDialogCampaign, setDialogCampaign] = useState(false);
+  const [openDialogSearch, setDialogSearch] = useState(false);
+  const [openShortcut, setShortcut] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
 
   const context: ContextType = {
     date: {
       day,
-      setDay,
+      set: setDay,
     },
     filter: {
-      option,
-      setOption,
+      option: filter,
+      set: setFilter,
+    },
+    arrange: {
+      option: arrange,
+      set: setArrange,
     },
     priority: {
       option: priority,
-      setPriority,
+      set: setPriority,
     },
     actions: {
       open: openDialogAction,
-      setOpen: setopenDialogAction,
+      set: setDialogAction,
     },
     celebrations: {
       open: openDialogCelebration,
-      setOpen: setopenDialogCelebration,
+      set: setDialogCelebration,
     },
     campaigns: {
       open: openDialogCampaign,
-      setOpen: setopenDialogCampaign,
+      set: setDialogCampaign,
     },
     search: {
       open: openDialogSearch,
-      setOpen: setopenDialogSearch,
+      set: setDialogSearch,
     },
 
     shortcut: {
       open: openShortcut,
-      setOpen: setopenShortcut,
+      set: setShortcut,
     },
     sidebar: {
       open: sidebar,
-      setOpen: setsidebar,
+      set: setSidebar,
     },
   };
 

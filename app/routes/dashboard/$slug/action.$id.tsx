@@ -47,7 +47,8 @@ export default function ActionPage() {
         <div className="col-span-1 h-full overflow-hidden ">
           <h4 className="px-4">Ações recentes</h4>
           <ActionList
-            actions={actionsByPriority(actions)}
+            // actions={actionsByPriority(actions)}
+            actions={actions}
             hideAccount
             showDateAndTime
           />
