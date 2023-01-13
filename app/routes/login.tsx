@@ -1,7 +1,7 @@
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
-import { Form, useTransition } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 import { useState } from "react";
 import Button from "~/components/Button";
 import Field from "~/components/Forms/InputField";
@@ -65,10 +65,10 @@ export const quote = quotes[Math.floor(Math.random() * quotes.length)];
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const transition = useTransition();
+  const transition = useNavigation();
   const isLoading =
     transition.state !== "idle" &&
-    transition.submission?.formData.get("action") === "login";
+    transition.formData?.get("action") === "login";
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
