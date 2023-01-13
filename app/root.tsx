@@ -49,20 +49,6 @@ export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
 
-  // const [context, setContext] = useState<ContextType>({
-  //   date: dayjs(),
-  //   filter: "all",
-  //   sidebar: true,
-  //   priority: false,
-  //   dialogs: {
-  //     actions: false,
-  //     celebrations: false,
-  //     campaigns: false,
-  //     search: false,
-  //     shortcut: false,
-  //   },
-  // });
-
   const [day, setDay] = useState(dayjs());
   const [option, setOption] = useState("all");
   const [openDialogAction, setopenDialogAction] = useState(false);

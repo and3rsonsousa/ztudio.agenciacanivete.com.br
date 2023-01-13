@@ -168,7 +168,11 @@ export default function Calendar({
           </div>
           <div className="mt-4 mr-4">
             <label className="field field-checkbox item-center flex gap-2">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={context.priority.option}
+                onChange={() => context.priority.setPriority((prev) => !prev)}
+              />
               <div className="checkbox">
                 <CheckIcon />
               </div>

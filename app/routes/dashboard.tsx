@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     getTagsStatusAttributes(request),
     getCelebrations({ request }),
   ]);
-  const url = request.url;
+  const url = new URL(request.url).pathname;
   return {
     person,
     persons,

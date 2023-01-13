@@ -13,9 +13,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const { error } = await handleAction(formData, request);
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");
 
-  if (!error) {
-    return redirect(redirectTo ?? `/dashboard/${params.slug}`);
-  }
+  if (error) return { error };
+  return redirect(redirectTo ?? `/dashboard/${params.slug}`);
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
