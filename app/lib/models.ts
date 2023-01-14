@@ -50,6 +50,7 @@ export type ActionModel = {
   account: AccountModel;
   campaign: CampaignModel;
   attributes: ItemModel & { priority: number };
+  deleted: boolean;
 };
 
 export type CelebrationModel = {

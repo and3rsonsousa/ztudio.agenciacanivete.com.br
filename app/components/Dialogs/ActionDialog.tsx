@@ -307,11 +307,25 @@ export default function ActionDialog({
         <div className={`h-16`}>
           <div className={`flex w-full items-center justify-end gap-2 py-4 `}>
             {action && (
-              <Form method="post">
-                <input type="hidden" name="id" value={action.id} />
-                <input type="hidden" name="action" value="delete-action" />
-                <Button>Excluir</Button>
-              </Form>
+              <>
+                {action.deleted && (
+                  <div className="text-xs font-bold text-error-500">
+                    Este item está na lixeira
+                  </div>
+                )}
+                <Form method="post">
+                  <input type="hidden" name="id" value={action.id} />
+                  <input
+                    type="hidden"
+                    name="action"
+                    value={
+                      action.deleted ? "delete-action-trash" : `delete-action`
+                    }
+                  />
+
+                  <Button>{action.deleted ? "Excluir" : "Lixeira"}</Button>
+                </Form>
+              </>
             )}
             <Button primary type="submit" loading={isAdding || isUpdating}>
               {action ? "Atualizar" : "Adicionar"}

@@ -35,6 +35,7 @@ import type {
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
+import React from "react";
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -193,7 +194,7 @@ export const ActionMedium = ({
 
           <div className="overflow-hidden">
             <div className="mb-1">
-              <div className="font-norma text-sm">{action.name}</div>
+              <div className="text-sm font-normal">{action.name}</div>
               {action.campaign && (
                 <Link
                   to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
@@ -323,27 +324,30 @@ export const ActionGrid = ({
 
 export const Actions = ({ actions }: { actions: ActionModel[] }) => {
   let currentMonth = "";
+
   return (
     <div className="no-scrollbars grid gap-x-4 gap-y-2 overflow-hidden overflow-y-auto p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
       {Array.isArray(actions) && actions.length > 0 ? (
-        actions.reverse().map((action) => {
+        actions.reverse().map((action, index) => {
           const header =
             currentMonth !== dayjs(action.date).format("MM") ? (
-              <h4 className="col-span-full py-4 first-letter:capitalize">
+              <h4
+                className="col-span-full py-4 first-letter:capitalize"
+                key={index}
+              >
                 {dayjs(action.date).format("MMMM [de] YYYY")}
               </h4>
             ) : null;
           currentMonth = dayjs(action.date).format("MM");
           return (
-            <>
+            <React.Fragment key={index}>
               {header}
               <ActionMedium
-                key={action.id}
                 action={action}
                 hideAccount={true}
                 showDateAndTime={true}
               />
-            </>
+            </React.Fragment>
           );
         })
       ) : (
@@ -366,6 +370,7 @@ const ContextMenuItems = ({
   const tags: ItemModel[] = matches[1].data.tags;
   const status: ItemModel[] = matches[1].data.status;
   const accounts: AccountModel[] = matches[1].data.accounts;
+  const trash = matches[1].data.url?.includes("trash");
 
   return (
     <>
@@ -440,7 +445,7 @@ const ContextMenuItems = ({
         onSelect={(event: Event) => {
           fetcher.submit(
             {
-              action: "delete-action",
+              action: trash ? "delete-action-trash" : "delete-action",
               id: action.id,
             },
             {

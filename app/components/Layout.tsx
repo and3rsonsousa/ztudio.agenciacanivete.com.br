@@ -26,6 +26,7 @@ import Button from "./Button";
 import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
+import SearchDialog from "./Dialogs/SearchDialog";
 import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -467,10 +468,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 <Dialog.Content forceMount className="dialog dialog-search">
                   <motion.div
-                    className="dialog-content top-1/3 w-[36rem] max-w-lg font-light antialiased "
+                    className="dialog-content w-[36rem] max-w-lg font-light antialiased"
                     {...scaleUp()}
                   >
-                    <input type="text" className="field-default" />
+                    <SearchDialog />
                   </motion.div>
                 </Dialog.Content>
               </Dialog.Portal>
