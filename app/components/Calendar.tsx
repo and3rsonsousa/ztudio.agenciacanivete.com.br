@@ -3,11 +3,13 @@ import {
   FunnelIcon as FunnelIconSolid,
   Square3Stack3DIcon as Square3Stack3DIconSolid,
   BellAlertIcon as BellAlertIconSolid,
+  ClockIcon as ClockIconSolid,
 } from "@heroicons/react/20/solid";
 import {
   BellAlertIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ClockIcon,
   FunnelIcon,
   Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
@@ -186,22 +188,41 @@ export default function Calendar({
         <DataFlow actions={actions} />
 
         <div className="flex gap-4">
-          <label
-            className={`grid h-10 w-10 cursor-pointer place-items-center rounded-lg  dark:hover:text-white ${
-              context.priority.option ? "bg-brand text-white" : "text-gray-400"
-            }`}
-          >
+          <label className={`flex cursor-pointer gap-2`}>
             <input
               type="checkbox"
               className="hidden"
               checked={context.priority.option}
               onChange={() => context.priority.set((prev) => !prev)}
             />
-            {context.priority.option ? (
-              <BellAlertIconSolid className="w-5" />
-            ) : (
-              <BellAlertIcon className="w-5" />
-            )}
+            <div
+              className={`grid h-10 w-10 place-items-center rounded-xl ${
+                context.priority.option
+                  ? "bg-brand text-white"
+                  : "text-gray-400"
+              }`}
+              title="Ordenar por prioridade de status"
+            >
+              {context.priority.option ? (
+                <BellAlertIconSolid className="w-5" />
+              ) : (
+                <BellAlertIcon className="w-5" />
+              )}
+            </div>
+            <div
+              className={`grid h-10 w-10 place-items-center rounded-xl  ${
+                !context.priority.option
+                  ? "bg-brand text-white"
+                  : "text-gray-400"
+              }`}
+              title="Ordenar por horário de conclusão"
+            >
+              {!context.priority.option ? (
+                <ClockIconSolid className={`w-5`} />
+              ) : (
+                <ClockIcon className={`w-5`} />
+              )}
+            </div>
           </label>
 
           <DropdownMenu.Root>
@@ -304,10 +325,10 @@ export default function Calendar({
                   </div>
                 )
               )}
-              <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
+              <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-800"></div>
             </div>
 
-            {/* <div className="absolute top-12 left-0 z-20 h-4 w-full bg-gradient-to-b dark:from-gray-1000"></div> */}
+            {/* <div className="absolute top-12 left-0 z-20 h-8 w-full bg-gradient-to-b dark:from-brand-900/50"></div> */}
 
             <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
               {days.map((day, index) => {
