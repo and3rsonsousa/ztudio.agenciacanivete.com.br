@@ -1,12 +1,17 @@
 import {
-  CheckIcon,
+  CheckCircleIcon,
   FunnelIcon as FunnelIconSolid,
+  Square3Stack3DIcon as Square3Stack3DIconSolid,
+  BellAlertIcon as BellAlertIconSolid,
 } from "@heroicons/react/20/solid";
 import {
+  BellAlertIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   FunnelIcon,
+  Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Link,
   useMatches,
@@ -34,7 +39,6 @@ import Button from "./Button";
 import DataFlow from "./DataFlow";
 import Day from "./Day";
 import DayInfo from "./DayInfo";
-import SelectField from "./Forms/SelectField";
 import InstagramGrid from "./InstagramGrid";
 
 dayjs.extend(isSameOrAfter);
@@ -61,7 +65,7 @@ export default function Calendar({
   const matches = useMatches();
   let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
-  const tags = matches[1].data.tags;
+  const tags: ItemModel[] = matches[1].data.tags;
   const today = dayjs();
 
   const { firstDayOfCurrentMonth, days: newDays } = getPeriod({
@@ -103,6 +107,21 @@ export default function Calendar({
   });
 
   const { year } = getYear(firstDayOfCurrentMonth);
+  let arrangeDropdownItems = [
+    {
+      title: SHORTCUTS.ARRANGE_ALL.does,
+      value: SHORTCUTS.ARRANGE_ALL.value,
+    },
+    {
+      title: SHORTCUTS.ARRANGE_CATEGORIES.does,
+      value: SHORTCUTS.ARRANGE_CATEGORIES.value,
+    },
+  ];
+  if (!slug)
+    arrangeDropdownItems.push({
+      title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
+      value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
+    });
 
   useEffect(() => {
     if (window) {
@@ -115,8 +134,8 @@ export default function Calendar({
   return (
     <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col lg:overflow-hidden">
       {/* header */}
-      <div className="flex items-center justify-between ">
-        <div className="flex w-full items-center justify-between gap-2 lg:justify-start">
+      <div className="flex items-center justify-between">
+        <div className="flex w-full items-center justify-between gap-2 lg:w-auto lg:justify-start">
           {/* Mês e ano */}
           <h4 className="mb-0 p-4 first-letter:capitalize">
             {showYearView
@@ -164,82 +183,110 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className="-mb-4 flex gap-2 px-4">
-          <div className="mt-2">
-            <DataFlow actions={actions} />
-          </div>
-          <div className="mt-4 mr-4">
-            <label className="field field-checkbox item-center flex gap-2">
-              <input
-                type="checkbox"
-                checked={context.priority.option}
-                onChange={() => context.priority.set((prev) => !prev)}
-              />
-              <div className="checkbox">
-                <CheckIcon />
-              </div>
-              <div className="field-label whitespace-nowrap text-[10px] uppercase tracking-[1px]">
-                <span className="hidden md:inline">Ordenar por </span>
-                prioridade
-              </div>
-            </label>
-          </div>
-          <div
-            className={`bg-${
-              context.filter.option !== "all"
-                ? context.filter.option.includes("all")
-                  ? "info"
-                  : context.filter.option
-                : null
-            } mt-2 h-8 w-8 rounded-full p-2`}
+        <DataFlow actions={actions} />
+
+        <div className="flex gap-4">
+          <label
+            className={`grid h-10 w-10 cursor-pointer place-items-center rounded-lg  dark:hover:text-white ${
+              context.priority.option ? "bg-brand text-white" : "text-gray-400"
+            }`}
           >
-            {context.filter.option === "all" ? (
-              <FunnelIcon className="w-4" />
+            <input
+              type="checkbox"
+              className="hidden"
+              checked={context.priority.option}
+              onChange={() => context.priority.set((prev) => !prev)}
+            />
+            {context.priority.option ? (
+              <BellAlertIconSolid className="w-5" />
             ) : (
-              <FunnelIconSolid className="w-4" />
+              <BellAlertIcon className="w-5" />
             )}
-          </div>
+          </label>
 
-          <SelectField
-            name="FilterActions"
-            items={[
-              [
-                {
-                  title: SHORTCUTS.ARRANGE_ALL.does,
-                  value: SHORTCUTS.ARRANGE_ALL.value,
-                },
-                {
-                  title: SHORTCUTS.ARRANGE_CATEGORIES.does,
-                  value: SHORTCUTS.ARRANGE_CATEGORIES.value,
-                },
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger
+              className={`grid h-10 w-10 place-items-center rounded-lg  dark:hover:text-white ${
+                context.arrange.option !== "arrange_all"
+                  ? "bg-brand text-white"
+                  : "text-gray-400"
+              }`}
+            >
+              {context.arrange.option !== "arrange_all" ? (
+                <Square3Stack3DIconSolid className="w-5" />
+              ) : (
+                <Square3Stack3DIcon className="w-5" />
+              )}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content className="dropdown-content">
+                {arrangeDropdownItems.map((item, index) => (
+                  <DropdownMenu.Item
+                    key={index}
+                    className="dropdown-item item-small flex justify-between gap-4"
+                    onSelect={() => {
+                      if (
+                        context.filter.option !== "all" &&
+                        item.value === "arrange_category"
+                      ) {
+                        context.filter.set("all");
+                      }
+                      context.arrange.set(item.value);
+                    }}
+                  >
+                    {item?.title.substring(item.title.indexOf(" ") + 1)}
+                    {context.arrange.option === item.value && (
+                      <CheckCircleIcon className="w-4" />
+                    )}
+                  </DropdownMenu.Item>
+                ))}
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
 
-                slug
-                  ? undefined
-                  : {
-                      title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
-                      value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
-                    },
-              ],
-              [
-                { title: "Todas", value: "all" },
-                ...tags.map((tag: ItemModel) => ({
-                  title: tag.name,
-                  value: tag.slug,
-                })),
-              ],
-            ]}
-            onChange={(value) => {
-              if (value.includes("arrange")) {
-                context.arrange.set(value);
-              } else {
-                context.filter.set(value);
-              }
-            }}
-            small
-            value={context.filter.option}
-            link
-          />
-          <div></div>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger
+              className={`grid h-10 w-10 place-items-center rounded-lg text-gray-400 dark:hover:text-white bg-${context.filter.option}`}
+            >
+              {context.filter.option !== "all" ? (
+                <FunnelIconSolid className="w-5" />
+              ) : (
+                <FunnelIcon className="w-5" />
+              )}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content className="dropdown-content">
+                <DropdownMenu.Item
+                  className="dropdown-item item-small flex justify-between gap-4"
+                  onSelect={() => {
+                    context.filter.set("all");
+                  }}
+                >
+                  Todos
+                  {context.filter.option === "all" && (
+                    <CheckCircleIcon className="w-4" />
+                  )}
+                </DropdownMenu.Item>
+                {tags.map((tag, index) => (
+                  <DropdownMenu.Item
+                    key={index}
+                    className="dropdown-item item-small flex justify-between gap-4"
+                    onSelect={() => {
+                      if (context.arrange.option === "arrange_category") {
+                        context.arrange.set("arrange_all");
+                      }
+                      context.filter.set(tag.slug);
+                    }}
+                  >
+                    {tag.name}
+                    {context.filter.option === tag.slug && (
+                      <CheckCircleIcon className="w-4" />
+                    )}
+                  </DropdownMenu.Item>
+                ))}
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
         </div>
       </div>
       {showYearView ? (

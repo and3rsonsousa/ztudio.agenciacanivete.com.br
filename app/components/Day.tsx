@@ -177,7 +177,7 @@ export default function Day({
                           className={`mb-1/2 h-1 w-1 rounded-full bg-${category.tag.slug}`}
                         ></div>
                         <div
-                          className={`text-xx font-bold uppercase tracking-[1px] text-gray-300`}
+                          className={`text-xx font-bold uppercase tracking-[1px] text-gray-700 dark:text-gray-300`}
                         >
                           {category.tag?.name}
                         </div>
@@ -202,7 +202,7 @@ export default function Day({
                           className={`mb-1/2 h-1 w-1 rounded-full bg-brand`}
                         ></div>
                         <div
-                          className={`text-[10px] font-bold uppercase tracking-[1px] text-gray-500`}
+                          className={`text-[10px] font-bold uppercase tracking-[1px] text-gray-700 dark:text-gray-300`}
                         >
                           {account.account?.short}
                         </div>

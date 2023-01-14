@@ -1447,6 +1447,10 @@ h5 {
   height: 4rem;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .max-h-\[90vh\] {
   max-height: 90vh;
 }
@@ -1521,6 +1525,14 @@ h5 {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .max-w-\[8rem\] {
@@ -1923,6 +1935,11 @@ h5 {
   background-color: transparent;
 }
 
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -2083,13 +2100,13 @@ h5 {
   font-size: 10px;
 }
 
-.text-\[8px\] {
-  font-size: 8px;
-}
-
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-\[8px\] {
+  font-size: 8px;
 }
 
 .text-base {
@@ -2182,6 +2199,11 @@ h5 {
   color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
 .text-success-500 {
   --tw-text-opacity: 1;
   color: rgb(16 185 129 / var(--tw-text-opacity));
@@ -2190,11 +2212,6 @@ h5 {
 .text-alert-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
-}
-
-.text-gray-500 {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .text-gray-300 {
@@ -2220,6 +2237,11 @@ h5 {
 .text-error-200 {
   --tw-text-opacity: 1;
   color: rgb(254 202 202 / var(--tw-text-opacity));
+}
+
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
 .antialiased {
@@ -3110,6 +3132,11 @@ body {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
+.dark .dark\:text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
 .dark .dark\:ring-offset-gray-1000 {
   --tw-ring-offset-color: #0a0c1a;
 }
@@ -3127,6 +3154,21 @@ body {
 .dark .dark\:hover\:bg-gray-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:hover\:text-gray-300:hover {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.dark .dark\:hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.dark .dark\:hover\:text-gray-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 @media (min-width: 640px) {
@@ -3272,6 +3314,10 @@ body {
 
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:w-auto {
+    width: auto;
   }
 
   .lg\:flex-auto {
