@@ -23,6 +23,7 @@ import {
   TrashIcon as Trash,
 } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { scaleUp } from "~/lib/animations";
@@ -36,6 +37,8 @@ import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
 import React from "react";
+
+dayjs.extend(relativeTime);
 
 export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -604,8 +607,8 @@ const ContextMenuItems = ({
 const IsLate = ({ action }: { action: ActionModel }) =>
   dayjs(action.date).isBefore(dayjs()) &&
   action.status.slug !== "accomplished" ? (
-    <div className="absolute -left-2 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-white bg-error-500 dark:border-gray-1000"></div>
-  ) : // <div className="absolute -left-1.5 -rotate-12 animate-pulse font-black text-error-500">
-  //   !
-  // </div>
-  null;
+    <div
+      className="absolute -left-1 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-white bg-error-500 dark:border-gray-1000"
+      title={`Atrasado ${dayjs(action.date).fromNow()}`}
+    ></div>
+  ) : null;

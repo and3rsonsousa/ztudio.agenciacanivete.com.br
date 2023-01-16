@@ -19,6 +19,11 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...theme.fontFamily.sans],
       },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-radial-t":
+          "radial-gradient(ellipse at top, var(--tw-gradient-stops))",
+      },
     },
     colors: {
       white: "white",

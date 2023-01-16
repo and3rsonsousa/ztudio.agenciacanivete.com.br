@@ -79,12 +79,14 @@ export default function SearchDialog() {
       }}
     >
       <Combobox.Input
-        className="field-default"
+        className="rounded-xl bg-gray-1000 px-6 py-4 text-2xl font-medium antialiased placeholder-gray-600"
         value={query}
         onChange={(event) => {
           setQuery(event.target.value);
           getSearch(event.target.value);
         }}
+        placeholder="Buscar..."
+        autoComplete="off"
       />
       {searching && (
         <div className="absolute right-4 top-3">
@@ -92,80 +94,98 @@ export default function SearchDialog() {
         </div>
       )}
 
-      <Combobox.Options className="py-4">
-        {query.length > 2 ? (
-          <div className="no-scrollbars max-h-[40vh] overflow-hidden overflow-y-auto">
-            {/* Accounts */}
-            {items.accounts.length > 0 ? (
-              <div>
-                <div className="px-6 py-1 text-xl font-bold tracking-wide">
-                  Clientes
-                </div>
-                {items.accounts.map((account: AccountModel, index: number) => (
-                  <Combobox.Option key={index} value={account} as={Fragment}>
-                    {({ selected, active }) => (
-                      <div
-                        className={`dropdown-item font-medium ${
-                          active || selected ? "bg-brand text-white" : ""
-                        }`}
+      <Combobox.Options>
+        {query.length > 2 && (
+          <div className="relative py-4">
+            <div className="absolute left-0 right-0 top-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-brand-700"></div>
+            <div className="absolute left-0 right-0 top-0 h-8 bg-gradient-radial-t dark:from-brand-900/50"></div>
+            <div className="no-scrollbars max-h-[40vh] overflow-hidden overflow-y-auto">
+              {/* Accounts */}
+              {items.accounts.length > 0 ? (
+                <div>
+                  <div className="px-6 py-1 text-xl font-bold tracking-wide">
+                    Clientes
+                  </div>
+                  {items.accounts.map(
+                    (account: AccountModel, index: number) => (
+                      <Combobox.Option
+                        key={index}
+                        value={account}
+                        as={Fragment}
                       >
-                        {account.name}
-                      </div>
-                    )}
-                  </Combobox.Option>
-                ))}
-              </div>
-            ) : null}
-            {/* Actions */}
-            {items.actions.length > 0 ? (
-              <div>
-                <div className="px-6 pb-1 pt-6 text-xl font-bold">Ações</div>
-                {items.actions.map((action: ActionModel, index: number) => (
-                  <Combobox.Option key={index} value={action} as={Fragment}>
-                    {({ selected, active }) => (
-                      <div
-                        className={`dropdown-item font-medium ${
-                          active || selected ? "bg-brand text-white" : ""
-                        }`}
-                      >
-                        {action.name}
-                      </div>
-                    )}
-                  </Combobox.Option>
-                ))}
-              </div>
-            ) : null}
-            {/* Campaigns */}
-            {items.campaigns.length > 0 ? (
-              <div>
-                <div className="px-6 pb-1 pt-6 text-xl font-bold">
-                  Campanhas
+                        {({ selected, active }) => (
+                          <div
+                            className={`dropdown-item font-medium ${
+                              active || selected ? "bg-brand text-white" : ""
+                            }`}
+                          >
+                            {account.name}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    )
+                  )}
                 </div>
-                {items.campaigns.map(
-                  (campaign: CampaignModel, index: number) => (
-                    <Combobox.Option key={index} value={campaign} as={Fragment}>
+              ) : null}
+              {/* Actions */}
+              {items.actions.length > 0 ? (
+                <div>
+                  <div className="px-6 pb-1 pt-6 text-xl font-bold">Ações</div>
+                  {items.actions.map((action: ActionModel, index: number) => (
+                    <Combobox.Option key={index} value={action} as={Fragment}>
                       {({ selected, active }) => (
                         <div
                           className={`dropdown-item font-medium ${
                             active || selected ? "bg-brand text-white" : ""
                           }`}
                         >
-                          {campaign.name}
+                          {action.name}
                         </div>
                       )}
                     </Combobox.Option>
-                  )
+                  ))}
+                </div>
+              ) : null}
+              {/* Campaigns */}
+              {items.campaigns.length > 0 ? (
+                <div>
+                  <div className="px-6 pb-1 pt-6 text-xl font-bold">
+                    Campanhas
+                  </div>
+                  {items.campaigns.map(
+                    (campaign: CampaignModel, index: number) => (
+                      <Combobox.Option
+                        key={index}
+                        value={campaign}
+                        as={Fragment}
+                      >
+                        {({ selected, active }) => (
+                          <div
+                            className={`dropdown-item font-medium ${
+                              active || selected ? "bg-brand text-white" : ""
+                            }`}
+                          >
+                            {campaign.name}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    )
+                  )}
+                </div>
+              ) : null}
+              {!searching &&
+                query.length > 2 &&
+                items.actions.length === 0 &&
+                items.campaigns.length === 0 &&
+                items.accounts.length === 0 && (
+                  <div className="p-4 text-center">
+                    Nenhum resultado para o termo{" "}
+                    <strong className="font-bold">{query}</strong> foi
+                    encontrado.
+                  </div>
                 )}
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          query.length >= 3 && (
-            <div className="p-4 text-center">
-              Nenhum resultado para o termo{" "}
-              <strong className="font-bold">{query}</strong> foi encontrado.
             </div>
-          )
+          </div>
         )}
       </Combobox.Options>
     </Combobox>

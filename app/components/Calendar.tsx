@@ -325,10 +325,8 @@ export default function Calendar({
                   </div>
                 )
               )}
-              <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-800"></div>
+              <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
             </div>
-
-            {/* <div className="absolute top-12 left-0 z-20 h-8 w-full bg-gradient-to-b dark:from-brand-900/50"></div> */}
 
             <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
               {days.map((day, index) => {
