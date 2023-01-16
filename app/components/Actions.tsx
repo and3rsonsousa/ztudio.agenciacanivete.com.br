@@ -269,7 +269,7 @@ export const ActionGrid = ({
 
   return action.name === "support" ? (
     <div
-      className={`grid aspect-square place-items-center border border-gray-1000 bg-gray-100 text-center dark:bg-gray-900 ${
+      className={`grid aspect-square place-items-center border border-white  bg-brand text-center text-white dark:border-gray-1000 ${
         index === 0 ? "rounded-tl-xl" : ""
       }`}
     >
@@ -292,11 +292,11 @@ export const ActionGrid = ({
     <ContextMenu.Root>
       <ContextMenu.Trigger>
         <div
-          className={`text-xx flex aspect-square flex-col justify-between border border-gray-1000 p-2 text-center leading-tight  ${
+          className={`text-xx flex aspect-square flex-col justify-between border border-white p-2 text-center leading-tight dark:border-gray-1000  ${
             (action as ActionModel).status.id ===
             "a448e17d-05ba-4ad0-9990-773f9384d15e"
               ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-400"
-              : " bg-white dark:bg-gray-800 dark:text-gray-200"
+              : " bg-gray-100 dark:bg-gray-800 dark:text-gray-200"
           } 
           ${index === 0 ? "rounded-tl-xl" : ""} 
           ${

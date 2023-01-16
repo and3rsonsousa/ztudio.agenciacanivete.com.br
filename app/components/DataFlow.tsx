@@ -44,7 +44,7 @@ const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
       </div>
       <div
         className={`px-2 text-center ${
-          accomplished > total / 0.1
+          accomplished > total * 0.9
             ? "text-success-500"
             : accomplished > total / 3
             ? "text-alert-500"

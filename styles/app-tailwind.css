@@ -205,7 +205,7 @@ body {
 }
 
 .calendar-day {
-  @apply py-2 text-center lg:text-left;
+  @apply rounded-lg py-2 text-center lg:text-left;
 }
 .calendar-day.not-this-month .day-button {
   @apply text-gray-300 dark:text-gray-700;
