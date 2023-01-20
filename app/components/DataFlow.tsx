@@ -26,11 +26,8 @@ const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
   return (
     <div className="flex">
       <div className="px-2 text-center md:px-4">
-        <div className="font-medium">{total}</div>
-        <div className="text-[8px] font-bold uppercase tracking-[1px]">
-          Ações
-        </div>
-        <div className="mt-1 flex h-1 w-12 overflow-hidden rounded-sm bg-gray-700">
+        <div className="font-bold">{total} AÇÕES</div>
+        <div className="mt-1 hidden h-1 overflow-hidden rounded-full bg-gray-700 md:flex">
           {stats.reverse().map((status) => (
             <div
               key={status.stat.id}
@@ -54,14 +51,14 @@ const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
         <div className="font-medium">
           {Math.floor((accomplished / total) * 100)}%
         </div>
-        <div className="text-[8px] font-bold uppercase tracking-[1px]">
+        <div className="hidden text-[8px] font-bold uppercase tracking-[1px] md:block">
           concluídos
         </div>
       </div>
       {late > 0 ? (
         <div className={`px-2 text-center text-error-500 md:px-4`}>
-          <div className="font-medium ">{late}</div>
-          <div className="text-[8px] font-bold uppercase tracking-[1px]">
+          <div className="font-medium">{late}</div>
+          <div className="hidden text-[8px] font-bold uppercase tracking-[1px] md:block">
             atrasadas
           </div>
         </div>

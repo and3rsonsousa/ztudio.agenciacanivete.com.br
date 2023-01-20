@@ -331,6 +331,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           { ...SHORTCUTS.ARRANGE_ALL },
                           { ...SHORTCUTS.ARRANGE_CATEGORIES },
                           { ...SHORTCUTS.ARRANGE_ACCOUNTS },
+                          { ...SHORTCUTS.FILTER_ALL },
                           { ...SHORTCUTS.FILTER_FEED },
                           { ...SHORTCUTS.FILTER_REELS },
                           { ...SHORTCUTS.FILTER_TASK },

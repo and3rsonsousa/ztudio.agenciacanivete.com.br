@@ -113,16 +113,19 @@ export default function Calendar({
     {
       title: SHORTCUTS.ARRANGE_ALL.does,
       value: SHORTCUTS.ARRANGE_ALL.value,
+      shortcut: SHORTCUTS.ARRANGE_ALL.shortcut,
     },
     {
       title: SHORTCUTS.ARRANGE_CATEGORIES.does,
       value: SHORTCUTS.ARRANGE_CATEGORIES.value,
+      shortcut: SHORTCUTS.ARRANGE_CATEGORIES.shortcut,
     },
   ];
   if (!slug)
     arrangeDropdownItems.push({
       title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
       value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
+      shortcut: SHORTCUTS.ARRANGE_ACCOUNTS.shortcut,
     });
 
   useEffect(() => {
@@ -136,13 +139,11 @@ export default function Calendar({
   return (
     <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col lg:overflow-hidden">
       {/* header */}
-      <div className="flex items-center justify-between">
-        <div className="flex w-full items-center justify-between gap-2 lg:w-auto lg:justify-start">
+      <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
+        <div className="order-1 flex w-full items-center justify-between gap-2 md:w-auto lg:justify-start">
           {/* Mês e ano */}
           <h4 className="mb-0 p-4 first-letter:capitalize">
-            {showYearView
-              ? firstDayOfCurrentMonth.format("YYYY")
-              : firstDayOfCurrentMonth.format(`MMMM [de] YYYY`)}
+            {firstDayOfCurrentMonth.format("MMMM")}
           </h4>
 
           {/* Botões para mês e ano */}
@@ -185,9 +186,11 @@ export default function Calendar({
           </div>
         </div>
 
-        <DataFlow actions={actions} />
+        <div className="order-3 md:order-2">
+          <DataFlow actions={actions} />
+        </div>
 
-        <div className="flex gap-4">
+        <div className="order-2 flex gap-1 px-4 md:order-3">
           <label className={`flex cursor-pointer gap-2`}>
             <input
               type="checkbox"
@@ -196,12 +199,12 @@ export default function Calendar({
               onChange={() => context.priority.set((prev) => !prev)}
             />
             <div
-              className={`grid h-10 w-10 place-items-center rounded-xl ${
+              className={`grid h-8 w-8 place-items-center rounded-xl md:h-10 md:w-10 ${
                 context.priority.option
                   ? "bg-brand text-white"
                   : "text-gray-400"
               }`}
-              title="Ordenar por prioridade de status"
+              title="Cmd + K → O ( Ordenar por prioridade de status )"
             >
               {context.priority.option ? (
                 <BellAlertIconSolid className="w-5" />
@@ -210,12 +213,12 @@ export default function Calendar({
               )}
             </div>
             <div
-              className={`grid h-10 w-10 place-items-center rounded-xl  ${
+              className={`grid h-8 w-8 place-items-center rounded-xl md:h-10 md:w-10  ${
                 !context.priority.option
                   ? "bg-brand text-white"
                   : "text-gray-400"
               }`}
-              title="Ordenar por horário de conclusão"
+              title="Cmd K → O ( Ordenar por horário de conclusão )"
             >
               {!context.priority.option ? (
                 <ClockIconSolid className={`w-5`} />
@@ -227,11 +230,12 @@ export default function Calendar({
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger
-              className={`grid h-10 w-10 place-items-center rounded-lg  dark:hover:text-white ${
+              className={`grid h-8 w-8 place-items-center rounded-lg dark:hover:text-white md:h-10 md:w-10 ${
                 context.arrange.option !== "arrange_all"
                   ? "bg-brand text-white"
                   : "text-gray-400"
               }`}
+              title="Agrupar Ações"
             >
               {context.arrange.option !== "arrange_all" ? (
                 <Square3Stack3DIconSolid className="w-5" />
@@ -244,6 +248,7 @@ export default function Calendar({
                 {arrangeDropdownItems.map((item, index) => (
                   <DropdownMenu.Item
                     key={index}
+                    title={`Cmd + K → ${item.shortcut}`}
                     className="dropdown-item item-small flex justify-between gap-4"
                     onSelect={() => {
                       if (
@@ -267,7 +272,7 @@ export default function Calendar({
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger
-              className={`grid h-10 w-10 place-items-center rounded-lg text-gray-400 dark:hover:text-white bg-${context.filter.option}`}
+              className={`grid h-8 w-8 place-items-center rounded-lg text-gray-400 dark:hover:text-white md:h-10 md:w-10 bg-${context.filter.option}`}
             >
               {context.filter.option !== "all" ? (
                 <FunnelIconSolid className="w-5" />
@@ -282,6 +287,7 @@ export default function Calendar({
                   onSelect={() => {
                     context.filter.set("all");
                   }}
+                  title={`Cmd + K → 0`}
                 >
                   Todos
                   {context.filter.option === "all" && (
@@ -291,6 +297,7 @@ export default function Calendar({
                 {tags.map((tag, index) => (
                   <DropdownMenu.Item
                     key={index}
+                    title={`Cmd + K → ${index + 1}`}
                     className="dropdown-item item-small flex justify-between gap-4"
                     onSelect={() => {
                       if (context.arrange.option === "arrange_category") {

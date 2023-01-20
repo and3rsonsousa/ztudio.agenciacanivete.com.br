@@ -66,7 +66,11 @@ export default function SelectField({
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content className="dropdown-content">
+          <Select.Content
+            className="dropdown-content mt-2"
+            collisionPadding={8}
+            position="popper"
+          >
             <Select.SelectScrollUpButton
               className={`${small ? "py-1" : "py-2"}`}
             >
