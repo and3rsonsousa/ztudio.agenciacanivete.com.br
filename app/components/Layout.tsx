@@ -1,12 +1,3 @@
-import {
-  BriefcaseIcon,
-  ChevronRightIcon,
-  MagnifyingGlassIcon,
-  MoonIcon,
-  PlusIcon,
-  SunIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
@@ -18,6 +9,15 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  Briefcase,
+  ChevronRight,
+  Moon,
+  Plus,
+  Search,
+  Sun,
+  User,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { fade, scaleUp } from "~/lib/animations";
 import { SHORTCUTS } from "~/lib/constants";
@@ -115,7 +115,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <button className="p-2">
-                  <BriefcaseIcon className="w-4" />
+                  <Briefcase className="w-4" />
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
@@ -148,7 +148,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               )}
               <div className={`${context.sidebar.open ? "ml-auto" : "-ml-1"}`}>
-                <MagnifyingGlassIcon className="w-4" />
+                <Search className="w-4" />
               </div>
             </button>
           </div>
@@ -162,7 +162,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                 )}
 
-                <UserIcon
+                <User
                   className={`${context.sidebar.open ? "ml-auto" : "ml-2"} w-4`}
                 />
               </DropdownMenu.Trigger>
@@ -216,7 +216,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <DropdownMenu.SubTrigger className="dropdown-item item-small">
                           <div className="flex items-center">
                             <div>Clientes</div>
-                            <ChevronRightIcon className="ml-auto w-4" />
+                            <ChevronRight className="ml-auto w-4" />
                           </div>
                         </DropdownMenu.SubTrigger>
                         <DropdownMenu.Portal>
@@ -245,7 +245,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <DropdownMenu.SubTrigger className="dropdown-item item-small">
                           <div className="flex items-center">
                             <div>Usuários</div>
-                            <ChevronRightIcon className="ml-auto w-4" />
+                            <ChevronRight className="ml-auto w-4" />
                           </div>
                         </DropdownMenu.SubTrigger>
                         <DropdownMenu.Portal>
@@ -294,7 +294,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               onClick={() => context.actions.set(true)}
             >
               <span className="hidden sm:block">Nova Ação</span>
-              <PlusIcon />
+              <Plus />
             </Button>
           </div>
         </div>
@@ -521,11 +521,7 @@ function ThemeSwitcher() {
     >
       <div>Modo {theme === "dark" ? "claro" : "escuro"}</div>
       <div className="ml-8">
-        {theme === "dark" ? (
-          <SunIcon className="w-4" />
-        ) : (
-          <MoonIcon className="w-4" />
-        )}
+        {theme === "dark" ? <Sun className="w-4" /> : <Moon className="w-4" />}
       </div>
     </DropdownMenu.Item>
   );

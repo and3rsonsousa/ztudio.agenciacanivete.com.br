@@ -1,9 +1,3 @@
-import {
-  ArrowSmallRightIcon,
-  CheckCircleIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/20/solid";
-
 import * as ContextMenu from "@radix-ui/react-context-menu";
 
 import type { FetcherWithComponents } from "@remix-run/react";
@@ -14,14 +8,17 @@ import {
   useNavigate,
   useOutletContext,
 } from "@remix-run/react";
-
 import {
-  ClockIcon,
-  DocumentDuplicateIcon,
-  DocumentPlusIcon,
-  PencilSquareIcon,
-  TrashIcon as Trash,
-} from "@heroicons/react/24/outline";
+  ArrowDownRight,
+  CheckCircle,
+  ChevronRight,
+  Clock,
+  Copy,
+  FilePlus2,
+  Edit,
+  Trash2,
+} from "lucide-react";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { AnimatePresence, motion } from "framer-motion";
@@ -203,7 +200,7 @@ export const ActionMedium = ({
                   to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
                   className="text-xx mb-2 flex items-center hover:underline"
                 >
-                  <ArrowSmallRightIcon className="w-4" />
+                  <ArrowDownRight className="w-4" />
                   <span>{action.campaign.name}</span>
                 </Link>
               )}
@@ -284,7 +281,7 @@ export const ActionGrid = ({
             context.actions.set(true);
           }}
         >
-          <DocumentPlusIcon />
+          <FilePlus2 />
         </Button>
       </div>
     </div>
@@ -384,7 +381,7 @@ const ContextMenuItems = ({
           className="dropdown-item item-small flex items-center justify-between gap-2"
         >
           <div className="flex items-center gap-2">
-            <PencilSquareIcon className="w-4" /> <div>Editar</div>
+            <Edit className="w-4" /> <div>Editar</div>
           </div>
           <div className="opacity-50">E</div>
         </Link>
@@ -406,12 +403,12 @@ const ContextMenuItems = ({
           }}
           className="dropdown-item item-small flex items-center gap-2"
         >
-          <DocumentDuplicateIcon className="w-4 shrink-0" />
+          <Copy className="w-4 shrink-0" />
           <div>Duplicar</div>
         </ContextMenu.Item>
         <ContextMenu.Sub>
           <ContextMenu.SubTrigger className="dropdown-item ml-auto py-1.5 pr-4 pl-2">
-            <ChevronRightIcon className="w-4" />
+            <ChevronRight className="w-4" />
           </ContextMenu.SubTrigger>
           <ContextMenu.Portal>
             <ContextMenu.SubContent className="dropdown-content">
@@ -461,16 +458,16 @@ const ContextMenuItems = ({
         textValue="Xclude"
       >
         <div className="flex items-center gap-2">
-          <Trash className="w-4" /> <div>Excluir</div>
+          <Trash2 className="w-4" /> <div>Excluir</div>
         </div>
         <div className="opacity-50">X</div>
       </ContextMenu.Item>
       {/* Adiar */}
       <ContextMenu.Sub>
         <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-          <ClockIcon className="w-4" />
+          <Clock className="w-4" />
           <div>Adiar</div>
-          <ChevronRightIcon className="ml-auto w-4" />
+          <ChevronRight className="ml-auto w-4" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
           <ContextMenu.SubContent className="dropdown-content w-36">
@@ -525,7 +522,7 @@ const ContextMenuItems = ({
             className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
           ></div>
           <div>{action.tag.name}</div>
-          <ChevronRightIcon className="ml-auto w-4" />
+          <ChevronRight className="ml-auto w-4" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
           <ContextMenu.SubContent className="dropdown-content w-36">
@@ -549,9 +546,7 @@ const ContextMenuItems = ({
               >
                 <div className={`h-2 w-2 rounded-full bg-${tag.slug}`}></div>
                 <div className="flex-shrink-0 flex-grow">{tag.name}</div>
-                {action.tag.id === tag.id && (
-                  <CheckCircleIcon className="w-4" />
-                )}
+                {action.tag.id === tag.id && <CheckCircle className="w-4" />}
               </ContextMenu.Item>
             ))}
           </ContextMenu.SubContent>
@@ -568,7 +563,7 @@ const ContextMenuItems = ({
             className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
           ></div>
           <div>{action.status.name}</div>
-          <ChevronRightIcon className="ml-auto w-4" />
+          <ChevronRight className="ml-auto w-4" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
           <ContextMenu.SubContent className="dropdown-content w-36">
@@ -593,7 +588,7 @@ const ContextMenuItems = ({
                 <div className={`h-2 w-2 rounded-full bg-${stat.slug}`}></div>
                 <div className="flex-shrink-0 flex-grow">{stat.name}</div>
                 {action.status.id === stat.id && (
-                  <CheckCircleIcon className="w-4" />
+                  <CheckCircle className="w-4" />
                 )}
               </ContextMenu.Item>
             ))}

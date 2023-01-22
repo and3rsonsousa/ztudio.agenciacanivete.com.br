@@ -1239,11 +1239,6 @@
   dependencies:
     client-only "^0.0.1"
 
-"@heroicons/react@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.npmjs.org/@heroicons/react/-/react-2.0.13.tgz"
-  integrity sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==
-
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
@@ -1937,25 +1932,25 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@remix-run/cloudflare-pages@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare-pages/-/cloudflare-pages-1.11.0.tgz#6b6269ea18859b9f90e5b778fe90ecb5538ee576"
-  integrity sha512-Oz/rkBi+OoZfyxUxlSwLjPn0meT62okY0ErYygLQGMPztdrg/ZmIgYqw94JCeQYeARMA5obzr/hKOvfc/ueixA==
+"@remix-run/cloudflare-pages@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare-pages/-/cloudflare-pages-1.11.1.tgz#f4b412036094d8dc1931a79dfd4c57a49a5aa415"
+  integrity sha512-ajcGRZpPkcU8QKcL0HY6RYW1xx304mX3w+YVMlrQlMUedAJj9M465dQmM4u8NL690aeZ8aJWpFoEXfDDuo2QHw==
   dependencies:
-    "@remix-run/cloudflare" "1.11.0"
+    "@remix-run/cloudflare" "1.11.1"
 
-"@remix-run/cloudflare@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare/-/cloudflare-1.11.0.tgz#0f8580337f4b79d86a1e4cb63f0609a07b3ea4ef"
-  integrity sha512-zH6yuW8FKKMl4ABOnWD+ihaMk7c3MkD2TWXCZyKCdoWIKQMIZf6Y7J51Py8dCYdg6vii5X4Z2Tcan1sfsaekmQ==
+"@remix-run/cloudflare@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/cloudflare/-/cloudflare-1.11.1.tgz#75092b81dc135c477d09fddf6eaf995914001b93"
+  integrity sha512-GeEyxrly7/Qkhsud2e1/jJMDDDcLsm2WLTvE/WVoXlkKAHwO/U3SElVaQ2yFuioxayRFtABsyAj1FTNW1iLXdw==
   dependencies:
     "@cloudflare/kv-asset-handler" "^0.1.3"
-    "@remix-run/server-runtime" "1.11.0"
+    "@remix-run/server-runtime" "1.11.1"
 
-"@remix-run/dev@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.11.0.tgz#ba6be7ea98c19ea174cb629fbcecca9e9bb4fad8"
-  integrity sha512-3Rj7dNC/Efb6OuDpIqXHDEG/kw5afFz59P+x0Bd6wS6XEiHUwNFocKyzqVWT8Z2CLGKfng1tonA8El9QPtYB+g==
+"@remix-run/dev@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.11.1.tgz#02111353abcffd71956faf5f7e30b2b1f189b138"
+  integrity sha512-8N7TRbJtNXKhU4pQwDGdEMDlOIJ1SqQdG1zZoIzU7Q7YfkdAI8/AOtXT7i2X6y5urjijtFUZEY6x8IVNhGAjbg==
   dependencies:
     "@babel/core" "^7.18.6"
     "@babel/generator" "^7.18.6"
@@ -1968,7 +1963,7 @@
     "@babel/types" "^7.20.2"
     "@esbuild-plugins/node-modules-polyfill" "^0.1.4"
     "@npmcli/package-json" "^2.0.0"
-    "@remix-run/server-runtime" "1.11.0"
+    "@remix-run/server-runtime" "1.11.1"
     "@vanilla-extract/integration" "^6.0.1"
     arg "^5.0.1"
     cacache "^15.0.5"
@@ -2009,10 +2004,10 @@
     ws "^7.4.5"
     xdm "^2.0.0"
 
-"@remix-run/eslint-config@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/eslint-config/-/eslint-config-1.11.0.tgz#01c56f6c31eb409a813e4a69f5bee6afd7c83fd5"
-  integrity sha512-A9LV+2/bgIY4MnBYwTi9Hb046F7FPRBopFN1T9dufAY+jXxmRXbLOCzZkRNsO6lTAApdSmDxzY00+JvJ5da2ug==
+"@remix-run/eslint-config@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/eslint-config/-/eslint-config-1.11.1.tgz#aea5ae752a87b5ad8a776329d7f26ff6b7cf6125"
+  integrity sha512-mpisTkWBKYklmuIuDhwdy8BAUV5+EJ3Q3cxlSGBXZ+SaddK8WgBZu5C44o/0YZvktFm53rWBH3Afeq0A03yUkQ==
   dependencies:
     "@babel/core" "^7.19.1"
     "@babel/eslint-parser" "^7.19.1"
@@ -2031,10 +2026,10 @@
     eslint-plugin-react-hooks "^4.6.0"
     eslint-plugin-testing-library "^5.6.4"
 
-"@remix-run/react@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/react/-/react-1.11.0.tgz#1d8d2633b67b173f1bde5bd71f2ab725e65340a9"
-  integrity sha512-0aneldZAXwpJ6h5Mil6BxwCm8mRIA4adf+eO+bFPz9njS5JQJ/o7+jx+TgwyAVzmiFdGf0b1km6PrVLq02jQKg==
+"@remix-run/react@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/react/-/react-1.11.1.tgz#78e9fe5042cf82380b2dd3bc4637c8dd436490c4"
+  integrity sha512-8D+55ygREmGLWuCfqU7DntMgD8EN/5Lk8feO0oF09eFR9tZ5frjjiB3xTiH+4wkyY3vz+cdFxVI/8p9Iyrwd6Q==
   dependencies:
     "@remix-run/router" "1.3.0"
     react-router-dom "6.7.0"
@@ -2045,10 +2040,10 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.3.0.tgz#b6ee542c7f087b73b3d8215b9bf799f648be71cb"
   integrity sha512-nwQoYb3m4DDpHTeOwpJEuDt8lWVcujhYYSFGLluC+9es2PyLjm+jjq3IeRBQbwBtPLJE/lkuHuGHr8uQLgmJRA==
 
-"@remix-run/server-runtime@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.11.0.tgz#95949378ed057f9e101cf7b673eb40e6906ceff3"
-  integrity sha512-6yP6d5KXRSwMgydKkwXi+B2sqDkCVn0/DgflHz8F0jRxnBn2ZWW1T9QTQdaXO3yL+wI6h4MN++TUbK/yiz40IA==
+"@remix-run/server-runtime@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.11.1.tgz#58f9509ddccdafb21ad6480ee7e9cf2248d5f06a"
+  integrity sha512-D0jTiaUSMK0q29CTVL7Bn4SlE6fd4bnp18vxObjSXlA6VYrzDAK3pQ/1baDawPdxBDIQPqImXOQ6g4aAYImfCA==
   dependencies:
     "@remix-run/router" "1.3.0"
     "@types/cookie" "^0.4.0"
@@ -2075,17 +2070,17 @@
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-4.6.0.tgz"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@supabase/auth-helpers-remix@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/@supabase/auth-helpers-remix/-/auth-helpers-remix-0.1.3.tgz"
-  integrity sha512-oA95htKyE/zWkOJClyb6ZK1CYreAIXgyC43ZEaQdwOTXt2dyRkPJfK/+8zpMTd0xXPKf0eNWO6WltigzbQHgaA==
+"@supabase/auth-helpers-remix@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-remix/-/auth-helpers-remix-0.1.4.tgz#e2b9ab805e96e5422e4a9872a5b5011849b2d4a3"
+  integrity sha512-li9OYVLskNBKr8zdO+BktBRdTTPEUptfRbUP8yG8gLLardUNRXs2ZOTiVrKKQxO3gYcF8lt3tRgWJVwIBYhLLg==
   dependencies:
-    "@supabase/auth-helpers-shared" "0.2.3"
+    "@supabase/auth-helpers-shared" "0.2.4"
 
-"@supabase/auth-helpers-shared@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.npmjs.org/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.2.3.tgz"
-  integrity sha512-Xwnd2UQ/VTjTKIuVg1Xl/ryrElbSccOJhC11jbVPHOs7Y6yxzy9APxQs//jj4IpbDH4uOEDCdpMIJ0tzRxj9DQ==
+"@supabase/auth-helpers-shared@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.2.4.tgz#ac980bf82e34afd8c9e7299400b00daf72d6c03c"
+  integrity sha512-c+hi3N6DhjPTzjXGOokre4gmMZOqt0f1ORrwZwi2s07pk3cbkmn77DwwVtlYMNi3oZNYRQqAfxJu83UzpJrrmg==
 
 "@supabase/functions-js@^2.0.0":
   version "2.0.0"
@@ -4600,10 +4595,10 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framer-motion@8.4.7:
-  version "8.4.7"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-8.4.7.tgz#82c1f614b82a02c3f14cc52dd1214f2aba98fa28"
-  integrity sha512-+uQRQ4bC4hCyrfxM0xQ/AP+O7g0iNG65MoKzdc2gLU9FDm19wWrafCYPunyP7HYLMQxjoiJh1fKUCxpfyQo6Mg==
+framer-motion@8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-8.5.0.tgz#700cc132f7b22b1627d0031a4ae8d169998a9613"
+  integrity sha512-z5hQvIa+9uFcA2aFmT+6XsUfuVPl9Y1uhs5yntxU1Q0E6hm4wDRpvFlB/yYN/cdfXUctf/1Q1Rep/dqOipz8sg==
   dependencies:
     "@motionone/dom" "^10.15.3"
     hey-listen "^1.0.8"
@@ -5861,6 +5856,11 @@ lru-cache@^7.14.1:
   version "7.14.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.14.1.tgz#8da8d2f5f59827edb388e63e459ac23d6d408fea"
   integrity sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==
+
+lucide-react@^0.105.0:
+  version "0.105.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.105.0.tgz#545bf09598d47dc6018136088d705f0fc054ce5a"
+  integrity sha512-iHaIkd4Wq6aNIVrFMXt3If8E/+2lnJd4WlCyntoJNIzZ8nWhdSSHWpsw7XM4rlw2319LZ2t4WLdnM8Z0ECDTOQ==
 
 lz-string@^1.4.4:
   version "1.4.4"

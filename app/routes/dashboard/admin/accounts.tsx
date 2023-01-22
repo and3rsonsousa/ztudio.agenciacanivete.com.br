@@ -1,7 +1,7 @@
-import { LockClosedIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Lock, Trash2 } from "lucide-react";
 import { getUser } from "~/lib/auth.server";
 import { getAccounts, getPersonByUser, handleAction } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
@@ -37,7 +37,7 @@ export default function Accounts() {
     <div className="flex h-screen flex-col">
       <div className="flex justify-between border-b p-4 dark:border-gray-800">
         <div className="flex items-center gap-2">
-          <LockClosedIcon className="w-6" />
+          <Lock className="w-6" />
 
           <Link to={`/dashboard/admin/accounts`}>
             <h2 className="mb-0 dark:text-gray-200">Clientes</h2>
@@ -70,7 +70,7 @@ export default function Accounts() {
                     to={`./${account.slug}/delete`}
                     className="button button-link button-small button-squared"
                   >
-                    <TrashIcon />
+                    <Trash2 />
                   </Link>
                 </Form>
               </div>

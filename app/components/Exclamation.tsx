@@ -1,8 +1,4 @@
-import {
-  ExclamationTriangleIcon,
-  HandThumbDownIcon,
-  HandThumbUpIcon,
-} from "@heroicons/react/24/outline";
+import { AlertTriangle, ThumbsDown, ThumbsUp } from "lucide-react";
 
 const Exclamation = ({
   children,
@@ -26,17 +22,11 @@ const Exclamation = ({
       {icon ? (
         <div>
           {type === "success" ? (
-            <HandThumbUpIcon
-              className={large ? `w-8` : small ? "w-4" : "w-6"}
-            />
+            <ThumbsUp className={large ? `w-8` : small ? "w-4" : "w-6"} />
           ) : type === "error" ? (
-            <HandThumbDownIcon
-              className={large ? `w-8` : small ? "w-4" : "w-6"}
-            />
+            <ThumbsDown className={large ? `w-8` : small ? "w-4" : "w-6"} />
           ) : (
-            <ExclamationTriangleIcon
-              className={large ? `w-8` : small ? "w-4" : "w-6"}
-            />
+            <AlertTriangle className={large ? `w-8` : small ? "w-4" : "w-6"} />
           )}
         </div>
       ) : null}

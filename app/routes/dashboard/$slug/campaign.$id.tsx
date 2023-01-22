@@ -1,4 +1,3 @@
-import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import {
@@ -12,6 +11,7 @@ import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import { getCampaign, handleAction } from "~/lib/data";
 import type { CampaignModel, ContextType } from "~/lib/models";
+import { FilePlus2 } from "lucide-react";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
@@ -58,7 +58,7 @@ export default function CampaignsPage() {
               }}
             >
               <div>Nova Ação</div>
-              <DocumentPlusIcon />
+              <FilePlus2 />
             </Button>
           </div>
         </div>

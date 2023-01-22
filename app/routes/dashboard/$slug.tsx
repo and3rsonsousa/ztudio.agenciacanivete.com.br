@@ -1,8 +1,3 @@
-import {
-  CalendarDaysIcon,
-  DocumentCheckIcon,
-  FolderIcon,
-} from "@heroicons/react/24/outline";
 import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 
 import {
@@ -12,6 +7,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
+import { CalendarDays, FileCheck2, Folder } from "lucide-react";
 import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
@@ -43,21 +39,21 @@ export default function Slug() {
             className="button button-link button-icon button-small"
             to={`./${month ? "?month=" + month : ""}`}
           >
-            <CalendarDaysIcon />
+            <CalendarDays />
             <div className="hidden md:block">Calendário</div>
           </Link>
           <Link
             className="button button-link button-icon button-small"
             to={`./actions`}
           >
-            <DocumentCheckIcon />
+            <FileCheck2 />
             <div className="hidden md:block">Ações</div>
           </Link>
           <Link
             className="button button-link button-icon button-small"
             to={`./campaigns`}
           >
-            <FolderIcon />
+            <Folder />
             <div className="hidden md:block">Campanhas</div>
           </Link>
         </div>

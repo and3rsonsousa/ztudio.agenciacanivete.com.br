@@ -5,7 +5,6 @@ import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
-import { actionsByPriority } from "~/lib/functions";
 import type { ActionModel } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request, params }) => {

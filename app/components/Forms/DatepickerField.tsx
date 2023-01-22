@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import * as Popover from "@radix-ui/react-popover";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
@@ -6,6 +5,7 @@ import "dayjs/locale/pt-br";
 
 import { useState } from "react";
 import { getPeriod } from "~/lib/functions";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 dayjs.locale("pt-br");
 
@@ -60,7 +60,7 @@ export default function DatepickerField({
                   )
                 }
               >
-                <ChevronLeftIcon className="w-4" />
+                <ChevronLeft className="w-4" />
               </button>
               <div className="uppercase tracking-wide">
                 {firstDayOfCurrentMonth.format("MMMM")}
@@ -72,7 +72,7 @@ export default function DatepickerField({
                   )
                 }
               >
-                <ChevronRightIcon className="w-4" />
+                <ChevronRight className="w-4" />
               </button>
             </div>
             <div className="grid grid-cols-7">

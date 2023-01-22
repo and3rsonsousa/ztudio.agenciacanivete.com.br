@@ -1,4 +1,4 @@
-import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { User } from "lucide-react";
 import Button from "~/components/Button";
 
 // export function meta({ matches }: { matches: any[] }) {
@@ -39,7 +39,7 @@ export default function Index() {
             <Button primary icon asChild>
               <a href="/dashboard">
                 <span>Entrar</span>
-                <UserCircleIcon />
+                <User />
               </a>
             </Button>
           </div>

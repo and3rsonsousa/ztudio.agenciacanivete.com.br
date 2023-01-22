@@ -1,4 +1,4 @@
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { Check } from "lucide-react";
 
 export default function CheckboxField({
   name,
@@ -23,7 +23,7 @@ export default function CheckboxField({
         value={value}
       />
       <div className="checkbox">
-        <CheckIcon />
+        <Check />
       </div>
       <span className="field-label">{label}</span>
     </label>

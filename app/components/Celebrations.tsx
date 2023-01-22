@@ -1,6 +1,5 @@
-import { StarIcon } from "@heroicons/react/20/solid";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
+import { Star, Trash2 } from "lucide-react";
 import type { CelebrationModel } from "~/lib/models";
 
 const Celebration = ({
@@ -21,7 +20,7 @@ const Celebration = ({
     >
       <div className="flex flex-auto items-center gap-1 overflow-hidden">
         {celebration.is_holiday ? (
-          <StarIcon className="w-2 shrink-0 opacity-50" />
+          <Star className="w-2 shrink-0 opacity-50" />
         ) : null}
         <div className="overflow-hidden text-ellipsis whitespace-nowrap">
           {celebration.name}
@@ -45,7 +44,7 @@ const Celebration = ({
               );
             }}
           >
-            <TrashIcon className="w-3" />
+            <Trash2 className="w-3" />
           </button>
         </div>
       )}

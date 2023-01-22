@@ -1,10 +1,5 @@
-import {
-  CheckCircleIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@heroicons/react/20/solid";
-
 import * as Select from "@radix-ui/react-select";
+import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type SelectItemModel = { title: string; value: string };
@@ -61,7 +56,7 @@ export default function SelectField({
           ></Select.Value>
 
           <Select.Icon className="-mr-3 ml-1">
-            <ChevronDownIcon className="w-6" />
+            <ChevronDown className="w-6" />
           </Select.Icon>
         </Select.Trigger>
 
@@ -74,7 +69,7 @@ export default function SelectField({
             <Select.SelectScrollUpButton
               className={`${small ? "py-1" : "py-2"}`}
             >
-              <ChevronUpIcon
+              <ChevronUp
                 className={`mx-auto  text-gray-700 dark:text-gray-400 ${
                   small ? "w-4" : "w-6"
                 }`}
@@ -97,7 +92,7 @@ export default function SelectField({
                             >
                               <Select.ItemText>{item.title}</Select.ItemText>
                               <Select.ItemIndicator>
-                                <CheckCircleIcon className="ml-2 w-4" />
+                                <CheckCircle className="ml-2 w-4" />
                               </Select.ItemIndicator>
                             </Select.Item>
                           )
@@ -110,7 +105,7 @@ export default function SelectField({
             <Select.SelectScrollDownButton
               className={`${small ? "py-1" : "py-2"} py-2`}
             >
-              <ChevronDownIcon
+              <ChevronDown
                 className={`mx-auto  text-gray-700 dark:text-gray-400 ${
                   small ? "w-4" : "w-6"
                 }`}

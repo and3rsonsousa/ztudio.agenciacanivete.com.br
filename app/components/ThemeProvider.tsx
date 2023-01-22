@@ -1,4 +1,5 @@
-import { ReactNode, Dispatch, SetStateAction, useContext } from "react";
+import type { ReactNode, Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import { useState, createContext } from "react";
 
 enum Theme {

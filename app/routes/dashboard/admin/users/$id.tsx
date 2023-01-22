@@ -38,7 +38,7 @@ export default function UserId() {
         <input type="hidden" name="action" value="update-person" />
         <input type="hidden" name="id" value={person.id} />
 
-        <InputField name="name" title="Nome" value={person.name} />
+        <InputField name="name" label="Nome" value={person.name} />
 
         <div className="my-4">
           <Exclamation type="alert" icon>

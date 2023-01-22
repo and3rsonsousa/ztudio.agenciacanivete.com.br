@@ -1,7 +1,7 @@
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Form, useNavigation } from "@remix-run/react";
+import { Lock, Unlock } from "lucide-react";
 import { useState } from "react";
 import Button from "~/components/Button";
 import Field from "~/components/Forms/InputField";
@@ -91,7 +91,7 @@ export default function Login() {
                     setShowPassword(!showPassword);
                   }}
                 >
-                  {showPassword ? <LockClosedIcon /> : <LockOpenIcon />}
+                  {showPassword ? <Lock /> : <Unlock />}
                 </Button>
               }
             />

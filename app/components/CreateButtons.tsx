@@ -1,10 +1,6 @@
-import {
-  DocumentPlusIcon,
-  FolderPlusIcon,
-  StarIcon,
-} from "@heroicons/react/24/outline";
 import { useOutletContext } from "@remix-run/react";
-import { ContextType } from "~/lib/models";
+import { FilePlus2, Folder, Star } from "lucide-react";
+import type { ContextType } from "~/lib/models";
 import Button from "./Button";
 
 export default function CreateButtons({
@@ -33,7 +29,7 @@ export default function CreateButtons({
               context.celebrations.set(true);
             }}
           >
-            <StarIcon />
+            <Star />
           </Button>
         </div>
       )}
@@ -47,7 +43,7 @@ export default function CreateButtons({
               context.campaigns.set(true);
             }}
           >
-            <FolderPlusIcon />
+            <Folder />
           </Button>
         </div>
       )}
@@ -70,7 +66,7 @@ export default function CreateButtons({
             {!showSmallAction && (
               <div className="whitespace-nowrap">Nova Ação</div>
             )}
-            <DocumentPlusIcon />
+            <FilePlus2 />
           </Button>
         </div>
       )}

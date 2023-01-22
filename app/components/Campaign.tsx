@@ -1,14 +1,7 @@
-import {
-  CheckBadgeIcon,
-  CheckCircleIcon,
-  ChevronRightIcon,
-  PencilIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import { useFetcher, useMatches, useNavigate } from "@remix-run/react";
 import dayjs from "dayjs";
+import { CheckCircle, ChevronRight, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { CampaignModel, ItemModel } from "~/lib/models";
 
@@ -47,7 +40,7 @@ export function Campaign({ campaign }: { campaign: CampaignModel }) {
             to={`/dashboard/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
             className="button"
           >
-            <PencilIcon />
+            <Edit />
           </Link>
         </div>
         <div>
@@ -66,7 +59,7 @@ export function Campaign({ campaign }: { campaign: CampaignModel }) {
               );
             }}
           >
-            <TrashIcon />
+            <Trash2 />
           </button>
         </div>
       </div>
@@ -100,7 +93,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
               to={`/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`}
               className="dropdown-item item-small flex items-center gap-2"
             >
-              <PencilSquareIcon className="w-4" /> <div>Editar</div>
+              <Edit className="w-4" /> <div>Editar</div>
             </Link>
           </ContextMenu.Item>
           <ContextMenu.Item
@@ -118,17 +111,17 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
               );
             }}
           >
-            <TrashIcon className="w-4" /> <div>Excluir</div>
+            <Trash2 className="w-4" /> <div>Excluir</div>
           </ContextMenu.Item>
           <hr className="dropdown-hr" />
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <CheckBadgeIcon className="w-4" />
+              <CheckCircle className="w-4" />
               <div className="flex flex-auto justify-between gap-4">
                 <div>Status</div>
 
                 <div className="">
-                  <ChevronRightIcon className="w-4" />
+                  <ChevronRight className="w-4" />
                 </div>
               </div>
             </ContextMenu.SubTrigger>
@@ -157,7 +150,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
                     ></div>
                     <div className="flex-shrink-0 flex-grow">{stat.name}</div>
                     {campaign.status === stat.id && (
-                      <CheckCircleIcon className="w-4" />
+                      <CheckCircle className="w-4" />
                     )}
                   </ContextMenu.Item>
                 ))}

@@ -1,5 +1,5 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useOutletContext, useParams } from "@remix-run/react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ContextType, DayModel } from "~/lib/models";
 import ActionList from "./ActionList";
 import Button from "./Button";
@@ -41,9 +41,9 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                   onClick={() => context.sidebar.set(!context.sidebar.open)}
                 >
                   {context.sidebar.open ? (
-                    <ArrowRightIcon className="mr-0.5" />
+                    <ArrowRight className="mr-0.5" />
                   ) : (
-                    <ArrowLeftIcon className="ml-0.5" />
+                    <ArrowLeft className="ml-0.5" />
                   )}
                 </Button>
               </div>

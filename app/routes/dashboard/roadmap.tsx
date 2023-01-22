@@ -1,9 +1,4 @@
-import {
-  HandRaisedIcon,
-  HandThumbDownIcon,
-  HandThumbUpIcon,
-  WrenchScrewdriverIcon,
-} from "@heroicons/react/24/outline";
+import { HandMetal, ThumbsDown, ThumbsUp, Wrench } from "lucide-react";
 
 export default function Roadmap() {
   const functions: Array<{
@@ -38,19 +33,19 @@ export default function Roadmap() {
   const icons = [
     {
       title: "Não iniciado / Sem planos",
-      icon: <HandThumbDownIcon className="w-4" />,
+      icon: <ThumbsDown className="w-4" />,
     },
     {
       title: "Iniciado / Em Planos",
-      icon: <HandRaisedIcon className="w-4" />,
+      icon: <HandMetal className="w-4" />,
     },
     {
       title: "Em desenvolvimento",
-      icon: <WrenchScrewdriverIcon className="w-4" />,
+      icon: <Wrench className="w-4" />,
     },
     {
       title: "Finalizado",
-      icon: <HandThumbUpIcon className="w-4" />,
+      icon: <ThumbsUp className="w-4" />,
     },
   ];
 

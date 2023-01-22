@@ -1,18 +1,3 @@
-import {
-  CheckCircleIcon,
-  FunnelIcon as FunnelIconSolid,
-  Square3Stack3DIcon as Square3Stack3DIconSolid,
-  BellAlertIcon as BellAlertIconSolid,
-  ClockIcon as ClockIconSolid,
-} from "@heroicons/react/20/solid";
-import {
-  BellAlertIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ClockIcon,
-  FunnelIcon,
-  Square3Stack3DIcon,
-} from "@heroicons/react/24/outline";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Link,
@@ -25,6 +10,19 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import {
+  AlarmCheck,
+  AlarmClockOff,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Clock10,
+  Filter,
+  FilterIcon,
+  Layers,
+  LayersIcon,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { SHORTCUTS } from "~/lib/constants";
 import { getPeriod, getYear } from "~/lib/functions";
@@ -157,7 +155,7 @@ export default function Calendar({
                     .format("YYYY-MM")
                 )}
               >
-                <ChevronLeftIcon />
+                <ChevronLeft />
               </a>
             </Button>
             <Button asChild link small>
@@ -180,7 +178,7 @@ export default function Calendar({
                     .format("YYYY-MM")
                 )}
               >
-                <ChevronRightIcon />
+                <ChevronRight />
               </a>
             </Button>
           </div>
@@ -206,11 +204,7 @@ export default function Calendar({
               }`}
               title="Cmd + K → O ( Ordenar por prioridade de status )"
             >
-              {context.priority.option ? (
-                <BellAlertIconSolid className="w-5" />
-              ) : (
-                <BellAlertIcon className="w-5" />
-              )}
+              <AlarmCheck className="w-5" />
             </div>
             <div
               className={`grid h-8 w-8 place-items-center rounded-xl md:h-10 md:w-10  ${
@@ -220,11 +214,7 @@ export default function Calendar({
               }`}
               title="Cmd K → O ( Ordenar por horário de conclusão )"
             >
-              {!context.priority.option ? (
-                <ClockIconSolid className={`w-5`} />
-              ) : (
-                <ClockIcon className={`w-5`} />
-              )}
+              <Clock className={`w-5`} />
             </div>
           </label>
 
@@ -237,11 +227,7 @@ export default function Calendar({
               }`}
               title="Agrupar Ações"
             >
-              {context.arrange.option !== "arrange_all" ? (
-                <Square3Stack3DIconSolid className="w-5" />
-              ) : (
-                <Square3Stack3DIcon className="w-5" />
-              )}
+              <Layers className="w-5" />
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
               <DropdownMenu.Content className="dropdown-content">
@@ -262,7 +248,7 @@ export default function Calendar({
                   >
                     {item?.title.substring(item.title.indexOf(" ") + 1)}
                     {context.arrange.option === item.value && (
-                      <CheckCircleIcon className="w-4" />
+                      <CheckCircle className="w-4" />
                     )}
                   </DropdownMenu.Item>
                 ))}
@@ -274,11 +260,7 @@ export default function Calendar({
             <DropdownMenu.Trigger
               className={`grid h-8 w-8 place-items-center rounded-lg text-gray-400 dark:hover:text-white md:h-10 md:w-10 bg-${context.filter.option}`}
             >
-              {context.filter.option !== "all" ? (
-                <FunnelIconSolid className="w-5" />
-              ) : (
-                <FunnelIcon className="w-5" />
-              )}
+              <Filter className="w-5" />
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
               <DropdownMenu.Content className="dropdown-content">
@@ -291,7 +273,7 @@ export default function Calendar({
                 >
                   Todos
                   {context.filter.option === "all" && (
-                    <CheckCircleIcon className="w-4" />
+                    <CheckCircle className="w-4" />
                   )}
                 </DropdownMenu.Item>
                 {tags.map((tag, index) => (
@@ -308,7 +290,7 @@ export default function Calendar({
                   >
                     {tag.name}
                     {context.filter.option === tag.slug && (
-                      <CheckCircleIcon className="w-4" />
+                      <CheckCircle className="w-4" />
                     )}
                   </DropdownMenu.Item>
                 ))}

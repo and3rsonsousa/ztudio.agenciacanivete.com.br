@@ -1,7 +1,6 @@
-import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { ChevronLeftIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { useMatches, useOutletContext } from "@remix-run/react";
 import dayjs from "dayjs";
+import { ChevronLeft, ChevronRight, FilePlus2 } from "lucide-react";
 import { useState } from "react";
 import type { ActionModel, ContextType, ItemModel } from "~/lib/models";
 import { ActionGrid } from "./Actions";
@@ -64,7 +63,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
                 primary={fill}
                 onClick={() => setFill(!fill)}
               >
-                <SquaresPlusIcon />
+                <FilePlus2 />
               </Button>
             )}
             <Button
@@ -75,11 +74,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
               icon
               onClick={() => context.sidebar.set(!context.sidebar.open)}
             >
-              {context.sidebar.open ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
+              {context.sidebar.open ? <ChevronRight /> : <ChevronLeft />}
             </Button>
           </div>
         </div>

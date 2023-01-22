@@ -1,4 +1,3 @@
-import { FolderPlusIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData, useOutletContext } from "@remix-run/react";
 import { Campaign } from "~/components/Campaign";
@@ -6,6 +5,7 @@ import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import { getCampaigns } from "~/lib/data";
 import type { CampaignModel, ContextType } from "~/lib/models";
+import { FolderPlus } from "lucide-react";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data, error } = await getCampaigns({ request, account: params.slug });
@@ -31,7 +31,7 @@ export default function CampaignsPage() {
             }}
           >
             <div>Nova Campanha</div>
-            <FolderPlusIcon />
+            <FolderPlus />
           </Button>
         </div>
       </div>
