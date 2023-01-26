@@ -1403,16 +1403,16 @@ h5 {
   height: 100%;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-2 {
   height: 0.5rem;
 }
 
 .h-6 {
   height: 1.5rem;
-}
-
-.h-3 {
-  height: 0.75rem;
 }
 
 .h-12 {
@@ -1459,8 +1459,16 @@ h5 {
   width: 100%;
 }
 
-.w-7 {
-  width: 1.75rem;
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .w-36 {
@@ -1473,14 +1481,6 @@ h5 {
 
 .w-1 {
   width: 0.25rem;
-}
-
-.w-4 {
-  width: 1rem;
-}
-
-.w-3 {
-  width: 0.75rem;
 }
 
 .w-8 {
@@ -1521,10 +1521,6 @@ h5 {
 
 .w-1\/2 {
   width: 50%;
-}
-
-.w-10 {
-  width: 2.5rem;
 }
 
 .max-w-\[8rem\] {
@@ -2071,8 +2067,8 @@ h5 {
   line-height: 1rem;
 }
 
-.text-\[9px\] {
-  font-size: 9px;
+.text-\[8px\] {
+  font-size: 8px;
 }
 
 .text-sm {
@@ -2083,10 +2079,6 @@ h5 {
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
-}
-
-.text-\[8px\] {
-  font-size: 8px;
 }
 
 .text-\[10px\] {
@@ -2116,12 +2108,12 @@ h5 {
   font-weight: 700;
 }
 
-.font-medium {
-  font-weight: 500;
-}
-
 .font-normal {
   font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
 }
 
 .font-semibold {
@@ -2136,16 +2128,16 @@ h5 {
   text-transform: uppercase;
 }
 
+.leading-none {
+  line-height: 1;
+}
+
 .leading-tight {
   line-height: 1.25;
 }
 
 .leading-normal {
   line-height: 1.5;
-}
-
-.leading-none {
-  line-height: 1;
 }
 
 .tracking-wider {
@@ -2242,10 +2234,6 @@ h5 {
   opacity: 0.6;
 }
 
-.opacity-75 {
-  opacity: 0.75;
-}
-
 .opacity-50 {
   opacity: 0.5;
 }
@@ -2256,6 +2244,10 @@ h5 {
 
 .opacity-25 {
   opacity: 0.25;
+}
+
+.opacity-75 {
+  opacity: 0.75;
 }
 
 .outline-none {

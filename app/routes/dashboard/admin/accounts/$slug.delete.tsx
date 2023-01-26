@@ -6,7 +6,8 @@ import { getAccount, getActions, handleAction } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request }) => {
-  return handleAction(await request.formData(), request);
+  await handleAction(await request.formData(), request);
+  return redirect("/dashboard/admin/accounts");
 };
 
 export const loader: LoaderFunction = async ({ params, request }) => {
