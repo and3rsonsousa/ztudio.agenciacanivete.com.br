@@ -14,15 +14,23 @@ import {
   ChevronRight,
   Clock,
   Copy,
-  FilePlus2,
+  DollarSign,
   Edit,
+  FilePlus2,
+  Heart,
+  HelpCircle,
+  Music2,
+  Play,
+  Printer,
+  RotateCw,
   Trash2,
+  Users,
 } from "lucide-react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import React, { useState } from "react";
 import { scaleUp } from "~/lib/animations";
 import type {
   AccountModel,
@@ -33,7 +41,6 @@ import type {
 import Button from "./Button";
 import Exclamation from "./Exclamation";
 import type { SupportType } from "./InstagramGrid";
-import React from "react";
 
 dayjs.extend(relativeTime);
 
@@ -93,19 +100,25 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
         >
           <IsLate action={action} />
           <div className="flex w-full items-center gap-1 overflow-hidden">
-            <div
-              className={`hidden w-7 shrink-0 grow-0 text-center text-[9px] font-medium uppercase tracking-wider opacity-60 @[120px]:block`}
-            >
-              {action.account.short}
-            </div>
+            {/* Icon For Tags */}
+            {<TagIcons type={action.tag.slug} className="h-3 w-3 opacity-60" />}
+            {/* Name */}
             <div className="hidden w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal sm:block ">
               {action.name}
             </div>
+            {/* Account Short */}
+            <div
+              className={`hidden w-4 shrink-0 grow-0 break-all text-center text-[8px] font-medium uppercase leading-none tracking-wider opacity-60 @[120px]:block`}
+            >
+              {action.account.short}
+            </div>
+            {/* Account Name for mobile */}
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
               {action.account.name.slice(0, 3)}
             </div>
           </div>
-          <div className="text-xx hidden text-center font-medium opacity-75 @[140px]:block">
+          {/* Time */}
+          <div className="text-xx hidden w-10 overflow-hidden text-center font-medium opacity-60 @[140px]:block">
             {dayjs(action.date).format(
               "H[h]".concat(
                 dayjs(action.date).format("mm") !== "00" ? "mm" : ""
@@ -607,3 +620,32 @@ const IsLate = ({ action }: { action: ActionModel }) =>
       title={`Atrasado ${dayjs(action.date).fromNow()}`}
     ></div>
   ) : null;
+
+export const TagIcons = ({
+  type,
+  className,
+}: {
+  type: string;
+  className: string;
+}) => {
+  switch (type) {
+    case "feed":
+      return <Heart className={className} />;
+    case "reels":
+      return <Play className={className} />;
+    case "task":
+      return <CheckCircle className={className} />;
+    case "stories":
+      return <RotateCw className={className} />;
+    case "meeting":
+      return <Users className={className} />;
+    case "print":
+      return <Printer className={className} />;
+    case "tiktok":
+      return <Music2 className={className} />;
+    case "financial":
+      return <DollarSign className={className} />;
+    default:
+      return <HelpCircle className={className} />;
+  }
+};

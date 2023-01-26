@@ -12,16 +12,12 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import {
   AlarmCheck,
-  AlarmClockOff,
   CheckCircle,
   ChevronLeft,
   ChevronRight,
   Clock,
-  Clock10,
   Filter,
-  FilterIcon,
   Layers,
-  LayersIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SHORTCUTS } from "~/lib/constants";

@@ -1523,6 +1523,10 @@ h5 {
   width: 50%;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
 .max-w-\[8rem\] {
   max-width: 8rem;
 }
@@ -1735,6 +1739,10 @@ h5 {
 
 .whitespace-pre-line {
   white-space: pre-line;
+}
+
+.break-all {
+  word-break: break-all;
 }
 
 .rounded-lg {
@@ -2134,6 +2142,10 @@ h5 {
 
 .leading-normal {
   line-height: 1.5;
+}
+
+.leading-none {
+  line-height: 1;
 }
 
 .tracking-wider {
