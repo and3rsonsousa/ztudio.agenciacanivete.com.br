@@ -22,7 +22,7 @@ import styles from "./styles.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "ZTUDIO - Plan fazt. Work lezz.",
+  title: "ZTUDIO - plan fazt / work lezz",
   viewport: "width=device-width,initial-scale=1",
 });
 
