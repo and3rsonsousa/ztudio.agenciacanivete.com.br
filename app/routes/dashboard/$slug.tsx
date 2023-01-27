@@ -13,7 +13,7 @@ import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
 export const meta: MetaFunction = ({ data }) => ({
-  title: `${data.account.name} - STUDIO`,
+  title: `${data.account.name} - ZTUDIO`,
 });
 
 export const loader: LoaderFunction = async ({ request, params }) => {

@@ -9,7 +9,7 @@ import Button from "~/components/Button";
 //   return [
 //     ...meta,
 //     {
-//       title: "STUDIO - Plan fast, Work less",
+//       title: "ZTUDIO - Plan fast, Work less",
 //     },
 //   ];
 // }
@@ -20,7 +20,7 @@ export default function Index() {
       <div className="grid min-h-screen place-content-center ">
         <div className="w-96 text-center">
           <div>
-            <img src="/logo.png" alt="STUDIO" className="mx-auto mb-8 w-36" />
+            <img src="/logo.png" alt="ZTUDIO" className="mx-auto mb-8 w-36" />
           </div>
           <p className="text-center font-normal">
             Sistema de gestão de ações criado

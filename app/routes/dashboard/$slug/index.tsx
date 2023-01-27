@@ -11,7 +11,7 @@ import { getActions, getCampaigns, handleAction } from "~/lib/data";
 //   return [
 //     ...meta,
 //     {
-//       // title: `${data.account.name} - STUDIO`,
+//       // title: `${data.account.name} - ZTUDIO`,
 //     },
 //   ];
 // }

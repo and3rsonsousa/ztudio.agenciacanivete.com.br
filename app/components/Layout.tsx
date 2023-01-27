@@ -80,9 +80,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className=" block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
             >
               {context.sidebar.open ? (
-                <img src="/logo-color.svg" alt="STUDIO" />
+                <img src="/logo-color.svg" alt="ZTUDIO" />
               ) : (
-                <img src="/ico.png" className="mx-auto h-6" alt="STUDIO" />
+                <img src="/ico.png" className="mx-auto h-6" alt="ZTUDIO" />
               )}
             </Link>
           </div>
