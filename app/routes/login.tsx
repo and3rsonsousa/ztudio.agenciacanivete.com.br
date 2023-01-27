@@ -75,7 +75,7 @@ export default function Login() {
       <div className="w-full max-w-3xl grid-cols-2 place-items-center p-8  md:grid">
         <div className="w-full p-8">
           <div className="mb-8 w-32">
-            <img src="/logo.png" alt="STUDIO" />
+            <img src="/logo-color.svg" alt="STUDIO" />
           </div>
           <Form method="post">
             <Field name="email" label="E-mail" type="email" />
