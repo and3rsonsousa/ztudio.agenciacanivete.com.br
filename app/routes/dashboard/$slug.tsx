@@ -1,4 +1,8 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
+import type {
+  LoaderFunction,
+  MetaFunction,
+  V2_MetaFunction,
+} from "@remix-run/cloudflare";
 
 import {
   Link,
@@ -12,9 +16,16 @@ import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
-export const meta: MetaFunction = ({ data }) => ({
-  title: `${data.account.name} - ZTUDIO`,
-});
+// export const meta: MetaFunction = ({ data }) => ({
+//   title: `${data.account.name} - ZTUDIO`,
+// });
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    {
+      title: `${data.account.name} no ᴢᴛᴜᴅɪᴏ`,
+    },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data: account } = await getAccount(request, params.slug);

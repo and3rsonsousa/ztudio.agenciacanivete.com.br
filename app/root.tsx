@@ -2,6 +2,7 @@ import type {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
+  V2_MetaFunction,
 } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import {
@@ -20,11 +21,18 @@ import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import type { ContextType } from "./lib/models";
 import styles from "./styles.css";
 
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "ZTUDIO - plan fazt / work lezz",
-  viewport: "width=device-width,initial-scale=1",
-});
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏrᴋ ʟezz",
+    },
+    {
+      name: "description",
+      content:
+        "sistema de gerenciamento de ações criado e mantido pela αɢêɴᴄɪα ᴄαɴɪᴠeᴛe",
+    },
+  ];
+};
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -107,6 +115,8 @@ export function App() {
   return (
     <html lang="pt-br" className={theme ?? "dark"}>
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
