@@ -5,7 +5,7 @@ import Exclamation from "~/components/Exclamation";
 import Button from "~/components/Button";
 import { getCampaigns } from "~/lib/data";
 import type { CampaignModel, ContextType } from "~/lib/models";
-import { FolderPlus } from "lucide-react";
+import { FolderPlus, FolderTree } from "lucide-react";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data, error } = await getCampaigns({ request, account: params.slug });
@@ -31,7 +31,7 @@ export default function CampaignsPage() {
             }}
           >
             <div>Nova Campanha</div>
-            <FolderPlus />
+            <FolderTree />
           </Button>
         </div>
       </div>

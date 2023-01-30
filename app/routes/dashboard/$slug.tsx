@@ -11,7 +11,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import { CalendarDays, FileCheck2, Folder } from "lucide-react";
+import { CalendarDays, FileCheck2, Folder, FolderTree } from "lucide-react";
 import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
@@ -64,7 +64,7 @@ export default function Slug() {
             className="button button-link button-icon button-small"
             to={`./campaigns`}
           >
-            <Folder />
+            <FolderTree />
             <div className="hidden md:block">Campanhas</div>
           </Link>
         </div>

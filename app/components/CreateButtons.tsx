@@ -1,5 +1,11 @@
 import { useOutletContext } from "@remix-run/react";
-import { FilePlus2, Folder, Star } from "lucide-react";
+import {
+  CalendarPlus,
+  FilePlus2,
+  Folder,
+  FolderTree,
+  Star,
+} from "lucide-react";
 import type { ContextType } from "~/lib/models";
 import Button from "./Button";
 
@@ -29,7 +35,7 @@ export default function CreateButtons({
               context.celebrations.set(true);
             }}
           >
-            <Star />
+            <CalendarPlus />
           </Button>
         </div>
       )}
@@ -43,7 +49,7 @@ export default function CreateButtons({
               context.campaigns.set(true);
             }}
           >
-            <Folder />
+            <FolderTree />
           </Button>
         </div>
       )}

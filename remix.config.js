@@ -2,7 +2,9 @@
 module.exports = {
   future: {
     v2_meta: true,
+    v2_routeConvention: true,
   },
+
   serverBuildTarget: "cloudflare-pages",
   server: "./server.js",
   devServerBroadcastDelay: 1000,
