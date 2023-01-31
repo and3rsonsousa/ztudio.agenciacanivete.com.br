@@ -1,19 +1,6 @@
 import { User } from "lucide-react";
 import Button from "~/components/Button";
 
-// export function meta({ matches }: { matches: any[] }) {
-//   const root = matches.find((match) => match.route.id === "root");
-
-//   const meta = root.meta;
-
-//   return [
-//     ...meta,
-//     {
-//       title: "ZTUDIO - Plan fast, Work less",
-//     },
-//   ];
-// }
-
 export default function Index() {
   return (
     <div className="selection:bg-brand selection:text-white">

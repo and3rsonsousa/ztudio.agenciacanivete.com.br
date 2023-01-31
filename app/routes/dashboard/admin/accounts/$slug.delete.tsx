@@ -7,7 +7,7 @@ import type { ActionModel } from "~/lib/models";
 
 export const action: ActionFunction = async ({ request }) => {
   await handleAction(await request.formData(), request);
-  return redirect("/dashboard/admin/accounts");
+  return redirect("/admin/accounts");
 };
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   ]);
 
   if (!account) {
-    return redirect(`/dashboard/admin/accounts`);
+    return redirect(`/admin/accounts`);
   }
 
   return { account, actions };

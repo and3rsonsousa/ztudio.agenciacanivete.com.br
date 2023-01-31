@@ -37,7 +37,7 @@ export function Campaign({ campaign }: { campaign: CampaignModel }) {
       <div className="flex gap-2 opacity-0  group-hover:opacity-100">
         <div>
           <Link
-            to={`/dashboard/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
+            to={`/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
             className="button"
           >
             <Edit />
@@ -77,9 +77,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
       <ContextMenu.Trigger>
         <div
           onClick={() =>
-            navigate(
-              `/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`
-            )
+            navigate(`/${campaign.Account?.slug}/campaign/${campaign.id}`)
           }
           className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover `}
         >
@@ -90,7 +88,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
         <ContextMenu.Content className="dropdown-content">
           <ContextMenu.Item asChild>
             <Link
-              to={`/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`}
+              to={`/${campaign.Account?.slug}/campaign/${campaign.id}`}
               className="dropdown-item item-small flex items-center gap-2"
             >
               <Edit className="w-4" /> <div>Editar</div>

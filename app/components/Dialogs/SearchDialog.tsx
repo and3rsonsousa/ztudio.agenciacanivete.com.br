@@ -63,13 +63,13 @@ export default function SearchDialog() {
       onChange={(value: any) => {
         navigate(
           "slug" in value
-            ? `/dashboard/${value.slug}`
+            ? `/${value.slug}`
             : "actions" in value
-            ? `/dashboard/${
+            ? `/${
                 accounts.filter((account) => account.id === value.account)[0]
                   .slug
               }/campaign/${value.id}`
-            : `/dashboard/${
+            : `/${
                 accounts.filter((account) => account.id === value.account)[0]
                   .slug
               }/action/${value.id}`

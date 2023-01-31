@@ -54,9 +54,9 @@ export default function NewUser() {
         <Exclamation type="error">{actionData.error.message}</Exclamation>
       )}
       <Form method="post" className="mt-4">
-        <InputField name="name" title="Nome" />
-        <InputField name="email" title="E-mail" type="email" />
-        <InputField name="password" title="Senha" />
+        <InputField name="name" label="Nome" />
+        <InputField name="email" label="E-mail" type="email" />
+        <InputField name="password" label="Senha" />
 
         <div className="flex justify-end">
           <Button type="submit" primary>

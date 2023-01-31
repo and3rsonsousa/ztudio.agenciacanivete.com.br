@@ -69,11 +69,7 @@ export default function UserId() {
           <Form method="post">
             <input type="hidden" name="id" value={account.id} />
             <input type="hidden" name="action" value="delete-account" />
-            <input
-              type="hidden"
-              name="redirectTo"
-              value={`/dashboard/admin/accounts`}
-            />
+            <input type="hidden" name="redirectTo" value={`/admin/accounts`} />
 
             <Button>Excluir</Button>
           </Form>

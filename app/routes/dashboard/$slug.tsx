@@ -1,8 +1,4 @@
-import type {
-  LoaderFunction,
-  MetaFunction,
-  V2_MetaFunction,
-} from "@remix-run/cloudflare";
+import type { LoaderFunction, V2_MetaFunction } from "@remix-run/cloudflare";
 
 import {
   Link,
@@ -11,7 +7,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import { CalendarDays, FileCheck2, Folder, FolderTree } from "lucide-react";
+import { CalendarDays, FileCheck2, FolderTree } from "lucide-react";
 import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
@@ -41,9 +37,7 @@ export default function Slug() {
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between p-4">
-        <PageHeader link={`/dashboard/${account.slug}`}>
-          {account.name}
-        </PageHeader>
+        <PageHeader link={`/${account.slug}`}>{account.name}</PageHeader>
 
         <div className="shrink-0 text-sm font-semibold">
           <Link
@@ -67,6 +61,7 @@ export default function Slug() {
             <FolderTree />
             <div className="hidden md:block">Campanhas</div>
           </Link>
+          ∏
         </div>
       </div>
 

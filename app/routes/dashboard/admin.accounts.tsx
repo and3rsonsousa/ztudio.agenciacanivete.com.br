@@ -23,7 +23,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { data: person } = await getPersonByUser(session.user.id, request);
 
   if (!person.admin) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   const { data: accounts } = await getAccounts(session.user.id, request);
@@ -39,7 +39,7 @@ export default function Accounts() {
         <div className="flex items-center gap-2">
           <Lock className="w-6" />
 
-          <Link to={`/dashboard/admin/accounts`}>
+          <Link to={`/admin/accounts`}>
             <h2 className="mb-0 dark:text-gray-200">Clientes</h2>
           </Link>
         </div>
@@ -52,7 +52,7 @@ export default function Accounts() {
               className="group flex  items-center justify-between"
             >
               <Link
-                to={`/dashboard/admin/accounts/${account.slug}`}
+                to={`/admin/accounts/${account.slug}`}
                 // className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
                 className="dropdown-item w-full"
               >

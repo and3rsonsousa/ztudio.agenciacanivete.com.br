@@ -29,7 +29,7 @@ export default function Me() {
   return (
     <div className="flex h-screen flex-col">
       <div className="flex justify-between border-b p-4 dark:border-gray-800">
-        <Link to={`/dashboard/me`}>
+        <Link to={`/me`}>
           <h2 className="mb-0 dark:text-gray-200">Minha conta</h2>
         </Link>
       </div>

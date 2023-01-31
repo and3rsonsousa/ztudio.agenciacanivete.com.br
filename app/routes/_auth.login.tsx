@@ -19,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   let session = await getSession(request.headers.get("Cookie"));
-  if (session.has("userId")) return redirect("/dashboard");
+  if (session.has("userId")) return redirect("/");
   return null;
 };
 

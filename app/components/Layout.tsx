@@ -92,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {accounts.map((account) => (
               <div key={account.id}>
                 <Link
-                  to={`/dashboard/${account.slug}/${searchParams}`}
+                  to={`/${account.slug}/${searchParams}`}
                   className={`${
                     context.sidebar.open
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
@@ -123,7 +123,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {accounts.map((account) => (
                     <DropdownMenu.Item key={account.id} asChild>
                       <Link
-                        to={`/dashboard/${account.slug}/${searchParams}`}
+                        to={`/${account.slug}/${searchParams}`}
                         className="dropdown-item item-small block"
                       >
                         {account.name}
@@ -181,17 +181,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </DropdownMenu.Label>
                   {/* Meus Dados */}
                   <DropdownMenu.Item asChild>
-                    <Link
-                      to="/dashboard/me"
-                      className="dropdown-item item-small block"
-                    >
+                    <Link to="/me" className="dropdown-item item-small block">
                       Meus dados
                     </Link>
                   </DropdownMenu.Item>
                   {/* Lixeira */}
                   <DropdownMenu.Item asChild>
                     <Link
-                      to="/dashboard/trash"
+                      to="/trash"
                       className="dropdown-item item-small block"
                     >
                       Lixeira
@@ -223,7 +220,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           <DropdownMenu.SubContent className="dropdown-content">
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/dashboard/admin/accounts`}
+                                to={`/admin/accounts`}
                                 className="dropdown-item item-small block"
                               >
                                 Ver Clientes
@@ -231,7 +228,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </DropdownMenu.Item>
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/dashboard/admin/accounts/new`}
+                                to={`/admin/accounts/new`}
                                 className="dropdown-item item-small block"
                               >
                                 Novo Cliente
@@ -252,7 +249,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           <DropdownMenu.SubContent className="dropdown-content">
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/dashboard/admin/users/`}
+                                to={`/admin/users/`}
                                 className="dropdown-item item-small block"
                               >
                                 Ver Usuários
@@ -260,7 +257,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </DropdownMenu.Item>
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/dashboard/admin/users/new`}
+                                to={`/admin/users/new`}
                                 className="dropdown-item item-small block"
                               >
                                 Novo Usuário
@@ -274,7 +271,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       {/* Roadmap */}
                       <DropdownMenu.Item asChild>
                         <Link
-                          to={`/dashboard/roadmap`}
+                          to={`/roadmap`}
                           className="dropdown-item item-small block"
                         >
                           Roadmap

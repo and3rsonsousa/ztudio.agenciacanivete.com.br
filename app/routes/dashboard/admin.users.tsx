@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { data: person } = await getPersonByUser(session.user.id, request);
 
   if (!person.admin) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   const { data: persons } = await getPersons(request);
@@ -41,7 +41,7 @@ export default function Users() {
         <div className="flex items-center gap-2">
           <Lock className="w-6" />
 
-          <Link to={`/dashboard/admin/users`}>
+          <Link to={`/admin/users`}>
             <h2 className="mb-0 dark:text-gray-200">Usuários</h2>
           </Link>
         </div>
@@ -54,7 +54,7 @@ export default function Users() {
               className="group flex items-center justify-between"
             >
               <Link
-                to={`/dashboard/admin/users/${person.id}`}
+                to={`/admin/users/${person.id}`}
                 className="block py-4 px-8  font-medium focus:text-brand focus:outline-none"
               >
                 {person.name}

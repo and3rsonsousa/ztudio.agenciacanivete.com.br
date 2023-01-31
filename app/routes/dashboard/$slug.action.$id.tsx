@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");
 
   if (error) return { error };
-  return redirect(redirectTo ?? `/dashboard/${params.slug}`);
+  return redirect(redirectTo ?? `/${params.slug}`);
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {

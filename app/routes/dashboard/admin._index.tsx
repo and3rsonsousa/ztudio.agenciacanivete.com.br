@@ -7,13 +7,10 @@ export default function AdminIndex() {
         <h1>Admin</h1>
         <div className="text-xl">Escolha qual área quer gerenciar</div>
         <div className="mt-4 flex justify-center gap-4">
-          <Link to={`/dashboard/admin/users`} className="button button-large">
+          <Link to={`/admin/users`} className="button button-large">
             Usuários
           </Link>
-          <Link
-            to={`/dashboard/admin/accounts`}
-            className="button button-large"
-          >
+          <Link to={`/admin/accounts`} className="button button-large">
             Clientes
           </Link>
         </div>
