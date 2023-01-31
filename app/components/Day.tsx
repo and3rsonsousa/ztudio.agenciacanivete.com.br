@@ -91,18 +91,16 @@ export default function Day({
             small
             squared
             className={
-              dayjs().format("YYYY-MM-DD") === day.date.format("YYYY-MM-DD")
-                ? "font-bold"
-                : day.date.format("MM") !==
-                    firstDayOfCurrentMonth.format("MM") &&
-                  dayjs(selectedDay).format("YYYY-MM-DD") !==
-                    day.date.format("YYYY-MM-DD")
+              day.date.format("MM") !== firstDayOfCurrentMonth.format("MM") &&
+              dayjs(selectedDay).format("YYYY-MM-DD") !==
+                day.date.format("YYYY-MM-DD")
                 ? "opacity-25"
                 : ""
             }
             link={
               dayjs(selectedDay).format("YYYY-MM-DD") !==
-              day.date.format("YYYY-MM-DD")
+                day.date.format("YYYY-MM-DD") &&
+              dayjs().format("YYYY-MM-DD") !== day.date.format("YYYY-MM-DD")
             }
             primary={
               dayjs(selectedDay).format("YYYY-MM-DD") ===
