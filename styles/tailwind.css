@@ -170,7 +170,7 @@ body {
     @apply h-4 w-4 rounded border border-transparent  bg-gray-100 dark:bg-gray-600;
   }
   .field-checkbox .checkbox svg {
-    @apply scale-50 text-white opacity-0;
+    @apply -mt-1 scale-50 text-white opacity-0 transition;
   }
 
   .field-checkbox input:checked ~ .checkbox {
@@ -181,7 +181,7 @@ body {
   }
 
   .field-checkbox input:focus ~ .checkbox {
-    @apply border-brand ring-4 ring-brand-300 dark:ring-brand-900;
+    @apply border-brand ring-2 ring-brand  ring-offset-2 dark:ring-offset-gray-1000;
   }
 
   .dropdown-content {

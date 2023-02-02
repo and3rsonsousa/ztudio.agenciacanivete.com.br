@@ -23,7 +23,7 @@ export default function CheckboxField({
         value={value}
       />
       <div className="checkbox">
-        <Check />
+        <Check className="m-0 w-4" />
       </div>
       <span className="field-label">{label}</span>
     </label>

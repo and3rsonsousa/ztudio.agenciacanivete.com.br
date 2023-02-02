@@ -1007,12 +1007,18 @@ h5 {
 }
 
 .field-checkbox .checkbox svg {
+  margin-top: -0.25rem;
   --tw-scale-x: .5;
   --tw-scale-y: .5;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   opacity: 0;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .field-checkbox input:checked ~ .checkbox {
@@ -1032,15 +1038,15 @@ h5 {
   --tw-border-opacity: 1;
   border-color: rgb(128 0 255 / var(--tw-border-opacity));
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(212 186 247 / var(--tw-ring-opacity));
+  --tw-ring-color: rgb(128 0 255 / var(--tw-ring-opacity));
+  --tw-ring-offset-width: 2px;
 }
 
 .dark .field-checkbox input:focus ~ .checkbox {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(59 23 130 / var(--tw-ring-opacity));
+  --tw-ring-offset-color: #0a0c1a;
 }
 
 .dropdown-content {

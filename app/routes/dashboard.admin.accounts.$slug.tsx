@@ -51,12 +51,14 @@ export default function UserId() {
 
         <InputField name="name" label="Nome" value={account.name} />
         <InputField name="slug" label="Slug" value={account.slug} />
+        <InputField name="short" label="Abreviação" value={account.short} />
 
         <div className="mt-8">
           {persons.map((person) => (
             <CheckboxField
               key={person.id}
               name="users"
+              value={person.user}
               label={person.name}
               checked={
                 account.users.filter((user) => user === person.user).length > 0

@@ -39,7 +39,7 @@ export default function Accounts() {
         <div className="flex items-center gap-2">
           <Lock className="w-6" />
 
-          <Link to={`/admin/accounts`}>
+          <Link to={`/dashboard/admin/accounts`}>
             <h2 className="mb-0 dark:text-gray-200">Clientes</h2>
           </Link>
         </div>
@@ -52,7 +52,7 @@ export default function Accounts() {
               className="group flex  items-center justify-between"
             >
               <Link
-                to={`/admin/accounts/${account.slug}`}
+                to={`/dashboard/admin/accounts/${account.slug}`}
                 // className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
                 className="dropdown-item w-full"
               >

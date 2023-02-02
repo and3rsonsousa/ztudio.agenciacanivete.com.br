@@ -450,6 +450,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
       values = {
         name: formData.get("name") as string,
         slug: formData.get("slug") as string,
+        short: formData.get("short") as string,
         users: formData.getAll("users") as string[],
       };
     } else if (action === "update-campaign") {
@@ -470,6 +471,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
       .eq("id", id)
       .select("*")
       .single();
+
+    console.log({ data, error });
 
     return {
       data: {
