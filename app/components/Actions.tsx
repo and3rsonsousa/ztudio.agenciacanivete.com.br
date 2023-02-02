@@ -1,6 +1,6 @@
 import * as ContextMenu from "@radix-ui/react-context-menu";
 
-import type { FetcherWithComponents } from "@remix-run/react";
+import { FetcherWithComponents, useParams } from "@remix-run/react";
 import {
   Link,
   useFetcher,
@@ -48,6 +48,8 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const matches = useMatches();
   const url = matches[1].data.url;
+  const { slug } = useParams();
+
   const fetcher = useFetcher();
 
   const navigate = useNavigate();
@@ -107,11 +109,13 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
               {action.name}
             </div>
             {/* Account Short */}
-            <div
-              className={`hidden w-4 shrink-0 grow-0 break-all text-center text-[8px] font-medium uppercase leading-none tracking-wider opacity-60 @[120px]:block`}
-            >
-              {action.account.short}
-            </div>
+            {!slug && (
+              <div
+                className={`hidden w-4 shrink-0 grow-0 break-all text-center text-[8px] font-medium uppercase leading-none tracking-wider opacity-60 @[120px]:block`}
+              >
+                {action.account.short}
+              </div>
+            )}
             {/* Account Name for mobile */}
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
               {action.account.name.slice(0, 3)}
