@@ -76,7 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <div className={`-mt-1 max-w-[8rem] p-2 lg:pt-0`}>
             <Link
-              to={`/dashboard`}
+              to="/dashboard"
               className=" block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
             >
               {context.sidebar.open ? (
@@ -92,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {accounts.map((account) => (
               <div key={account.id}>
                 <Link
-                  to={`/${account.slug}/${searchParams}`}
+                  to={`/dashboard/${account.slug}/${searchParams}`}
                   className={`${
                     context.sidebar.open
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
@@ -123,7 +123,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {accounts.map((account) => (
                     <DropdownMenu.Item key={account.id} asChild>
                       <Link
-                        to={`/${account.slug}/${searchParams}`}
+                        to={`/dashboard/${account.slug}/${searchParams}`}
                         className="dropdown-item item-small block"
                       >
                         {account.name}
@@ -181,14 +181,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </DropdownMenu.Label>
                   {/* Meus Dados */}
                   <DropdownMenu.Item asChild>
-                    <Link to="/me" className="dropdown-item item-small block">
+                    <Link
+                      to="/dashboard/me"
+                      className="dropdown-item item-small block"
+                    >
                       Meus dados
                     </Link>
                   </DropdownMenu.Item>
                   {/* Lixeira */}
                   <DropdownMenu.Item asChild>
                     <Link
-                      to="/trash"
+                      to="/dashboard/trash"
                       className="dropdown-item item-small block"
                     >
                       Lixeira
@@ -220,7 +223,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           <DropdownMenu.SubContent className="dropdown-content">
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/admin/accounts`}
+                                to={`/dashboard/admin/accounts`}
                                 className="dropdown-item item-small block"
                               >
                                 Ver Clientes
@@ -228,7 +231,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </DropdownMenu.Item>
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/admin/accounts/new`}
+                                to={`/dashboard/admin/accounts/new`}
                                 className="dropdown-item item-small block"
                               >
                                 Novo Cliente
@@ -249,7 +252,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           <DropdownMenu.SubContent className="dropdown-content">
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/admin/users/`}
+                                to={`/dashboard/admin/users/`}
                                 className="dropdown-item item-small block"
                               >
                                 Ver Usuários
@@ -257,7 +260,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </DropdownMenu.Item>
                             <DropdownMenu.Item asChild>
                               <Link
-                                to={`/admin/users/new`}
+                                to={`/dashboard/admin/users/new`}
                                 className="dropdown-item item-small block"
                               >
                                 Novo Usuário

@@ -87,11 +87,13 @@ export default function Calendar({
       );
     });
 
-    _day.celebrations = celebrations.filter((celebration) => {
-      return (
-        _day.date.format("MM-DD") === dayjs(celebration.date).format("MM-DD")
-      );
-    });
+    if (celebrations) {
+      _day.celebrations = celebrations.filter((celebration) => {
+        return (
+          _day.date.format("MM-DD") === dayjs(celebration.date).format("MM-DD")
+        );
+      });
+    }
     _day.campaigns = campaigns.filter((campaign) => {
       return (
         day.isSameOrAfter(dayjs(campaign.date_start), "day") &&

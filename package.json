@@ -9,7 +9,7 @@
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "cross-env NODE_ENV=development npm run wrangler",
     "dev:wrangler": "remix watch",
-    "generate:css": "tailwindcss -i ./styles/app-tailwind.css -o app/styles.css",
+    "generate:css": "tailwindcss -i ./styles/tailwind.css -o app/styles.css",
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "wrangler": "wrangler pages dev ./public",
     "typecheck": "tsc -b"
