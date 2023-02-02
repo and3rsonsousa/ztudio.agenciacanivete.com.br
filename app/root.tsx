@@ -1,7 +1,6 @@
 import type {
   LinksFunction,
   LoaderFunction,
-  MetaFunction,
   V2_MetaFunction,
 } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
@@ -24,7 +23,7 @@ import styles from "./styles.css";
 export const meta: V2_MetaFunction = () => {
   return [
     {
-      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏrᴋ ʟezz",
+      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏʀᴋ ʟeᴢᴢ",
     },
     {
       name: "description",
@@ -36,7 +35,6 @@ export const meta: V2_MetaFunction = () => {
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
-  { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   {
     rel: "icon",
     href: "/ico.png",

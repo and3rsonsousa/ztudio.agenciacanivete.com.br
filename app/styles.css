@@ -1507,12 +1507,12 @@ h5 {
   width: 36rem;
 }
 
-.w-32 {
-  width: 8rem;
-}
-
 .w-96 {
   width: 24rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-24 {
@@ -2287,6 +2287,20 @@ h5 {
 .text-xx {
   font-size: .625rem;
   letter-spacing: 0.025em;
+}
+
+@font-face {
+  font-family: Inter var;
+
+  font-weight: 100 900;
+
+  font-display: block;
+
+  font-style: normal;
+
+  font-named-instance: "Regular";
+
+  src: url(/inter.woff2) format("woff2");
 }
 
 * {
