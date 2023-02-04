@@ -37,7 +37,9 @@ export default function Slug() {
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between p-4">
-        <PageHeader link={`/${account.slug}`}>{account.name}</PageHeader>
+        <PageHeader link={`/dashboard/${account.slug}`}>
+          {account.name}
+        </PageHeader>
 
         <div className="shrink-0 text-sm font-semibold">
           <Link
@@ -61,7 +63,6 @@ export default function Slug() {
             <FolderTree />
             <div className="hidden md:block">Campanhas</div>
           </Link>
-          ∏
         </div>
       </div>
 

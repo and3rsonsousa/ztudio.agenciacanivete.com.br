@@ -1,12 +1,14 @@
 import * as ContextMenu from "@radix-ui/react-context-menu";
 
-import { FetcherWithComponents, useParams } from "@remix-run/react";
+import type { FetcherWithComponents } from "@remix-run/react";
+
 import {
   Link,
   useFetcher,
   useMatches,
   useNavigate,
   useOutletContext,
+  useParams,
 } from "@remix-run/react";
 import {
   ArrowDownRight,
@@ -31,7 +33,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { scaleUp } from "~/lib/animations";
+import { fade, scaleUp } from "~/lib/animations";
 import type {
   AccountModel,
   ActionModel,
@@ -135,7 +137,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
         {showContextMenu && (
           <ContextMenu.Portal forceMount>
             <ContextMenu.Content asChild forceMount loop>
-              <motion.div className="dropdown-content w-36" {...scaleUp(0.2)}>
+              <motion.div className="dropdown-content w-36" {...fade(0.2)}>
                 {action.status.id !==
                   "a448e17d-05ba-4ad0-9990-773f9384d15e" && (
                   <>

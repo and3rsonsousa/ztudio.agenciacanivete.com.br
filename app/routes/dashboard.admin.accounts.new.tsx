@@ -79,8 +79,8 @@ export default function NewAccount() {
             <CheckboxField
               name="users"
               label={person.name}
-              value={person.user}
-              key={person.user}
+              value={person.user_id}
+              key={person.user_id}
             />
           ))}
         </div>

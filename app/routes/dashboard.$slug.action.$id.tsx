@@ -1,4 +1,8 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import type {
+  ActionFunction,
+  LoaderArgs,
+  LoaderFunction,
+} from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { useActionData, useLoaderData } from "@remix-run/react";
 import ActionList from "~/components/ActionList";
@@ -7,7 +11,10 @@ import Exclamation from "~/components/Exclamation";
 import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}: LoaderArgs) => {
   const formData = await request.formData();
   const { error } = await handleAction(formData, request);
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");

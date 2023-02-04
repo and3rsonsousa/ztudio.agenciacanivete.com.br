@@ -1,4 +1,9 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
+import type {
+  ActionArgs,
+  ActionFunction,
+  LoaderArgs,
+  LoaderFunction,
+} from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import {
   useActionData,
@@ -13,7 +18,10 @@ import { getCampaign, handleAction } from "~/lib/data";
 import type { CampaignModel, ContextType } from "~/lib/models";
 import { FilePlus2 } from "lucide-react";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}: ActionArgs) => {
   const formData = await request.formData();
   const { error } = await handleAction(formData, request);
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");
@@ -23,7 +31,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}: LoaderArgs) => {
   const { data, error } = await getCampaign(request, params.id as string);
   return { campaign: data, error };
 };

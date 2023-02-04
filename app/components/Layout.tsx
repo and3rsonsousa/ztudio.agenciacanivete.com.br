@@ -38,8 +38,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const context: ContextType = useOutletContext();
 
   const [showShortcuts, setShowShorcuts] = useState(false);
-  const navigate = useNavigate();
+  const [openAccountsMenu, setOpenAccountsMenu] = useState(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+  // const navigate = useNavigate();
   const [params] = useSearchParams();
+
   const searchParams =
     params.get("month") !== null ? `?month=${params.get("month")}` : "";
 
@@ -80,7 +83,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className=" block rounded p-2 outline-none focus:ring-2 focus:ring-brand"
             >
               {context.sidebar.open ? (
-                <img src="/logo-color.svg" alt="ZTUDIO" />
+                <>
+                  <img src="/logo-color.svg" alt="ZTUDIO" className="h-6" />
+                </>
               ) : (
                 <img src="/ico.png" className="mx-auto h-6" alt="ZTUDIO" />
               )}
@@ -112,26 +117,38 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex pr-2 lg:flex lg:w-full lg:flex-col lg:p-2">
           {/* Clientes mobile */}
           <div className="lg:hidden">
-            <DropdownMenu.Root>
+            <DropdownMenu.Root
+              open={openAccountsMenu}
+              onOpenChange={setOpenAccountsMenu}
+            >
               <DropdownMenu.Trigger asChild>
                 <button className="p-2">
                   <Briefcase className="w-4" />
                 </button>
               </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content className="dropdown-content mr-2">
-                  {accounts.map((account) => (
-                    <DropdownMenu.Item key={account.id} asChild>
-                      <Link
-                        to={`/dashboard/${account.slug}/${searchParams}`}
-                        className="dropdown-item item-small block"
-                      >
-                        {account.name}
-                      </Link>
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
+              <AnimatePresence>
+                {openAccountsMenu && (
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className="dropdown-content mr-2"
+                      asChild
+                    >
+                      <motion.div {...fade()}>
+                        {accounts.map((account) => (
+                          <DropdownMenu.Item key={account.id} asChild>
+                            <Link
+                              to={`/dashboard/${account.slug}/${searchParams}`}
+                              className="dropdown-item item-small block"
+                            >
+                              {account.name}
+                            </Link>
+                          </DropdownMenu.Item>
+                        ))}
+                      </motion.div>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                )}
+              </AnimatePresence>
             </DropdownMenu.Root>
           </div>
           {/* Search */}
@@ -154,7 +171,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           {/* User Menu */}
           <div>
-            <DropdownMenu.Root>
+            <DropdownMenu.Root
+              open={openUserMenu}
+              onOpenChange={setOpenUserMenu}
+            >
               <DropdownMenu.Trigger className="flex items-center gap-2 rounded p-2 outline-none lg:w-full">
                 {context.sidebar.open && (
                   <div className="hidden text-xs font-semibold lg:block">
@@ -166,124 +186,134 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className={`${context.sidebar.open ? "ml-auto" : "ml-2"} w-4`}
                 />
               </DropdownMenu.Trigger>
-
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content className="dropdown-content mr-4" loop>
-                  {/* Theme Switcher */}
-                  <div className="flex items-center justify-between gap-2">
-                    <ThemeSwitcher />
-                  </div>
-
-                  <hr className="dropdown-hr" />
-                  {/* Minha Conta */}
-                  <DropdownMenu.Label className="dropdown-label">
-                    minha conta
-                  </DropdownMenu.Label>
-                  {/* Meus Dados */}
-                  <DropdownMenu.Item asChild>
-                    <Link
-                      to="/dashboard/me"
-                      className="dropdown-item item-small block"
+              <AnimatePresence>
+                {openUserMenu && (
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className="dropdown-content mr-4"
+                      loop
+                      asChild
                     >
-                      Meus dados
-                    </Link>
-                  </DropdownMenu.Item>
-                  {/* Lixeira */}
-                  <DropdownMenu.Item asChild>
-                    <Link
-                      to="/dashboard/trash"
-                      className="dropdown-item item-small block"
-                    >
-                      Lixeira
-                    </Link>
-                  </DropdownMenu.Item>
-                  {/* Sair */}
-                  <DropdownMenu.Item
-                    className="dropdown-item item-small"
-                    onSelect={() => navigate("/signout")}
-                  >
-                    Sair
-                  </DropdownMenu.Item>
-                  {/* Admin */}
-                  {person.admin && (
-                    <>
-                      <hr className="dropdown-hr" />
-                      <DropdownMenu.Label className="dropdown-label">
-                        admin
-                      </DropdownMenu.Label>
-                      {/* Clientes / Accounts  */}
-                      <DropdownMenu.Sub>
-                        <DropdownMenu.SubTrigger className="dropdown-item item-small">
-                          <div className="flex items-center">
-                            <div>Clientes</div>
-                            <ChevronRight className="ml-auto w-4" />
-                          </div>
-                        </DropdownMenu.SubTrigger>
-                        <DropdownMenu.Portal>
-                          <DropdownMenu.SubContent className="dropdown-content">
-                            <DropdownMenu.Item asChild>
-                              <Link
-                                to={`/dashboard/admin/accounts`}
-                                className="dropdown-item item-small block"
-                              >
-                                Ver Clientes
-                              </Link>
-                            </DropdownMenu.Item>
-                            <DropdownMenu.Item asChild>
-                              <Link
-                                to={`/dashboard/admin/accounts/new`}
-                                className="dropdown-item item-small block"
-                              >
-                                Novo Cliente
-                              </Link>
-                            </DropdownMenu.Item>
-                          </DropdownMenu.SubContent>
-                        </DropdownMenu.Portal>
-                      </DropdownMenu.Sub>
-                      {/* Usuários */}
-                      <DropdownMenu.Sub>
-                        <DropdownMenu.SubTrigger className="dropdown-item item-small">
-                          <div className="flex items-center">
-                            <div>Usuários</div>
-                            <ChevronRight className="ml-auto w-4" />
-                          </div>
-                        </DropdownMenu.SubTrigger>
-                        <DropdownMenu.Portal>
-                          <DropdownMenu.SubContent className="dropdown-content">
-                            <DropdownMenu.Item asChild>
-                              <Link
-                                to={`/dashboard/admin/users/`}
-                                className="dropdown-item item-small block"
-                              >
-                                Ver Usuários
-                              </Link>
-                            </DropdownMenu.Item>
-                            <DropdownMenu.Item asChild>
-                              <Link
-                                to={`/dashboard/admin/users/new`}
-                                className="dropdown-item item-small block"
-                              >
-                                Novo Usuário
-                              </Link>
-                            </DropdownMenu.Item>
-                          </DropdownMenu.SubContent>
-                        </DropdownMenu.Portal>
-                      </DropdownMenu.Sub>
+                      <motion.div {...fade()}>
+                        {/* Theme Switcher */}
+                        <div className="flex items-center justify-between gap-2">
+                          <ThemeSwitcher />
+                        </div>
 
-                      <hr className="dropdown-hr" />
-                      {/* Roadmap */}
-                      <DropdownMenu.Item asChild>
-                        <Link
-                          to={`/roadmap`}
-                          className="dropdown-item item-small block"
+                        <hr className="dropdown-hr" />
+                        {/* Minha Conta */}
+                        <DropdownMenu.Label className="dropdown-label">
+                          minha conta
+                        </DropdownMenu.Label>
+                        {/* Meus Dados */}
+                        <DropdownMenu.Item asChild>
+                          <Link
+                            to="/dashboard/me"
+                            className="dropdown-item item-small block"
+                          >
+                            Meus dados
+                          </Link>
+                        </DropdownMenu.Item>
+                        {/* Lixeira */}
+                        <DropdownMenu.Item asChild>
+                          <Link
+                            to="/dashboard/trash"
+                            className="dropdown-item item-small block"
+                          >
+                            Lixeira
+                          </Link>
+                        </DropdownMenu.Item>
+                        {/* Sair */}
+                        <DropdownMenu.Item
+                          className="dropdown-item item-small"
+                          // onSelect={() => navigate("/signout")}
+                          onSelect={() => context.supabase.auth.signOut()}
                         >
-                          Roadmap
-                        </Link>
-                      </DropdownMenu.Item>
-                    </>
-                  )}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
+                          Sair
+                        </DropdownMenu.Item>
+                        {/* Admin */}
+                        {person.admin && (
+                          <>
+                            <hr className="dropdown-hr" />
+                            <DropdownMenu.Label className="dropdown-label">
+                              admin
+                            </DropdownMenu.Label>
+                            {/* Clientes / Accounts  */}
+                            <DropdownMenu.Sub>
+                              <DropdownMenu.SubTrigger className="dropdown-item item-small">
+                                <div className="flex items-center">
+                                  <div>Clientes</div>
+                                  <ChevronRight className="ml-auto w-4" />
+                                </div>
+                              </DropdownMenu.SubTrigger>
+                              <DropdownMenu.Portal>
+                                <DropdownMenu.SubContent className="dropdown-content">
+                                  <DropdownMenu.Item asChild>
+                                    <Link
+                                      to={`/dashboard/admin/accounts`}
+                                      className="dropdown-item item-small block"
+                                    >
+                                      Ver Clientes
+                                    </Link>
+                                  </DropdownMenu.Item>
+                                  <DropdownMenu.Item asChild>
+                                    <Link
+                                      to={`/dashboard/admin/accounts/new`}
+                                      className="dropdown-item item-small block"
+                                    >
+                                      Novo Cliente
+                                    </Link>
+                                  </DropdownMenu.Item>
+                                </DropdownMenu.SubContent>
+                              </DropdownMenu.Portal>
+                            </DropdownMenu.Sub>
+                            {/* Usuários */}
+                            <DropdownMenu.Sub>
+                              <DropdownMenu.SubTrigger className="dropdown-item item-small">
+                                <div className="flex items-center">
+                                  <div>Usuários</div>
+                                  <ChevronRight className="ml-auto w-4" />
+                                </div>
+                              </DropdownMenu.SubTrigger>
+                              <DropdownMenu.Portal>
+                                <DropdownMenu.SubContent className="dropdown-content">
+                                  <DropdownMenu.Item asChild>
+                                    <Link
+                                      to={`/dashboard/admin/users/`}
+                                      className="dropdown-item item-small block"
+                                    >
+                                      Ver Usuários
+                                    </Link>
+                                  </DropdownMenu.Item>
+                                  <DropdownMenu.Item asChild>
+                                    <Link
+                                      to={`/dashboard/admin/users/new`}
+                                      className="dropdown-item item-small block"
+                                    >
+                                      Novo Usuário
+                                    </Link>
+                                  </DropdownMenu.Item>
+                                </DropdownMenu.SubContent>
+                              </DropdownMenu.Portal>
+                            </DropdownMenu.Sub>
+
+                            <hr className="dropdown-hr" />
+                            {/* Roadmap */}
+                            <DropdownMenu.Item asChild>
+                              <Link
+                                to={`/roadmap`}
+                                className="dropdown-item item-small block"
+                              >
+                                Roadmap
+                              </Link>
+                            </DropdownMenu.Item>
+                          </>
+                        )}
+                      </motion.div>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                )}
+              </AnimatePresence>
             </DropdownMenu.Root>
           </div>
           {/* Create Action on Mobile */}

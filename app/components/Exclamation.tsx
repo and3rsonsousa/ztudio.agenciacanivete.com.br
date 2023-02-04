@@ -1,36 +1,30 @@
-import { AlertTriangle, ThumbsDown, ThumbsUp } from "lucide-react";
+import { Frown, Laugh, Meh } from "lucide-react";
 
 const Exclamation = ({
   children,
   icon,
   type,
-  large,
-  small,
+  size,
 }: {
   children: React.ReactNode;
   icon?: boolean;
   type?: "alert" | "error" | "success" | "info";
-  large?: boolean;
-  small?: boolean;
+  size?: "large" | "small";
 }) => (
   <div className="text-left">
-    <div
-      className={`exclamation bg-${type ?? "info"} ${
-        large ? "text-base" : small ? "text-xx" : "text-sm"
-      }`}
-    >
+    <div className={`exclamation bg-${type ?? "info"} ${size ?? ""}`}>
       {icon ? (
-        <div>
+        <div className="exclamation-icon">
           {type === "success" ? (
-            <ThumbsUp className={large ? `w-8` : small ? "w-4" : "w-6"} />
+            <Laugh />
           ) : type === "error" ? (
-            <ThumbsDown className={large ? `w-8` : small ? "w-4" : "w-6"} />
+            <Frown />
           ) : (
-            <AlertTriangle className={large ? `w-8` : small ? "w-4" : "w-6"} />
+            <Meh />
           )}
         </div>
       ) : null}
-      <div>{children}</div>
+      <div className="exclamation-text">{children}</div>
     </div>
   </div>
 );

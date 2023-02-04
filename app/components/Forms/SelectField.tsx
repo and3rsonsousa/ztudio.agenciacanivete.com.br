@@ -1,6 +1,8 @@
 import * as Select from "@radix-ui/react-select";
+import { motion } from "framer-motion";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { fade } from "~/lib/animations";
 
 type SelectItemModel = { title: string; value: string };
 
@@ -26,6 +28,7 @@ export default function SelectField({
   onChange?: (value: string) => void;
 }) {
   const [selectedValue, setValue] = useState(value);
+  const [open, setOpen] = useState(false);
   const _items = Array.isArray(items[0]) ? items : [items];
   useEffect(() => {
     setValue(value);
@@ -35,8 +38,9 @@ export default function SelectField({
     <label className="select-field field relative">
       {title && <span className="field-label">{title}</span>}
       <Select.Root
+        open={open}
+        onOpenChange={setOpen}
         value={selectedValue}
-        // onValueChange={setValue}
         onValueChange={(value) => {
           if (onChange) {
             onChange(value);
@@ -61,11 +65,7 @@ export default function SelectField({
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content
-            className="dropdown-content mt-2"
-            collisionPadding={8}
-            position="popper"
-          >
+          <Select.Content collisionPadding={8} className="dropdown-content">
             <Select.SelectScrollUpButton
               className={`${small ? "py-1" : "py-2"}`}
             >

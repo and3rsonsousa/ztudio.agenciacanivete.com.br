@@ -30,12 +30,13 @@
     "@tailwindcss/container-queries": "^0.1.0",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.7",
-    "framer-motion": "9.0.0",
-    "lucide-react": "0.108.0",
+    "framer-motion": "9.0.1",
+    "lucide-react": "0.109.0",
     "patch-package": "^6.5.1",
     "postinstall-postinstall": "^2.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-use-measure": "^2.1.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.18.0",

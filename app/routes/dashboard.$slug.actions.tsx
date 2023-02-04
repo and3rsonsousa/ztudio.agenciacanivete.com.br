@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderArgs, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
@@ -7,7 +7,10 @@ import { getActions } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
 dayjs.locale("pt-br");
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}: LoaderArgs) => {
   const { data } = await getActions({
     request,
     all: true,

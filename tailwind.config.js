@@ -42,7 +42,7 @@ module.exports = {
       brave: colors.orange[500],
       vivid: colors.indigo[500],
 
-      info: colors.slate,
+      info: colors.indigo,
       error: colors.red,
       alert: colors.yellow,
       success: colors.emerald,

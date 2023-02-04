@@ -1,10 +1,13 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderArgs, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}: LoaderArgs) => {
   let period = new URL(request.url).searchParams.get("month");
   const {
     data: { session },

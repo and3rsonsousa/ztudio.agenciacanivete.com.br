@@ -1,10 +1,11 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Dayjs } from "dayjs";
 export type PersonModel = {
   id: string;
   name: string;
   email: string;
   admin: Boolean;
-  user: string;
+  user_id: string;
 };
 
 export type UserModel = {
@@ -123,4 +124,5 @@ export type ContextType = {
     open: boolean;
     set: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  supabase: SupabaseClient<any, "public", any>;
 };

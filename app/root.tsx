@@ -3,7 +3,7 @@ import type {
   LoaderFunction,
   V2_MetaFunction,
 } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare";
+
 import {
   Links,
   LiveReload,
@@ -12,9 +12,11 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRevalidator,
 } from "@remix-run/react";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import type { ContextType } from "./lib/models";
@@ -41,19 +43,20 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader: LoaderFunction = () => {
-  return json({
-    env: {
-      SUPABASE_URL: "https://pivlgmzzjgsysyvmsgjy.supabase.co",
-      SUPABASE_ANON_KEY:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdmxnbXp6amdzeXN5dm1zZ2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTMyNTM3NDUsImV4cCI6MTk2ODgyOTc0NX0.sSMLicGE_LCmu1YidlnHFqwNnNj4K2CCfJUiTHc3muA",
-    },
-  });
-};
+export const loader: LoaderFunction = () => ({
+  env: {
+    SUPABASE_URL: "https://pivlgmzzjgsysyvmsgjy.supabase.co",
+    SUPABASE_ANON_KEY:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdmxnbXp6amdzeXN5dm1zZ2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTMyNTM3NDUsImV4cCI6MTk2ODgyOTc0NX0.sSMLicGE_LCmu1YidlnHFqwNnNj4K2CCfJUiTHc3muA",
+  },
+});
 
 export function App() {
   const { env } = useLoaderData();
   const [theme] = useTheme();
+  const [supabase] = useState(() => {
+    return createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
+  });
 
   const [day, setDay] = useState(dayjs());
   const [filter, setFilter] = useState("all");
@@ -108,7 +111,20 @@ export function App() {
       open: sidebar,
       set: setSidebar,
     },
+    supabase: supabase,
   };
+
+  const revalidator = useRevalidator();
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async () => {
+      revalidator.revalidate();
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase, revalidator]);
 
   return (
     <html lang="pt-br" className={theme ?? "dark"}>
@@ -123,11 +139,11 @@ export function App() {
           <Outlet context={context} />
         </div>
         <ScrollRestoration />
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `window.env = ${JSON.stringify(env)}`,
           }}
-        />
+        /> */}
 
         <Scripts />
         <LiveReload />

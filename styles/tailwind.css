@@ -365,20 +365,30 @@ body {
 }
 
 .exclamation {
-  @apply inline-flex items-center gap-4 rounded-xl p-4;
+  @apply inline-flex items-center gap-4 rounded-xl px-5 py-3 font-normal;
+}
+.exclamation.large {
+  @apply gap-6 rounded-2xl px-8 py-6 text-2xl;
+}
+.exclamation.small {
+  @apply gap-2 rounded-lg px-3 py-1 text-xs;
+}
+
+.exclamation-icon {
+  @apply w-4;
 }
 
 .bg-info {
-  @apply bg-info-100 text-info-700 dark:bg-info-700 dark:text-info-200;
+  @apply bg-info-100 text-info-700 dark:bg-info-900 dark:text-white;
 }
 .bg-alert {
-  @apply bg-alert-100 text-alert-700 dark:bg-alert-900 dark:text-alert-200;
+  @apply bg-alert-100 text-alert-700 dark:bg-alert-900 dark:text-white;
 }
 .bg-error {
-  @apply bg-error-100 text-error-700 dark:bg-error-700 dark:text-error-200;
+  @apply bg-error-100 text-error-700 dark:bg-error-900 dark:text-white;
 }
 .bg-success {
-  @apply bg-success-100 text-success-700 dark:bg-success-700 dark:text-success-200;
+  @apply bg-success-100 text-success-700 dark:bg-success-700 dark:text-white;
 }
 
 .action-line {

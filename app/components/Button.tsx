@@ -19,7 +19,8 @@ export default function Button(props: {
   isPreffix?: boolean;
   asChild?: boolean;
   style?: {};
-  onClick?: (event: any) => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> &
+    React.MouseEventHandler<HTMLElement>;
 }) {
   const Component = props.asChild ? Slot : "button";
 
@@ -33,7 +34,7 @@ export default function Button(props: {
       } ${props.link ? "button-link" : ""} ${props.className ?? ""} ${
         props.isSuffix ? "h-12 rounded-r-none rounded-l-xl px-4" : ""
       } ${props.isPreffix ? "h-12 rounded-l-none rounded-r-xl px-4" : ""}`}
-      type={props.type}
+      type={props.type ?? "button"}
       disabled={props.disabled}
       onClick={props.onClick}
       title={props.title}

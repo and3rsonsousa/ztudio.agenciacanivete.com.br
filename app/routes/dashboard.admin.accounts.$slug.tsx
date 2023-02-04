@@ -58,10 +58,11 @@ export default function UserId() {
             <CheckboxField
               key={person.id}
               name="users"
-              value={person.user}
+              value={person.user_id}
               label={person.name}
               checked={
-                account.users.filter((user) => user === person.user).length > 0
+                account.users.filter((user) => user === person.user_id).length >
+                0
               }
             />
           ))}
@@ -71,7 +72,11 @@ export default function UserId() {
           <Form method="post">
             <input type="hidden" name="id" value={account.id} />
             <input type="hidden" name="action" value="delete-account" />
-            <input type="hidden" name="redirectTo" value={`/admin/accounts`} />
+            <input
+              type="hidden"
+              name="redirectTo"
+              value={`dashboard/admin/accounts`}
+            />
 
             <Button>Excluir</Button>
           </Form>
