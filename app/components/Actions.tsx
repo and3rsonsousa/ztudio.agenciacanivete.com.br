@@ -33,7 +33,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { fade, scaleUp } from "~/lib/animations";
+import { fade } from "~/lib/animations";
 import type {
   AccountModel,
   ActionModel,

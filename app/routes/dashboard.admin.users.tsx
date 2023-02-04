@@ -1,6 +1,12 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
-import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  Outlet,
+  useFetcher,
+  useLoaderData,
+} from "@remix-run/react";
 import { Lock, Trash2 } from "lucide-react";
 import Button from "~/components/Button";
 import { getUser } from "~/lib/auth.server";
@@ -35,6 +41,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Users() {
   const { persons } = useLoaderData<{ persons: PersonModel[] }>();
+
+  const fetcher = useFetcher();
+
   return (
     <div className="flex h-screen flex-col">
       <div className="flex justify-between border-b p-4 dark:border-gray-800">
@@ -68,11 +77,20 @@ export default function Users() {
                     link
                     onClick={(event) => {
                       if (
-                        !window.confirm(
+                        window.confirm(
                           `Deseja mesmo deletar o usuário "${person.name}"`
                         )
                       ) {
-                        event.preventDefault();
+                        fetcher.submit(
+                          {
+                            action: "delete-person",
+                            id: person.id,
+                          },
+                          {
+                            method: "post",
+                            action: "/handle-action",
+                          }
+                        );
                       }
                     }}
                   >
