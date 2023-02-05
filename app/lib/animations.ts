@@ -4,7 +4,7 @@ export const scaleUp = (duration = 0.5) => ({
     opacity: 1,
     scale: 1,
     transition: {
-      ease: "circOut",
+      ease: "easeOut",
       duration: duration,
     },
   },
@@ -12,7 +12,7 @@ export const scaleUp = (duration = 0.5) => ({
     opacity: 0,
     scale: 0.8,
     transition: {
-      duration: duration / 2,
+      duration: duration * 0.5,
     },
   },
 });

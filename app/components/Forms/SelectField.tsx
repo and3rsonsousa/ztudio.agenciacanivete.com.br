@@ -1,8 +1,6 @@
 import * as Select from "@radix-ui/react-select";
-import { motion } from "framer-motion";
 import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import { fade } from "~/lib/animations";
 
 type SelectItemModel = { title: string; value: string };
 

@@ -128,12 +128,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </DropdownMenu.Trigger>
               <AnimatePresence>
                 {openAccountsMenu && (
-                  <DropdownMenu.Portal>
+                  <DropdownMenu.Portal forceMount>
                     <DropdownMenu.Content
-                      className="dropdown-content mr-2"
+                      className="dropdown-content mr-2 origin-top"
+                      forceMount
                       asChild
                     >
-                      <motion.div {...fade()}>
+                      <motion.div {...scaleUp(0.3)}>
                         {accounts.map((account) => (
                           <DropdownMenu.Item key={account.id} asChild>
                             <Link
@@ -188,13 +189,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </DropdownMenu.Trigger>
               <AnimatePresence>
                 {openUserMenu && (
-                  <DropdownMenu.Portal>
-                    <DropdownMenu.Content
-                      className="dropdown-content mr-4"
-                      loop
-                      asChild
-                    >
-                      <motion.div {...fade()}>
+                  <DropdownMenu.Portal forceMount>
+                    <DropdownMenu.Content loop forceMount asChild>
+                      <motion.div
+                        {...scaleUp(0.3)}
+                        className="dropdown-content mr-4 origin-bottom"
+                      >
                         {/* Theme Switcher */}
                         <div className="flex items-center justify-between gap-2">
                           <ThemeSwitcher />

@@ -77,7 +77,9 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
       <ContextMenu.Trigger>
         <div
           onClick={() =>
-            navigate(`/${campaign.Account?.slug}/campaign/${campaign.id}`)
+            navigate(
+              `/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`
+            )
           }
           className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover `}
         >

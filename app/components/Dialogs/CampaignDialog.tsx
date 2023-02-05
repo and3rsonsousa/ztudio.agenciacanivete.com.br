@@ -5,7 +5,6 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 import type {
@@ -15,9 +14,9 @@ import type {
   ItemModel,
   PersonModel,
 } from "~/lib/models";
-import Exclamation from "../Exclamation";
 import Button from "../Button";
-import DatepickerField from "../Forms/DatepickerField";
+import Exclamation from "../Exclamation";
+import DateRangeField from "../Forms/DateRangeField";
 import { default as Field } from "../Forms/InputField";
 import SelectField from "../Forms/SelectField";
 import TextareaField from "../Forms/TextareaField";
@@ -132,29 +131,21 @@ export default function CampaignDialog({
           value={campaign ? campaign.description : undefined}
         />
         <div className="grid gap-4 md:grid-cols-2">
-          <DatepickerField
-            name="date_start"
-            title="Começa em"
-            full={campaign ? true : false}
-            date={campaign ? dayjs(campaign.date_start) : date}
+          <DateRangeField
+            names={["date_start", "date_end"]}
+            title="Período"
+            full
+            day1={campaign ? dayjs(campaign.date_start) : date}
+            day2={campaign ? dayjs(campaign.date_end) : date.add(5, "days")}
           />
-          <DatepickerField
-            name="date_end"
-            title="Termina em"
-            full={campaign ? true : false}
-            date={
-              campaign
-                ? dayjs(campaign.date_end)
-                : (date as Dayjs).add(7, "days")
-            }
+
+          <SelectField
+            name="status"
+            title="Status"
+            items={statusItems}
+            value={campaign ? campaign.status : undefined}
           />
         </div>
-        <SelectField
-          name="status"
-          title="Status"
-          items={statusItems}
-          value={campaign ? campaign.status : undefined}
-        />
 
         <div className="flex items-center justify-end gap-2 pt-4">
           {campaign && (
