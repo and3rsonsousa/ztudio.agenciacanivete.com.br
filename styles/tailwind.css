@@ -365,17 +365,25 @@ body {
 }
 
 .exclamation {
-  @apply inline-flex items-center gap-4 rounded-xl px-5 py-3 font-normal;
+  @apply inline-flex items-center gap-4 rounded-xl px-5 py-3 text-sm font-normal leading-tight;
 }
 .exclamation.large {
   @apply gap-6 rounded-2xl px-8 py-6 text-2xl;
 }
 .exclamation.small {
-  @apply gap-2 rounded-lg px-3 py-1 text-xs;
+  @apply gap-3 rounded-lg px-3 py-2 text-xs;
 }
 
 .exclamation-icon {
-  @apply w-4;
+  @apply w-12;
+}
+
+.exclamation.large .exclamation-icon {
+  @apply w-16;
+}
+
+.exclamation.small .exclamation-icon {
+  @apply w-8;
 }
 
 .bg-info {
@@ -395,9 +403,14 @@ body {
   @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded-md py-1 px-2 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
 }
 
+.action-line-new {
+  @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded border-l-4 bg-gray-100 py-1 px-2 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 hover:text-white dark:bg-gray-800 dark:ring-offset-gray-1000;
+}
+
 .action-medium {
   @apply relative mb-2 flex flex-nowrap justify-between gap-4 rounded-xl bg-gray-100 p-4 text-gray-900  ring-brand ring-offset-2 ring-offset-white transition hover:bg-gray-200 focus:ring-2 dark:bg-gray-800 dark:text-gray-100 dark:ring-offset-gray-1000 dark:hover:bg-gray-700;
 }
+
 .action-medium.accomplished {
   @apply opacity-50 hover:opacity-100;
 }

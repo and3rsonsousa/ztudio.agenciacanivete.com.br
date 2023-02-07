@@ -1,7 +1,7 @@
 import { getPeriod } from "./functions";
 import { getSupabase } from "./supabase";
 
-const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status!Action_status_fkey(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
 
 // Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {

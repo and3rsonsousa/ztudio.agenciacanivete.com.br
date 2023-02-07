@@ -27,6 +27,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import Loader from "../Loader";
+import { Combobox } from "@headlessui/react";
+import ComboboxField from "../Forms/ComboboxField";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -257,7 +259,7 @@ export default function ActionDialog({
         <div className="grid w-full gap-4 md:grid-cols-2">
           <SelectField
             name="tag"
-            title="Tags"
+            title="Tag"
             value={
               action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
             }
@@ -312,6 +314,9 @@ export default function ActionDialog({
             value={action ? action.responsible.id : creator.id}
           />
         </div>
+        {/* <div>
+          <ComboboxField label="Tarefas" />
+        </div> */}
 
         <div className={`h-16`}>
           <div className={`flex w-full items-center justify-end gap-2 py-4 `}>

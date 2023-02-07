@@ -14,15 +14,13 @@ const Exclamation = ({
   <div className="text-left">
     <div className={`exclamation bg-${type ?? "info"} ${size ?? ""}`}>
       {icon ? (
-        <div className="exclamation-icon">
-          {type === "success" ? (
-            <Laugh />
-          ) : type === "error" ? (
-            <Frown />
-          ) : (
-            <Meh />
-          )}
-        </div>
+        type === "success" ? (
+          <Laugh className="exclamation-icon" />
+        ) : type === "error" ? (
+          <Frown className="exclamation-icon" />
+        ) : (
+          <Meh className="exclamation-icon" />
+        )
       ) : null}
       <div className="exclamation-text">{children}</div>
     </div>
