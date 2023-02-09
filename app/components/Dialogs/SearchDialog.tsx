@@ -1,13 +1,17 @@
 import { Combobox } from "@headlessui/react";
 import { useMatches, useNavigate, useOutletContext } from "@remix-run/react";
+import { logger } from "@supabase/auth-helpers-remix";
 import { SupabaseClient } from "@supabase/supabase-js";
+import dayjs from "dayjs";
 import { Fragment, useState } from "react";
 import type {
   AccountModel,
   ActionModel,
   CampaignModel,
   ContextType,
+  ItemModel,
 } from "~/lib/models";
+import { TagIcons } from "../Actions";
 import Loader from "../Loader";
 
 export default function SearchDialog() {
@@ -20,6 +24,8 @@ export default function SearchDialog() {
   const [query, setQuery] = useState("");
   const matches = useMatches();
   const accounts: AccountModel[] = matches[1].data.accounts;
+  const status: ItemModel[] = matches[1].data.status;
+  const tags: ItemModel[] = matches[1].data.tags;
   const navigate = useNavigate();
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = matches[0].data.env;
   const supabaseClient = new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -27,28 +33,30 @@ export default function SearchDialog() {
   const getSearch = async (query: string) => {
     if (query.length > 2) {
       setSearching(() => true);
-      const [{ data: actions }, { data: campaigns }, { data: accounts }] =
-        await Promise.all([
-          supabaseClient.rpc("search_for_actions", {
-            query: `%${query
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")}%`,
-          }),
-          supabaseClient.rpc("search_for_campaigns", {
-            query: `%${query
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")}%`,
-          }),
-          supabaseClient.rpc("search_for_accounts", {
-            query: `%${query
-              .split("")
-              .join("%")
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")}%`,
-          }),
-        ]);
+      let _accounts = accounts.filter(
+        (account) =>
+          account.name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(query) || account.short.includes(query)
+      );
+      setItems({
+        actions: [],
+        accounts: _accounts,
 
-      setItems({ actions, accounts, campaigns });
+        campaigns: [],
+      });
+
+      const [{ data: actions }, { data: campaigns }] = await Promise.all([
+        supabaseClient.rpc("search_for_actions", {
+          query: `%${query.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}%`,
+        }),
+        supabaseClient.rpc("search_for_campaigns", {
+          query: `%${query.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}%`,
+        }),
+      ]);
+
+      setItems({ actions, accounts: _accounts, campaigns });
       setSearching(() => false);
     }
   };
@@ -88,11 +96,11 @@ export default function SearchDialog() {
         placeholder="Buscar..."
         autoComplete="off"
       />
-      {searching && (
+      {/* {searching && (
         <div className="absolute right-4 top-3">
           <Loader />
         </div>
-      )}
+      )} */}
 
       <Combobox.Options>
         {query.length > 2 && (
@@ -115,11 +123,11 @@ export default function SearchDialog() {
                       >
                         {({ selected, active }) => (
                           <div
-                            className={`dropdown-item font-medium ${
+                            className={`dropdown-item flex items-center justify-between font-medium ${
                               active || selected ? "bg-brand text-white" : ""
                             }`}
                           >
-                            {account.name}
+                            <div>{account.name}</div>
                           </div>
                         )}
                       </Combobox.Option>
@@ -131,21 +139,66 @@ export default function SearchDialog() {
               {items.actions.length > 0 ? (
                 <div>
                   <div className="px-6 pb-1 pt-6 text-xl font-bold">Ações</div>
-                  {items.actions.map((action: ActionModel, index: number) => (
+                  {items.actions.map((action: any, index: number) => (
                     <Combobox.Option key={index} value={action} as={Fragment}>
                       {({ selected, active }) => (
                         <div
-                          className={`dropdown-item font-medium ${
+                          className={`dropdown-item flex items-center justify-between gap-4 font-medium ${
                             active || selected ? "bg-brand text-white" : ""
                           }`}
                         >
-                          {action.name}
+                          <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                            {action.name}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div>
+                              <TagIcons
+                                type={
+                                  tags.filter((tag) => tag.id === action.tag)[0]
+                                    .slug
+                                }
+                                className="h-4 w-4"
+                              />
+                            </div>
+                            <div
+                              className={`bg-${
+                                status.filter(
+                                  (status) => status.id === action.status
+                                )[0].slug
+                              } text-xx rounded-lg px-1 py-0.5 uppercase`}
+                            >
+                              {
+                                status.filter(
+                                  (status) => status.id === action.status
+                                )[0].name
+                              }
+                            </div>
+                            <div className="text-xx font-bold uppercase">
+                              {
+                                accounts.filter(
+                                  (account) => account.id === action.account
+                                )[0].short
+                              }
+                            </div>
+                            <div className="text-xx whitespace-nowrap">
+                              {dayjs(action.date).format(
+                                "DD[/]MM [às] HH[:]mm"
+                              )}
+                            </div>
+                          </div>
                         </div>
                       )}
                     </Combobox.Option>
                   ))}
                 </div>
-              ) : null}
+              ) : (
+                searching && (
+                  <div className="flex items-center justify-center gap-4 p-4">
+                    <Loader size="small" />
+                    <div>Procurando por Ações</div>
+                  </div>
+                )
+              )}
               {/* Campaigns */}
               {items.campaigns.length > 0 ? (
                 <div>
@@ -172,7 +225,14 @@ export default function SearchDialog() {
                     )
                   )}
                 </div>
-              ) : null}
+              ) : (
+                searching && (
+                  <div className="flex items-center justify-center gap-4 p-4">
+                    <Loader size="small" />
+                    <div>Procurando por campanhas</div>
+                  </div>
+                )
+              )}
               {!searching &&
                 query.length > 2 &&
                 items.actions.length === 0 &&
