@@ -7,7 +7,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import { CalendarDays, FileCheck2, FolderTree } from "lucide-react";
+import { CalendarDays, FileCheck2, FolderTree, Instagram } from "lucide-react";
 import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
@@ -37,9 +37,19 @@ export default function Slug() {
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between p-4">
-        <PageHeader link={`/dashboard/${account.slug}`}>
-          {account.name}
-        </PageHeader>
+        <div className="flex items-center gap-4">
+          <PageHeader link={`/dashboard/${account.slug}`}>
+            {account.name}
+          </PageHeader>
+
+          <Link
+            className="hover:text-brand"
+            to={`https://instagram.com/${account.slug}`}
+            target="_blank"
+          >
+            <Instagram className="h-8 w-8" />
+          </Link>
+        </div>
 
         <div className="shrink-0 text-sm font-semibold">
           <Link

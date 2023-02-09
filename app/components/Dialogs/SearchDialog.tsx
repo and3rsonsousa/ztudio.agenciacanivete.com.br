@@ -1,12 +1,10 @@
 import { Combobox } from "@headlessui/react";
 import { useMatches, useNavigate, useOutletContext } from "@remix-run/react";
-import { logger } from "@supabase/auth-helpers-remix";
 import { SupabaseClient } from "@supabase/supabase-js";
 import dayjs from "dayjs";
 import { Fragment, useState } from "react";
 import type {
   AccountModel,
-  ActionModel,
   CampaignModel,
   ContextType,
   ItemModel,
