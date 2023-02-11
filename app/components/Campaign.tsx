@@ -37,7 +37,7 @@ export function Campaign({ campaign }: { campaign: CampaignModel }) {
       <div className="flex gap-2 opacity-0  group-hover:opacity-100">
         <div>
           <Link
-            to={`/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
+            to={`/dashboard/${account.slug}/campaign/${campaign.id}/?redirectTo=${url}`}
             className="button"
           >
             <Edit />
@@ -90,7 +90,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
         <ContextMenu.Content className="dropdown-content">
           <ContextMenu.Item asChild>
             <Link
-              to={`/${campaign.Account?.slug}/campaign/${campaign.id}`}
+              to={`/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`}
               className="dropdown-item item-small flex items-center gap-2"
             >
               <Edit className="w-4" /> <div>Editar</div>
