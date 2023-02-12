@@ -132,7 +132,18 @@ export function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Partytown />
+        <Partytown
+          forward={["fbq"]}
+          debug={true}
+          resolveUrl={function (url) {
+            if (url.hostname === "connect.facebook.net") {
+              var proxyUrl = new URL("https://ztudio.agenciacanivete.com.br/");
+              proxyUrl.searchParams.append("url", url.href);
+              return proxyUrl;
+            }
+            return url;
+          }}
+        />
         <script
           type="text/partytown"
           async
@@ -157,11 +168,7 @@ fbq('track', 'PageView');}, 1000)`,
           <Outlet context={context} />
         </div>
         <ScrollRestoration />
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `window.env = ${JSON.stringify(env)}`,
-          }}
-        /> */}
+
         <noscript>
           <img
             height="1"
