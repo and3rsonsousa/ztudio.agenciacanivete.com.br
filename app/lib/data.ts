@@ -463,6 +463,14 @@ export const handleAction = async (formData: FormData, request: Request) => {
       };
 
       table = "Campaign";
+    } else if (action === "update-action-restore") {
+      const { data, error } = await supabase
+        .from("Action")
+        .update({ deleted: null })
+        .eq("id", id)
+        .select()
+        .single();
+      return { data, error };
     }
 
     const { data, error } = await supabase
@@ -494,6 +502,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
       return { data, error };
     } else if (action === "delete-action-trash") {
       table = "Action";
+      console.log({ table, id });
     } else if (action === "delete-celebration") {
       table = "Celebration";
     } else if (action === "delete-account") {

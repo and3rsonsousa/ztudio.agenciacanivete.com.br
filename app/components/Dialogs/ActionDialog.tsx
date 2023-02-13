@@ -27,8 +27,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import Loader from "../Loader";
-import { Combobox } from "@headlessui/react";
-import ComboboxField from "../Forms/ComboboxField";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -278,18 +276,6 @@ export default function ActionDialog({
             }))}
           />
 
-          {/* <SelectField
-            name="status"
-            title="Status"
-            value={
-              action ? action.status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
-            }
-            items={status.map((stat) => ({
-              title: stat.name,
-              value: stat.id,
-            }))}
-          /> */}
-
           <InputField
             name="date"
             label="Data"
@@ -314,18 +300,29 @@ export default function ActionDialog({
             value={action ? action.responsible.id : creator.id}
           />
         </div>
-        {/* <div>
-          <ComboboxField label="Tarefas" />
-        </div> */}
 
         <div className={`h-16`}>
           <div className={`flex w-full items-center justify-end gap-2 py-4 `}>
             {action && (
               <>
                 {action.deleted && (
-                  <div className="text-xs font-bold text-error-500">
-                    Este item está na lixeira
-                  </div>
+                  <>
+                    <div className="text-xs font-bold text-error-500">
+                      Este item está na lixeira
+                    </div>
+                    <Form method="post">
+                      <input type="hidden" name="id" value={action.id} />
+                      <input
+                        type="hidden"
+                        name="action"
+                        value="update-action-restore"
+                      />
+
+                      <Button type="submit" primary>
+                        Restaurar
+                      </Button>
+                    </Form>
+                  </>
                 )}
                 <Form method="post">
                   <input type="hidden" name="id" value={action.id} />
@@ -337,11 +334,17 @@ export default function ActionDialog({
                     }
                   />
 
-                  <Button>{action.deleted ? "Excluir" : "Lixeira"}</Button>
+                  <Button type="submit">
+                    {action.deleted ? "Excluir" : "Lixeira"}
+                  </Button>
                 </Form>
               </>
             )}
-            <Button primary type="submit" loading={isAdding || isUpdating}>
+            <Button
+              primary={!action?.deleted}
+              type="submit"
+              loading={isAdding || isUpdating}
+            >
               {action ? "Atualizar" : "Adicionar"}
             </Button>
           </div>

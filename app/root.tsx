@@ -14,7 +14,6 @@ import {
   useLoaderData,
   useRevalidator,
 } from "@remix-run/react";
-import { Partytown } from "@builder.io/partytown/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
