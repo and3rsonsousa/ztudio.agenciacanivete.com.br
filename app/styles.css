@@ -1473,10 +1473,6 @@ h5 {
   width: 2.5rem;
 }
 
-.w-14 {
-  width: 3.5rem;
-}
-
 .w-2 {
   width: 0.5rem;
 }
@@ -1527,14 +1523,6 @@ h5 {
 
 .w-full {
   width: 100%;
-}
-
-.w-16 {
-  width: 4rem;
-}
-
-.w-20 {
-  width: 5rem;
 }
 
 .max-w-2xl {
@@ -1767,6 +1755,10 @@ h5 {
   border-radius: 0.25rem;
 }
 
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -1928,10 +1920,6 @@ h5 {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-white\/50 {
-  background-color: rgb(255 255 255 / 0.5);
 }
 
 .bg-gradient-radial-t {
@@ -2273,10 +2261,6 @@ h5 {
   opacity: 0.6;
 }
 
-.opacity-75 {
-  opacity: 0.75;
-}
-
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -2348,9 +2332,6 @@ h5 {
 * {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-html {
 }
 
 body {
@@ -2448,6 +2429,15 @@ body {
   z-index: 50;
   --tw-translate-x: -50%;
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.dialog-toast {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  z-index: 60;
+  --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -3204,10 +3194,6 @@ body {
 .dark .dark\:border-t-brand-900 {
   --tw-border-opacity: 1;
   border-top-color: rgb(59 23 130 / var(--tw-border-opacity));
-}
-
-.dark .dark\:bg-gray-1000\/50 {
-  background-color: rgb(10 12 26 / 0.5);
 }
 
 .dark .dark\:bg-gray-700 {

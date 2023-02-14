@@ -126,3 +126,9 @@ export type ContextType = {
   };
   supabase: SupabaseClient<any, "public", any>;
 };
+
+export type ShortcutModel = {
+  shortcut: string;
+  does: string;
+  value?: string;
+};

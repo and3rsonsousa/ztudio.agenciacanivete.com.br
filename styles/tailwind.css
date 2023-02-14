@@ -234,6 +234,9 @@ body {
 .dialog {
   @apply fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2;
 }
+.dialog-toast {
+  @apply fixed top-4 left-1/2 z-[60] -translate-x-1/2;
+}
 
 .dialog-overlay {
   @apply fixed inset-0 z-50 bg-gray-700/50 backdrop-blur-lg;

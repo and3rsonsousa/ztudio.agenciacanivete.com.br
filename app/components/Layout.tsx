@@ -20,9 +20,14 @@ import {
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { fade, scaleUp } from "~/lib/animations";
+import { fade, fadeDown, scaleUp } from "~/lib/animations";
 import { SHORTCUTS } from "~/lib/constants";
-import type { AccountModel, ContextType, PersonModel } from "~/lib/models";
+import type {
+  AccountModel,
+  ContextType,
+  PersonModel,
+  ShortcutModel,
+} from "~/lib/models";
 import Button from "./Button";
 import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
@@ -38,6 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const accounts: AccountModel[] = matches[1].data.accounts;
   const context: ContextType = useOutletContext();
 
+  const [shortcut, setShorcut] = useState<ShortcutModel>();
   const [openAccountsMenu, setOpenAccountsMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [params] = useSearchParams();
@@ -46,6 +52,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     params.get("month") !== null ? `?month=${params.get("month")}` : "";
 
   useEffect(() => {
+    function handleShortcut(shortcut: ShortcutModel) {
+      setShorcut(shortcut);
+      setTimeout(() => {
+        setShorcut(undefined);
+      }, 2000);
+    }
+
     function keyDown(event: KeyboardEvent) {
       // SHORTCUTS
       event.preventDefault();
@@ -54,46 +67,65 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       if (event.metaKey && !event.shiftKey && key == "K") {
         context.search.set((prev) => !prev);
+        handleShortcut(SHORTCUTS.SEARCH);
       } else if (
         event.metaKey &&
         event.shiftKey &&
         !["SHIFT", "META", "ALT"].includes(key)
       ) {
         if (key === SHORTCUTS.SHORTCUTS.shortcut) {
+          handleShortcut(SHORTCUTS.SHORTCUTS);
           context.shortcut.set((prev) => !prev);
         } else if (key === SHORTCUTS.NEW_ACTION.shortcut) {
+          handleShortcut(SHORTCUTS.NEW_ACTION);
           context.actions.set((prev) => !prev);
         } else if (key === SHORTCUTS.NEW_CELEBRATION.shortcut) {
+          handleShortcut(SHORTCUTS.NEW_CELEBRATION);
           context.celebrations.set((prev) => !prev);
         } else if (key === SHORTCUTS.NEW_CAMPAIGN.shortcut) {
+          handleShortcut(SHORTCUTS.NEW_CAMPAIGN);
           context.campaigns.set((prev) => !prev);
         } else if (key === SHORTCUTS.SIDEBAR.shortcut) {
+          handleShortcut(SHORTCUTS.SIDEBAR);
           context.sidebar.set((prev) => !prev);
         } else if (key === SHORTCUTS.PRIORITY.shortcut) {
+          handleShortcut(SHORTCUTS.PRIORITY);
           context.priority.set((value) => !value);
         } else if (key === SHORTCUTS.ARRANGE_ALL.shortcut) {
+          handleShortcut(SHORTCUTS.ARRANGE_ALL);
           context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
         } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
+          handleShortcut(SHORTCUTS.ARRANGE_CATEGORIES);
           context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
         } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
+          handleShortcut(SHORTCUTS.ARRANGE_ACCOUNTS);
           context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
         } else if (key === SHORTCUTS.FILTER_ALL.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_ALL);
           context.filter.set(SHORTCUTS.FILTER_ALL.value);
         } else if (key === SHORTCUTS.FILTER_FEED.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_FEED);
           context.filter.set(SHORTCUTS.FILTER_FEED.value);
         } else if (key === SHORTCUTS.FILTER_REELS.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_REELS);
           context.filter.set(SHORTCUTS.FILTER_REELS.value);
         } else if (key === SHORTCUTS.FILTER_TASK.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_TASK);
           context.filter.set(SHORTCUTS.FILTER_TASK.value);
         } else if (key === SHORTCUTS.FILTER_STORIES.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_STORIES);
           context.filter.set(SHORTCUTS.FILTER_STORIES.value);
         } else if (key === SHORTCUTS.FILTER_MEETING.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_MEETING);
           context.filter.set(SHORTCUTS.FILTER_MEETING.value);
         } else if (key === SHORTCUTS.FILTER_PRINT.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_PRINT);
           context.filter.set(SHORTCUTS.FILTER_PRINT.value);
         } else if (key === SHORTCUTS.FILTER_TIKTOK.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_TIKTOK);
           context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
         } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
+          handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
           context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
         } else {
           alert("Nenhum Atalho está associado a essa tecla.");
@@ -582,6 +614,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
+        {/* Dialog for Shortcut */}
+
+        <AnimatePresence>
+          {shortcut !== undefined && (
+            <motion.div className="dialog-toast antialiased" {...fade(0.1)}>
+              <div className="mb-1 flex items-center gap-1 text-xl font-bold ">
+                <div>
+                  <CommandIcon className="h-6 w-6" />
+                </div>
+                {shortcut.value !== "search" && (
+                  <>
+                    <div>+</div>
+                    <div>
+                      <ArrowBigUp className="h-6 w-6" />
+                    </div>
+                  </>
+                )}
+                <div>+</div>
+                <div>{shortcut.shortcut}</div>
+              </div>
+              <div className="text-center text-xs font-medium uppercase">
+                {shortcut.does}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </>
     </div>
   );
