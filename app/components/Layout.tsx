@@ -14,7 +14,6 @@ import {
   ChevronRight,
   CommandIcon,
   Moon,
-  OptionIcon,
   Plus,
   Search,
   Sun,

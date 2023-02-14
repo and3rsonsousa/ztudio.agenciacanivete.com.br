@@ -107,21 +107,21 @@ export default function Calendar({
   const { year } = getYear(firstDayOfCurrentMonth);
   let arrangeDropdownItems = [
     {
-      // title: SHORTCUTS.ARRANGE_ALL.does,
-      // value: SHORTCUTS.ARRANGE_ALL.value,
-      // shortcut: SHORTCUTS.ARRANGE_ALL.shortcut,
+      title: SHORTCUTS.ARRANGE_ALL.does,
+      value: SHORTCUTS.ARRANGE_ALL.value,
+      shortcut: SHORTCUTS.ARRANGE_ALL.shortcut,
     },
     {
-      // title: SHORTCUTS.ARRANGE_CATEGORIES.does,
-      // value: SHORTCUTS.ARRANGE_CATEGORIES.value,
-      // shortcut: SHORTCUTS.ARRANGE_CATEGORIES.shortcut,
+      title: SHORTCUTS.ARRANGE_CATEGORIES.does,
+      value: SHORTCUTS.ARRANGE_CATEGORIES.value,
+      shortcut: SHORTCUTS.ARRANGE_CATEGORIES.shortcut,
     },
   ];
   if (!slug)
     arrangeDropdownItems.push({
-      // title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
-      // value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
-      // shortcut: SHORTCUTS.ARRANGE_ACCOUNTS.shortcut,
+      title: SHORTCUTS.ARRANGE_ACCOUNTS.does,
+      value: SHORTCUTS.ARRANGE_ACCOUNTS.value,
+      shortcut: SHORTCUTS.ARRANGE_ACCOUNTS.shortcut,
     });
 
   useEffect(() => {
@@ -229,7 +229,7 @@ export default function Calendar({
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
               <DropdownMenu.Content className="dropdown-content">
-                {/* {arrangeDropdownItems.map((item, index) => (
+                {arrangeDropdownItems.map((item, index) => (
                   <DropdownMenu.Item
                     key={index}
                     title={`Cmd + K → ${item.shortcut}`}
@@ -249,7 +249,7 @@ export default function Calendar({
                       <CheckCircle className="w-4" />
                     )}
                   </DropdownMenu.Item>
-                ))} */}
+                ))}
               </DropdownMenu.Content>
             </DropdownMenu.Portal>
           </DropdownMenu.Root>
