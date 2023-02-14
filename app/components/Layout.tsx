@@ -445,10 +445,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               <div>
                                 <CommandIcon className="h-3 w-3" />
                               </div>
-                              <div>+</div>
-                              <div className="text-xx">
-                                <ArrowBigUp className="h-3 w-3" />
-                              </div>
+                              {shortcut.value !== "search" && (
+                                <>
+                                  <div>+</div>
+                                  <div className="text-xx">
+                                    <ArrowBigUp className="h-3 w-3" />
+                                  </div>
+                                </>
+                              )}
                               <div>+</div>
                               <div>{shortcut.shortcut}</div>
                             </div>

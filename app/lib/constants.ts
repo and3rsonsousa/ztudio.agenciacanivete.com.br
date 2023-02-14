@@ -1,5 +1,5 @@
 export const SHORTCUTS = {
-  SEARCH: { shortcut: "K", does: "Buscar" },
+  SEARCH: { shortcut: "K", does: "Buscar", value: "search" },
   NEW_ACTION: { shortcut: "A", does: "Nova Ação" },
   NEW_CELEBRATION: { shortcut: "D", does: "Nova Data Comemorativa" },
   NEW_CAMPAIGN: { shortcut: "C", does: "Nova Campanha" },
