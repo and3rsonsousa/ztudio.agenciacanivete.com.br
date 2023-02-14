@@ -619,8 +619,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <AnimatePresence>
           {shortcut !== undefined && (
-            <motion.div className="dialog-toast antialiased" {...fade(0.1)}>
-              <div className="mb-1 flex items-center gap-1 text-xl font-bold ">
+            <motion.div
+              className="dialog-toast rounded-b-2xl p-4 antialiased backdrop-blur-md"
+              {...fade(0.1)}
+            >
+              <div className="mb-1 flex items-center justify-center gap-1 text-xl font-bold ">
                 <div>
                   <CommandIcon className="h-6 w-6" />
                 </div>
@@ -635,7 +638,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div>+</div>
                 <div>{shortcut.shortcut}</div>
               </div>
-              <div className="text-center text-xs font-medium uppercase">
+              <div className="text-xx text-center font-medium uppercase tracking-wider">
                 {shortcut.does}
               </div>
             </motion.div>
