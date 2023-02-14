@@ -20,7 +20,7 @@ import {
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { fade, fadeDown, scaleUp } from "~/lib/animations";
+import { fade, scaleUp } from "~/lib/animations";
 import { SHORTCUTS } from "~/lib/constants";
 import type {
   AccountModel,
@@ -61,11 +61,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     function keyDown(event: KeyboardEvent) {
       // SHORTCUTS
-      event.preventDefault();
 
       const key = event.key.toUpperCase();
 
       if (event.metaKey && !event.shiftKey && key == "K") {
+        event.preventDefault();
         context.search.set((prev) => !prev);
         handleShortcut(SHORTCUTS.SEARCH);
       } else if (
@@ -73,6 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         event.shiftKey &&
         !["SHIFT", "META", "ALT"].includes(key)
       ) {
+        event.preventDefault();
         if (key === SHORTCUTS.SHORTCUTS.shortcut) {
           handleShortcut(SHORTCUTS.SHORTCUTS);
           context.shortcut.set((prev) => !prev);
