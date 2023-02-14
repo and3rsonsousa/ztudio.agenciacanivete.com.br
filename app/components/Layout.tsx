@@ -3,16 +3,18 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Link,
   useMatches,
-  useNavigate,
   useOutletContext,
   useParams,
   useSearchParams,
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  ArrowBigUp,
   Briefcase,
   ChevronRight,
+  CommandIcon,
   Moon,
+  OptionIcon,
   Plus,
   Search,
   Sun,
@@ -37,10 +39,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const accounts: AccountModel[] = matches[1].data.accounts;
   const context: ContextType = useOutletContext();
 
-  const [showShortcuts, setShowShorcuts] = useState(false);
   const [openAccountsMenu, setOpenAccountsMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  // const navigate = useNavigate();
   const [params] = useSearchParams();
 
   const searchParams =
@@ -48,15 +48,57 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function keyDown(event: KeyboardEvent) {
-      if (event.metaKey && event.key === "k") {
-        if (event.shiftKey) {
-          setShowShorcuts((prev: boolean) => !prev);
+      // SHORTCUTS
+      event.preventDefault();
+
+      const key = event.key.toUpperCase();
+
+      if (
+        event.metaKey &&
+        event.shiftKey &&
+        !["SHIFT", "META", "ALT"].includes(key)
+      ) {
+        if (key === SHORTCUTS.SHORTCUTS.shortcut) {
+          context.shortcut.set((prev) => !prev);
+        } else if (key === SHORTCUTS.NEW_ACTION.shortcut) {
+          context.actions.set((prev) => !prev);
+        } else if (key === SHORTCUTS.NEW_CELEBRATION.shortcut) {
+          context.celebrations.set((prev) => !prev);
+        } else if (key === SHORTCUTS.NEW_CAMPAIGN.shortcut) {
+          context.campaigns.set((prev) => !prev);
+        } else if (key === SHORTCUTS.SIDEBAR.shortcut) {
+          context.sidebar.set((prev) => !prev);
+        } else if (key === SHORTCUTS.SEARCH.shortcut) {
+          context.search.set((prev) => !prev);
+        } else if (key === SHORTCUTS.PRIORITY.shortcut) {
+          context.priority.set((value) => !value);
+        } else if (key === SHORTCUTS.ARRANGE_ALL.shortcut) {
+          context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
+        } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
+          context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
+        } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
+          context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
+        } else if (key === SHORTCUTS.FILTER_ALL.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_ALL.value);
+        } else if (key === SHORTCUTS.FILTER_FEED.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_FEED.value);
+        } else if (key === SHORTCUTS.FILTER_REELS.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_REELS.value);
+        } else if (key === SHORTCUTS.FILTER_TASK.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_TASK.value);
+        } else if (key === SHORTCUTS.FILTER_STORIES.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_STORIES.value);
+        } else if (key === SHORTCUTS.FILTER_MEETING.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_MEETING.value);
+        } else if (key === SHORTCUTS.FILTER_PRINT.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_PRINT.value);
+        } else if (key === SHORTCUTS.FILTER_TIKTOK.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
+        } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
+          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
         } else {
-          setTimeout(() => {
-            context.shortcut.set(false);
-          }, 2000);
+          alert("Nenhum Atalho está associado a essa tecla.");
         }
-        context.shortcut.set((prev: boolean) => !prev);
       }
     }
 
@@ -66,6 +108,41 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       window.removeEventListener("keydown", keyDown);
     };
   }, [context]);
+
+  const shortcuts: Array<{
+    title: string;
+    shortcuts: Array<{ shortcut: string; does: string; value?: string }>;
+  }> = [
+    {
+      title: "Ações",
+      shortcuts: [
+        { ...SHORTCUTS.SEARCH },
+        { ...SHORTCUTS.SHORTCUTS },
+        { ...SHORTCUTS.NEW_ACTION },
+        { ...SHORTCUTS.NEW_CELEBRATION },
+        { ...SHORTCUTS.NEW_CAMPAIGN },
+        { ...SHORTCUTS.SIDEBAR },
+        { ...SHORTCUTS.PRIORITY },
+      ],
+    },
+    {
+      title: "Filtros",
+      shortcuts: [
+        { ...SHORTCUTS.ARRANGE_ALL },
+        { ...SHORTCUTS.ARRANGE_CATEGORIES },
+        { ...SHORTCUTS.ARRANGE_ACCOUNTS },
+        { ...SHORTCUTS.FILTER_ALL },
+        { ...SHORTCUTS.FILTER_FEED },
+        { ...SHORTCUTS.FILTER_REELS },
+        { ...SHORTCUTS.FILTER_TASK },
+        { ...SHORTCUTS.FILTER_STORIES },
+        { ...SHORTCUTS.FILTER_MEETING },
+        { ...SHORTCUTS.FILTER_PRINT },
+        { ...SHORTCUTS.FILTER_TIKTOK },
+        { ...SHORTCUTS.FILTER_FINANCIAL },
+      ],
+    },
+  ];
 
   return (
     <div className="flex h-screen w-full flex-col  lg:flex-row">
@@ -223,10 +300,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             Lixeira
                           </Link>
                         </DropdownMenu.Item>
+                        <DropdownMenu.Item
+                          className="dropdown-item item-small"
+                          onSelect={() => context.shortcut.set(true)}
+                        >
+                          Ajuda
+                        </DropdownMenu.Item>
                         {/* Sair */}
                         <DropdownMenu.Item
                           className="dropdown-item item-small"
-                          // onSelect={() => navigate("/signout")}
                           onSelect={() => context.supabase.auth.signOut()}
                         >
                           Sair
@@ -243,7 +325,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               <DropdownMenu.SubTrigger className="dropdown-item item-small">
                                 <div className="flex items-center">
                                   <div>Clientes</div>
-                                  <ChevronRight className="ml-auto w-4" />
+                                  <ChevronRight className="ml-auto h-4 w-4" />
                                 </div>
                               </DropdownMenu.SubTrigger>
                               <DropdownMenu.Portal>
@@ -272,7 +354,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               <DropdownMenu.SubTrigger className="dropdown-item item-small">
                                 <div className="flex items-center">
                                   <div>Usuários</div>
-                                  <ChevronRight className="ml-auto w-4" />
+                                  <ChevronRight className="ml-auto h-4 w-4" />
                                 </div>
                               </DropdownMenu.SubTrigger>
                               <DropdownMenu.Portal>
@@ -333,59 +415,47 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <div className="mt-12 flex-auto lg:mt-0">{children}</div>
       {/* Shortcut */}
-      <Dialog.Root open={showShortcuts} onOpenChange={setShowShorcuts}>
+      <Dialog.Root
+        open={context.shortcut.open}
+        onOpenChange={context.shortcut.set}
+      >
         <AnimatePresence>
-          {showShortcuts && (
+          {context.shortcut.open && (
             <Dialog.Portal forceMount>
+              <Dialog.Overlay forceMount asChild>
+                <motion.div className="dialog-overlay" {...fade()}></motion.div>
+              </Dialog.Overlay>
               <Dialog.Content forceMount className="dialog">
                 <motion.div
-                  className="rounded-xl bg-white/50 p-4 font-light antialiased backdrop-blur-xl dark:bg-gray-1000/50 md:p-8"
-                  {...fade(0.1)}
+                  className="rounded-xl p-4 font-light antialiased md:p-8"
+                  {...scaleUp()}
                 >
-                  <div className="mb-4 text-2xl font-medium">Shortcuts</div>
+                  <div className="mb-4 text-2xl font-medium">Atalhos</div>
                   <div className="grid-cols-2 gap-8 md:grid">
-                    {[
-                      {
-                        title: "Ações",
-                        shorcuts: [
-                          { ...SHORTCUTS.NEW_ACTION },
-                          { ...SHORTCUTS.NEW_CELEBRATION },
-                          { ...SHORTCUTS.NEW_CAMPAIGN },
-                          { ...SHORTCUTS.SIDEBAR },
-                          { ...SHORTCUTS.PRIORITY },
-                        ],
-                      },
-                      {
-                        title: "Filtros",
-                        shorcuts: [
-                          { ...SHORTCUTS.ARRANGE_ALL },
-                          { ...SHORTCUTS.ARRANGE_CATEGORIES },
-                          { ...SHORTCUTS.ARRANGE_ACCOUNTS },
-                          { ...SHORTCUTS.FILTER_ALL },
-                          { ...SHORTCUTS.FILTER_FEED },
-                          { ...SHORTCUTS.FILTER_REELS },
-                          { ...SHORTCUTS.FILTER_TASK },
-                          { ...SHORTCUTS.FILTER_STORIES },
-                          { ...SHORTCUTS.FILTER_MEETING },
-                          { ...SHORTCUTS.FILTER_PRINT },
-                          { ...SHORTCUTS.FILTER_TIKTOK },
-                          { ...SHORTCUTS.FILTER_FINANCIAL },
-                        ],
-                      },
-                    ].map((column, index) => (
+                    {shortcuts.map((column, index) => (
                       <div key={index} className=" text-xs">
                         <div className="mb-2 text-xs font-bold uppercase">
                           {column.title}
                         </div>
-                        {column.shorcuts.map((shortcut, index) => (
+                        {column.shortcuts.map((shortcut, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-between py-1"
+                            className="flex items-center justify-between gap-4 py-1"
                           >
-                            <div className="w-14 font-bold">
-                              {shortcut.shortcut}
+                            <div className="flex items-center gap-1 font-bold">
+                              <div>
+                                <CommandIcon className="h-3 w-3" />
+                              </div>
+                              <div>+</div>
+                              <div className="text-xx">
+                                <ArrowBigUp className="h-3 w-3" />
+                              </div>
+                              <div>+</div>
+                              <div>{shortcut.shortcut}</div>
                             </div>
-                            <div className="opacity-75">{shortcut.does}</div>
+                            <div className="overflow-hidden text-ellipsis whitespace-nowrap text-right">
+                              {shortcut.does}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -509,15 +579,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </AnimatePresence>
         </Dialog.Root>
-        {context.shortcut.open && (
-          <Shortcut
-            context={context}
-            close={(value: boolean) => {
-              context.shortcut.set(value);
-              setShowShorcuts(value);
-            }}
-          />
-        )}
       </>
     </div>
   );
@@ -555,86 +616,4 @@ function ThemeSwitcher() {
       </div>
     </DropdownMenu.Item>
   );
-}
-
-function Shortcut({
-  context,
-  close,
-}: {
-  context: ContextType;
-  close: (value: boolean) => void;
-}) {
-  useEffect(() => {
-    function keyDown(event: KeyboardEvent) {
-      event.preventDefault();
-      const key = event.key.toUpperCase();
-
-      switch (key) {
-        case SHORTCUTS.NEW_ACTION.shortcut:
-          context.actions.set((prev) => !prev);
-          break;
-        case SHORTCUTS.NEW_CELEBRATION.shortcut:
-          context.celebrations.set((prev) => !prev);
-          break;
-        case SHORTCUTS.NEW_CAMPAIGN.shortcut:
-          context.campaigns.set((prev) => !prev);
-          break;
-        case SHORTCUTS.SIDEBAR.shortcut:
-          context.sidebar.set((prev) => !prev);
-          break;
-        case SHORTCUTS.SEARCH.shortcut:
-          context.search.set((prev) => !prev);
-          break;
-        case SHORTCUTS.PRIORITY.shortcut:
-          context.priority.set((value) => !value);
-          break;
-        case SHORTCUTS.ARRANGE_ALL.shortcut:
-          context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
-          break;
-        case SHORTCUTS.ARRANGE_CATEGORIES.shortcut:
-          context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
-          break;
-        case SHORTCUTS.ARRANGE_ACCOUNTS.shortcut:
-          context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
-          break;
-        case SHORTCUTS.FILTER_ALL.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_ALL.value);
-          break;
-        case SHORTCUTS.FILTER_FEED.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_FEED.value);
-          break;
-        case SHORTCUTS.FILTER_REELS.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_REELS.value);
-          break;
-        case SHORTCUTS.FILTER_TASK.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_TASK.value);
-          break;
-        case SHORTCUTS.FILTER_STORIES.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_STORIES.value);
-          break;
-        case SHORTCUTS.FILTER_MEETING.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_MEETING.value);
-          break;
-        case SHORTCUTS.FILTER_PRINT.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_PRINT.value);
-          break;
-        case SHORTCUTS.FILTER_TIKTOK.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
-          break;
-        case SHORTCUTS.FILTER_FINANCIAL.shortcut:
-          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
-          break;
-        default:
-          alert("Not implemented");
-          break;
-      }
-      close(false);
-    }
-
-    window.addEventListener("keydown", keyDown);
-
-    return () => window.removeEventListener("keydown", keyDown);
-  }, [close, context]);
-
-  return <div></div>;
 }

@@ -1,31 +1,34 @@
 export const SHORTCUTS = {
-  SEARCH: { shortcut: "S", does: "Buscar" },
+  SEARCH: { shortcut: "K", does: "Buscar" },
   NEW_ACTION: { shortcut: "A", does: "Nova Ação" },
   NEW_CELEBRATION: { shortcut: "D", does: "Nova Data Comemorativa" },
   NEW_CAMPAIGN: { shortcut: "C", does: "Nova Campanha" },
+  SHORTCUTS: { shortcut: "S", does: "Exibe os atalhos" },
   SIDEBAR: {
     shortcut: "B",
     does: "Ocultar/Mostrar barras laterais",
   },
   PRIORITY: {
-    shortcut: "O",
-    does: "Organizar por prioridade",
+    shortcut: "H",
+    does: "Ordenar por prioridade",
+    value: "priority",
   },
   ARRANGE_ALL: {
-    shortcut: ",",
+    shortcut: "J",
     does: "Organizar: Mostrar Todos",
     value: "arrange_all",
   },
   ARRANGE_CATEGORIES: {
-    shortcut: ".",
+    shortcut: "K",
     does: "Organizar: Por categoria",
     value: "arrange_category",
   },
   ARRANGE_ACCOUNTS: {
-    shortcut: "/",
+    shortcut: "L",
     does: "Organizar: Por cliente",
     value: "arrange_account",
   },
+
   FILTER_ALL: { shortcut: "0", does: "Filtrar: Todos", value: "all" },
   FILTER_FEED: { shortcut: "1", does: "Filtrar: Feed", value: "feed" },
   FILTER_REELS: { shortcut: "2", does: "Filtrar: Reels", value: "reels" },
