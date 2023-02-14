@@ -15,9 +15,6 @@
   @apply outline-none;
 }
 
-html {
-}
-
 body {
   @apply bg-white font-sans font-light text-gray-900 antialiased dark:bg-gray-1000 dark:text-gray-300;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
