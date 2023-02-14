@@ -52,7 +52,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       const key = event.key.toUpperCase();
 
-      if (
+      if (event.metaKey && !event.shiftKey && key == "K") {
+        context.search.set((prev) => !prev);
+      } else if (
         event.metaKey &&
         event.shiftKey &&
         !["SHIFT", "META", "ALT"].includes(key)
@@ -67,8 +69,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           context.campaigns.set((prev) => !prev);
         } else if (key === SHORTCUTS.SIDEBAR.shortcut) {
           context.sidebar.set((prev) => !prev);
-        } else if (key === SHORTCUTS.SEARCH.shortcut) {
-          context.search.set((prev) => !prev);
         } else if (key === SHORTCUTS.PRIORITY.shortcut) {
           context.priority.set((value) => !value);
         } else if (key === SHORTCUTS.ARRANGE_ALL.shortcut) {
