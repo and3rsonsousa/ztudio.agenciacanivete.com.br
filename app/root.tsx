@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import type { ContextType } from "./lib/models";
-import styles from "./styles.css";
+import styles from "./tailwind.css";
 
 export const meta: V2_MetaFunction = () => {
   return [
