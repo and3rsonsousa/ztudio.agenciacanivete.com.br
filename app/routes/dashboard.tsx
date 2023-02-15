@@ -45,6 +45,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     attributes,
     celebrations,
     url,
+    user: session.user,
   };
 };
 

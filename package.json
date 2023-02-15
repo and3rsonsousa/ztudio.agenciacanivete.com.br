@@ -8,7 +8,7 @@
     "dev:remix": "cross-env NODE_ENV=development npm run wrangler",
     "dev:wrangler": "remix watch",
     "start": "cross-env NODE_ENV=production npm run wrangler",
-    "wrangler": "wrangler pages dev ./public",
+    "wrangler": "wrangler pages dev ./public --env .dev.vars",
     "typecheck": "tsc -b"
   },
   "dependencies": {

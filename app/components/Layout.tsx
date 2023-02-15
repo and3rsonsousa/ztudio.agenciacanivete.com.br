@@ -71,10 +71,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       } else if (
         event.metaKey &&
         event.shiftKey &&
-        !["SHIFT", "META", "ALT"].includes(key)
+        !["SHIFT", "META", "ALT"].includes(key) &&
+        !["TEXTAREA", "INPUT"].includes((event.target as HTMLElement).tagName)
       ) {
-        console.log((event.target as HTMLElement).tagName);
-
         if (key === SHORTCUTS.SHORTCUTS.shortcut) {
           event.preventDefault();
           handleShortcut(SHORTCUTS.SHORTCUTS);

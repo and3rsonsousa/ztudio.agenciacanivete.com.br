@@ -25,12 +25,12 @@ import styles from "./tailwind.css";
 export const meta: V2_MetaFunction = () => {
   return [
     {
-      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏʀᴋ ʟeᴢᴢ",
+      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏʀᴋ ʟezz",
     },
     {
       name: "description",
       content:
-        "sistema de gerenciamento de ações criado e mantido pela αɢêɴᴄɪα ᴄαɴɪᴠeᴛe",
+        "sistema de gerenciamento de ações criado e mantido pela αɢêɴᴄɪα cαɴɪveᴛe",
     },
   ];
 };
@@ -43,13 +43,16 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader: LoaderFunction = () => ({
-  env: {
-    SUPABASE_URL: "https://pivlgmzzjgsysyvmsgjy.supabase.co",
-    SUPABASE_ANON_KEY:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdmxnbXp6amdzeXN5dm1zZ2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTMyNTM3NDUsImV4cCI6MTk2ODgyOTc0NX0.sSMLicGE_LCmu1YidlnHFqwNnNj4K2CCfJUiTHc3muA",
-  },
-});
+export const loader: LoaderFunction = ({ request, context }) => {
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = context;
+
+  return {
+    env: {
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY,
+    },
+  };
+};
 
 export function App() {
   const { env } = useLoaderData();
