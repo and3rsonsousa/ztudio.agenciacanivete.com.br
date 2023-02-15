@@ -31,7 +31,10 @@ export default function SearchDialog() {
   const getSearch = async (query: string) => {
     if (query.length > 2) {
       setSearching(() => true);
-      let _accounts = accounts.filter(
+      let _accounts = [
+        { name: "Home", short: "home", slug: "" },
+        ...accounts,
+      ].filter(
         (account) =>
           account.name
             .normalize("NFD")
