@@ -27,25 +27,24 @@ export default function SearchDialog() {
   const navigate = useNavigate();
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = matches[0].data.env;
   const supabaseClient = new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let _accounts = [{ name: "Home", short: "home", slug: "" }, ...accounts];
 
   const getSearch = async (query: string) => {
     if (query.length > 2) {
       setSearching(() => true);
-      let _accounts = [{ name: "Home", short: "home", slug: "" }, ...accounts];
-      console.log(_accounts);
 
-      _accounts = _accounts.filter((account) => {
-        console.log({
-          a: account.name.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
-          b: account.short,
-        });
-        return (
+      const _query = query
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
+      _accounts = _accounts.filter(
+        (account) =>
           account.name
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
-            .includes(query) || account.short.includes(query)
-        );
-      });
+            .includes(_query) || account.short.includes(_query)
+      );
       setItems({
         actions: [],
         accounts: _accounts,
@@ -55,10 +54,10 @@ export default function SearchDialog() {
 
       const [{ data: actions }, { data: campaigns }] = await Promise.all([
         supabaseClient.rpc("search_for_actions", {
-          query: `%${query.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}%`,
+          query: `%${_query}%`,
         }),
         supabaseClient.rpc("search_for_campaigns", {
-          query: `%${query.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}%`,
+          query: `%${_query}%`,
         }),
       ]);
 
