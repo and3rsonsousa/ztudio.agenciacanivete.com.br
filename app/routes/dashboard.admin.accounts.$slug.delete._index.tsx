@@ -51,7 +51,7 @@ export default function AccountsIndex() {
         <Form method="post">
           <input type="hidden" name="action" value="delete-account" />
           <input type="hidden" name="id" value={account.id} />
-          <Button>Excluir conta {account.name}</Button>
+          <Button type="submit">Excluir conta {account.name}</Button>
         </Form>
       </div>
     </div>

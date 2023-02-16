@@ -1,5 +1,10 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useMatches,
+} from "@remix-run/react";
 import Button from "~/components/Button";
 import Exclamation from "~/components/Exclamation";
 import CheckboxField from "~/components/Forms/CheckboxField";
@@ -27,6 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
   const values = {
     name: formData.get("name") as string,
     slug: formData.get("slug") as string,
+    short: formData.get("short") as string,
     users: formData.getAll("users") as string[],
   };
 
@@ -46,6 +52,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function NewAccount() {
   const { persons } = useLoaderData<{ persons: PersonModel[] }>();
+  const matches = useMatches();
+  const { person } = matches[1].data;
+
   const actionData = useActionData<{
     data?: any;
     error?: { message: string };
@@ -62,25 +71,37 @@ export default function NewAccount() {
           name="name"
           label="Nome"
           onChange={(event) => {
-            const ele = document.querySelector(
+            const slug = document.querySelector(
               "input[name='slug']"
             ) as HTMLInputElement;
-            // if (ele.value === "") {
+            const abv = document.querySelector(
+              "input[name='short']"
+            ) as HTMLInputElement;
 
-            // }
-
-            ele.value = event.target.value.replace(" ", "").toLowerCase();
+            slug.value = event.target.value
+              .replace(/\s/g, "")
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
+            abv.value = event.target.value
+              .replace(" ", "")
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .substring(0, 4);
           }}
         />
         <InputField name="slug" label="Slug" />
         <InputField name="short" label="Abreviação" />
+        <div className="field-label">Quem pode ter acesso</div>
         <div>
-          {persons.map((person) => (
+          {persons.map((p) => (
             <CheckboxField
               name="users"
-              label={person.name}
-              value={person.user_id}
-              key={person.user_id}
+              label={p.name}
+              value={p.user_id}
+              key={p.user_id}
+              checked={p.user_id === person.user_id}
             />
           ))}
         </div>

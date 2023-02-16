@@ -31,16 +31,21 @@ export default function SearchDialog() {
   const getSearch = async (query: string) => {
     if (query.length > 2) {
       setSearching(() => true);
-      let _accounts = [
-        { name: "Home", short: "home", slug: "" },
-        ...accounts,
-      ].filter(
-        (account) =>
+      let _accounts = [{ name: "Home", short: "home", slug: "" }, ...accounts];
+      console.log(_accounts);
+
+      _accounts = _accounts.filter((account) => {
+        console.log({
+          a: account.name.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          b: account.short,
+        });
+        return (
           account.name
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .includes(query) || account.short.includes(query)
-      );
+        );
+      });
       setItems({
         actions: [],
         accounts: _accounts,

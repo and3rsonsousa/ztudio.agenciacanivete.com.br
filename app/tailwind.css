@@ -430,11 +430,3 @@ body {
 .busy {
   @apply scale-90 opacity-25;
 }
-
-[data-side="right"] {
-  @apply origin-top-left;
-}
-
-[data-side="left"] {
-  @apply origin-top-right;
-}
