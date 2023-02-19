@@ -6,6 +6,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      fontSize: {
+        xx: ["0.625rem", { lineHeight: "1rem", letterSpacing: "0.025" }],
+      },
       screens: {
         "3xl": "1728px",
       },

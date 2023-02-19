@@ -33,7 +33,7 @@ import type {
 } from "~/lib/models";
 import Button from "./Button";
 import DataFlow from "./DataFlow";
-import Day from "./Day";
+import Day from "./CalendarDay";
 import DayInfo from "./DayInfo";
 import InstagramGrid from "./InstagramGrid";
 

@@ -12,9 +12,6 @@ import PageHeader from "~/components/PageHeader";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
-// export const meta: MetaFunction = ({ data }) => ({
-//   title: `${data.account.name} - ZTUDIO`,
-// });
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
   return [
     {

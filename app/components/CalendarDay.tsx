@@ -1,6 +1,12 @@
-import { useFetcher, useMatches, useOutletContext } from "@remix-run/react";
+import {
+  Link,
+  useFetcher,
+  useMatches,
+  useOutletContext,
+} from "@remix-run/react";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import { ExternalLink } from "lucide-react";
 import {
   actionsByAccount,
   actionsByCategory,
@@ -72,7 +78,7 @@ export default function Day({
           }
         );
       }}
-      className={`calendar-day ${
+      className={`calendar-day group ${
         day.date.format("MM") === firstDayOfCurrentMonth.format("MM")
           ? ""
           : " not-this-month"
@@ -85,7 +91,7 @@ export default function Day({
       date-attr={day.date.format("YYYY-MM-DD")}
     >
       <div>
-        <div className="px-2 lg:px-1">
+        <div className="flex items-center gap-1 px-2 lg:px-1">
           <Button
             icon
             small
@@ -113,6 +119,12 @@ export default function Day({
           >
             {day.date.format("D")}
           </Button>
+          <Link
+            className="uppercase transition lg:opacity-0 lg:group-hover:opacity-100"
+            to={`/dashboard/day/${day.date.format("DD-MM-YYYY")}`}
+          >
+            <ExternalLink className="h-4 w-4" />
+          </Link>
         </div>
 
         {/* Campanhas Campaigns */}

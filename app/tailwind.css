@@ -66,9 +66,9 @@ body {
     @apply shadow-2xl shadow-gray-1000/75;
   }
 
-  .text-xx {
+  /* .text-xx {
     @apply text-[.625rem] tracking-wide;
-  }
+  } */
 }
 
 @layer components {
