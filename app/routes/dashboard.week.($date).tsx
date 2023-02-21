@@ -6,7 +6,7 @@ import WeekView from "~/components/CalendarWeek";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import { getWeek } from "~/lib/functions";
-import { ActionModel } from "~/lib/models";
+import type { ActionModel } from "~/lib/models";
 
 export async function loader({ request, params }: LoaderArgs) {
   const {
@@ -26,8 +26,6 @@ export async function loader({ request, params }: LoaderArgs) {
     }),
     getCampaigns({ request, user: session?.user.id }),
   ]);
-
-  console.log({ actions });
 
   return { period, actions, campaigns };
 }

@@ -7,7 +7,6 @@ import CalendarHeader from "~/components/CalendarHeader";
 
 export function loader({ request, params }: LoaderArgs) {
   const { date } = params;
-  console.log({ date });
 
   return { date: date ?? dayjs().format("YYYY-MM") };
 }

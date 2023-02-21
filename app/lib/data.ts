@@ -505,7 +505,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
       return { data, error };
     } else if (action === "delete-action-trash") {
       table = "Action";
-      console.log({ table, id });
     } else if (action === "delete-celebration") {
       table = "Celebration";
     } else if (action === "delete-account") {

@@ -36,6 +36,8 @@ export default function CalendarHeader({
             href={
               view === "year"
                 ? "./".concat(date.subtract(1, "year").format("YYYY-MM"))
+                : view === "week"
+                ? "./".concat(date.subtract(1, "week").format("YYYY-MM-DD"))
                 : "?month=".concat(date.subtract(1, "month").format("YYYY-MM"))
             }
           >
@@ -47,6 +49,8 @@ export default function CalendarHeader({
             href={
               view === "year"
                 ? "./".concat(date.add(1, "year").format("YYYY-MM"))
+                : view === "week"
+                ? "./".concat(date.add(1, "week").format("YYYY-MM-DD"))
                 : "?month=".concat(date.add(1, "month").format("YYYY-MM"))
             }
           >
