@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { scaleUp } from "~/lib/animations";
-import { getPeriod } from "~/lib/functions";
+import { getMonth } from "~/lib/functions";
 
 dayjs.locale("pt-br");
 
@@ -29,7 +29,7 @@ export default function DatepickerField({
 
   let [selectedDay, setSelectedDay] = useState(_dates[index]);
   let [currentMonth, setCurrentMonth] = useState(selectedDay.format("YYYY-MM"));
-  const { firstDayOfCurrentMonth, days } = getPeriod({ period: currentMonth });
+  const { firstDayOfCurrentMonth, days } = getMonth({ period: currentMonth });
 
   const formatValue = (date: Dayjs) =>
     date.format(

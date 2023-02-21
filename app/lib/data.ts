@@ -1,4 +1,4 @@
-import { getPeriod } from "./functions";
+import { getMonth, getWeek } from "./functions";
 import { getSupabase } from "./supabase";
 
 const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status!Action_status_fkey(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
@@ -85,11 +85,12 @@ export const getActions = async (
     user?: string;
     account?: string;
     period?: string | null;
+    week?: boolean;
     all?: boolean;
     where?: string;
   } = {}
 ) => {
-  let { user, account, period, request, all, where } = args;
+  let { user, account, period, request, all, where, week } = args;
 
   if (!request) {
     return { error: { message: "Request is undefined" } };
@@ -142,7 +143,9 @@ export const getActions = async (
     return { data, error };
   }
 
-  const { firstDayOfPeriod, lastDayOfPeriod } = getPeriod({ period });
+  const { firstDayOfPeriod, lastDayOfPeriod } = week
+    ? getWeek({ period })
+    : getMonth({ period });
 
   if (account) {
     const { data, error } = await supabase

@@ -6,14 +6,36 @@ import type {
   AccountModel,
   ActionModel,
   ItemModel,
-  MonthType,
+  PeriodType,
 } from "~/lib/models";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Fortaleza");
 
-export const getPeriod = ({ period }: { period?: string | null }) => {
+export const getWeek = ({ period }: { period?: string | null }) => {
+  const day = dayjs(period ?? new Date());
+
+  const firstDayOfWeek = day.startOf("week");
+  const lastDayOfWeek = day.endOf("week");
+  const days: PeriodType = [];
+  const diffDays = lastDayOfWeek.diff(firstDayOfWeek, "days") + 1;
+
+  for (let index = 0; index < diffDays; index++) {
+    let currentDate = firstDayOfWeek.add(index, "day");
+    days.push({ date: currentDate });
+  }
+
+  return {
+    firstDayOfPeriod: firstDayOfWeek,
+    lastDayOfPeriod: lastDayOfWeek,
+    firstDayOfWeek,
+    lastDayOfWeek,
+    days,
+  };
+};
+
+export const getMonth = ({ period }: { period?: string | null }) => {
   const day = dayjs(period ?? new Date());
 
   const firstDayOfCurrentMonth = day.startOf("month");
@@ -21,10 +43,13 @@ export const getPeriod = ({ period }: { period?: string | null }) => {
   const firstDayOfPeriod = firstDayOfCurrentMonth.startOf("week");
   const lastDayOfPeriod = lastDayOfCurrentMonth.endOf("week");
   const days: Array<Dayjs> = [];
+  const _period: PeriodType = [];
   const diffDays = lastDayOfPeriod.diff(firstDayOfPeriod, "days") + 1;
 
   for (let index = 0; index < diffDays; index++) {
-    days.push(firstDayOfPeriod.add(index, "day"));
+    let currentDate = firstDayOfPeriod.add(index, "day");
+    days.push(currentDate);
+    _period.push({ date: currentDate });
   }
 
   return {
@@ -33,13 +58,14 @@ export const getPeriod = ({ period }: { period?: string | null }) => {
     firstDayOfPeriod,
     lastDayOfPeriod,
     days,
+    period: _period,
   };
 };
 
 export const getYear = (currentDate: Dayjs) => {
   const firstDayOfCurrentYear = currentDate.startOf("year");
 
-  const year: Array<MonthType> = [];
+  const year: Array<PeriodType> = [];
 
   function getDaysOnMonth(month: number) {
     const Month = dayjs().month(month);
@@ -50,7 +76,7 @@ export const getYear = (currentDate: Dayjs) => {
 
   for (let month = 0; month < 12; month++) {
     let current = firstDayOfCurrentYear.add(month, "month").clone();
-    const Month: MonthType = [];
+    const Month: PeriodType = [];
     for (let day = 0; day < getDaysOnMonth(month); day++) {
       Month.push({ date: current.add(day, "day") });
     }

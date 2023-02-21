@@ -79,7 +79,7 @@ export type DropdownOptions = Array<
   { id: string; text: string; href: string } | "divider" | (() => {})
 >;
 
-export type MonthType = Array<{
+export type PeriodType = Array<{
   date: Dayjs;
 }>;
 

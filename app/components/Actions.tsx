@@ -124,7 +124,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
             </div>
           </div>
           {/* Time */}
-          <div className="text-xx hidden w-10 overflow-hidden text-center font-medium opacity-60 @[140px]:block">
+          <div className="hidden w-10 overflow-hidden text-center text-xx font-medium opacity-60 @[140px]:block">
             {dayjs(action.date).format(
               "H[h]".concat(
                 dayjs(action.date).format("mm") !== "00" ? "mm" : ""
@@ -181,10 +181,12 @@ export const ActionMedium = ({
   action,
   showDateAndTime,
   hideAccount,
+  wrap,
 }: {
   action: ActionModel;
   showDateAndTime?: boolean;
   hideAccount?: boolean;
+  wrap?: boolean;
 }) => {
   const fetcher = useFetcher();
   const matches = useMatches();
@@ -217,7 +219,7 @@ export const ActionMedium = ({
               {action.campaign && (
                 <Link
                   to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
-                  className="text-xx mb-2 flex items-center hover:underline"
+                  className="mb-2 flex items-center text-xx hover:underline"
                 >
                   <ArrowDownRight className="w-4" />
                   <span>{action.campaign.name}</span>
@@ -228,7 +230,11 @@ export const ActionMedium = ({
               <div className="text-xx line-clamp-3">{action.description}</div>
             ) : null}
             {/* Horário - Cliente - Tag - Status */}
-            <div className="text-xx mt-1 flex gap-4 overflow-hidden">
+            <div
+              className={`mt-1 flex ${
+                wrap ? "flex-wrap" : ""
+              } gap-1 overflow-hidden text-xx`}
+            >
               <div className="whitespace-nowrap">
                 {showDateAndTime
                   ? date.format(
@@ -247,18 +253,18 @@ export const ActionMedium = ({
               )}
               <div className="flex items-center gap-1">
                 <div
-                  className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
+                  className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
                 >
                   {action.tag.short}
                 </div>
                 <div
-                  className={`text-xx rounded-full px-2 uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
+                  className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
                 >
                   {action.status.short}
                 </div>
               </div>
             </div>
-            <div className="text-xx mt-1 flex gap-4 overflow-hidden">{}</div>
+            <div className="mt-1 flex gap-4 overflow-hidden text-xx">{}</div>
           </div>
         </div>
       </ContextMenu.Trigger>
@@ -308,7 +314,7 @@ export const ActionGrid = ({
     <ContextMenu.Root>
       <ContextMenu.Trigger>
         <div
-          className={`text-xx flex aspect-square flex-col justify-between border border-white p-2 text-center leading-tight dark:border-gray-1000  ${
+          className={`flex aspect-square flex-col justify-between border border-white p-2 text-center text-xx leading-tight dark:border-gray-1000  ${
             (action as ActionModel).status.id ===
             "a448e17d-05ba-4ad0-9990-773f9384d15e"
               ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-400"

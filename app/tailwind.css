@@ -186,7 +186,7 @@ body {
   }
 
   .dropdown-label {
-    @apply text-xx spacing-sm font-semibold uppercase text-gray-700 antialiased  dark:text-gray-300;
+    @apply spacing-sm text-xx font-semibold uppercase text-gray-700 antialiased  dark:text-gray-300;
   }
 
   .dropdown-item {
