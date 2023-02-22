@@ -1,5 +1,5 @@
 import { useFetcher } from "@remix-run/react";
-import { CalendarPlus, Star, Trash2 } from "lucide-react";
+import { Star, Trash2 } from "lucide-react";
 import type { CelebrationModel } from "~/lib/models";
 
 const Celebration = ({
@@ -14,14 +14,12 @@ const Celebration = ({
   return (
     <div
       className={`group flex w-full items-center justify-between text-gray-500  ${
-        small ? "text-xx my-0.5" : "my-1 text-xs"
+        small ? "my-0.5 text-xx" : "my-1 text-xs"
       } font-normal`}
       title={celebration.name}
     >
       <div className="flex flex-auto items-center gap-1 overflow-hidden">
-        {celebration.is_holiday ? (
-          <CalendarPlus className="w-2 shrink-0 opacity-50" />
-        ) : null}
+        {celebration.is_holiday ? <Star className="w-3 shrink-0" /> : null}
         <div className="overflow-hidden text-ellipsis whitespace-nowrap">
           {celebration.name}
         </div>

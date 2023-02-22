@@ -20,7 +20,15 @@ const WeekView = ({
         {period.map((day, index) => {
           return (
             <div key={index} className="px-1">
-              <h5>{day.date.format("D")}</h5>
+              <div
+                className={`grid h-8 w-8 place-items-center text-sm font-medium ${
+                  day.date.format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+                    ? "rounded-full bg-brand text-white"
+                    : undefined
+                }`}
+              >
+                {day.date.format("D")}
+              </div>
               <div>
                 {celebrations
                   .filter(
