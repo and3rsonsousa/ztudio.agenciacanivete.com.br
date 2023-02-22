@@ -2,6 +2,8 @@ import type { Dayjs } from "dayjs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "./Button";
 import { Link } from "@remix-run/react";
+import dayjs from "dayjs";
+import { isToday } from "~/lib/functions";
 
 export default function CalendarHeader({
   date,
@@ -14,18 +16,25 @@ export default function CalendarHeader({
     <div className="order-1 flex w-full items-center justify-between gap-2 md:w-auto lg:justify-start">
       {/* Mês e ano */}
       <h4 className="mb-0 p-4 first-letter:capitalize">
-        {view === "year"
-          ? date.format("YYYY")
-          : view === "week"
-          ? `${getWrittenDate(date.startOf("week"))} a ${getWrittenDate(
-              date.endOf("week")
-            )}${
-              isOnSameMonth(date.startOf("week"), date.endOf("week")) &&
-              isOnSameYear(date.startOf("week"), date.endOf("week"))
-                ? date.format(" [de] MMMM")
-                : ""
-            }`
-          : date.format("MMMM [de] YYYY")}
+        {view === "year" ? (
+          date.format("YYYY")
+        ) : view === "week" ? (
+          `${getWrittenDate(date.startOf("week"))} a ${getWrittenDate(
+            date.endOf("week")
+          )}${
+            isOnSameMonth(date.startOf("week"), date.endOf("week")) &&
+            isOnSameYear(date.startOf("week"), date.endOf("week"))
+              ? date.format(" [de] MMMM")
+              : ""
+          }`
+        ) : view === "day" ? (
+          <>
+            {dayjs(date).format("DD [de] MMMM [de] YYYY")}
+            {isToday(date) ? " (HOJE)" : ""}
+          </>
+        ) : (
+          date.format("MMMM [de] YYYY")
+        )}
       </h4>
 
       {/* Botões para mês e ano */}
@@ -63,7 +72,7 @@ export default function CalendarHeader({
           className={
             view === "year" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/year/${""}`}
+          to={`/dashboard/year/${dayjs().format("YYYY-MM")}`}
         >
           ANO
         </Link>
@@ -71,7 +80,7 @@ export default function CalendarHeader({
           className={
             view === "month" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/${""}`}
+          to={`/dashboard/?month=${dayjs().format("YYYY-MM")}`}
         >
           MÊS
         </Link>
@@ -79,7 +88,7 @@ export default function CalendarHeader({
           className={
             view === "week" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/week/${""}`}
+          to={`/dashboard/week/${dayjs().format("YYYY-MM-DD")}`}
         >
           SEMANA
         </Link>
@@ -87,7 +96,7 @@ export default function CalendarHeader({
           className={
             view === "day" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/day/${""}`}
+          to={`/dashboard/day/today`}
         >
           DIA
         </Link>

@@ -86,6 +86,10 @@ export const getYear = (currentDate: Dayjs) => {
   return { firstDayOfCurrentYear, year };
 };
 
+export const isToday = (date: Dayjs | string) => {
+  return dayjs().format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD");
+};
+
 export function actionsByPriority(actions: ActionModel[]) {
   // return actions;
   return actions
@@ -117,6 +121,7 @@ export function actionsByCategory(
 
   return categories;
 }
+
 export function actionsByAccount(
   actions: ActionModel[],
   accounts: AccountModel[],

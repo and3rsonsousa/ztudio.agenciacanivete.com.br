@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { getMonth, getWeek } from "./functions";
 import { getSupabase } from "./supabase";
 
@@ -85,12 +86,12 @@ export const getActions = async (
     user?: string;
     account?: string;
     period?: string | null;
-    week?: boolean;
+    mode?: "week" | "day" | "month";
     all?: boolean;
     where?: string;
   } = {}
 ) => {
-  let { user, account, period, request, all, where, week } = args;
+  let { user, account, period, request, all, where, mode } = args;
 
   if (!request) {
     return { error: { message: "Request is undefined" } };
@@ -143,9 +144,12 @@ export const getActions = async (
     return { data, error };
   }
 
-  const { firstDayOfPeriod, lastDayOfPeriod } = week
-    ? getWeek({ period })
-    : getMonth({ period });
+  const { firstDayOfPeriod, lastDayOfPeriod } =
+    mode === "week"
+      ? getWeek({ period })
+      : mode === "day"
+      ? { firstDayOfPeriod: dayjs(period), lastDayOfPeriod: dayjs(period) }
+      : getMonth({ period });
 
   if (account) {
     const { data, error } = await supabase
