@@ -51,7 +51,7 @@ export async function loader({ params, request }: LoaderArgs) {
 }
 
 export default function DayPage() {
-  const { date, actions, campaigns, oldDate } = useLoaderData<typeof loader>();
+  const { date, actions, oldDate } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex h-screen flex-col">

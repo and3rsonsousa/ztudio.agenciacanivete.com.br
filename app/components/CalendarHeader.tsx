@@ -5,6 +5,15 @@ import { Link } from "@remix-run/react";
 import dayjs from "dayjs";
 import { isToday } from "~/lib/functions";
 
+import "dayjs/locale/pt-br";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("pt-br");
+dayjs.tz.setDefault("America/Fortaleza");
+
 export default function CalendarHeader({
   date,
   view = "month",
@@ -47,6 +56,8 @@ export default function CalendarHeader({
                 ? "./".concat(date.subtract(1, "year").format("YYYY-MM"))
                 : view === "week"
                 ? "./".concat(date.subtract(1, "week").format("YYYY-MM-DD"))
+                : view === "day"
+                ? `./${date.subtract(1, "day").format("DD-MM-YYYY")}`
                 : "?month=".concat(date.subtract(1, "month").format("YYYY-MM"))
             }
           >
@@ -60,6 +71,8 @@ export default function CalendarHeader({
                 ? "./".concat(date.add(1, "year").format("YYYY-MM"))
                 : view === "week"
                 ? "./".concat(date.add(1, "week").format("YYYY-MM-DD"))
+                : view === "day"
+                ? `./${date.add(1, "day").format("DD-MM-YYYY")}`
                 : "?month=".concat(date.add(1, "month").format("YYYY-MM"))
             }
           >
