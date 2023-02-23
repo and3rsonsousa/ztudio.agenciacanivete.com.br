@@ -53,12 +53,12 @@ export default function CalendarHeader({
           <a
             href={
               view === "year"
-                ? "./".concat(date.subtract(1, "year").format("YYYY-MM"))
+                ? "./".concat(date.subtract(1, "year").format("MM-YYYY"))
                 : view === "week"
-                ? "./".concat(date.subtract(1, "week").format("YYYY-MM-DD"))
+                ? "./".concat(date.subtract(1, "week").format("DD-MM-YYYY"))
                 : view === "day"
                 ? `./${date.subtract(1, "day").format("DD-MM-YYYY")}`
-                : "?month=".concat(date.subtract(1, "month").format("YYYY-MM"))
+                : "?month=".concat(date.subtract(1, "month").format("MM-YYYY"))
             }
           >
             <ChevronLeft />
@@ -68,12 +68,12 @@ export default function CalendarHeader({
           <a
             href={
               view === "year"
-                ? "./".concat(date.add(1, "year").format("YYYY-MM"))
+                ? "./".concat(date.add(1, "year").format("MM-YYYY"))
                 : view === "week"
-                ? "./".concat(date.add(1, "week").format("YYYY-MM-DD"))
+                ? "./".concat(date.add(1, "week").format("DD-MM-YYYY"))
                 : view === "day"
                 ? `./${date.add(1, "day").format("DD-MM-YYYY")}`
-                : "?month=".concat(date.add(1, "month").format("YYYY-MM"))
+                : "?month=".concat(date.add(1, "month").format("MM-YYYY"))
             }
           >
             <ChevronRight />
@@ -85,7 +85,7 @@ export default function CalendarHeader({
           className={
             view === "year" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/year/${dayjs().format("YYYY-MM")}`}
+          to={`/dashboard/year/${dayjs().format("MM-YYYY")}`}
         >
           ANO
         </Link>
@@ -93,7 +93,7 @@ export default function CalendarHeader({
           className={
             view === "month" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/?month=${dayjs().format("YYYY-MM")}`}
+          to={`/dashboard/?month=${dayjs().format("MM-YYYY")}`}
         >
           MÊS
         </Link>
@@ -101,7 +101,7 @@ export default function CalendarHeader({
           className={
             view === "week" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/week/${dayjs().format("YYYY-MM-DD")}`}
+          to={`/dashboard/week/${dayjs().format("DD-MM-YYYY")}`}
         >
           SEMANA
         </Link>
