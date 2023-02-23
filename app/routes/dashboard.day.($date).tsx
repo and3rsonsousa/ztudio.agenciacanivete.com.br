@@ -9,6 +9,15 @@ import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
 
+import "dayjs/locale/pt-br";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("pt-br");
+dayjs.tz.setDefault("America/Fortaleza");
+
 export async function loader({ params, request }: LoaderArgs) {
   const {
     data: { session },

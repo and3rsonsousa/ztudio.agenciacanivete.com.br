@@ -6,7 +6,18 @@ import { getMonth, getYear } from "~/lib/functions";
 import CalendarHeader from "~/components/CalendarHeader";
 
 export function loader({ request, params }: LoaderArgs) {
-  const { date } = params;
+  let { date } = params;
+
+  let oldDate = new URL(request.url).searchParams.get("oldDate");
+
+  const pattern = /^\d{1,2}-\d{1,2}-\d{4}$/;
+  let day = dayjs();
+  if (date?.match(pattern)) {
+    let dateInfo = date.split("-");
+    day = dayjs(`${dateInfo[2]}-${dateInfo[1]}-${dateInfo[0]}`);
+  }
+
+  date = day.format("YYYY-MM-DD");
 
   return { date: date ?? dayjs().format("YYYY-MM") };
 }
