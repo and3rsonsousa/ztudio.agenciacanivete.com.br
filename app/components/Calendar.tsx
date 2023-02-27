@@ -1,10 +1,5 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import {
-  useMatches,
-  useOutletContext,
-  useParams,
-  useSearchParams,
-} from "@remix-run/react";
+import { useMatches, useOutletContext, useParams } from "@remix-run/react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -35,17 +30,17 @@ export default function Calendar({
   actions,
   campaigns,
   grid,
+  date,
 }: {
   actions: ActionModel[];
   campaigns: CampaignModel[];
-
+  date: string;
   grid?: boolean;
 }) {
-  const [searchParams] = useSearchParams();
   const { slug } = useParams();
   const context: ContextType = useOutletContext();
 
-  const currentMonth = searchParams.get("month");
+  const currentMonth = date;
   const matches = useMatches();
   let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;

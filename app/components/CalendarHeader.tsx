@@ -1,9 +1,9 @@
+import { Link, useParams } from "@remix-run/react";
 import type { Dayjs } from "dayjs";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Button from "./Button";
-import { Link } from "@remix-run/react";
 import dayjs from "dayjs";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { isToday } from "~/lib/functions";
+import Button from "./Button";
 
 import "dayjs/locale/pt-br";
 import timezone from "dayjs/plugin/timezone";
@@ -21,10 +21,13 @@ export default function CalendarHeader({
   date: Dayjs;
   view?: "year" | "month" | "week" | "day";
 }) {
+  const { slug } = useParams();
+  const url = "/dashboard/" + (slug ? slug + "/" : "");
+
   return (
     <div className="order-1 flex w-full items-center justify-between gap-2 md:w-auto lg:justify-start">
       {/* Mês e ano */}
-      <h4 className="mb-0 p-4 first-letter:capitalize">
+      <h4 className="mb-0 py-4 px-2 first-letter:capitalize">
         {view === "year" ? (
           date.format("YYYY")
         ) : view === "week" ? (
@@ -51,30 +54,28 @@ export default function CalendarHeader({
       <div className="item-center flex">
         <Button link small icon squared asChild>
           <a
-            href={
-              view === "year"
-                ? "./".concat(date.subtract(1, "year").format("MM-YYYY"))
-                : view === "week"
-                ? "./".concat(date.subtract(1, "week").format("DD-MM-YYYY"))
-                : view === "day"
-                ? `./${date.subtract(1, "day").format("DD-MM-YYYY")}`
-                : "?month=".concat(date.subtract(1, "month").format("MM-YYYY"))
-            }
+            href={(view === "year"
+              ? "?date="
+              : view === "week"
+              ? "?date="
+              : view === "day"
+              ? `?date=`
+              : "?date="
+            ).concat(date.subtract(1, view).format("DD-MM-YYYY"))}
           >
             <ChevronLeft />
           </a>
         </Button>
         <Button link small icon squared asChild>
           <a
-            href={
-              view === "year"
-                ? "./".concat(date.add(1, "year").format("MM-YYYY"))
-                : view === "week"
-                ? "./".concat(date.add(1, "week").format("DD-MM-YYYY"))
-                : view === "day"
-                ? `./${date.add(1, "day").format("DD-MM-YYYY")}`
-                : "?month=".concat(date.add(1, "month").format("MM-YYYY"))
-            }
+            href={(view === "year"
+              ? "?date="
+              : view === "week"
+              ? "?date="
+              : view === "day"
+              ? `?date=`
+              : "?date="
+            ).concat(date.add(1, view).format("DD-MM-YYYY"))}
           >
             <ChevronRight />
           </a>
@@ -85,7 +86,7 @@ export default function CalendarHeader({
           className={
             view === "year" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/year/${dayjs().format("MM-YYYY")}`}
+          to={`${url}year?date=${dayjs().format("DD-MM-YYYY")}`}
         >
           ANO
         </Link>
@@ -93,7 +94,7 @@ export default function CalendarHeader({
           className={
             view === "month" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/?month=${dayjs().format("MM-YYYY")}`}
+          to={`${url}?date=${dayjs().format("DD-MM-YYYY")}`}
         >
           MÊS
         </Link>
@@ -101,7 +102,7 @@ export default function CalendarHeader({
           className={
             view === "week" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/week/${dayjs().format("DD-MM-YYYY")}`}
+          to={`${url}week?date=${dayjs().format("DD-MM-YYYY")}`}
         >
           SEMANA
         </Link>
@@ -109,7 +110,7 @@ export default function CalendarHeader({
           className={
             view === "day" ? "rounded-full bg-brand px-2 py-1 text-white" : ""
           }
-          to={`/dashboard/day/today`}
+          to={`${url}day?date=${dayjs().format("DD-MM-YYYY")}`}
         >
           DIA
         </Link>

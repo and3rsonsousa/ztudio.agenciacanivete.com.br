@@ -18,7 +18,6 @@ import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
-import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import type { ContextType } from "./lib/models";
 import styles from "./tailwind.css";
 
@@ -54,9 +53,9 @@ export const loader: LoaderFunction = ({ request, context }) => {
   };
 };
 
-export function App() {
+export default function App() {
   const { env } = useLoaderData();
-  const [theme] = useTheme();
+
   const [supabase] = useState(() => {
     return createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
   });
@@ -130,7 +129,7 @@ export function App() {
   }, [supabase, revalidator]);
 
   return (
-    <html lang="pt-br" className={theme ?? "dark"}>
+    <html lang="pt-br" className={"dark"}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -148,14 +147,6 @@ export function App() {
         <LiveReload />
       </body>
     </html>
-  );
-}
-
-export default function AppWithProviders() {
-  return (
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
   );
 }
 

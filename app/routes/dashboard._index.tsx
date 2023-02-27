@@ -3,12 +3,17 @@ import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
+import { checkDate } from "~/lib/functions";
 
 export const loader: LoaderFunction = async ({
   request,
   params,
 }: LoaderArgs) => {
-  let period = new URL(request.url).searchParams.get("month");
+  let period = new URL(request.url).searchParams.get("date");
+  period = checkDate(period);
+
+  console.log({ period });
+
   const {
     data: { session },
   } = await getUser(request);
@@ -23,15 +28,15 @@ export const loader: LoaderFunction = async ({
     getCampaigns({ request, user: session?.user.id }),
   ]);
 
-  return { actions, campaigns };
+  return { actions, campaigns, date: period };
 };
 
 const DashboardIndex = () => {
-  const { actions, campaigns } = useLoaderData();
+  const { actions, campaigns, date } = useLoaderData();
 
   return (
     <div className="h-screen">
-      <Calendar actions={actions} campaigns={campaigns} />
+      <Calendar actions={actions} campaigns={campaigns} date={date} />
     </div>
   );
 };

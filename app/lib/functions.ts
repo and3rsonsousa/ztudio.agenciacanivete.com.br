@@ -1,3 +1,4 @@
+import { redirect } from "@remix-run/cloudflare";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -148,4 +149,26 @@ export function shortWord(word: string) {
     .substring(1)
     .toLowerCase()
     .replace(/[aãáeéêiíoóãôuú]/g, "")}`;
+}
+
+export function checkDate(
+  date: string | null = dayjs().format("DD-MM-YYYY"),
+  redirectTo: string = ""
+) {
+  const pattern = /^\d{1,2}-\d{1,2}-\d{4}$/;
+
+  let day = dayjs();
+  if (date?.match(pattern)) {
+    let splitDate = date.split("-");
+    day = dayjs(`${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`);
+    if (!day.isValid()) {
+      throw redirect(
+        `${redirectTo}?date=${dayjs().format("DD-MM-YYYY")}&invalidDate=${date}`
+      );
+    } else {
+      return day.format("YYYY-MM-DD");
+    }
+  }
+
+  return day.format("YYYY-MM-DD");
 }

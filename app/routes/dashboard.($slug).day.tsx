@@ -1,10 +1,8 @@
 import type { LoaderArgs } from "@remix-run/cloudflare";
-import { redirect } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import { ActionMedium } from "~/components/Actions";
 import CalendarHeader from "~/components/CalendarHeader";
-import Exclamation from "~/components/Exclamation";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
@@ -12,6 +10,8 @@ import type { ActionModel } from "~/lib/models";
 import "dayjs/locale/pt-br";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { checkDate } from "~/lib/functions";
+import Exclamation from "~/components/Exclamation";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -23,32 +23,12 @@ export async function loader({ params, request }: LoaderArgs) {
     data: { session },
   } = await getUser(request);
 
-  let { date } = params;
-  let oldDate = new URL(request.url).searchParams.get("oldDate");
-
-  let day = dayjs();
-
-  if (date !== "today") {
-    const pattern = /^\d{1,2}-\d{1,2}-\d{4}$/;
-
-    if (date?.match(pattern)) {
-      let dateInfo = date.split("-");
-      day = dayjs(`${dateInfo[2]}-${dateInfo[1]}-${dateInfo[0]}`);
-    } else {
-      throw redirect(`/dashboard/day/today?oldDate=${date}`);
-    }
-
-    if (!day.isValid()) {
-      throw redirect(`/dashboard/day/today?oldDate=${date}`);
-    }
-  }
-
-  date = day.format("YYYY-MM-DD");
+  let date = checkDate(new URL(request.url).searchParams.get("date"));
 
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
       request,
-      account: params.account,
+      account: params.slug,
       user: session?.user.id,
       period: date,
       mode: "day",
@@ -56,11 +36,12 @@ export async function loader({ params, request }: LoaderArgs) {
     getCampaigns({ request, user: session?.user.id }),
   ]);
 
-  return { date, oldDate, actions, campaigns };
+  return { date, actions, campaigns };
 }
 
 export default function DayPage() {
-  const { date, actions, oldDate } = useLoaderData<typeof loader>();
+  const { date, actions } = useLoaderData<typeof loader>();
+  let isEmpty = 0;
 
   return (
     <div className="flex h-screen flex-col">
@@ -68,15 +49,6 @@ export default function DayPage() {
         <div>
           <CalendarHeader date={dayjs(date)} view="day" />
         </div>
-
-        {oldDate && (
-          <div className="flex max-w-xs items-center gap-2">
-            <Exclamation icon size="small" type="alert">
-              <strong>{oldDate}</strong> não é uma data válida. Por isso você
-              foi redirecionado para o dia de hoje.
-            </Exclamation>
-          </div>
-        )}
       </div>
       <div className="p-2">
         {Array(24)
@@ -85,6 +57,11 @@ export default function DayPage() {
             const currentActions: ActionModel[] | undefined = actions?.filter(
               (action) => dayjs(action.date).format("H") === index.toString()
             );
+
+            if (currentActions && currentActions.length > 0) {
+              isEmpty += 1;
+            }
+
             return (
               currentActions &&
               currentActions.length > 0 && (
@@ -104,6 +81,11 @@ export default function DayPage() {
               )
             );
           })}
+        {isEmpty === 0 && (
+          <div>
+            <Exclamation>Nenhuma ação nesse dia</Exclamation>
+          </div>
+        )}
       </div>
     </div>
   );

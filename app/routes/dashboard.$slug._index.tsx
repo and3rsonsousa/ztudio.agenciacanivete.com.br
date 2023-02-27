@@ -6,25 +6,16 @@ import type {
 import { useLoaderData } from "@remix-run/react";
 import Calendar from "~/components/Calendar";
 import { getActions, getCampaigns, handleAction } from "~/lib/data";
-
-// export function meta({ data, matches }: { data: any; matches: any[] }) {
-//   const root = matches.find((match) => match.route.id === "root");
-
-//   const meta = root.meta;
-
-//   return [
-//     ...meta,
-//     {
-//       // title: `${data.account.name} - ZTUDIO`,
-//     },
-//   ];
-// }
+import { checkDate } from "~/lib/functions";
 
 export const loader: LoaderFunction = async ({
   request,
   params,
 }: LoaderArgs) => {
-  let period = new URL(request.url).searchParams.get("month");
+  const period = checkDate(
+    new URL(request.url).searchParams.get("date") as string,
+    `/dashboard/${params.slug}/`
+  );
 
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
@@ -34,7 +25,7 @@ export const loader: LoaderFunction = async ({
     }),
     getCampaigns({ request, account: params.slug }),
   ]);
-  return { actions, campaigns };
+  return { actions, campaigns, date: period };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -43,11 +34,16 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function SlugIndex() {
-  const { actions, campaigns } = useLoaderData();
+  const { actions, campaigns, date } = useLoaderData();
 
   return (
     <>
-      <Calendar actions={actions} campaigns={campaigns} grid={true} />
+      <Calendar
+        actions={actions}
+        campaigns={campaigns}
+        grid={true}
+        date={date}
+      />
     </>
   );
 }

@@ -13,10 +13,8 @@ import {
   Briefcase,
   ChevronRight,
   CommandIcon,
-  Moon,
   Plus,
   Search,
-  Sun,
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -33,7 +31,6 @@ import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import SearchDialog from "./Dialogs/SearchDialog";
-import { Theme, useTheme } from "./ThemeProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
@@ -226,7 +223,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className={`${
                     context.sidebar.open
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
-                      : "text-xx text-center font-bold uppercase"
+                      : "text-center text-xx font-bold uppercase"
                   } block  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
                     slug === account.slug
                       ? "bg-brand text-white ring-offset-2 ring-offset-white dark:ring-offset-gray-1000"
@@ -321,9 +318,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         className="dropdown-content mr-4 origin-bottom"
                       >
                         {/* Theme Switcher */}
-                        <div className="flex items-center justify-between gap-2">
-                          <ThemeSwitcher />
-                        </div>
+                        <div className="flex items-center justify-between gap-2"></div>
 
                         <hr className="dropdown-hr" />
                         {/* Minha Conta */}
@@ -655,7 +650,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div>+</div>
                 <div>{shortcut.shortcut}</div>
               </div>
-              <div className="text-xx text-center font-medium uppercase tracking-wider">
+              <div className="text-center text-xx font-medium uppercase tracking-wider">
                 {shortcut.does}
               </div>
             </motion.div>
@@ -663,39 +658,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </AnimatePresence>
       </>
     </div>
-  );
-}
-
-function ThemeSwitcher() {
-  // const [theme, setTheme] = useState(localStorage.getItem("theme"));
-  const [theme, setTheme] = useTheme();
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
-    );
-  };
-
-  return (
-    <DropdownMenu.Item
-      className="dropdown-item item-small flex items-center gap-2"
-      onSelect={() => {
-        toggleTheme();
-        // if (theme === "dark") {
-        //   document.body.classList.remove("dark");
-        //   localStorage.removeItem("theme");
-        //   setTheme("");
-        // } else {
-        //   document.body.classList.add("dark");
-        //   localStorage.setItem("theme", "dark");
-        //   setTheme("dark");
-        // }
-      }}
-    >
-      <div>Modo {theme === "dark" ? "claro" : "escuro"}</div>
-      <div className="ml-8">
-        {theme === "dark" ? <Sun className="w-4" /> : <Moon className="w-4" />}
-      </div>
-    </DropdownMenu.Item>
   );
 }
