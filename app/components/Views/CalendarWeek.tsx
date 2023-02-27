@@ -1,8 +1,8 @@
 import { useMatches } from "@remix-run/react";
 import dayjs from "dayjs";
 import type { ActionModel, CelebrationModel, PeriodType } from "~/lib/models";
-import { ActionMedium } from "./Actions";
-import Celebration from "./Celebrations";
+import { ActionMedium } from "../Actions";
+import Celebration from "../Celebrations";
 
 const WeekView = ({
   period,

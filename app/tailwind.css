@@ -228,9 +228,6 @@ body {
   @apply bg-brand font-semibold text-white;
 }
 
-.no-scrollbars::-webkit-scrollbar {
-  display: none;
-}
 .dialog {
   @apply fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2;
 }

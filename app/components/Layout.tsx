@@ -190,7 +190,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="flex h-screen w-full flex-col  lg:flex-row">
+    <div className="flex h-screen w-full flex-col lg:flex-row">
       {/* Header */}
       <div
         className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between bg-gray-800/50 backdrop-blur-xl lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:bg-transparent lg:py-4  ${
@@ -215,7 +215,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           {/* Clientes large view */}
 
-          <div className="hidden p-2 lg:block">
+          <div className="hidden space-y-1 p-2 lg:block">
             {accounts.map((account) => (
               <div key={account.id}>
                 <Link
@@ -224,7 +224,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     context.sidebar.open
                       ? "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-semibold "
                       : "text-center text-xx font-bold uppercase"
-                  } block  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
+                  } block rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-brand ${
                     slug === account.slug
                       ? "bg-brand text-white ring-offset-2 ring-offset-white dark:ring-offset-gray-1000"
                       : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -457,7 +457,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Content */}
-      <div className="mt-12 flex-auto lg:mt-0">{children}</div>
+      <div className="mt-12 w-full lg:mt-0 lg:px-4">{children}</div>
       {/* Shortcut */}
       <Dialog.Root
         open={context.shortcut.open}

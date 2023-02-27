@@ -4,7 +4,7 @@ import type {
   LoaderFunction,
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import Calendar from "~/components/Calendar";
+import Calendar from "~/components/Views/Calendar";
 import { getActions, getCampaigns, handleAction } from "~/lib/data";
 import { checkDate } from "~/lib/functions";
 

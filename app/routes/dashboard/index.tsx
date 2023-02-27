@@ -1,6 +1,6 @@
 import type { LoaderArgs, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import Calendar from "~/components/Calendar";
+import Calendar from "~/components/Views/Calendar";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import { checkDate } from "~/lib/functions";
@@ -32,11 +32,7 @@ export const loader: LoaderFunction = async ({
 const DashboardIndex = () => {
   const { actions, campaigns, date } = useLoaderData();
 
-  return (
-    <div className="h-screen">
-      <Calendar actions={actions} campaigns={campaigns} date={date} />
-    </div>
-  );
+  return <Calendar actions={actions} campaigns={campaigns} date={date} />;
 };
 
 export default DashboardIndex;

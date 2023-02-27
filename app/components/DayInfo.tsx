@@ -51,7 +51,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
             {/* Celebrations */}
             {context.sidebar.open && day.celebrations.length > 0 ? (
-              <div className=" mt-4 flex flex-col">
+              <div className="mt-4 flex flex-col">
                 {day.celebrations.map((celebration, index) => (
                   <Celebration celebration={celebration} key={index} />
                 ))}

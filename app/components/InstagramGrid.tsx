@@ -7,6 +7,7 @@ import { ActionGrid } from "./Actions";
 import Button from "./Button";
 import CreateButtons from "./CreateButtons";
 import Exclamation from "./Exclamation";
+import Scrollable from "./Scrollable";
 
 export type SupportType = { id: string; date: string; name: string };
 export type FilterType = SupportType[];
@@ -44,7 +45,7 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
 
   return (
     <div
-      className={`mt-16 flex flex-shrink-0 flex-col overflow-hidden  pt-16 lg:mt-0 ${
+      className={`mt-16 flex flex-shrink-0 flex-col pt-16 lg:mt-0 ${
         context.sidebar.open ? "lg:w-80" : "lg:w-12"
       }  lg:pt-0`}
     >
@@ -81,16 +82,18 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
       </div>
       {context.sidebar.open &&
         (filtered.length ? (
-          <div className="no-scrollbars grid h-full grid-cols-3 flex-col content-start overflow-auto px-4">
-            {filtered.map((action, i) => (
-              <ActionGrid
-                action={action}
-                key={i}
-                index={i}
-                total={filtered.length}
-              />
-            ))}
-          </div>
+          <Scrollable>
+            <div className="grid h-full grid-cols-3 flex-col content-start  px-4">
+              {filtered.map((action, i) => (
+                <ActionGrid
+                  action={action}
+                  key={i}
+                  index={i}
+                  total={filtered.length}
+                />
+              ))}
+            </div>
+          </Scrollable>
         ) : (
           <div className=" flex-auto p-8">
             <Exclamation icon>

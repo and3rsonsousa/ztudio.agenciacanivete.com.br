@@ -2,7 +2,8 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import CalendarHeader from "~/components/CalendarHeader";
-import WeekView from "~/components/CalendarWeek";
+import WeekView from "~/components/Views/CalendarWeek";
+import Scrollable from "~/components/Scrollable";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import { checkDate, getWeek } from "~/lib/functions";
@@ -13,8 +14,7 @@ export async function loader({ request, params }: LoaderArgs) {
     data: { session },
   } = await getUser(request);
 
-  let date = new URL(request.url).searchParams.get("date");
-  let period = checkDate(date);
+  let period = checkDate(new URL(request.url).searchParams.get("date"));
 
   const [{ data: actions }, { data: campaigns }] = await Promise.all([
     getActions({
@@ -31,7 +31,10 @@ export async function loader({ request, params }: LoaderArgs) {
 }
 
 export default function WeekPage() {
-  const { period, actions } = useLoaderData<typeof loader>();
+  const { period, actions } = useLoaderData<{
+    period: string;
+    actions: ActionModel[];
+  }>();
   const { days } = getWeek({
     period,
   });
@@ -43,7 +46,9 @@ export default function WeekPage() {
           <CalendarHeader date={dayjs(period)} view="week" />
         </div>
       </div>
-      <WeekView period={days} actions={actions as ActionModel[]} />
+      <Scrollable>
+        <WeekView period={days} actions={actions as ActionModel[]} />
+      </Scrollable>
     </div>
   );
 }

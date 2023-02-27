@@ -2,7 +2,8 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import CalendarHeader from "~/components/CalendarHeader";
-import CalendarYear from "~/components/CalendarYear";
+import CalendarYear from "~/components/Views/CalendarYear";
+import Scrollable from "~/components/Scrollable";
 import { checkDate, getYear } from "~/lib/functions";
 
 export function loader({ request }: LoaderArgs) {
@@ -18,9 +19,13 @@ export default function YearPage() {
   const { year } = getYear(period);
 
   return (
-    <div>
-      <CalendarHeader date={period} view="year" />
-      <CalendarYear year={year} />
-    </div>
+    <>
+      <div>
+        <CalendarHeader date={period} view="year" />
+      </div>
+      <Scrollable>
+        <CalendarYear year={year} />
+      </Scrollable>
+    </>
   );
 }

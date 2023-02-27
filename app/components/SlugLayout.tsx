@@ -1,39 +1,20 @@
-import type { LoaderFunction, V2_MetaFunction } from "@remix-run/cloudflare";
-
-import {
-  Link,
-  Outlet,
-  useLoaderData,
-  useOutletContext,
-  useSearchParams,
-} from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import { CalendarDays, FileCheck2, FolderTree, Instagram } from "lucide-react";
-import PageHeader from "~/components/PageHeader";
-import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
+import PageHeader from "./PageHeader";
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-  return [
-    {
-      title: `${data.account.name} no ᴢᴛᴜᴅɪᴏ`,
-    },
-  ];
-};
-
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const { data: account } = await getAccount(request, params.slug);
-
-  return { account };
-};
-
-export default function Slug() {
-  const { account } = useLoaderData<{ account: AccountModel }>();
-  const [searchParams] = useSearchParams();
-  const month = searchParams.get("month");
-
+export default function SlugLayout({
+  account,
+  date,
+  children,
+}: {
+  children: React.ReactNode;
+  account: AccountModel;
+  date: string | null;
+}) {
   return (
-    <div className="flex h-screen flex-col">
-      <div className="flex items-center justify-between p-4">
+    <div className="flex h-screen flex-col overflow-hidden">
+      <div className="flex items-center justify-between px-2 py-4">
         <div className="flex items-center gap-4">
           <PageHeader link={`/dashboard/${account.slug}`}>
             {account.name}
@@ -51,7 +32,7 @@ export default function Slug() {
         <div className="shrink-0 text-sm font-semibold">
           <Link
             className="button button-link button-icon button-small"
-            to={`./${month ? "?month=" + month : ""}`}
+            to={`./${date ? "?date=" + date : ""}`}
           >
             <CalendarDays />
             <div className="hidden md:block">Calendário</div>
@@ -73,7 +54,7 @@ export default function Slug() {
         </div>
       </div>
 
-      <Outlet context={useOutletContext()} />
+      {children}
     </div>
   );
 }

@@ -16,11 +16,12 @@ import type {
   DayModel,
   ItemModel,
 } from "~/lib/models";
-import Day from "./CalendarDay";
-import CalendarHeader from "./CalendarHeader";
-import DataFlow from "./DataFlow";
-import DayInfo from "./DayInfo";
-import InstagramGrid from "./InstagramGrid";
+import Day from "../CalendarDay";
+import CalendarHeader from "../CalendarHeader";
+import DataFlow from "../DataFlow";
+import DayInfo from "../DayInfo";
+import InstagramGrid from "../InstagramGrid";
+import Scrollable from "../Scrollable";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -108,14 +109,16 @@ export default function Calendar({
 
   useEffect(() => {
     if (window) {
-      document
-        .querySelector(`div[date-attr="${dayjs().format("YYYY-MM-DD")}"]`)
+      const viewport = document.querySelector(".calendar-days");
+
+      viewport
+        ?.querySelector(`div[date-attr="${dayjs().format("YYYY-MM-DD")}"]`)
         ?.scrollIntoView();
     }
   }, []);
 
   return (
-    <div className="calendar lg:flex lg:h-full lg:flex-auto lg:flex-col lg:overflow-hidden">
+    <div className="calendar flex flex-col lg:h-full lg:overflow-hidden">
       {/* header */}
       <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
         <CalendarHeader date={firstDayOfCurrentMonth} />
@@ -236,11 +239,11 @@ export default function Calendar({
         </div>
       </div>
 
-      <div className=" h-full overflow-hidden lg:flex">
+      <div className="flex-auto lg:flex lg:overflow-hidden">
         {/* Calendar  */}
 
-        <div className="relative flex w-full flex-col">
-          <div className="relative grid grid-cols-7 rounded-xl">
+        <div className="relative flex flex-auto flex-col lg:h-full">
+          <div className="relative grid grid-cols-7">
             {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map(
               (day, index) => (
                 <div key={index} className="calendar-weekday">
@@ -251,30 +254,32 @@ export default function Calendar({
             <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
           </div>
 
-          <div className="no-scrollbars grid flex-auto grid-cols-7 overflow-hidden overflow-y-auto">
-            {days.map((day, index) => {
-              if (index % 7 === 0) {
-                height = 0;
-                for (let i = index; i < index + 7; i++) {
-                  if (days[i].campaigns.length > height) {
-                    height = days[i].campaigns.length;
+          <Scrollable>
+            <div className="calendar-days grid flex-auto grid-cols-7">
+              {days.map((day, index) => {
+                if (index % 7 === 0) {
+                  height = 0;
+                  for (let i = index; i < index + 7; i++) {
+                    if (days[i].campaigns.length > height) {
+                      height = days[i].campaigns.length;
+                    }
                   }
                 }
-              }
 
-              return (
-                <Day
-                  key={index}
-                  day={day}
-                  height={height}
-                  firstDayOfCurrentMonth={firstDayOfCurrentMonth}
-                  selectedDay={selectedDay}
-                  setSelectedDay={setSelectedDay}
-                  arrange={context.arrange.option}
-                />
-              );
-            })}
-          </div>
+                return (
+                  <Day
+                    key={index}
+                    day={day}
+                    height={height}
+                    firstDayOfCurrentMonth={firstDayOfCurrentMonth}
+                    selectedDay={selectedDay}
+                    setSelectedDay={setSelectedDay}
+                    arrange={context.arrange.option}
+                  />
+                );
+              })}
+            </div>
+          </Scrollable>
         </div>
         {/* Info */}
 

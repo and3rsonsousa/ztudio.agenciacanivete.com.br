@@ -2,8 +2,8 @@
 module.exports = {
   future: {
     v2_meta: true,
-    v2_routeConvention: true,
     unstable_tailwind: true,
+    unstable_dev: true,
   },
 
   serverBuildTarget: "cloudflare-pages",

@@ -1,6 +1,7 @@
 import type { ActionModel } from "~/lib/models";
 import { ActionMedium } from "./Actions";
 import Exclamation from "./Exclamation";
+import Scrollable from "./Scrollable";
 
 export default function ActionList({
   actions,
@@ -11,20 +12,20 @@ export default function ActionList({
   hideAccount?: boolean;
   showDateAndTime?: boolean;
 }) {
-  return (
-    <div className="no-scrollbars flex h-full flex-col overflow-auto p-4">
-      {actions && actions.length > 0 ? (
-        actions.map((action, i) => (
+  return actions && actions.length > 0 ? (
+    <Scrollable>
+      <div className="h-full w-full p-4">
+        {actions.map((action, i) => (
           <ActionMedium
             action={action}
             key={i}
             hideAccount={hideAccount}
             showDateAndTime={showDateAndTime}
           />
-        ))
-      ) : (
-        <Exclamation icon>Nenhuma ação para exibir.</Exclamation>
-      )}
-    </div>
+        ))}
+      </div>
+    </Scrollable>
+  ) : (
+    <Exclamation icon>Nenhuma ação para exibir.</Exclamation>
   );
 }
