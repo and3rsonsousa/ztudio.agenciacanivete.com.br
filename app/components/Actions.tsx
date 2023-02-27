@@ -202,70 +202,59 @@ export const ActionMedium = ({
       <ContextMenu.Trigger>
         <div
           tabIndex={0}
-          className={`action-medium group ${action.status.slug}`}
+          className={`action-medium @container ${action.status.slug}`}
         >
-          {/* <div className="absolute top-1/2 -left-1 -translate-y-1/2">
-            <div
-              className={` h-6 w-1 rounded-tl-full bg-${action.status.slug}  `}
-            ></div>
-            <div
-              className={` h-6 w-1 rounded-bl-full bg-${action.tag.slug}  `}
-            ></div>
-          </div> */}
-
-          <div className="overflow-hidden">
-            <div className="mb-1">
-              <div className="text-sm font-normal">{action.name}</div>
-              {action.campaign && (
-                <Link
-                  to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
-                  className="mb-2 flex items-center text-xx hover:underline"
-                >
-                  <ArrowDownRight className="w-4" />
-                  <span>{action.campaign.name}</span>
-                </Link>
-              )}
-            </div>
-            {action.description?.trim().length ? (
-              <div className="text-xx line-clamp-3">{action.description}</div>
-            ) : null}
-            {/* Horário - Cliente - Tag - Status */}
-            <div
-              className={`mt-1 flex ${
-                wrap ? "flex-wrap" : ""
-              } gap-1 overflow-hidden text-xx`}
-            >
-              <div className="whitespace-nowrap">
-                {showDateAndTime
-                  ? date.format(
-                      "D/M/YY [às] H[h]".concat(
-                        date.format("mm") !== "00" ? "mm" : ""
-                      )
-                    )
-                  : date.format(
-                      "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
-                    )}
-              </div>
-              {!hideAccount && (
-                <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
-                  {account.name}
-                </div>
-              )}
-              <div className="flex items-center gap-1">
-                <div
-                  className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
-                >
-                  {action.tag.short}
-                </div>
-                <div
-                  className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
-                >
-                  {action.status.short}
-                </div>
-              </div>
-            </div>
-            <div className="mt-1 flex gap-4 overflow-hidden text-xx">{}</div>
+          <div>
+            <div className="text-sm font-normal">{action.name}</div>
+            {action.campaign && (
+              <Link
+                to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
+                className="mb-2 flex items-center text-xx hover:underline"
+              >
+                <ArrowDownRight className="w-4" />
+                <span>{action.campaign.name}</span>
+              </Link>
+            )}
           </div>
+          {action.description?.trim().length ? (
+            <div className="text-xx line-clamp-3">{action.description}</div>
+          ) : null}
+          {/* Horário - Cliente - Tag - Status */}
+          <div
+            className={`flex ${
+              wrap ? "flex-wrap" : ""
+            } gap-1 overflow-hidden text-xx`}
+          >
+            <div className="whitespace-nowrap">
+              {showDateAndTime
+                ? date.format(
+                    "D/M/YY [às] H[h]".concat(
+                      date.format("mm") !== "00" ? "mm" : ""
+                    )
+                  )
+                : date.format(
+                    "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
+                  )}
+            </div>
+            {!hideAccount && (
+              <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+                {account.name}
+              </div>
+            )}
+            <div className="flex items-center gap-1">
+              <div
+                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
+              >
+                {action.tag.short}
+              </div>
+              <div
+                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
+              >
+                {action.status.short}
+              </div>
+            </div>
+          </div>
+          {/* <div className="mt-1 flex gap-4 overflow-hidden text-xx">{}</div> */}
         </div>
       </ContextMenu.Trigger>
       <ContextMenu.Portal>
