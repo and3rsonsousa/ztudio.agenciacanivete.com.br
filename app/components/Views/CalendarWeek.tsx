@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import type { ActionModel, CelebrationModel, PeriodType } from "~/lib/models";
 import { ActionMedium } from "../Actions";
 import Celebration from "../Celebrations";
+import Scrollable from "../Scrollable";
 
 const WeekView = ({
   period,
@@ -15,7 +16,7 @@ const WeekView = ({
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
 
   return (
-    <div className="h-full flex-wrap overflow-hidden lg:flex">
+    <>
       <div className="grid w-full grid-cols-7">
         {period.map((day, index) => {
           return (
@@ -50,9 +51,9 @@ const WeekView = ({
       <div className="grid h-full w-full grid-cols-7 overflow-hidden">
         {period.map((day, index) => {
           return (
-            <div key={index} className="h-full overflow-hidden">
-              <div className="no-scrollbars h-full overflow-hidden overflow-y-auto px-1">
-                <div className="pb-32">
+            <div key={index} className="h-full w-full overflow-hidden">
+              <Scrollable>
+                <div className="px-1">
                   {/* Actions */}
                   {actions
                     .filter(
@@ -70,12 +71,12 @@ const WeekView = ({
                       />
                     ))}
                 </div>
-              </div>
+              </Scrollable>
             </div>
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 

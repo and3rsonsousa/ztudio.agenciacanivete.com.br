@@ -40,15 +40,11 @@ export default function WeekPage() {
   });
 
   return (
-    <div className="h-screen overflow-hidden">
-      <div className="flex justify-between">
-        <div>
-          <CalendarHeader date={dayjs(period)} view="week" />
-        </div>
+    <div className="flex h-screen flex-col overflow-hidden">
+      <div>
+        <CalendarHeader date={dayjs(period)} view="week" />
       </div>
-      <Scrollable>
-        <WeekView period={days} actions={actions as ActionModel[]} />
-      </Scrollable>
+      <WeekView period={days} actions={actions as ActionModel[]} />
     </div>
   );
 }
