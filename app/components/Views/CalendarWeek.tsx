@@ -50,17 +50,18 @@ const WeekView = ({
       <div className="grid h-full w-full grid-cols-7 overflow-hidden">
         {period.map((day, index) => {
           return (
-            <ActionList
-              actions={actions.filter(
-                (action) =>
-                  dayjs(action.date).format("YYYY-MM-DD") ===
-                  day.date.format("YYYY-MM-DD")
-              )}
-              key={index}
-              className="px-2"
-              wrap
-            />
-
+            <div key={index}>
+              <ActionList
+                actions={actions.filter(
+                  (action) =>
+                    dayjs(action.date).format("YYYY-MM-DD") ===
+                    day.date.format("YYYY-MM-DD")
+                )}
+                showDateAndTime
+                className="px-2"
+                wrap
+              />
+            </div>
             // <div key={index} className="h-full w-full overflow-hidden">
             //   <Scrollable>
             //     <div className="px-1">

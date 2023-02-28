@@ -25,7 +25,7 @@ export default function CalendarHeader({
   const url = "/dashboard/" + (slug ? slug + "/" : "");
 
   return (
-    <div className="order-1 flex w-full items-center justify-between gap-2 md:w-auto lg:justify-start">
+    <div className="flex w-full items-center justify-between gap-2 md:w-auto lg:justify-start">
       {/* Mês e ano */}
       <h4 className="mb-0 py-4 px-2 first-letter:capitalize">
         {view === "year" ? (

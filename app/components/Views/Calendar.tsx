@@ -121,7 +121,9 @@ export default function Calendar({
     <div className="calendar flex flex-col lg:h-full lg:overflow-hidden">
       {/* header */}
       <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
-        <CalendarHeader date={firstDayOfCurrentMonth} />
+        <div className="order-1">
+          <CalendarHeader date={firstDayOfCurrentMonth} />
+        </div>
 
         <div className="order-3 md:order-2">
           <DataFlow actions={actions} />

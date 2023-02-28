@@ -2,6 +2,7 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import CalendarHeader from "~/components/CalendarHeader";
+import DataFlow from "~/components/DataFlow";
 import WeekView from "~/components/Views/CalendarWeek";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
@@ -40,10 +41,15 @@ export default function WeekPage() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      <div>
-        <CalendarHeader date={dayjs(period)} view="week" />
+      <div className="items-center justify-between lg:flex">
+        <div className="order-1">
+          <CalendarHeader date={dayjs(period)} view="week" />
+        </div>
+        <div className="order-2">
+          <DataFlow actions={actions} />
+        </div>
       </div>
-      <WeekView period={days} actions={actions as ActionModel[]} />
+      <WeekView period={days} actions={actions} />
     </div>
   );
 }

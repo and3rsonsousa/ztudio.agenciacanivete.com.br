@@ -68,6 +68,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                 hideAccount={slug !== undefined}
                 showDateAndTime={slug !== undefined}
                 className="p-4"
+                warn
               />
             </>
           )}
