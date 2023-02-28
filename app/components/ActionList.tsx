@@ -19,7 +19,7 @@ export default function ActionList({
   warn?: boolean;
 }) {
   return actions && actions.length > 0 ? (
-    <Scrollable>
+    <Scrollable skinnyThumb>
       <div className={`h-full w-full ${className ?? ""}`}>
         {actions.map((action, i) => (
           <ActionMedium
