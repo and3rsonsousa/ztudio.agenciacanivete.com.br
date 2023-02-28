@@ -58,7 +58,7 @@ const WeekView = ({
                     day.date.format("YYYY-MM-DD")
                 )}
                 showDateAndTime
-                className="px-2"
+                className="p-2"
                 wrap
               />
             </div>

@@ -225,6 +225,7 @@ export const ActionMedium = ({
               wrap ? "flex-wrap" : ""
             } gap-1 overflow-hidden text-xx`}
           >
+            {/* Horário */}
             <div className="whitespace-nowrap">
               {showDateAndTime
                 ? date.format(
@@ -236,8 +237,9 @@ export const ActionMedium = ({
                     "H[h]".concat(date.format("mm") !== "00" ? "mm" : "")
                   )}
             </div>
+            {/* Cliente */}
             {!hideAccount && (
-              <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap">
+              <div className="flex-shrink overflow-hidden text-ellipsis whitespace-nowrap font-medium uppercase tracking-wider">
                 {account.name}
               </div>
             )}
