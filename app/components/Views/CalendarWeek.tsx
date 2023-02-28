@@ -50,7 +50,7 @@ const WeekView = ({
       <div className="grid h-full w-full grid-cols-7 overflow-hidden">
         {period.map((day, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="h-full flex-auto overflow-hidden">
               <ActionList
                 actions={actions.filter(
                   (action) =>

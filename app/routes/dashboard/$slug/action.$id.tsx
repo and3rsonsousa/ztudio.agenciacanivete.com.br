@@ -8,6 +8,7 @@ import { useActionData, useLoaderData } from "@remix-run/react";
 import ActionList from "~/components/ActionList";
 import AddActionDialog from "~/components/Dialogs/ActionDialog";
 import Exclamation from "~/components/Exclamation";
+import Scrollable from "~/components/Scrollable";
 import { getAction, getActions, getCampaigns, handleAction } from "~/lib/data";
 import type { ActionModel } from "~/lib/models";
 
@@ -42,21 +43,25 @@ export default function ActionPage() {
   const actionData = useActionData<{ error: { message: string } }>();
 
   return (
-    <div className="overflow-hidden p-4 lg:p-8">
-      <div className="mx-auto h-full max-w-4xl grid-cols-3 overflow-hidden lg:grid">
-        <div className="no-scrollbars col-span-2 h-full overflow-hidden overflow-y-auto px-4">
+    <div className="overflow-hidden">
+      <div className="mx-auto h-full max-w-5xl grid-cols-3 overflow-hidden lg:grid">
+        <div className="col-span-2 h-full overflow-hidden overflow-y-auto">
           {actionData && (
             <Exclamation type="error">{actionData.error.message}</Exclamation>
           )}
-          <AddActionDialog action={action} />
+          <Scrollable>
+            <div className="p-4">
+              <AddActionDialog action={action} />
+            </div>
+          </Scrollable>
         </div>
-        <div className="col-span-1 h-full overflow-hidden ">
+        <div className="col-span-1 h-full overflow-hidden p-4">
           <h4 className="px-4">Ações recentes</h4>
           <ActionList
-            // actions={actionsByPriority(actions)}
             actions={actions}
             hideAccount
             showDateAndTime
+            className="p-4"
           />
         </div>
       </div>
