@@ -67,6 +67,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                 actions={day.actions}
                 hideAccount={slug !== undefined}
                 showDateAndTime={slug !== undefined}
+                className="p-4"
               />
             </>
           )}

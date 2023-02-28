@@ -3,7 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import CalendarHeader from "~/components/CalendarHeader";
 import WeekView from "~/components/Views/CalendarWeek";
-import Scrollable from "~/components/Scrollable";
 import { getUser } from "~/lib/auth.server";
 import { getActions, getCampaigns } from "~/lib/data";
 import { checkDate, getWeek } from "~/lib/functions";
