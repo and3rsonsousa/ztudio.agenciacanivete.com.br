@@ -14,12 +14,31 @@ const DayInfo = ({ day }: { day: DayModel }) => {
 
   return (
     <div
-      className={`flex flex-shrink-0 flex-col overflow-hidden ${
-        context.sidebar.open ? "lg:w-80" : "lg:w-12"
+      className={`relative flex flex-shrink-0 flex-col overflow-hidden ${
+        context.sidebar.open ? "lg:w-80" : "lg:w-0"
       } lg:pt-0`}
     >
       {day !== undefined ? (
         <>
+          <div
+            className={`${
+              !context.sidebar.open ? " " : ""
+            }  right-2 hidden lg:fixed lg:block`}
+          >
+            <Button
+              link
+              small
+              icon
+              squared
+              onClick={() => context.sidebar.set(!context.sidebar.open)}
+            >
+              {context.sidebar.open ? (
+                <ArrowRight className="mr-0.5" />
+              ) : (
+                <ArrowLeft className="ml-0.5" />
+              )}
+            </Button>
+          </div>
           <div className="px-4 py-2">
             {/* Header */}
             <div className="flex items-center justify-between">
@@ -28,25 +47,6 @@ const DayInfo = ({ day }: { day: DayModel }) => {
                   {day.date.format("D [de] MMMM [de] YYYY")}
                 </h5>
               )}
-              <div
-                className={`${
-                  !context.sidebar.open ? "-ml-2" : ""
-                } hidden lg:block`}
-              >
-                <Button
-                  link
-                  small
-                  icon
-                  squared
-                  onClick={() => context.sidebar.set(!context.sidebar.open)}
-                >
-                  {context.sidebar.open ? (
-                    <ArrowRight className="mr-0.5" />
-                  ) : (
-                    <ArrowLeft className="ml-0.5" />
-                  )}
-                </Button>
-              </div>
             </div>
 
             {/* Celebrations */}
