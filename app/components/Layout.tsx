@@ -214,7 +214,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
           {/* Clientes large view */}
-
           <div className="hidden space-y-1 p-2 lg:block">
             {accounts.map((account) => (
               <div key={account.id}>

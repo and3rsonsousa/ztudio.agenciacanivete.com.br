@@ -103,28 +103,22 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           title={`${action.name} - ${action.account.name}`}
         >
           <IsLate action={action} />
-          <div className="flex w-full items-center gap-1 overflow-hidden">
+          <div className="action-line__left">
             {/* Icon For Tags */}
             {<TagIcons type={action.tag.slug} className="h-3 w-3 opacity-60" />}
             {/* Name */}
-            <div className="hidden w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal sm:block ">
-              {action.name}
-            </div>
+            <div className="action-line__name">{action.name}</div>
             {/* Account Short */}
             {!slug && (
-              <div
-                className={`hidden w-4 shrink-0 grow-0 break-all text-center text-[8px] font-medium uppercase leading-none tracking-wider opacity-60 @[120px]:block`}
-              >
-                {action.account.short}
-              </div>
+              <div className="action-line__short">{action.account.short}</div>
             )}
             {/* Account Name for mobile */}
-            <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden">
+            <div className="action-line__name_mobile">
               {action.account.name.slice(0, 3)}
             </div>
           </div>
           {/* Time */}
-          <div className="hidden w-10 overflow-hidden text-center text-xx font-medium opacity-60 @[140px]:block">
+          <div className="action-line__right">
             {dayjs(action.date).format(
               "H[h]".concat(
                 dayjs(action.date).format("mm") !== "00" ? "mm" : ""

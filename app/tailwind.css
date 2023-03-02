@@ -399,6 +399,24 @@ body {
 .action-line {
   @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded-md py-1 px-2 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 dark:ring-offset-gray-1000;
 }
+.action-line__left {
+  @apply flex w-full items-center gap-1 overflow-hidden;
+}
+
+.action-line__name {
+  @apply hidden w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal sm:block;
+}
+
+.action-line__name_mobile {
+  @apply w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs font-medium uppercase sm:hidden;
+}
+.action-line__short {
+  @apply hidden w-4 shrink-0 grow-0 break-all text-center text-[8px] font-medium uppercase leading-none tracking-wider opacity-60 @[120px]:block;
+}
+
+.action-line__right {
+  @apply hidden w-10 overflow-hidden text-center text-xx font-medium opacity-60 @[140px]:block;
+}
 
 .action-line-new {
   @apply relative mx-1 mt-1 flex cursor-pointer items-center justify-between gap-2 rounded border-l-4 bg-gray-100 py-1 px-2 ring-brand ring-offset-2 ring-offset-white transition focus-within:ring-2 hover:text-white dark:bg-gray-800 dark:ring-offset-gray-1000;
