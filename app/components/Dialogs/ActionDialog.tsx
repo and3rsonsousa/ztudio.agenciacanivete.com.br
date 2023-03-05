@@ -251,8 +251,8 @@ export default function ActionDialog({
 
         <div className="grid w-full gap-4 md:grid-cols-2">
           <SelectField
-            name="tag"
-            title="Tag"
+            name="category"
+            title="Categoria"
             value={
               action
                 ? action.category.id
