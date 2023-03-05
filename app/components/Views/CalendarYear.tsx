@@ -33,7 +33,7 @@ const YearView = ({
         return (
           <div key={index} className="col-span-1 flex flex-col p-4">
             <div className="relative mx-auto mb-2 rounded-xl py-1 px-4 text-center font-semibold transition first-letter:capitalize hover:bg-gray-800 ">
-              <Link to={`?month=${month[0].date.format("YYYY-MM")}`}>
+              <Link to={`../?date=${month[0].date.format("DD-MM-YYYY")}`}>
                 {month[0].date.format("MMMM")}
               </Link>
               {currentActions.length > 0 && (
@@ -43,20 +43,22 @@ const YearView = ({
             <div className="grid w-full flex-auto grid-cols-7 text-center text-xs md:text-sm">
               {/* Dias */}
               {month.map((day, index) => {
+                // const actionsOfThisDay = currentActions.filter(
+                //   (action) =>
+                //     dayjs(action.date).format("YYYY-MM-DD") ===
+                //     day.date.format("YYYY-MM-DD")
+                // );
+
                 return (
                   <div
                     key={index}
                     className={`col-span-1 `}
                     style={{ gridColumnStart: day.date.day() + 1 }}
                   >
-                    <div
+                    <Link
+                      to={`../day?date=${day.date.format("DD-MM-YYYY")}`}
                       data-date={day.date.format("MM/DD")}
-                      data-teste={
-                        day.date.format("YYYY-MM-DD") +
-                        " - " +
-                        dayjs().format("YYYY-MM-DD")
-                      }
-                      className={`grid h-6 w-6 place-items-center md:h-8 md:w-8 ${
+                      className={`relative grid h-6 w-6 place-items-center hover:underline md:h-8 md:w-8 ${
                         day.date.format("YYYY-MM-DD") ===
                         dayjs().format("YYYY-MM-DD")
                           ? "rounded-full bg-brand font-semibold text-white"
@@ -69,7 +71,7 @@ const YearView = ({
                       }`}
                     >
                       {day.date.format("D")}
-                    </div>
+                    </Link>
                   </div>
                 );
               })}

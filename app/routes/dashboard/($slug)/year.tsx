@@ -35,13 +35,13 @@ export default function YearPage() {
   const { year } = getYear({ period: date });
 
   return (
-    <>
+    <div className="lg:h-screen lg:overflow-hidden">
       <div>
         <CalendarHeader date={period} view="year" />
       </div>
       <Scrollable>
         <CalendarYear year={year} actions={actions as ActionModel[]} />
       </Scrollable>
-    </>
+    </div>
   );
 }

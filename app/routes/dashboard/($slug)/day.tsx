@@ -46,8 +46,8 @@ export default function DayPage() {
   }>();
 
   return (
-    <>
-      <div className="flex  items-center justify-between p-4">
+    <div className="lg:h-screen lg:overflow-hidden">
+      <div className="flex items-center justify-between gap-4 p-4">
         <div>
           <CalendarHeader date={dayjs(date)} view="day" />
         </div>
@@ -55,6 +55,6 @@ export default function DayPage() {
       <Scrollable>
         <CalendarDay date={date} actions={actions} />
       </Scrollable>
-    </>
+    </div>
   );
 }

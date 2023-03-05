@@ -29,10 +29,10 @@ export default function CalendarDay({
             currentActions.length > 0 && (
               <div
                 key={index}
-                className="flex gap-2 border-b p-2 dark:border-gray-800"
+                className="flex gap-4 border-b p-2 dark:border-gray-800"
               >
                 <div className="text-xl font-medium">{index}h</div>
-                <div className="grid grid-cols-3 gap-x-2">
+                <div className="grid w-full grid-cols-3 gap-x-2 xl:grid-cols-4 3xl:grid-cols-6 ">
                   {currentActions.map((action) => (
                     <div key={action.id}>
                       <ActionMedium action={action} />
