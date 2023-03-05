@@ -50,8 +50,8 @@ export default function ActionDialog({
   const date = context.date.day;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const tags: ItemModel[] = matches[1].data.categorys;
-  const stages: ItemModel[] = matches[1].data.stage;
+  const categories: ItemModel[] = matches[1].data.categories;
+  const stages: ItemModel[] = matches[1].data.stages;
   // const attributes: ItemModel[] = matches[1].data.attributes;
   const persons: PersonModel[] = matches[1].data.persons;
   const campaigns: CampaignModel[] =
@@ -258,7 +258,7 @@ export default function ActionDialog({
                 ? action.category.id
                 : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
             }
-            items={tags.map((tag) => ({
+            items={categories.map((category) => ({
               title: category.name,
               value: category.id,
             }))}
