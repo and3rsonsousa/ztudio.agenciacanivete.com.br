@@ -1,13 +1,21 @@
 import { Link, useMatches } from "@remix-run/react";
 import dayjs from "dayjs";
-import type { CelebrationModel, PeriodType } from "~/lib/models";
+import type { ActionModel, CelebrationModel, PeriodType } from "~/lib/models";
+import Badge from "../Badge";
 
-const YearView = ({ year }: { year: PeriodType[] }) => {
+const YearView = ({
+  year,
+  actions,
+}: {
+  year: PeriodType[];
+  actions: ActionModel[];
+}) => {
   const matches = useMatches();
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
 
   return (
     <div className="grid w-full grid-cols-2 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
+      {/* Meses */}
       {year.map((month, index) => {
         const currentMonthCelebrations = celebrations.filter(
           (celebration) =>
@@ -15,14 +23,25 @@ const YearView = ({ year }: { year: PeriodType[] }) => {
               celebration.date.substring(0, celebration.date.indexOf("/")) &&
             celebration.is_holiday
         );
+        const currentActions = actions.filter((action) => {
+          return (
+            month[0].date.format("MM-YYYY") ===
+            dayjs(action.date).format("MM-YYYY")
+          );
+        });
+
         return (
           <div key={index} className="col-span-1 flex flex-col p-4">
-            <div className="pb-4 text-center font-semibold first-letter:capitalize">
+            <div className="relative mx-auto mb-2 rounded-xl py-1 px-4 text-center font-semibold transition first-letter:capitalize hover:bg-gray-800 ">
               <Link to={`?month=${month[0].date.format("YYYY-MM")}`}>
                 {month[0].date.format("MMMM")}
               </Link>
+              {currentActions.length > 0 && (
+                <Badge size="small">{currentActions.length}</Badge>
+              )}
             </div>
             <div className="grid w-full flex-auto grid-cols-7 text-center text-xs md:text-sm">
+              {/* Dias */}
               {month.map((day, index) => {
                 return (
                   <div

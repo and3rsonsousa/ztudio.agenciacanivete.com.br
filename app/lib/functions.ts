@@ -63,8 +63,13 @@ export const getMonth = ({ period }: { period?: string | null }) => {
   };
 };
 
-export const getYear = (currentDate: Dayjs) => {
-  const firstDayOfCurrentYear = currentDate.startOf("year");
+export const getYear = ({ period }: { period?: string | null }) => {
+  const day = dayjs(period ?? new Date());
+
+  const firstDayOfCurrentYear = day.startOf("year");
+  const lastDayOfCurrentYear = day.endOf("year");
+  const firstDayOfPeriod = firstDayOfCurrentYear.startOf("week");
+  const lastDayOfPeriod = lastDayOfCurrentYear.endOf("week");
 
   const year: Array<PeriodType> = [];
 
@@ -84,7 +89,7 @@ export const getYear = (currentDate: Dayjs) => {
     year.push(Month);
   }
 
-  return { firstDayOfCurrentYear, year };
+  return { firstDayOfCurrentYear, firstDayOfPeriod, lastDayOfPeriod, year };
 };
 
 export const isToday = (date: Dayjs | string) => {
@@ -95,32 +100,38 @@ export function actionsByPriority(actions: ActionModel[]) {
   // return actions;
   return actions
     .reverse()
-    .sort((a, b) => (a.stage.priority > b.stage.priority ? 1 : -1));
+    .sort((a, b) =>
+      (a.stage.priority as number) > (b.stage.priority as number) ? 1 : -1
+    );
 }
 
 export function actionsByCategory(
   actions: ActionModel[],
-  tags: ItemModel[],
+  categories: ItemModel[],
   priority?: boolean
 ) {
-  const categories = tags.map((tag, index) => {
-    let category: { tag: ItemModel; actions: ActionModel[] } = {
-      tag: tag,
+  const actionsByCategory = categories.map((currentCategory, index) => {
+    let category: { category: ItemModel; actions: ActionModel[] } = {
+      category: currentCategory,
       actions: [],
     };
 
     let _actions = priority
       ? actionsByPriority(
-          actions.filter((action) => action.category.slug === category.slug)
+          actions.filter(
+            (action) => action.category.slug === currentCategory.slug
+          )
         )
-      : actions.filter((action) => action.category.slug === category.slug);
+      : actions.filter(
+          (action) => action.category.slug === currentCategory.slug
+        );
 
     category.actions = _actions;
 
     return category;
   });
 
-  return categories;
+  return actionsByCategory;
 }
 
 export function actionsByAccount(

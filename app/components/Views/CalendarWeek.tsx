@@ -62,28 +62,6 @@ const WeekView = ({
                 wrap
               />
             </div>
-            // <div key={index} className="h-full w-full overflow-hidden">
-            //   <Scrollable>
-            //     <div className="px-1">
-            //       {/* Actions */}
-            //       {actions
-            //         .filter(
-            //           (action) =>
-            //             dayjs(action.date).format("YYYY-MM-DD") ===
-            //             day.date.format("YYYY-MM-DD")
-            //         )
-            //         .map((action) => (
-            //           <ActionMedium
-            //             action={action}
-            //             hideAccount={false}
-            //             key={action.id}
-            //             showDateAndTime={true}
-            //             wrap
-            //           />
-            //         ))}
-            //     </div>
-            //   </Scrollable>
-            // </div>
           );
         })}
       </div>

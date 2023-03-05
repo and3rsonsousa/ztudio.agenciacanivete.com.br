@@ -2,21 +2,37 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import CalendarHeader from "~/components/CalendarHeader";
-import CalendarYear from "~/components/Views/CalendarYear";
 import Scrollable from "~/components/Scrollable";
+import CalendarYear from "~/components/Views/CalendarYear";
+import { getUser } from "~/lib/auth.server";
+import { getActions } from "~/lib/data";
 import { checkDate, getYear } from "~/lib/functions";
+import type { ActionModel } from "~/lib/models";
 
-export function loader({ request }: LoaderArgs) {
+export async function loader({ request, params }: LoaderArgs) {
+  const {
+    data: { session },
+  } = await getUser(request);
+
   let date = new URL(request.url).searchParams.get("date");
   date = checkDate(date);
-  return { date };
+
+  const { data: actions } = await getActions({
+    request,
+    account: params.slug,
+    user: session?.user.id,
+    period: date,
+    mode: "year",
+  });
+
+  return { date, actions };
 }
 
 export default function YearPage() {
-  const { date } = useLoaderData<typeof loader>();
+  const { date, actions } = useLoaderData<typeof loader>();
 
   const period = dayjs(date);
-  const { year } = getYear(period);
+  const { year } = getYear({ period: date });
 
   return (
     <>
@@ -24,7 +40,7 @@ export default function YearPage() {
         <CalendarHeader date={period} view="year" />
       </div>
       <Scrollable>
-        <CalendarYear year={year} />
+        <CalendarYear year={year} actions={actions as ActionModel[]} />
       </Scrollable>
     </>
   );

@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
-import { getMonth, getWeek } from "./functions";
+import { getMonth, getWeek, getYear } from "./functions";
 import { getSupabase } from "./supabase";
 
 const SQL__GET__ACTION = `*, account:Account!inner(*), category:Category(*), stage:Stage(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+
+const SQL__GET__ACTION_ONLY_ID = `id, date, Account(id)`;
 
 // Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
@@ -52,19 +54,6 @@ export const getAllAccounts = (request: Request) => {
   });
 };
 
-// export const getCategoriesStages = async (request: Request) => {
-//   const { supabase } = getSupabase(request);
-//   const [{ data: categories }, { data: stages }] = await Promise.all([
-//     supabase
-//       .from("Category")
-//       .select("*")
-//       .order("priority", { ascending: true }),
-//     supabase.from("Stage").select("*").order("priority", { ascending: true }),
-//   ]);
-
-//   return { categories, stages };
-// };
-
 export const getCategoriesStagesAttributes = async (request: Request) => {
   const { supabase } = getSupabase(request);
   const [{ data: categories }, { data: stages }, { data: attributes }] =
@@ -89,7 +78,7 @@ export const getActions = async (
     user?: string;
     account?: string;
     period?: string | null;
-    mode?: "week" | "day" | "month";
+    mode?: "year" | "week" | "day" | "month";
     all?: boolean;
     where?: string;
   } = {}
@@ -148,7 +137,9 @@ export const getActions = async (
   }
 
   const { firstDayOfPeriod, lastDayOfPeriod } =
-    mode === "week"
+    mode === "year"
+      ? getYear({ period })
+      : mode === "week"
       ? getWeek({ period })
       : mode === "day"
       ? { firstDayOfPeriod: dayjs(period), lastDayOfPeriod: dayjs(period) }
@@ -157,7 +148,7 @@ export const getActions = async (
   if (account) {
     const { data, error } = await supabase
       .from("Action")
-      .select(SQL__GET__ACTION)
+      .select(mode === "year" ? SQL__GET__ACTION_ONLY_ID : SQL__GET__ACTION)
       .eq("Account.slug", account)
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
@@ -175,7 +166,7 @@ export const getActions = async (
 
     const { data, error } = await supabase
       .from("Action")
-      .select(SQL__GET__ACTION)
+      .select(mode === "year" ? SQL__GET__ACTION_ONLY_ID : SQL__GET__ACTION)
       .contains("Account.users", [user])
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
