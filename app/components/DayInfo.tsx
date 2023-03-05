@@ -6,7 +6,6 @@ import Button from "./Button";
 import Celebration from "./Celebrations";
 import CreateButtons from "./CreateButtons";
 import DataFlow from "./DataFlow";
-import Exclamation from "./Exclamation";
 
 const DayInfo = ({ day }: { day: DayModel }) => {
   const context: ContextType = useOutletContext();
@@ -18,7 +17,7 @@ const DayInfo = ({ day }: { day: DayModel }) => {
         context.sidebar.open ? "lg:w-80" : "lg:w-0"
       } lg:pt-0`}
     >
-      {day !== undefined ? (
+      {day !== undefined && (
         <>
           <div
             className={`${
@@ -39,27 +38,26 @@ const DayInfo = ({ day }: { day: DayModel }) => {
               )}
             </Button>
           </div>
-          <div className="px-4 py-2">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              {context.sidebar.open && (
-                <h5 className="text-xs">
-                  {day.date.format("D [de] MMMM [de] YYYY")}
-                </h5>
-              )}
-            </div>
-
-            {/* Celebrations */}
-            {context.sidebar.open && day.celebrations.length > 0 ? (
-              <div className="mt-4 flex flex-col">
-                {day.celebrations.map((celebration, index) => (
-                  <Celebration celebration={celebration} key={index} />
-                ))}
-              </div>
-            ) : null}
-          </div>
           {context.sidebar.open && (
             <>
+              <div className="px-4 py-2">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <h5 className="text-xs">
+                    {day.date.format("D [de] MMMM [de] YYYY")}
+                  </h5>
+                </div>
+
+                {/* Celebrations */}
+                {day.celebrations.length > 0 ? (
+                  <div className="mt-4 flex flex-col">
+                    {day.celebrations.map((celebration, index) => (
+                      <Celebration celebration={celebration} key={index} />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
               <div className="mx-auto">
                 <DataFlow actions={day.actions} />
               </div>
@@ -73,12 +71,6 @@ const DayInfo = ({ day }: { day: DayModel }) => {
             </>
           )}
         </>
-      ) : (
-        context.sidebar.open && (
-          <div className="flex flex-auto p-8">
-            <Exclamation icon>Escolha um dia no calendário ao lado</Exclamation>
-          </div>
-        )
       )}
 
       <CreateButtons
