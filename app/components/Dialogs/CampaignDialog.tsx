@@ -141,7 +141,7 @@ export default function CampaignDialog({
 
           <SelectField
             name="stage"
-            title="Stage"
+            title="Status"
             items={stageItems}
             value={campaign ? campaign.stage : undefined}
           />
