@@ -16,15 +16,18 @@ export default function InstagramGrid({ actions }: { actions: ActionModel[] }) {
   const context: ContextType = useOutletContext();
   const [fill, setFill] = useState(true);
   const matches = useMatches();
-  const { tags } = matches[1].data;
+  const { categories } = matches[1].data;
 
-  const gridTags = tags.filter(
-    (tag: ItemModel) => tag.slug === "feed" || tag.slug === "reels"
+  const gridTags = categories.filter(
+    (category: ItemModel) =>
+      category.slug === "feed" || category.slug === "reels"
   );
 
   let filtered: FilterType = actions.filter(
     (action: ActionModel) =>
-      gridTags.filter((tag: ItemModel) => tag.id === action.tag.id).length > 0
+      gridTags.filter(
+        (category: ItemModel) => category.id === action.category.id
+      ).length > 0
   );
 
   if (fill && filtered.length > 3 && filtered.length % 3 !== 0) {

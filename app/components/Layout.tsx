@@ -244,7 +244,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               <DropdownMenu.Trigger asChild>
                 <button className="p-2">
-                  <Briefcase className="w-4" />
+                  <Briefcase className="sq-4" />
                 </button>
               </DropdownMenu.Trigger>
               <AnimatePresence>
@@ -260,7 +260,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           <DropdownMenu.Item key={account.id} asChild>
                             <Link
                               to={`/dashboard/${account.slug}/${searchParams}`}
-                              className="dropdown-item item-small block"
+                              className="dropdown-item item-small"
                             >
                               {account.name}
                             </Link>
@@ -287,7 +287,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               )}
               <div className={`${context.sidebar.open ? "ml-auto" : "-ml-1"}`}>
-                <Search className="w-4" />
+                <Search className="sq-4" />
               </div>
             </button>
           </div>
@@ -328,7 +328,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <DropdownMenu.Item asChild>
                           <Link
                             to="/dashboard/me"
-                            className="dropdown-item item-small block"
+                            className="dropdown-item item-small"
                           >
                             Meus dados
                           </Link>
@@ -337,7 +337,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <DropdownMenu.Item asChild>
                           <Link
                             to="/dashboard/trash"
-                            className="dropdown-item item-small block"
+                            className="dropdown-item item-small"
                           >
                             Lixeira
                           </Link>
@@ -376,7 +376,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   <DropdownMenu.Item asChild>
                                     <Link
                                       to={`/dashboard/admin/accounts`}
-                                      className="dropdown-item item-small block"
+                                      className="dropdown-item item-small"
                                     >
                                       Ver Clientes
                                     </Link>
@@ -384,7 +384,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   <DropdownMenu.Item asChild>
                                     <Link
                                       to={`/dashboard/admin/accounts/new`}
-                                      className="dropdown-item item-small block"
+                                      className="dropdown-item item-small"
                                     >
                                       Novo Cliente
                                     </Link>
@@ -405,7 +405,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   <DropdownMenu.Item asChild>
                                     <Link
                                       to={`/dashboard/admin/users/`}
-                                      className="dropdown-item item-small block"
+                                      className="dropdown-item item-small"
                                     >
                                       Ver Usuários
                                     </Link>
@@ -413,7 +413,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   <DropdownMenu.Item asChild>
                                     <Link
                                       to={`/dashboard/admin/users/new`}
-                                      className="dropdown-item item-small block"
+                                      className="dropdown-item item-small"
                                     >
                                       Novo Usuário
                                     </Link>
@@ -427,7 +427,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <DropdownMenu.Item asChild>
                               <Link
                                 to={`/roadmap`}
-                                className="dropdown-item item-small block"
+                                className="dropdown-item item-small"
                               >
                                 Roadmap
                               </Link>
@@ -487,13 +487,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           >
                             <div className="flex items-center gap-1 font-bold">
                               <div>
-                                <CommandIcon className="h-3 w-3" />
+                                <CommandIcon className="sq-3 w-3" />
                               </div>
                               {shortcut.value !== "search" && (
                                 <>
                                   <div>+</div>
                                   <div className="text-xx">
-                                    <ArrowBigUp className="h-3 w-3" />
+                                    <ArrowBigUp className="sq-3 w-3" />
                                   </div>
                                 </>
                               )}

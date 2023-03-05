@@ -15,6 +15,7 @@ import {
   CheckCircle,
   ChevronRight,
   Clock,
+  Code2,
   Copy,
   DollarSign,
   Edit,
@@ -94,7 +95,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
             let ele = e.target as HTMLElement;
             ele.classList.remove("dragging");
           }}
-          className={`action-line bg-${action.status.slug} bg-${action.status.slug}-hover  @container`}
+          className={`action-line bg-${action.stage.slug} bg-${action.stage.slug}-hover  @container`}
           onClick={() => {
             navigate(
               `/dashboard/${action.account.slug}/action/${action.id}?redirectTo=${url}`
@@ -105,7 +106,12 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
           <IsLate action={action} />
           <div className="action-line__left">
             {/* Icon For Tags */}
-            {<TagIcons type={action.tag.slug} className="h-3 w-3 opacity-60" />}
+            {
+              <TagIcons
+                type={action.category.slug}
+                className="sq-3 opacity-60"
+              />
+            }
             {/* Name */}
             <div className="action-line__name">{action.name}</div>
             {/* Account Short */}
@@ -131,18 +137,20 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
         {showContextMenu && (
           <ContextMenu.Portal forceMount>
             <ContextMenu.Content asChild forceMount loop>
-              <motion.div className="dropdown-content w-36" {...fade(0.2)}>
-                {action.status.id !==
-                  "a448e17d-05ba-4ad0-9990-773f9384d15e" && (
+              <motion.div
+                className="dropdown-content min-w-[9rem]"
+                {...fade(0.2)}
+              >
+                {action.stage.id !== "a448e17d-05ba-4ad0-9990-773f9384d15e" && (
                   <>
                     {/* Caso o item não esteja concluído, exibe a opção de concluir mais rápido */}
                     <ContextMenu.Item
                       onSelect={(event: Event) => {
                         fetcher.submit(
                           {
-                            action: "update-action-status",
+                            action: "update-action-stage",
                             id: action.id,
-                            status: "a448e17d-05ba-4ad0-9990-773f9384d15e",
+                            stage: "a448e17d-05ba-4ad0-9990-773f9384d15e",
                           },
                           {
                             method: "post",
@@ -150,7 +158,7 @@ export const ActionLine = ({ action }: { action: ActionModel }) => {
                           }
                         );
                       }}
-                      className="dropdown-item item-small flex items-center gap-2"
+                      className="dropdown-item item-small"
                     >
                       <div
                         className={`bg-accomplished mx-1 h-2 w-2 rounded-full`}
@@ -196,7 +204,7 @@ export const ActionMedium = ({
       <ContextMenu.Trigger>
         <div
           tabIndex={0}
-          className={`action-medium @container ${action.status.slug}`}
+          className={`action-medium @container ${action.stage.slug}`}
         >
           <div>
             <div className="text-sm font-normal">{action.name}</div>
@@ -205,7 +213,7 @@ export const ActionMedium = ({
                 to={`/dashboard/${action.account.slug}/campaign/${action.campaign}`}
                 className="mb-2 flex items-center text-xx hover:underline"
               >
-                <ArrowDownRight className="w-4" />
+                <ArrowDownRight className="sq-4" />
                 <span>{action.campaign.name}</span>
               </Link>
             )}
@@ -213,7 +221,7 @@ export const ActionMedium = ({
           {action.description?.trim().length ? (
             <div className="text-xx line-clamp-3">{action.description}</div>
           ) : null}
-          {/* Horário - Cliente - Tag - Status */}
+          {/* Horário - Account - Category - Stage */}
           <div
             className={`flex ${
               wrap ? "flex-wrap" : ""
@@ -239,14 +247,14 @@ export const ActionMedium = ({
             )}
             <div className="flex items-center gap-1">
               <div
-                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.tag.slug} font-bold`}
+                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.category.slug} font-bold`}
               >
-                {action.tag.short}
+                {action.category.short}
               </div>
               <div
-                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.status.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
+                className={`rounded-full px-2 text-xx uppercase tracking-wide text-white bg-${action.stage.slug} w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold`}
               >
-                {action.status.short}
+                {action.stage.short}
               </div>
             </div>
           </div>
@@ -300,7 +308,7 @@ export const ActionGrid = ({
       <ContextMenu.Trigger>
         <div
           className={`flex aspect-square flex-col justify-between border border-white p-2 text-center text-xx leading-tight dark:border-gray-1000  ${
-            (action as ActionModel).status.id ===
+            (action as ActionModel).stage.id ===
             "a448e17d-05ba-4ad0-9990-773f9384d15e"
               ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-400"
               : " bg-gray-100 dark:bg-gray-800 dark:text-gray-200"
@@ -377,8 +385,8 @@ const ContextMenuItems = ({
   fetcher: FetcherWithComponents<any>;
 }) => {
   const matches = useMatches();
-  const tags: ItemModel[] = matches[1].data.tags;
-  const status: ItemModel[] = matches[1].data.status;
+  const categories: ItemModel[] = matches[1].data.categories;
+  const stages: ItemModel[] = matches[1].data.stages;
   const accounts: AccountModel[] = matches[1].data.accounts;
   const trash = matches[1].data.url?.includes("trash");
 
@@ -388,16 +396,16 @@ const ContextMenuItems = ({
       <ContextMenu.Item asChild>
         <Link
           to={`/dashboard/${action.account.slug}/action/${action.id}`}
-          className="dropdown-item item-small flex items-center justify-between gap-2"
+          className="dropdown-item item-small"
         >
           <div className="flex items-center gap-2">
-            <Edit className="w-4" /> <div>Editar</div>
+            <Edit className="sq-4" /> <div>Editar</div>
           </div>
-          <div className="opacity-50">E</div>
+          <div className="sq-4 text-center">E</div>
         </Link>
       </ContextMenu.Item>
       {/* Duplicar */}
-      <div className="flex">
+      <div className="flex items-center justify-between">
         <ContextMenu.Item
           onSelect={() => {
             fetcher.submit(
@@ -411,14 +419,14 @@ const ContextMenuItems = ({
               }
             );
           }}
-          className="dropdown-item item-small flex items-center gap-2"
+          className="dropdown-item item-small "
         >
-          <Copy className="w-4 shrink-0" />
+          <Copy className="sq-4 shrink-0" />
           <div>Duplicar</div>
         </ContextMenu.Item>
         <ContextMenu.Sub>
-          <ContextMenu.SubTrigger className="dropdown-item ml-auto py-1.5 pr-4 pl-2">
-            <ChevronRight className="w-4" />
+          <ContextMenu.SubTrigger className="dropdown-item item-small">
+            <ChevronRight className="sq-4" />
           </ContextMenu.SubTrigger>
           <ContextMenu.Portal>
             <ContextMenu.SubContent className="dropdown-content">
@@ -464,23 +472,23 @@ const ContextMenuItems = ({
             }
           );
         }}
-        className="dropdown-item item-small flex items-center justify-between gap-2"
+        className="dropdown-item item-small"
         textValue="Xclude"
       >
         <div className="flex items-center gap-2">
-          <Trash2 className="w-4" /> <div>Excluir</div>
+          <Trash2 className="sq-4" /> <div>Excluir</div>
         </div>
-        <div className="opacity-50">X</div>
+        <div className="sq-4 text-center">X</div>
       </ContextMenu.Item>
       {/* Adiar */}
       <ContextMenu.Sub>
-        <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-          <Clock className="w-4" />
+        <ContextMenu.SubTrigger className="dropdown-item item-small ">
+          <Clock className="sq-4" />
           <div>Adiar</div>
-          <ChevronRight className="ml-auto w-4" />
+          <ChevronRight className="sq-4 ml-auto" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
-          <ContextMenu.SubContent className="dropdown-content w-36">
+          <ContextMenu.SubContent className="dropdown-content min-w-[9rem]">
             {[
               {
                 id: 1,
@@ -525,26 +533,25 @@ const ContextMenuItems = ({
       <ContextMenu.Sub>
         <ContextMenu.SubTrigger
           textValue="Tag"
-          className="dropdown-item item-small flex items-center gap-2"
+          className="dropdown-item item-small "
         >
-          {/* <TagIcon className="w-4" /> */}
           <div
-            className={`mr-2 h-2 w-2 rounded-full bg-${action.tag.slug}`}
+            className={`mr-2 h-2 w-2 rounded-full bg-${action.category.slug}`}
           ></div>
-          <div>{action.tag.name}</div>
-          <ChevronRight className="ml-auto w-4" />
+          <div>{action.category.name}</div>
+          <ChevronRight className="sq-4 ml-auto" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
-          <ContextMenu.SubContent className="dropdown-content w-36">
-            {tags.map((tag) => (
+          <ContextMenu.SubContent className="dropdown-content min-w-[9rem]">
+            {categories.map((category) => (
               <ContextMenu.Item
-                key={tag.id}
+                key={category.id}
                 onSelect={(event: Event) => {
                   fetcher.submit(
                     {
-                      action: "update-tag",
+                      action: "update-category",
                       id: action.id,
-                      tag: tag.id,
+                      category: category.id,
                     },
                     {
                       method: "post",
@@ -552,40 +559,43 @@ const ContextMenuItems = ({
                     }
                   );
                 }}
-                className="dropdown-item item-small flex items-center gap-2"
+                className="dropdown-item item-small "
               >
-                <div className={`h-2 w-2 rounded-full bg-${tag.slug}`}></div>
-                <div className="flex-shrink-0 flex-grow">{tag.name}</div>
-                {action.tag.id === tag.id && <CheckCircle className="w-4" />}
+                <div
+                  className={`h-2 w-2 rounded-full bg-${category.slug}`}
+                ></div>
+                <div className="flex-shrink-0 flex-grow">{category.name}</div>
+                {action.category.id === category.id && (
+                  <CheckCircle className="sq-4" />
+                )}
               </ContextMenu.Item>
             ))}
           </ContextMenu.SubContent>
         </ContextMenu.Portal>
       </ContextMenu.Sub>
-      {/* Status */}
+      {/* stage */}
       <ContextMenu.Sub>
         <ContextMenu.SubTrigger
-          textValue="Status"
-          className="dropdown-item item-small flex items-center gap-2"
+          textValue="Stage"
+          className="dropdown-item item-small "
         >
-          {/* <CheckBadgeIcon className="w-4" /> */}
           <div
-            className={`mr-2 h-2 w-2 rounded-full bg-${action.status.slug}`}
+            className={`mr-2 h-2 w-2 rounded-full bg-${action.stage.slug}`}
           ></div>
-          <div>{action.status.name}</div>
-          <ChevronRight className="ml-auto w-4" />
+          <div>{action.stage.name}</div>
+          <ChevronRight className="sq-4 ml-auto" />
         </ContextMenu.SubTrigger>
         <ContextMenu.Portal>
-          <ContextMenu.SubContent className="dropdown-content w-36">
-            {status.map((stat) => (
+          <ContextMenu.SubContent className="dropdown-content min-w-[9rem]">
+            {stages.map((stage) => (
               <ContextMenu.Item
-                key={stat.id}
+                key={stage.id}
                 onSelect={(event: Event) => {
                   fetcher.submit(
                     {
-                      action: "update-action-status",
+                      action: "update-action-stage",
                       id: action.id,
-                      status: stat.id,
+                      stage: stage.id,
                     },
                     {
                       method: "post",
@@ -593,12 +603,12 @@ const ContextMenuItems = ({
                     }
                   );
                 }}
-                className="dropdown-item item-small flex items-center gap-2"
+                className="dropdown-item item-small "
               >
-                <div className={`h-2 w-2 rounded-full bg-${stat.slug}`}></div>
-                <div className="flex-shrink-0 flex-grow">{stat.name}</div>
-                {action.status.id === stat.id && (
-                  <CheckCircle className="w-4" />
+                <div className={`h-2 w-2 rounded-full bg-${stage.slug}`}></div>
+                <div className="flex-shrink-0 flex-grow">{stage.name}</div>
+                {action.stage.id === stage.id && (
+                  <CheckCircle className="sq-4" />
                 )}
               </ContextMenu.Item>
             ))}
@@ -611,7 +621,7 @@ const ContextMenuItems = ({
 
 const IsLate = ({ action }: { action: ActionModel }) =>
   dayjs(action.date).isBefore(dayjs()) &&
-  action.status.slug !== "accomplished" ? (
+  action.stage.slug !== "accomplished" ? (
     <div
       className="absolute -left-1 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-white bg-error-500 dark:border-gray-1000"
       title={`Atrasado ${dayjs(action.date).fromNow()}`}
@@ -642,6 +652,8 @@ export const TagIcons = ({
       return <Music2 className={className} />;
     case "financial":
       return <DollarSign className={className} />;
+    case "webdev":
+      return <Code2 className={className} />;
     default:
       return <HelpCircle className={className} />;
   }

@@ -31,8 +31,8 @@ export type CampaignModel = {
   actions: ActionModel[];
   created_at?: string;
   updated_at?: string;
-  status: string;
-  Status?: ItemModel;
+  stage: string;
+  Stage?: ItemModel;
   Account?: AccountModel;
   Action?: ActionModel[];
 };
@@ -46,11 +46,11 @@ export type ActionModel = {
   updated_at: string;
   creator: PersonModel;
   responsible: PersonModel;
-  tag: ItemModel & { priority: number };
-  status: ItemModel & { priority: number };
+  category: ItemModel;
+  stage: ItemModel;
   account: AccountModel;
   campaign: CampaignModel;
-  attributes: ItemModel & { priority: number };
+  attributes: ItemModel;
   deleted: boolean;
 };
 
@@ -66,6 +66,7 @@ export type ItemModel = {
   name: string;
   slug: string;
   short?: string;
+  priority?: number;
 };
 
 export type DayModel = {

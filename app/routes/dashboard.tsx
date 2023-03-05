@@ -8,7 +8,7 @@ import {
   getCelebrations,
   getPersonByUser,
   getPersons,
-  getTagsStatusAttributes,
+  getCategoriesStagesAttributes,
 } from "~/lib/data";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -26,13 +26,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     { data: person },
     { data: persons },
     { data: accounts },
-    { tags, status, attributes },
+    { categories, stages, attributes },
     { data: celebrations },
   ] = await Promise.all([
     getPersonByUser(userId, request),
     getPersons(request),
     getAccounts(userId, request),
-    getTagsStatusAttributes(request),
+    getCategoriesStagesAttributes(request),
     getCelebrations({ request }),
   ]);
   const url = new URL(request.url).pathname;
@@ -40,8 +40,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     person,
     persons,
     accounts,
-    tags,
-    status,
+    categories,
+    stages,
     attributes,
     celebrations,
     url,

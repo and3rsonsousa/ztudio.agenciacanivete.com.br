@@ -45,7 +45,7 @@ export default function Calendar({
   const matches = useMatches();
   let height = 0;
   const celebrations: CelebrationModel[] = matches[1].data.celebrations;
-  const tags: ItemModel[] = matches[1].data.tags;
+  const categories: ItemModel[] = matches[1].data.categories;
   const today = dayjs();
 
   const { firstDayOfCurrentMonth, days: newDays } = getMonth({
@@ -67,7 +67,7 @@ export default function Calendar({
         dayjs(action.date).format("YYYY-MM-DD") ===
           _day.date.format("YYYY-MM-DD") &&
         (context.filter.option === "all" ||
-          action.tag.slug === context.filter.option)
+          action.category.slug === context.filter.option)
       );
     });
 
@@ -176,7 +176,7 @@ export default function Calendar({
                   <DropdownMenu.Item
                     key={index}
                     title={`Cmd + K → ${item.shortcut}`}
-                    className="dropdown-item item-small flex justify-between gap-4"
+                    className="dropdown-item item-small"
                     onSelect={() => {
                       if (
                         context.filter.option !== "all" &&
@@ -189,7 +189,7 @@ export default function Calendar({
                   >
                     {item?.title.substring(item.title.indexOf(" ") + 1)}
                     {context.arrange.option === item.value && (
-                      <CheckCircle className="w-4" />
+                      <CheckCircle className="sq-4" />
                     )}
                   </DropdownMenu.Item>
                 ))}
@@ -206,7 +206,7 @@ export default function Calendar({
             <DropdownMenu.Portal>
               <DropdownMenu.Content className="dropdown-content">
                 <DropdownMenu.Item
-                  className="dropdown-item item-small flex justify-between gap-4"
+                  className="dropdown-item item-small"
                   onSelect={() => {
                     context.filter.set("all");
                   }}
@@ -214,24 +214,24 @@ export default function Calendar({
                 >
                   Todos
                   {context.filter.option === "all" && (
-                    <CheckCircle className="w-4" />
+                    <CheckCircle className="sq-4 w-4" />
                   )}
                 </DropdownMenu.Item>
-                {tags.map((tag, index) => (
+                {categories.map((category, index) => (
                   <DropdownMenu.Item
                     key={index}
                     title={`Cmd + K → ${index + 1}`}
-                    className="dropdown-item item-small flex justify-between gap-4"
+                    className="dropdown-item item-small"
                     onSelect={() => {
                       if (context.arrange.option === "arrange_category") {
                         context.arrange.set("arrange_all");
                       }
-                      context.filter.set(tag.slug);
+                      context.filter.set(category.slug);
                     }}
                   >
-                    {tag.name}
-                    {context.filter.option === tag.slug && (
-                      <CheckCircle className="w-4" />
+                    {category.name}
+                    {context.filter.option === category.slug && (
+                      <CheckCircle className="sq-4" />
                     )}
                   </DropdownMenu.Item>
                 ))}

@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { getMonth, getWeek } from "./functions";
 import { getSupabase } from "./supabase";
 
-const SQL__GET__ACTION = `*, account:Account!inner(*), tag:Tag(*), status:Status!Action_status_fkey(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+const SQL__GET__ACTION = `*, account:Account!inner(*), category:Category(*), stage:Stage(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
 
 // Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
@@ -52,32 +52,35 @@ export const getAllAccounts = (request: Request) => {
   });
 };
 
-export const getTagsStatus = async (request: Request) => {
-  const { supabase } = getSupabase(request);
-  const [{ data: tags }, { data: status }] = await Promise.all([
-    supabase.from("Tag").select("*").order("priority", { ascending: true }),
-    supabase.from("Status").select("*").order("priority", { ascending: true }),
-  ]);
+// export const getCategoriesStages = async (request: Request) => {
+//   const { supabase } = getSupabase(request);
+//   const [{ data: categories }, { data: stages }] = await Promise.all([
+//     supabase
+//       .from("Category")
+//       .select("*")
+//       .order("priority", { ascending: true }),
+//     supabase.from("Stage").select("*").order("priority", { ascending: true }),
+//   ]);
 
-  return { tags, status };
-};
+//   return { categories, stages };
+// };
 
-export const getTagsStatusAttributes = async (request: Request) => {
+export const getCategoriesStagesAttributes = async (request: Request) => {
   const { supabase } = getSupabase(request);
-  const [{ data: tags }, { data: status }, { data: attributes }] =
+  const [{ data: categories }, { data: stages }, { data: attributes }] =
     await Promise.all([
-      supabase.from("Tag").select("*").order("priority", { ascending: true }),
       supabase
-        .from("Status")
+        .from("Category")
         .select("*")
         .order("priority", { ascending: true }),
+      supabase.from("Stage").select("*").order("priority", { ascending: true }),
       supabase
         .from("Attribute")
         .select("*")
         .order("priority", { ascending: true }),
     ]);
 
-  return { tags, status, attributes };
+  return { categories, stages, attributes };
 };
 
 export const getActions = async (
@@ -220,7 +223,7 @@ export const getCampaign = async (request: Request, id: string) => {
   const { data, error } = await supabase
     .from("Campaign")
     .select(
-      "*, Action!inner(*), Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+      "*, Action!inner(*), Account!Campaign_account_fkey!inner(*), stage:Stage!Campaign_stage_fkey!inner(*)"
     )
     .eq("id", id)
     .single();
@@ -249,8 +252,9 @@ export const getCampaigns = async (
     const { data, error } = await supabase
       .from("Campaign")
       .select(
-        "*, Account!Campaign_account_fkey!inner(*),Status!Campaign_status_fkey!inner(*)"
+        "*, Account!Campaign_account_fkey!inner(*),state:Campaign_stage_fkey(*)"
       )
+
       .eq("Account.slug", account)
       .is("deleted", null)
       .order("date_start", {
@@ -265,13 +269,16 @@ export const getCampaigns = async (
     const { data, error } = await supabase
       .from("Campaign")
       .select(
-        "*, Account!Campaign_account_fkey!inner(*), Status!Campaign_status_fkey!inner(*)"
+        "*, Account!Campaign_account_fkey!inner(*), stage:Campaign_stage_fkey(*)"
       )
+
       .contains("Account.users", [user])
       .is("deleted", null)
       .order("date_start", {
         ascending: true,
       });
+
+    if (error) throw new Error(error.message);
 
     return { data, error };
   }
@@ -322,8 +329,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
       const account = formData.get("account");
       const campaign = formData.get("campaign");
       const description = formData.get("description");
-      const tag = formData.get("tag");
-      const status = formData.get("status");
+      const category = formData.get("category");
+      const stage = formData.get("stage");
       const date = formData.get("date");
 
       const values = {
@@ -333,8 +340,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
         account,
         campaign: campaign ? campaign : null,
         description,
-        tag,
-        status,
+        category,
+        stage,
         date,
       };
 
@@ -367,7 +374,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
       const description = formData.get("description");
       const date_start = formData.get("date_start");
       const date_end = formData.get("date_end");
-      const status = formData.get("status");
+      const stage = formData.get("stage");
 
       const values = {
         creator: creator,
@@ -376,7 +383,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         description,
         date_start,
         date_end,
-        status,
+        stage,
       };
 
       if (name === "") {
@@ -406,21 +413,24 @@ export const handleAction = async (formData: FormData, request: Request) => {
     const id = formData.get("id") as string;
     let values = {};
     let table = "";
-    if (action === "update-tag") {
-      values = { tag: formData.get("tag") as string, updated_at: "NOW()" };
+    if (action === "update-category") {
+      values = {
+        category: formData.get("category") as string,
+        updated_at: "NOW()",
+      };
       table = "Action";
     } else if (action === "update-delay") {
       values = { date: formData.get("date") as string, updated_at: "NOW()" };
       table = "Action";
-    } else if (action === "update-action-status") {
+    } else if (action === "update-action-stage") {
       values = {
-        status: formData.get("status") as string,
+        stage: formData.get("stage") as string,
         updated_at: "NOW()",
       };
       table = "Action";
-    } else if (action === "update-campaign-status") {
+    } else if (action === "update-campaign-stage") {
       values = {
-        status: formData.get("status") as string,
+        stage: formData.get("stage") as string,
         updated_at: "NOW()",
       };
       table = "Campaign";
@@ -435,8 +445,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
         name: formData.get("name") as string,
         description: formData.get("description") as string,
         account: formData.get("account") as string,
-        tag: formData.get("tag") as string,
-        status: formData.get("status") as string,
+        category: formData.get("category") as string,
+        stage: formData.get("stage") as string,
         date: formData.get("date") as string,
         responsible: formData.get("responsible") as string,
         updated_at: "NOW()",
@@ -568,8 +578,8 @@ export const handleAction = async (formData: FormData, request: Request) => {
         name: old_action.name,
         description: old_action.description,
         date: old_action.date,
-        tag: old_action.tag,
-        status: old_action.status,
+        category: old_action.category,
+        stage: old_action.stage,
         account: account ? account : old_action.account,
         campaign: old_action.campaign,
         creator: old_action.creator,

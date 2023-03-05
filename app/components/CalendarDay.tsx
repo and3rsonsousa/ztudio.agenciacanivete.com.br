@@ -40,7 +40,7 @@ export default function Day({
 }) {
   const fetcher = useFetcher();
   const matches = useMatches();
-  const tags: ItemModel[] = matches[1].data.tags;
+  const tags: ItemModel[] = matches[1].data.categorys;
   const accounts: AccountModel[] = matches[1].data.accounts;
 
   const context: ContextType = useOutletContext();
@@ -123,7 +123,7 @@ export default function Day({
             className="uppercase transition lg:opacity-0 lg:group-hover:opacity-100"
             to={`/dashboard/day/${day.date.format("DD-MM-YYYY")}`}
           >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLink className="sq-4 w-4" />
           </Link>
         </div>
 
@@ -187,12 +187,12 @@ export default function Day({
                     <div key={index}>
                       <div className="mb-1 flex items-center gap-2">
                         <div
-                          className={`mb-1/2 h-1 w-1 rounded-full bg-${category.tag.slug}`}
+                          className={`mb-1/2 h-1 w-1 rounded-full bg-${category.category.slug}`}
                         ></div>
                         <div
                           className={`text-xx font-bold uppercase tracking-[1px] text-gray-700 dark:text-gray-300`}
                         >
-                          {category.tag?.name}
+                          {category.category?.name}
                         </div>
                       </div>
                       {category.actions?.map((action, index) => (

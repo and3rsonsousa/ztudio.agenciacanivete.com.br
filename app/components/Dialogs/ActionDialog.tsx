@@ -50,8 +50,8 @@ export default function ActionDialog({
   const date = context.date.day;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const tags: ItemModel[] = matches[1].data.tags;
-  const status: ItemModel[] = matches[1].data.status;
+  const tags: ItemModel[] = matches[1].data.categorys;
+  const stages: ItemModel[] = matches[1].data.stage;
   // const attributes: ItemModel[] = matches[1].data.attributes;
   const persons: PersonModel[] = matches[1].data.persons;
   const campaigns: CampaignModel[] =
@@ -150,12 +150,7 @@ export default function ActionDialog({
         {/* Mostra há quanto tempo foi criado ou atualizado */}
         {action ? (
           <div className="flex items-center gap-2 text-xs text-gray-400">
-            <div>
-              {isUpdating ? (
-                <Loader size="small" />
-              ) : // <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-brand-300"></div>
-              null}
-            </div>
+            <div>{isUpdating ? <Loader size="small" /> : null}</div>
             <div>
               {dayjs(action.created_at).format("YYYY-MM-dd HH:mm:ss") ===
               dayjs(action.updated_at).format("YYYY-MM-dd HH:mm:ss")
@@ -259,20 +254,25 @@ export default function ActionDialog({
             name="tag"
             title="Tag"
             value={
-              action ? action.tag.id : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
+              action
+                ? action.category.id
+                : "d90224a7-abf2-4bc7-be60-e5d165a6a37a"
             }
-            items={tags.map((tag) => ({ title: tag.name, value: tag.id }))}
+            items={tags.map((tag) => ({
+              title: category.name,
+              value: category.id,
+            }))}
           />
 
           <SelectField
-            name="status"
+            name="stage"
             title="Status"
             value={
-              action ? action.status.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
+              action ? action.stage.id : "32a26e75-5f4a-4ae7-8805-877909abb477"
             }
-            items={status.map((stat) => ({
-              title: stat.name,
-              value: stat.id,
+            items={stages.map((stage) => ({
+              title: stage.name,
+              value: stage.id,
             }))}
           />
 

@@ -22,8 +22,8 @@ export default function SearchDialog() {
   const [query, setQuery] = useState("");
   const matches = useMatches();
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const status: ItemModel[] = matches[1].data.status;
-  const tags: ItemModel[] = matches[1].data.tags;
+  const stages: ItemModel[] = matches[1].data.stages;
+  const categories: ItemModel[] = matches[1].data.categories;
   const navigate = useNavigate();
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = matches[0].data.env;
   const supabaseClient = new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -101,11 +101,6 @@ export default function SearchDialog() {
         placeholder="Buscar..."
         autoComplete="off"
       />
-      {/* {searching && (
-        <div className="absolute right-4 top-3">
-          <Loader />
-        </div>
-      )} */}
 
       <Combobox.Options>
         {query.length > 2 && (
@@ -128,7 +123,7 @@ export default function SearchDialog() {
                       >
                         {({ selected, active }) => (
                           <div
-                            className={`dropdown-item flex items-center justify-between font-medium ${
+                            className={`dropdown-item ${
                               active || selected ? "bg-brand text-white" : ""
                             }`}
                           >
@@ -148,7 +143,7 @@ export default function SearchDialog() {
                     <Combobox.Option key={index} value={action} as={Fragment}>
                       {({ selected, active }) => (
                         <div
-                          className={`dropdown-item flex items-center justify-between gap-4 font-medium ${
+                          className={`dropdown-item ${
                             active || selected ? "bg-brand text-white" : ""
                           }`}
                         >
@@ -159,22 +154,24 @@ export default function SearchDialog() {
                             <div>
                               <TagIcons
                                 type={
-                                  tags.filter((tag) => tag.id === action.tag)[0]
-                                    .slug
+                                  categories.filter(
+                                    (category) =>
+                                      category.id === action.category
+                                  )[0].slug
                                 }
-                                className="h-4 w-4"
+                                className="sq-4"
                               />
                             </div>
                             <div
                               className={`bg-${
-                                status.filter(
-                                  (status) => status.id === action.status
+                                stages.filter(
+                                  (stage) => stage.id === action.stage
                                 )[0].slug
-                              } text-xx rounded-lg px-1 py-0.5 uppercase`}
+                              } rounded-lg px-1 py-0.5 text-xx uppercase`}
                             >
                               {
-                                status.filter(
-                                  (status) => status.id === action.status
+                                stages.filter(
+                                  (stage) => stage.id === action.stage
                                 )[0].name
                               }
                             </div>
@@ -185,7 +182,7 @@ export default function SearchDialog() {
                                 )[0].short
                               }
                             </div>
-                            <div className="text-xx whitespace-nowrap">
+                            <div className="whitespace-nowrap text-xx">
                               {dayjs(action.date).format(
                                 "DD[/]MM [às] HH[:]mm"
                               )}

@@ -95,7 +95,7 @@ export function actionsByPriority(actions: ActionModel[]) {
   // return actions;
   return actions
     .reverse()
-    .sort((a, b) => (a.status.priority > b.status.priority ? 1 : -1));
+    .sort((a, b) => (a.stage.priority > b.stage.priority ? 1 : -1));
 }
 
 export function actionsByCategory(
@@ -111,9 +111,9 @@ export function actionsByCategory(
 
     let _actions = priority
       ? actionsByPriority(
-          actions.filter((action) => action.tag.slug === tag.slug)
+          actions.filter((action) => action.category.slug === category.slug)
         )
-      : actions.filter((action) => action.tag.slug === tag.slug);
+      : actions.filter((action) => action.category.slug === category.slug);
 
     category.actions = _actions;
 

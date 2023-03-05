@@ -72,7 +72,7 @@ export default function DatepickerField({
                         )
                       }
                     >
-                      <ChevronLeft className="w-4" />
+                      <ChevronLeft className="sq-4" />
                     </button>
                     <div className="text-xs font-medium uppercase tracking-wider">
                       {firstDayOfCurrentMonth.format("MMMM")}
@@ -86,7 +86,7 @@ export default function DatepickerField({
                         )
                       }
                     >
-                      <ChevronRight className="w-4" />
+                      <ChevronRight className="sq-4" />
                     </button>
                   </div>
                   <div className="grid grid-cols-7">

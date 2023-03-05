@@ -66,9 +66,12 @@ body {
     @apply shadow-2xl shadow-gray-1000/75;
   }
 
-  /* .text-xx {
-    @apply text-[.625rem] tracking-wide;
-  } */
+  .sq-3 {
+    @apply h-3 w-3;
+  }
+  .sq-4 {
+    @apply h-4 w-4;
+  }
 }
 
 @layer components {
@@ -190,7 +193,7 @@ body {
   }
 
   .dropdown-item {
-    @apply spacing cursor-pointer font-normal text-gray-700 antialiased focus:bg-brand focus:text-white  focus:outline-none dark:text-gray-200;
+    @apply spacing flex cursor-pointer items-center justify-between gap-2 font-normal  text-gray-700 antialiased focus:bg-brand focus:text-white focus:outline-none dark:text-gray-200;
   }
 
   .dropdown-item.item-small {
@@ -299,7 +302,14 @@ body {
   @apply hover:bg-financial-600 dark:hover:bg-financial-700;
 }
 
-/* Status */
+.bg-webdev {
+  @apply bg-webdev-500 text-white dark:bg-webdev-600;
+}
+.bg-webdev-hover {
+  @apply hover:bg-webdev-600 dark:hover:bg-webdev-700;
+}
+
+/* Stage */
 
 .bg-idea {
   @apply bg-idea-500 text-white;

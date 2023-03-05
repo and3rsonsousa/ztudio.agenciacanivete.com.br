@@ -7,33 +7,33 @@ const DataFlow = ({ actions }: { actions: ActionModel[] }) => {
   if (actions.length === 0) {
     return null;
   }
-  const status: ItemModel[] = matches[1].data.status;
-  const stats = status.map((stat) => ({
-    stat,
-    actions: actions.filter((action) => action.status.slug === stat.slug)
+  const stages: ItemModel[] = matches[1].data.stages;
+  const Stages = stages.map((stage) => ({
+    stage,
+    actions: actions.filter((action) => action.stage.slug === stage.slug)
       .length,
   }));
 
   const total = actions.length;
   const accomplished = actions.filter(
-    (action) => action.status.slug === "accomplished"
+    (action) => action.stage.slug === "accomplished"
   ).length;
   const late = actions.filter(
     (action) =>
       dayjs(action.date).isBefore(dayjs()) &&
-      action.status.slug !== "accomplished"
+      action.stage.slug !== "accomplished"
   ).length;
   return (
     <div className="flex">
       <div className="px-2 text-center md:px-4">
         <div className="font-bold">{total} AÇÕES</div>
         <div className="mt-1 hidden h-1 overflow-hidden rounded-full bg-gray-700 md:flex">
-          {stats.reverse().map((status) => (
+          {Stages.reverse().map((stage) => (
             <div
-              key={status.stat.id}
-              className={`bg-${status.stat.slug} h-1 flex-auto`}
+              key={stage.stage.id}
+              className={`bg-${stage.stage.slug} h-1 flex-auto`}
               style={{
-                width: `${Math.floor((status.actions / total) * 100)}%`,
+                width: `${Math.floor((stage.actions / total) * 100)}%`,
               }}
             ></div>
           ))}

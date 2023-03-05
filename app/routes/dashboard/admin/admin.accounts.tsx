@@ -54,7 +54,7 @@ export default function Accounts() {
               <Link
                 to={`/dashboard/admin/accounts/${account.slug}`}
                 // className="block w-full p-4 font-medium focus:text-brand focus:outline-none md:px-8"
-                className="dropdown-item w-full"
+                className="dropdown-item"
               >
                 <span className="hidden md:block">{account.name}</span>
                 <span className="block w-full text-center uppercase md:hidden">

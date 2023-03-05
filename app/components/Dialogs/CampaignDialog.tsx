@@ -34,7 +34,7 @@ export default function CampaignDialog({
   const date = context.date.day;
 
   const accounts: AccountModel[] = matches[1].data.accounts;
-  const status: ItemModel[] = matches[1].data.status;
+  const stages: ItemModel[] = matches[1].data.stages;
   const creator: PersonModel = matches[1].data.person;
   const account: AccountModel = campaign
     ? campaign.account
@@ -44,9 +44,9 @@ export default function CampaignDialog({
     title: account.name,
     value: account.id,
   }));
-  const statusItems = status.map((stat) => ({
-    title: stat.name,
-    value: stat.id,
+  const stageItems = stages.map((stage) => ({
+    title: stage.name,
+    value: stage.id,
   }));
 
   const isAdding =
@@ -140,10 +140,10 @@ export default function CampaignDialog({
           />
 
           <SelectField
-            name="status"
-            title="Status"
-            items={statusItems}
-            value={campaign ? campaign.status : undefined}
+            name="stage"
+            title="Stage"
+            items={stageItems}
+            value={campaign ? campaign.stage : undefined}
           />
         </div>
 

@@ -71,7 +71,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
   const navigate = useNavigate();
   const fetcher = useFetcher();
   const matches = useMatches();
-  const status: ItemModel[] = matches[1].data.status;
+  const stages: ItemModel[] = matches[1].data.stages;
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger>
@@ -81,7 +81,7 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
               `/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`
             )
           }
-          className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Status?.slug} bg-${campaign.Status?.slug}-hover `}
+          className={`cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap bg-gray-100 py-1 px-2 text-xs font-medium  bg-${campaign.Stage?.slug} bg-${campaign.Stage?.slug}-hover `}
         >
           {campaign.name} {dayjs(campaign.date_end).format("DD/MM/YYYY")}
         </div>
@@ -91,13 +91,13 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
           <ContextMenu.Item asChild>
             <Link
               to={`/dashboard/${campaign.Account?.slug}/campaign/${campaign.id}`}
-              className="dropdown-item item-small flex items-center gap-2"
+              className="dropdown-item item-small "
             >
-              <Edit className="w-4" /> <div>Editar</div>
+              <Edit className="sq-4" /> <div>Editar</div>
             </Link>
           </ContextMenu.Item>
           <ContextMenu.Item
-            className="dropdown-item item-small flex items-center gap-2"
+            className="dropdown-item item-small "
             onSelect={() => {
               fetcher.submit(
                 {
@@ -111,31 +111,31 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
               );
             }}
           >
-            <Trash2 className="w-4" /> <div>Excluir</div>
+            <Trash2 className="sq-4" /> <div>Excluir</div>
           </ContextMenu.Item>
           <hr className="dropdown-hr" />
           <ContextMenu.Sub>
-            <ContextMenu.SubTrigger className="dropdown-item item-small flex items-center gap-2">
-              <CheckCircle className="w-4" />
+            <ContextMenu.SubTrigger className="dropdown-item item-small ">
+              <CheckCircle className="sq-4" />
               <div className="flex flex-auto justify-between gap-4">
                 <div>Status</div>
 
                 <div className="">
-                  <ChevronRight className="w-4" />
+                  <ChevronRight className="sq-4" />
                 </div>
               </div>
             </ContextMenu.SubTrigger>
             <ContextMenu.Portal>
-              <ContextMenu.SubContent className="dropdown-content w-36">
-                {status.map((stat) => (
+              <ContextMenu.SubContent className="dropdown-content min-w-[9rem]">
+                {stages.map((stage) => (
                   <ContextMenu.Item
-                    key={stat.id}
+                    key={stage.id}
                     onSelect={(event) => {
                       fetcher.submit(
                         {
-                          action: "update-campaign-status",
+                          action: "update-campaign-stage",
                           id: campaign.id,
-                          status: stat.id,
+                          stage: stage.id,
                         },
                         {
                           method: "post",
@@ -143,14 +143,14 @@ export const CampaignLine = ({ campaign }: { campaign: CampaignModel }) => {
                         }
                       );
                     }}
-                    className="dropdown-item item-small flex items-center gap-2"
+                    className="dropdown-item item-small "
                   >
                     <div
-                      className={`h-2 w-2 rounded-full bg-${stat.slug}`}
+                      className={`h-2 w-2 rounded-full bg-${stage.slug}`}
                     ></div>
-                    <div className="flex-shrink-0 flex-grow">{stat.name}</div>
-                    {campaign.status === stat.id && (
-                      <CheckCircle className="w-4" />
+                    <div className="flex-shrink-0 flex-grow">{stage.name}</div>
+                    {campaign.stage === stage.id && (
+                      <CheckCircle className="sq-4" />
                     )}
                   </ContextMenu.Item>
                 ))}

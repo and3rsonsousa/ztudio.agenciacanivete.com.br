@@ -55,9 +55,10 @@ module.exports = {
       task: colors.rose,
       stories: colors.pink,
       meeting: colors.purple,
-      print: colors.blue,
+      print: colors.indigo,
       tiktok: colors.sky,
-      financial: colors.green,
+      financial: colors.emerald,
+      webdev: colors.lime,
 
       idea: colors.yellow,
       do: colors.orange,

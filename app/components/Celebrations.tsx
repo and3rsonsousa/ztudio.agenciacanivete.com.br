@@ -19,7 +19,7 @@ const Celebration = ({
       title={celebration.name}
     >
       <div className="flex flex-auto items-center gap-1 overflow-hidden">
-        {celebration.is_holiday ? <Star className="w-3 shrink-0" /> : null}
+        {celebration.is_holiday ? <Star className="sq-3 shrink-0" /> : null}
         <div className="overflow-hidden text-ellipsis whitespace-nowrap">
           {celebration.name}
         </div>
@@ -42,7 +42,7 @@ const Celebration = ({
               );
             }}
           >
-            <Trash2 className="w-3" />
+            <Trash2 className="sq-3" />
           </button>
         </div>
       )}

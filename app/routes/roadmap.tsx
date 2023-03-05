@@ -33,19 +33,19 @@ export default function Roadmap() {
   const icons = [
     {
       title: "Não iniciado / Sem planos",
-      icon: <ThumbsDown className="w-4" />,
+      icon: <ThumbsDown className="sq-4" />,
     },
     {
       title: "Iniciado / Em Planos",
-      icon: <HandMetal className="w-4" />,
+      icon: <HandMetal className="sq-4" />,
     },
     {
       title: "Em desenvolvimento",
-      icon: <Wrench className="w-4" />,
+      icon: <Wrench className="sq-4" />,
     },
     {
       title: "Finalizado",
-      icon: <ThumbsUp className="w-4" />,
+      icon: <ThumbsUp className="sq-4" />,
     },
   ];
 
