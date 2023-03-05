@@ -425,7 +425,7 @@ body {
 }
 
 .action-line__right {
-  @apply hidden w-10 overflow-hidden text-center text-xx font-medium opacity-60 @[140px]:block;
+  @apply hidden w-10 overflow-hidden text-center text-xx font-medium opacity-60 @[135px]:block;
 }
 
 .action-line-new {
