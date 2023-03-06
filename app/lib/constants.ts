@@ -42,4 +42,9 @@ export const SHORTCUTS = {
     does: "Filtrar: Financeiro",
     value: "financial",
   },
+  FILTER_DEVELOPMENT: {
+    shortcut: "9",
+    does: "Filtrar: Desenvolvimento",
+    value: "webdev",
+  },
 };

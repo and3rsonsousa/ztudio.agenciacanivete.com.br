@@ -101,6 +101,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
         } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
           event.preventDefault();
+          console.log("AQUI");
+
           handleShortcut(SHORTCUTS.ARRANGE_CATEGORIES);
           context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
         } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
@@ -139,6 +141,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           event.preventDefault();
           handleShortcut(SHORTCUTS.FILTER_TIKTOK);
           context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
+        } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
+          event.preventDefault();
+          handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
+          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
         } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
           event.preventDefault();
           handleShortcut(SHORTCUTS.FILTER_FINANCIAL);

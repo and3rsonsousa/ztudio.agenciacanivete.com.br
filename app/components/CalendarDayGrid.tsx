@@ -40,7 +40,7 @@ export default function Day({
 }) {
   const fetcher = useFetcher();
   const matches = useMatches();
-  const tags: ItemModel[] = matches[1].data.categorys;
+  const categories: ItemModel[] = matches[1].data.categories;
   const accounts: AccountModel[] = matches[1].data.accounts;
 
   const context: ContextType = useOutletContext();
@@ -181,7 +181,11 @@ export default function Day({
 
         <div className={`space-y-4`}>
           {arrange === "arrange_category"
-            ? actionsByCategory(day.actions, tags, context.priority.option).map(
+            ? actionsByCategory(
+                day.actions,
+                categories,
+                context.priority.option
+              ).map(
                 (category, index) =>
                   category.actions?.length !== 0 && (
                     <div key={index}>
