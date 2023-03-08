@@ -143,7 +143,7 @@ export default function Calendar({
                   ? "bg-brand text-white"
                   : "text-gray-400"
               }`}
-              title="Cmd + K → O ( Ordenar por prioridade de status )"
+              title="Cmd + K → H ( Ordenar por prioridade de status )"
             >
               <AlarmCheck className="w-5" />
             </div>
@@ -153,7 +153,7 @@ export default function Calendar({
                   ? "bg-brand text-white"
                   : "text-gray-400"
               }`}
-              title="Cmd K → O ( Ordenar por horário de conclusão )"
+              title="Cmd K → H ( Ordenar por horário de conclusão )"
             >
               <Clock className={`w-5`} />
             </div>
