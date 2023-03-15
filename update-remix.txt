@@ -1,1 +1,1 @@
-@remix-run/cloudflare@1.13.0 @remix-run/cloudflare-pages@1.13.0 @remix-run/react@1.13.0 @remix-run/dev@1.13.0 @remix-run/eslint-config@1.13.0
+@remix-run/cloudflare@1.14.2 @remix-run/cloudflare-pages@1.14.2 @remix-run/dev@1.14.2 @remix-run/eslint-config@1.14.2 @remix-run/react@1.14.2 framer-motion@10.3.2 
