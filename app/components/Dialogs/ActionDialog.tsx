@@ -5,7 +5,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type {
   AccountModel,
   ActionModel,
@@ -75,7 +75,7 @@ export default function ActionDialog({
   const [selectedAccount, setSelectedAccount] = useState(
     account ? account.id : ""
   );
-  const [isDirty, setDirty] = useState(false);
+  // const [isDirty, setDirty] = useState(false);
 
   const campaignItems =
     selectedAccount && campaigns
@@ -95,42 +95,42 @@ export default function ActionDialog({
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "update-action";
 
-  useEffect(() => {
-    if (
-      !isAdding &&
-      fetcher.state === "idle" &&
-      fetcher.data &&
-      !fetcher.data.error
-    ) {
-      context.actions.set(false);
-    }
-  }, [isAdding, context, fetcher]);
+  // useEffect(() => {
+  //   if (
+  //     !isAdding &&
+  //     fetcher.state === "idle" &&
+  //     fetcher.data &&
+  //     !fetcher.data.error
+  //   ) {
+  //     context.actions.set(false);
+  //   }
+  // }, [isAdding, context, fetcher]);
 
-  useEffect(() => {
-    function getDirty() {
-      setDirty(true);
-    }
+  // useEffect(() => {
+  //   function getDirty() {
+  //     setDirty(true);
+  //   }
 
-    window.addEventListener("keydown", getDirty);
-    window.addEventListener("mousedown", getDirty);
+  //   window.addEventListener("keydown", getDirty);
+  //   window.addEventListener("mousedown", getDirty);
 
-    if (action) {
-      const save = setInterval(() => {
-        if (isDirty) {
-          fetcher.submit(formRef.current, {
-            method: "post",
-            action: `/handle-action`,
-          });
-          setDirty(false);
-        }
-      }, 5000);
-      return () => {
-        clearInterval(save);
-        window.removeEventListener("keydown", getDirty);
-        window.removeEventListener("mousedown", getDirty);
-      };
-    }
-  }, [action, isDirty, fetcher]);
+  // if (action) {
+  //   const save = setInterval(() => {
+  //     if (isDirty) {
+  //       fetcher.submit(formRef.current, {
+  //         method: "post",
+  //         action: `/handle-action`,
+  //       });
+  //       setDirty(false);
+  //     }
+  //   }, 5000);
+  //   return () => {
+  //     clearInterval(save);
+  //     window.removeEventListener("keydown", getDirty);
+  //     window.removeEventListener("mousedown", getDirty);
+  //   };
+  // }
+  // }, [action, isDirty, fetcher]);
   return (
     <>
       <div className="mb-4 flex justify-between">
