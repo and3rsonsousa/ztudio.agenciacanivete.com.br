@@ -5,7 +5,7 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type {
   AccountModel,
   ActionModel,
@@ -95,16 +95,16 @@ export default function ActionDialog({
     fetcher.state === "submitting" &&
     fetcher.submission.formData.get("action") === "update-action";
 
-  // useEffect(() => {
-  //   if (
-  //     !isAdding &&
-  //     fetcher.state === "idle" &&
-  //     fetcher.data &&
-  //     !fetcher.data.error
-  //   ) {
-  //     context.actions.set(false);
-  //   }
-  // }, [isAdding, context, fetcher]);
+  useEffect(() => {
+    if (
+      !isAdding &&
+      fetcher.state === "idle" &&
+      fetcher.data &&
+      !fetcher.data.error
+    ) {
+      context.actions.set(false);
+    }
+  }, [isAdding, context, fetcher]);
 
   // useEffect(() => {
   //   function getDirty() {
