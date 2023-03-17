@@ -92,7 +92,7 @@ export default function Login() {
       <div className="w-full max-w-3xl grid-cols-2 place-items-center p-8  md:grid">
         <div className="w-full p-8">
           <div className="mb-8 w-32">
-            <img src="/logo-color.svg" alt="ZTUDIO" />
+            <img src="/ztudio-logo-white.svg" alt="ZTUDIO" />
           </div>
 
           <ResizeblePanel duration={0.3}>

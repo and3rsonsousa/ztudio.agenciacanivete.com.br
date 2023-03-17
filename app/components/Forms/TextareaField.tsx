@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export default function TextareaField({
   label,
@@ -19,13 +19,13 @@ export default function TextareaField({
   onChange?: (value: string) => void;
 }) {
   const inputRef = useRef(null);
-  const [content, setContent] = useState(value);
+  // const [content, setContent] = useState(value);
 
   return (
     <div className="field">
       <label className="field-label">{label}</label>
 
-      {/* <textarea
+      <textarea
         name={name}
         placeholder={placeholder}
         defaultValue={value}
@@ -36,8 +36,8 @@ export default function TextareaField({
         rows={rows}
         ref={inputRef}
         className={`field-default`}
-      /> */}
-      <input
+      />
+      {/* <input
         name={name}
         type="hidden"
         placeholder={placeholder}
@@ -46,8 +46,8 @@ export default function TextareaField({
         // rows={rows}
         ref={inputRef}
         className={`field-default`}
-      />
-      <div
+      /> */}
+      {/* <div
         contentEditable={true}
         className={`field-default`}
         onInput={(e) => {
@@ -55,7 +55,7 @@ export default function TextareaField({
           if (onChange) onChange(content as string);
         }}
         dangerouslySetInnerHTML={{ __html: value ?? "" }}
-      />
+      /> */}
     </div>
   );
 }

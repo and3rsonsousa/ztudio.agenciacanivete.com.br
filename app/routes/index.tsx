@@ -8,7 +8,7 @@ export default function Index() {
         <div className="w-96 text-center">
           <div>
             <img
-              src="/logo-color.svg"
+              src="/ztudio-logo-white.svg"
               alt="ZTUDIO"
               className="mx-auto mb-8 w-36"
             />

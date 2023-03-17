@@ -75,7 +75,7 @@ export default function ActionDialog({
   const [selectedAccount, setSelectedAccount] = useState(
     account ? account.id : ""
   );
-  // const [isDirty, setDirty] = useState(false);
+  const [isDirty, setDirty] = useState(false);
 
   const campaignItems =
     selectedAccount && campaigns
@@ -106,31 +106,31 @@ export default function ActionDialog({
     }
   }, [isAdding, context, fetcher]);
 
-  // useEffect(() => {
-  //   function getDirty() {
-  //     setDirty(true);
-  //   }
+  useEffect(() => {
+    function getDirty() {
+      setDirty(true);
+    }
 
-  //   window.addEventListener("keydown", getDirty);
-  //   window.addEventListener("mousedown", getDirty);
+    window.addEventListener("keydown", getDirty);
+    window.addEventListener("mousedown", getDirty);
 
-  // if (action) {
-  //   const save = setInterval(() => {
-  //     if (isDirty) {
-  //       fetcher.submit(formRef.current, {
-  //         method: "post",
-  //         action: `/handle-action`,
-  //       });
-  //       setDirty(false);
-  //     }
-  //   }, 5000);
-  //   return () => {
-  //     clearInterval(save);
-  //     window.removeEventListener("keydown", getDirty);
-  //     window.removeEventListener("mousedown", getDirty);
-  //   };
-  // }
-  // }, [action, isDirty, fetcher]);
+    if (action) {
+      const save = setInterval(() => {
+        if (isDirty) {
+          fetcher.submit(formRef.current, {
+            method: "post",
+            action: `/handle-action`,
+          });
+          setDirty(false);
+        }
+      }, 5000);
+      return () => {
+        clearInterval(save);
+        window.removeEventListener("keydown", getDirty);
+        window.removeEventListener("mousedown", getDirty);
+      };
+    }
+  }, [action, isDirty, fetcher]);
   return (
     <>
       <div className="mb-4 flex justify-between">
