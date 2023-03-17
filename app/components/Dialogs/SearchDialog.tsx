@@ -38,13 +38,15 @@ export default function SearchDialog() {
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
 
-      _accounts = _accounts.filter(
-        (account) =>
+      _accounts = _accounts.filter((account) => {
+        return (
           account.name
             .normalize("NFD")
+            .toLowerCase()
             .replace(/[\u0300-\u036f]/g, "")
             .includes(_query) || account.short.includes(_query)
-      );
+        );
+      });
       setItems({
         actions: [],
         accounts: _accounts,
