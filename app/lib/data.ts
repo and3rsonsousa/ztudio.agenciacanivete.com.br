@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { getMonth, getWeek, getYear } from "./functions";
 import { getSupabase } from "./supabase";
 
-const SQL__GET__ACTION = `*, account:Account!inner(*), category:Category(*), stage:Stage(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*)`;
+const SQL__GET__ACTION = `*, account:Account!inner(*), category:Category(*), stage:Stage(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*) order by date`;
 
 const SQL__GET__ACTION_ONLY_ID = `id, date, Account(id)`;
 
