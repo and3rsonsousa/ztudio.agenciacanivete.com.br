@@ -59,6 +59,7 @@ module.exports = {
       tiktok: colors.sky,
       financial: colors.emerald,
       webdev: colors.lime,
+      ads: colors.teal,
 
       idea: colors.yellow,
       do: colors.orange,

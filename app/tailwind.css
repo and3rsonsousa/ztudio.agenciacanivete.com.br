@@ -309,6 +309,13 @@ body {
   @apply hover:bg-webdev-600 dark:hover:bg-webdev-700;
 }
 
+.bg-ads {
+  @apply bg-ads-500 text-white dark:bg-ads-600;
+}
+.bg-ads-hover {
+  @apply hover:bg-ads-600 dark:hover:bg-ads-700;
+}
+
 /* Stage */
 
 .bg-idea {
