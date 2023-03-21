@@ -145,10 +145,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           event.preventDefault();
           handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
           context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
-        } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
+        } else if (key === SHORTCUTS.FILTER_DEVELOPMENT.shortcut) {
           event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
-          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
+          handleShortcut(SHORTCUTS.FILTER_DEVELOPMENT);
+          context.filter.set(SHORTCUTS.FILTER_DEVELOPMENT.value);
         }
       }
     }
