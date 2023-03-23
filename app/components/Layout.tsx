@@ -212,11 +212,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               {context.sidebar.open ? (
                 <>
-                  <img
-                    src="/ztudio-logo-white.svg"
-                    alt="ZTUDIO"
-                    className="h-6"
-                  />
+                  <img src="/logo.png" alt="ZTUDIO" />
                 </>
               ) : (
                 <img src="/ico.png" className="mx-auto h-6" alt="ZTUDIO" />

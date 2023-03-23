@@ -7,11 +7,7 @@ export default function Index() {
       <div className="grid min-h-screen place-content-center ">
         <div className="w-96 text-center">
           <div>
-            <img
-              src="/ztudio-logo-white.svg"
-              alt="ZTUDIO"
-              className="mx-auto mb-8 w-36"
-            />
+            <img src="/logo.png" alt="ZTUDIO" className="mx-auto mb-8 w-36" />
           </div>
           <p className="text-center font-normal">
             Sistema de gestão de ações criado
