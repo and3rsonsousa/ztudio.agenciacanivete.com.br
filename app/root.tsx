@@ -24,12 +24,12 @@ import styles from "./tailwind.css";
 export const meta: V2_MetaFunction = () => {
   return [
     {
-      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟαɴ ꜰαzᴛ, ᴡᴏʀᴋ ʟezz",
+      title: "ᴢᴛᴜᴅɪᴏ - ᴘʟaɴ ꜰazᴛ, ᴡᴏʀᴋ ʟezz",
     },
     {
       name: "description",
       content:
-        "sistema de gerenciamento de ações criado e mantido pela αɢêɴᴄɪα cαɴɪveᴛe",
+        "sistema de gerenciamento de ações criado e mantido pela aɢêɴᴄɪa caɴɪveᴛe",
     },
   ];
 };

@@ -18,7 +18,7 @@ export default function Index() {
               rel="noreferrer"
               className="link"
             >
-              αɢêɴᴄɪα ᴄαɴɪᴠeᴛe
+              aɢêɴᴄɪa ᴄaɴɪᴠeᴛe
             </a>
             .
           </p>
