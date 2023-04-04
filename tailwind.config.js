@@ -2,7 +2,7 @@
 var colors = require("tailwindcss/colors");
 var theme = require("tailwindcss/defaultTheme");
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,tsx,jsx}"],
   darkMode: "class",
   theme: {
     extend: {
@@ -22,7 +22,6 @@ module.exports = {
         sans: ["Inter var", ...theme.fontFamily.sans],
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-radial-t":
           "radial-gradient(ellipse at top, var(--tw-gradient-stops))",
       },
@@ -70,7 +69,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/line-clamp"),
     require("@tailwindcss/container-queries"),
   ],
 };

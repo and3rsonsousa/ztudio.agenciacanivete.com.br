@@ -11,15 +11,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
-  useRevalidator,
+  useLoaderData
 } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import styles from "~/tailwind.css";
 import type { ContextType } from "./lib/models";
-import styles from "./tailwind.css";
+import { createServerClient } from "./lib/supabase";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -42,14 +42,20 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader: LoaderFunction = ({ request, context }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = context;
+  const response = new Response();
+  const supabase = createServerClient ({request, response})
+
+  const {data: {session}} = await supabase.auth.getSession()
 
   return {
     env: {
       SUPABASE_URL,
       SUPABASE_ANON_KEY,
     },
+    session,
+    headers: response.headers
   };
 };
 
@@ -116,17 +122,31 @@ export default function App() {
     supabase: supabase,
   };
 
-  const revalidator = useRevalidator();
+  // const access_token = session?.access_token
 
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async () => {
-      revalidator.revalidate();
-    });
+  // useEffect(() => {
+  //   const {data: {subscription}} = supabase.auth.onAuthStateChange((event, session) => {
+  //     if(session?.access_token !== access_token){
 
-    return () => subscription.unsubscribe();
-  }, [supabase, revalidator]);
+  //     }
+  //   })
+
+
+  //   return subscription.unsubscribe()
+  // }, [])
+
+  // const revalidator = useRevalidator();
+
+  // useEffect(() => {
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange(async () => {
+  //     revalidator.revalidate();
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [supabase, revalidator]);
+
+  // const serverAcessToken = session
 
   return (
     <html lang="pt-br" className={"dark"}>
