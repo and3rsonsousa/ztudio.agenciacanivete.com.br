@@ -11,7 +11,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
@@ -45,9 +47,11 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async ({ request, context }) => {
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = context;
   const response = new Response();
-  const supabase = createServerClient ({request, response})
+  const supabase = createServerClient({ request, response });
 
-  const {data: {session}} = await supabase.auth.getSession()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   return {
     env: {
@@ -55,7 +59,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
       SUPABASE_ANON_KEY,
     },
     session,
-    headers: response.headers
+    headers: response.headers,
   };
 };
 
@@ -131,7 +135,6 @@ export default function App() {
   //     }
   //   })
 
-
   //   return subscription.unsubscribe()
   // }, [])
 
@@ -170,25 +173,31 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: any }) {
-  return (
-    <html>
-      <head>
-        <title>Oh no!</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <div className="grid min-h-screen place-content-center">
-          <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
-            {error.message}
-          </div>
-          <div className="p-8">
-            <pre className="whitespace-pre-line  text-xs">{error.stack}</pre>
-          </div>
+export function ErrorBoundary() {
+  let error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="grid min-h-screen place-content-center">
+        <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
+          {error.status}
         </div>
-        <Scripts />
-      </body>
-    </html>
-  );
+        <div className="p-8">
+          <pre className="whitespace-pre-line  text-xs">{error.data}</pre>
+        </div>
+      </div>
+    );
+  } else if (error instanceof Error) {
+    return (
+      <div className="grid min-h-screen place-content-center">
+        <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
+          {error.message}
+        </div>
+        <div className="p-8">
+          <pre className="whitespace-pre-line  text-xs">{error.stack}</pre>
+        </div>
+      </div>
+    );
+  } else {
+    return <h1>Erro desconhecido</h1>;
+  }
 }

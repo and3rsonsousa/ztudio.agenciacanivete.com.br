@@ -461,6 +461,7 @@ export const handleAction = async (formData: FormData, request: Request) => {
         short: formData.get("short") as string,
         users: formData.getAll("users") as string[],
       };
+      console.log({ values });
     } else if (action === "update-campaign") {
       values = {
         name: formData.get("name") as string,
@@ -566,15 +567,15 @@ export const handleAction = async (formData: FormData, request: Request) => {
         .single();
 
       const new_action = {
-        name: old_action.name,
-        description: old_action.description,
-        date: old_action.date,
-        category: old_action.category,
-        stage: old_action.stage,
-        account: account ? account : old_action.account,
-        campaign: old_action.campaign,
-        creator: old_action.creator,
-        responsible: old_action.responsible,
+        name: old_action?.name,
+        description: old_action?.description,
+        date: old_action?.date,
+        category: old_action?.category,
+        stage: old_action?.stage,
+        account: account ? account : old_action?.account,
+        campaign: old_action?.campaign,
+        creator: old_action?.creator,
+        responsible: old_action?.responsible,
       };
 
       const { data, error } = await supabase

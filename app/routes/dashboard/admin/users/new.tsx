@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (!error) {
     const { data, error } = await supabase
       .from("Person")
-      .insert({ name, email, user: user?.id });
+      .insert({ name, email, user: user?.id, user_id: user?.id });
 
     return { data, error };
   } else {

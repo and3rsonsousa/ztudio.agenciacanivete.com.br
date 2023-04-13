@@ -19,7 +19,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-
   const { data, error } = await handleAction(formData, request);
 
   if (formData.get("redirectTo")) {
