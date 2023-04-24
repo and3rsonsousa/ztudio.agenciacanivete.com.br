@@ -1,7 +1,5 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
-  
-
   devServerBroadcastDelay: 1000,
   ignoredRouteFiles: ["**/.*"],
   server: "./server.js",
@@ -12,7 +10,7 @@ module.exports = {
   serverMinify: true,
   serverModuleFormat: "esm",
   serverPlatform: "neutral",
-  
+
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
@@ -21,6 +19,7 @@ module.exports = {
     v2_meta: true,
     v2_normalizeFormMethod: true,
     // v2_routeConvention: true,
-    unstable_tailwind: true
+    unstable_tailwind: true,
+    unstable_postcss: true,
   },
 };
