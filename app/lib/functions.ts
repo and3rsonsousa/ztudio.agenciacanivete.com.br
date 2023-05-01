@@ -15,7 +15,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Fortaleza");
 
 export const getWeek = ({ period }: { period?: string | null }) => {
-  const day = dayjs(period ?? new Date());
+  const day = dayjs(period ?? new Date()).tz("America/Fortaleza");
 
   const firstDayOfWeek = day.startOf("week");
   const lastDayOfWeek = day.endOf("week");
