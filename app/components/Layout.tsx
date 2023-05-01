@@ -33,6 +33,15 @@ import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import SearchDialog from "./Dialogs/SearchDialog";
 import dayjs from "dayjs";
 
+import "dayjs/locale/pt-br";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("pt-br");
+dayjs.tz.setDefault("America/Fortaleza");
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
   const { slug } = useParams();
@@ -281,7 +290,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </DropdownMenu.Root>
           </div>
           <div className="p-4 text-center text-xs font-bold">
+            <div>atual</div>
             {dayjs().format("D/M/YY m:h:s:SSS Z")}
+          </div>
+          <div className="p-4 text-center text-xs font-bold">
+            <div>day from root</div>
+            {context.date.day.format("D/M/YY m:h:s:SSS Z")}
           </div>
           {/* Search */}
           <div className="lg:p-2">
