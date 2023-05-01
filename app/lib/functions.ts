@@ -15,8 +15,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Fortaleza");
 
 export const getWeek = ({ period }: { period?: string | null }) => {
-  // const day = dayjs(period ?? new Date());
-  const day = period ? dayjs(period) : dayjs().tz("America/Fortaleza");
+  const day = dayjs(period ?? new Date());
 
   const firstDayOfWeek = day.startOf("week");
   const lastDayOfWeek = day.endOf("week");
@@ -169,7 +168,9 @@ export function checkDate(
 ) {
   const pattern = /^\d{1,2}-\d{1,2}-\d{4}$/;
 
-  let day = dayjs();
+  let day = dayjs().tz("America/Fortaleza");
+  console.log(day.format("D M YY"));
+
   if (date?.match(pattern)) {
     let splitDate = date.split("-");
     day = dayjs(`${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`);
