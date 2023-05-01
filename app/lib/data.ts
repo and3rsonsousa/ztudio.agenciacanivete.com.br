@@ -113,9 +113,8 @@ export const getActions = async (
         .select(SQL__GET__ACTION)
         .eq("deleted", "true")
         .order("updated_at", {
-          ascending: false,
-        })
-        .order("created_at", { ascending: true });
+          ascending: true,
+        });
 
       if (error) throw new Error(error.message);
 

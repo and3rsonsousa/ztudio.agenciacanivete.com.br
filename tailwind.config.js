@@ -68,7 +68,5 @@ module.exports = {
       accomplished: colors.lime,
     },
   },
-  plugins: [
-    require("@tailwindcss/container-queries"),
-  ],
+  plugins: [require("@tailwindcss/container-queries")],
 };

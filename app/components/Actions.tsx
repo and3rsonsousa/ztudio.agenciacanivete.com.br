@@ -219,7 +219,7 @@ export const ActionMedium = ({
             )}
           </div>
           {action.description?.trim().length ? (
-            <div className="text-xx line-clamp-3">{action.description}</div>
+            <div className="line-clamp-3 text-xx">{action.description}</div>
           ) : null}
           {/* Horário - Account - Category - Stage */}
           <div
@@ -344,7 +344,7 @@ export const Actions = ({ actions }: { actions: ActionModel[] }) => {
   let currentMonth = "";
 
   return (
-    <div className="no-scrollbars grid gap-x-4 gap-y-2 overflow-hidden overflow-y-auto p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6">
+    <div className="grid gap-x-4 gap-y-2  p-4  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
       {Array.isArray(actions) && actions.length > 0 ? (
         actions.reverse().map((action, index) => {
           const header =
