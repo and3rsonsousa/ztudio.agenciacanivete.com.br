@@ -12,8 +12,6 @@ export const loader: LoaderFunction = async ({
   let period = new URL(request.url).searchParams.get("date");
   period = checkDate(period);
 
-  console.log({ period });
-
   const {
     data: { session },
   } = await getUser(request);
@@ -34,7 +32,12 @@ export const loader: LoaderFunction = async ({
 const DashboardIndex = () => {
   const { actions, campaigns, date } = useLoaderData();
 
-  return <Calendar actions={actions} campaigns={campaigns} date={date} />;
+  return (
+    <>
+      <div>{date}</div>
+      <Calendar actions={actions} campaigns={campaigns} date={date} />
+    </>
+  );
 };
 
 export default DashboardIndex;
