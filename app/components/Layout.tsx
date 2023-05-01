@@ -31,6 +31,7 @@ import ActionDialog from "./Dialogs/ActionDialog";
 import CampaignDialog from "./Dialogs/CampaignDialog";
 import CelebrationDialog from "./Dialogs/CelebrationDialog";
 import SearchDialog from "./Dialogs/SearchDialog";
+import dayjs from "dayjs";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const matches = useMatches();
@@ -279,13 +280,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </AnimatePresence>
             </DropdownMenu.Root>
           </div>
+          <div className="p-4 text-center text-xs font-bold">
+            {dayjs().format("D/M/YY m:h:s:SSS Z")}
+          </div>
           {/* Search */}
           <div className="lg:p-2">
             <button
               onClick={() => {
                 context.search.set(true);
               }}
-              className="flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
+              className="Z flex w-full cursor-text items-center gap-2 rounded-lg px-3 py-2 outline-none lg:bg-gray-100 lg:dark:bg-gray-800"
             >
               {context.sidebar.open && (
                 <div className="hidden items-center gap-2 text-xs font-medium text-gray-400 lg:flex">
@@ -297,6 +301,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </button>
           </div>
+
           {/* User Menu */}
           <div>
             <DropdownMenu.Root

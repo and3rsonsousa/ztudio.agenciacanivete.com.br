@@ -5,7 +5,7 @@ import "dayjs/locale/pt-br";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { AlarmCheck, CheckCircle, Clock, Filter, Layers } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SHORTCUTS } from "~/lib/constants";
 import { getMonth } from "~/lib/functions";
 import type {
@@ -107,15 +107,15 @@ export default function Calendar({
       shortcut: SHORTCUTS.ARRANGE_ACCOUNTS.shortcut,
     });
 
-  useEffect(() => {
-    if (window) {
-      const viewport = document.querySelector(".calendar-days");
+  // useEffect(() => {
+  //   if (window) {
+  //     const viewport = document.querySelector(".calendar-days");
 
-      viewport
-        ?.querySelector(`div[date-attr="${dayjs().format("YYYY-MM-DD")}"]`)
-        ?.scrollIntoView();
-    }
-  }, []);
+  //     viewport
+  //       ?.querySelector(`div[date-attr="${dayjs().format("YYYY-MM-DD")}"]`)
+  //       ?.scrollIntoView();
+  //   }
+  // }, []);
 
   return (
     <div className="calendar flex flex-col lg:h-full lg:overflow-hidden">
@@ -253,7 +253,7 @@ export default function Calendar({
                 </div>
               )
             )}
-            <div className="absolute left-0 right-0 bottom-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[1px]  bg-gradient-to-r from-transparent dark:via-gray-700"></div>
           </div>
 
           <Scrollable>
