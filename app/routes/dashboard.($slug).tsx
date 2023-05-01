@@ -10,14 +10,16 @@ import SlugLayout from "~/components/SlugLayout";
 import { getAccount } from "~/lib/data";
 import type { AccountModel } from "~/lib/models";
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data, matches }) => {
+export const meta: V2_MetaFunction = ({ data, matches }) => {
+  const match = matches[0];
+
   return data.account
     ? [
         {
           title: `${data.account.name} no ᴢᴛᴜᴅɪᴏ`,
         },
       ]
-    : matches[0].meta;
+    : match["meta"];
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {

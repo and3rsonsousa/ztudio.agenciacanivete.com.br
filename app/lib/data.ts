@@ -4,7 +4,7 @@ import { getSupabase } from "./supabase";
 
 const SQL__GET__ACTION = `*, account:Account!inner(*), category:Category(*), stage:Stage(*), campaign:Campaign(*), creator:Person!Action_creator_fkey(*), responsible:Person!Action_responsible_fkey(*) order by date`;
 
-const SQL__GET__ACTION_ONLY_ID = `id, date, Account(id)`;
+const SQL__GET__ACTION_ONLY_ID = `date, account!inner(slug)`;
 
 // Simplificar para apenas dois
 export const getPerson = (id: string, request: Request) => {
@@ -145,10 +145,10 @@ export const getActions = async (
       : getMonth({ period });
 
   if (account) {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("Action")
       .select(mode === "year" ? SQL__GET__ACTION_ONLY_ID : SQL__GET__ACTION)
-      .eq("Account.slug", account)
+      .eq("account.slug", account)
       .is("deleted", null)
       .gte("date", firstDayOfPeriod.format("YYYY/MM/DD 00:00:00"))
       .lte("date", lastDayOfPeriod.format("YYYY/MM/DD 23:59:59"))
@@ -157,7 +157,7 @@ export const getActions = async (
       })
       .order("created_at", { ascending: true });
 
-    return { data, error };
+    return { data };
   } else {
     if (!user) {
       return { error: { message: "User is undefined" } };
@@ -177,7 +177,7 @@ export const getActions = async (
 
     if (error) throw new Error(error.message);
 
-    return { data, error };
+    return { data };
   }
 };
 

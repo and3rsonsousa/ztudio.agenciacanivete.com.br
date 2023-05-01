@@ -68,6 +68,10 @@ export default function Me() {
         </Form>
         <hr className="my-8 border-gray-800" />
 
+        <div className="mb-4">
+          <Exclamation type="alert">Not working yet</Exclamation>
+        </div>
+
         <div className="field">
           <label>
             <div className="field-label">Senha</div>
@@ -76,7 +80,10 @@ export default function Me() {
             className="link text-brand"
             onClick={async () => {
               const { error } = await supabase.auth.resetPasswordForEmail(
-                person.email
+                person.email,
+                {
+                  redirectTo: `${location.host}/reset-password`,
+                }
               );
               setError(error);
               console.log(error);
@@ -86,6 +93,7 @@ export default function Me() {
           </button>{" "}
           para redefinir a sua Senha
         </div>
+
         {error ? <Exclamation type="error">{error.message}</Exclamation> : null}
       </div>
     </div>

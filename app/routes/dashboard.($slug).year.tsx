@@ -29,7 +29,7 @@ export async function loader({ request, params }: LoaderArgs) {
 }
 
 export default function YearPage() {
-  const { date, actions } = useLoaderData<typeof loader>();
+  const { date, actions } = useLoaderData();
 
   const period = dayjs(date);
   const { year } = getYear({ period: date });
