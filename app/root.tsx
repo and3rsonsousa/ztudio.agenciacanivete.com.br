@@ -13,6 +13,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useLoaderData,
+  useLocation,
   useNavigate,
   useRouteError,
 } from "@remix-run/react";
@@ -70,7 +71,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 };
 
 export default function App() {
-  const { env, session } = useLoaderData();
+  const { env } = useLoaderData();
 
   const [supabase] = useState(() => {
     return createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
@@ -135,6 +136,7 @@ export default function App() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
+      // if (location.pathname !== "/")
       if (!session) {
         navigate("/login");
       } else {
