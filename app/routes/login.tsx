@@ -3,7 +3,7 @@ import type { AuthError } from "@supabase/supabase-js";
 import type { ContextType } from "~/lib/models";
 
 import { redirect } from "@remix-run/cloudflare";
-import { Form, useOutletContext } from "@remix-run/react";
+import { Form, useNavigate, useOutletContext } from "@remix-run/react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { Lock, Unlock } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -72,14 +72,22 @@ export default function Login() {
   const { supabase } = useOutletContext<ContextType>();
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState({ quote: "", author: "" });
+  const navigate = useNavigate();
 
   async function signIn() {
     setLoading(true);
     setError(null);
-    const { error } = await supabase.auth.signInWithPassword({
+    const {
+      error,
+      data: { session },
+    } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+
+    if (session) {
+      navigate("/dashboard");
+    }
 
     setLoading(false);
     setError(error);

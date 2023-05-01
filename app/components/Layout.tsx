@@ -3,6 +3,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Link,
   useMatches,
+  useNavigate,
   useOutletContext,
   useParams,
   useSearchParams,
@@ -45,6 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [openAccountsMenu, setOpenAccountsMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [params] = useSearchParams();
+  const navigate = useNavigate();
 
   const searchParams =
     params.get("month") !== null ? `?month=${params.get("month")}` : "";
@@ -366,7 +368,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         {/* Sair */}
                         <DropdownMenu.Item
                           className="dropdown-item item-small"
-                          onSelect={() => context.supabase.auth.signOut()}
+                          onSelect={async () => {
+                            const { error } =
+                              await context.supabase.auth.signOut();
+                            if (!error) {
+                              navigate("/login");
+                            }
+                          }}
                         >
                           Sair
                         </DropdownMenu.Item>

@@ -13,12 +13,11 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useLoaderData,
-  useNavigate,
   useRouteError,
 } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styles from "~/tailwind.css";
 import type { ContextType } from "./lib/models";
@@ -86,7 +85,6 @@ export default function App() {
   const [openDialogSearch, setDialogSearch] = useState(false);
   const [openShortcut, setShortcut] = useState(false);
   const [sidebar, setSidebar] = useState(true);
-  const navigate = useNavigate();
 
   const context: ContextType = {
     date: {
@@ -133,15 +131,15 @@ export default function App() {
     supabase,
   };
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/login");
-      } else {
-        navigate("/dashboard");
-      }
-    });
-  }, [supabase, navigate]);
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  // if (!session) {
+  //   navigate("/login");
+  // } else {
+  //   navigate("/dashboard");
+  // }
+  //   });
+  // }, [supabase, navigate]);
 
   return (
     <html lang="pt-br" className={"dark"}>
