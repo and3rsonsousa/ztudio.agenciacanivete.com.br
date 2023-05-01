@@ -12,6 +12,8 @@ export const loader: LoaderFunction = async ({
   let period = new URL(request.url).searchParams.get("date");
   period = checkDate(period);
 
+  console.log({ period });
+
   const {
     data: { session },
   } = await getUser(request);
