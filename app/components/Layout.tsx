@@ -66,94 +66,96 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     function keyDown(event: KeyboardEvent) {
       // SHORTCUTS
 
-      const key = event.key.toUpperCase();
+      if (event.key) {
+        const key = event.key.toUpperCase();
 
-      if (event.metaKey && !event.shiftKey && key == "K") {
-        event.preventDefault();
-        context.search.set((prev) => !prev);
-        handleShortcut(SHORTCUTS.SEARCH);
-      } else if (
-        event.metaKey &&
-        event.shiftKey &&
-        !["SHIFT", "META", "ALT"].includes(key) &&
-        !["TEXTAREA", "INPUT"].includes((event.target as HTMLElement).tagName)
-      ) {
-        if (key === SHORTCUTS.SHORTCUTS.shortcut) {
+        if (event.metaKey && !event.shiftKey && key == "K") {
           event.preventDefault();
-          handleShortcut(SHORTCUTS.SHORTCUTS);
-          context.shortcut.set((prev) => !prev);
-        } else if (key === SHORTCUTS.NEW_ACTION.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.NEW_ACTION);
-          context.actions.set((prev) => !prev);
-        } else if (key === SHORTCUTS.NEW_CELEBRATION.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.NEW_CELEBRATION);
-          context.celebrations.set((prev) => !prev);
-        } else if (key === SHORTCUTS.NEW_CAMPAIGN.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.NEW_CAMPAIGN);
-          context.campaigns.set((prev) => !prev);
-        } else if (key === SHORTCUTS.SIDEBAR.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.SIDEBAR);
-          context.sidebar.set((prev) => !prev);
-        } else if (key === SHORTCUTS.PRIORITY.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.PRIORITY);
-          context.priority.set((value) => !value);
-        } else if (key === SHORTCUTS.ARRANGE_ALL.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.ARRANGE_ALL);
-          context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
-        } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.ARRANGE_CATEGORIES);
-          context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
-        } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.ARRANGE_ACCOUNTS);
-          context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
-        } else if (key === SHORTCUTS.FILTER_ALL.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_ALL);
-          context.filter.set(SHORTCUTS.FILTER_ALL.value);
-        } else if (key === SHORTCUTS.FILTER_FEED.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_FEED);
-          context.filter.set(SHORTCUTS.FILTER_FEED.value);
-        } else if (key === SHORTCUTS.FILTER_REELS.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_REELS);
-          context.filter.set(SHORTCUTS.FILTER_REELS.value);
-        } else if (key === SHORTCUTS.FILTER_TASK.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_TASK);
-          context.filter.set(SHORTCUTS.FILTER_TASK.value);
-        } else if (key === SHORTCUTS.FILTER_STORIES.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_STORIES);
-          context.filter.set(SHORTCUTS.FILTER_STORIES.value);
-        } else if (key === SHORTCUTS.FILTER_MEETING.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_MEETING);
-          context.filter.set(SHORTCUTS.FILTER_MEETING.value);
-        } else if (key === SHORTCUTS.FILTER_PRINT.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_PRINT);
-          context.filter.set(SHORTCUTS.FILTER_PRINT.value);
-        } else if (key === SHORTCUTS.FILTER_TIKTOK.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_TIKTOK);
-          context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
-        } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
-          context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
-        } else if (key === SHORTCUTS.FILTER_DEVELOPMENT.shortcut) {
-          event.preventDefault();
-          handleShortcut(SHORTCUTS.FILTER_DEVELOPMENT);
-          context.filter.set(SHORTCUTS.FILTER_DEVELOPMENT.value);
+          context.search.set((prev) => !prev);
+          handleShortcut(SHORTCUTS.SEARCH);
+        } else if (
+          event.metaKey &&
+          event.shiftKey &&
+          !["SHIFT", "META", "ALT"].includes(key) &&
+          !["TEXTAREA", "INPUT"].includes((event.target as HTMLElement).tagName)
+        ) {
+          if (key === SHORTCUTS.SHORTCUTS.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.SHORTCUTS);
+            context.shortcut.set((prev) => !prev);
+          } else if (key === SHORTCUTS.NEW_ACTION.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.NEW_ACTION);
+            context.actions.set((prev) => !prev);
+          } else if (key === SHORTCUTS.NEW_CELEBRATION.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.NEW_CELEBRATION);
+            context.celebrations.set((prev) => !prev);
+          } else if (key === SHORTCUTS.NEW_CAMPAIGN.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.NEW_CAMPAIGN);
+            context.campaigns.set((prev) => !prev);
+          } else if (key === SHORTCUTS.SIDEBAR.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.SIDEBAR);
+            context.sidebar.set((prev) => !prev);
+          } else if (key === SHORTCUTS.PRIORITY.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.PRIORITY);
+            context.priority.set((value) => !value);
+          } else if (key === SHORTCUTS.ARRANGE_ALL.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.ARRANGE_ALL);
+            context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
+          } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.ARRANGE_CATEGORIES);
+            context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
+          } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.ARRANGE_ACCOUNTS);
+            context.arrange.set(SHORTCUTS.ARRANGE_ACCOUNTS.value);
+          } else if (key === SHORTCUTS.FILTER_ALL.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_ALL);
+            context.filter.set(SHORTCUTS.FILTER_ALL.value);
+          } else if (key === SHORTCUTS.FILTER_FEED.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_FEED);
+            context.filter.set(SHORTCUTS.FILTER_FEED.value);
+          } else if (key === SHORTCUTS.FILTER_REELS.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_REELS);
+            context.filter.set(SHORTCUTS.FILTER_REELS.value);
+          } else if (key === SHORTCUTS.FILTER_TASK.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_TASK);
+            context.filter.set(SHORTCUTS.FILTER_TASK.value);
+          } else if (key === SHORTCUTS.FILTER_STORIES.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_STORIES);
+            context.filter.set(SHORTCUTS.FILTER_STORIES.value);
+          } else if (key === SHORTCUTS.FILTER_MEETING.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_MEETING);
+            context.filter.set(SHORTCUTS.FILTER_MEETING.value);
+          } else if (key === SHORTCUTS.FILTER_PRINT.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_PRINT);
+            context.filter.set(SHORTCUTS.FILTER_PRINT.value);
+          } else if (key === SHORTCUTS.FILTER_TIKTOK.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_TIKTOK);
+            context.filter.set(SHORTCUTS.FILTER_TIKTOK.value);
+          } else if (key === SHORTCUTS.FILTER_FINANCIAL.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_FINANCIAL);
+            context.filter.set(SHORTCUTS.FILTER_FINANCIAL.value);
+          } else if (key === SHORTCUTS.FILTER_DEVELOPMENT.shortcut) {
+            event.preventDefault();
+            handleShortcut(SHORTCUTS.FILTER_DEVELOPMENT);
+            context.filter.set(SHORTCUTS.FILTER_DEVELOPMENT.value);
+          }
         }
       }
     }

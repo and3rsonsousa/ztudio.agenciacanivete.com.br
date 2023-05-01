@@ -1,15 +1,15 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Form, Link, useLoaderData, useOutletContext } from "@remix-run/react";
-import { AuthError } from "@supabase/supabase-js";
+import { type AuthError } from "@supabase/supabase-js";
 import { useState } from "react";
-import { useContext } from "react";
 import Button from "~/components/Button";
 import Exclamation from "~/components/Exclamation";
 import InputField from "~/components/Forms/InputField";
 import { getUser } from "~/lib/auth.server";
 import { getPersonByUser } from "~/lib/data";
 import type { ContextType, PersonModel } from "~/lib/models";
+import { getSupabase } from "~/lib/supabase";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const {
@@ -29,11 +29,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
-  const { name, email } = Object.fromEntries(formData);
+  const { name, email, id } = Object.fromEntries(formData);
+  const { supabase } = getSupabase(request);
 
-  console.log({ name, email });
+  const { data, error } = await supabase
+    .from("Person")
+    .update({ name, email })
+    .eq("id", id)
+    .select("*")
+    .single();
 
-  return {};
+  return { data, error };
 };
 
 export default function Me() {
@@ -50,6 +56,7 @@ export default function Me() {
       </div>
       <div className="max-w-md p-4">
         <Form method="post">
+          <input type="hidden" name="id" value={person.id} />
           <InputField label="Nome" name="name" value={person.name} />
           <InputField label="Email" name="email" value={person.email} />
 
