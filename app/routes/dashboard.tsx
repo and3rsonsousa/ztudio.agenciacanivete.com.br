@@ -5,16 +5,17 @@ import Layout from "~/components/Layout";
 import { getUser } from "~/lib/auth.server";
 import {
   getAccounts,
+  getCategoriesStagesAttributes,
   getCelebrations,
   getPersonByUser,
   getPersons,
-  getCategoriesStagesAttributes,
 } from "~/lib/data";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const response = new Response();
+
   const {
     data: { session },
-    response,
   } = await getUser(request);
 
   if (!session) {
@@ -51,6 +52,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Dashboard() {
   const context = useOutletContext();
+
   return (
     <Layout>
       <Outlet context={context} />

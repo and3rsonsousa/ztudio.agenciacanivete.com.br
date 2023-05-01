@@ -34,7 +34,6 @@ const DashboardIndex = () => {
 
   return (
     <>
-      <div>{date}</div>
       <Calendar actions={actions} campaigns={campaigns} date={date} />
     </>
   );

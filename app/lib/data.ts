@@ -461,7 +461,6 @@ export const handleAction = async (formData: FormData, request: Request) => {
         short: formData.get("short") as string,
         users: formData.getAll("users") as string[],
       };
-      console.log({ values });
     } else if (action === "update-campaign") {
       values = {
         name: formData.get("name") as string,

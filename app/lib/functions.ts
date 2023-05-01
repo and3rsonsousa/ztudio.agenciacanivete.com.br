@@ -169,7 +169,6 @@ export function checkDate(
   const pattern = /^\d{1,2}-\d{1,2}-\d{4}$/;
 
   let day = dayjs().tz("America/Fortaleza");
-  console.log(day.format("D M YY"));
 
   if (date?.match(pattern)) {
     let splitDate = date.split("-");

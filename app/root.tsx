@@ -13,11 +13,12 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useLoaderData,
+  useNavigate,
   useRouteError,
 } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "~/tailwind.css";
 import type { ContextType } from "./lib/models";
@@ -47,7 +48,12 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async ({ request, context }) => {
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = context;
   const response = new Response();
-  const supabase = createServerClient({ request, response });
+  const supabase = createServerClient({
+    SUPABASE_URL: SUPABASE_URL as string,
+    SUPABASE_ANON_KEY: SUPABASE_ANON_KEY as string,
+    request,
+    response,
+  });
 
   const {
     data: { session },
@@ -64,7 +70,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 };
 
 export default function App() {
-  const { env } = useLoaderData();
+  const { env, session } = useLoaderData();
 
   const [supabase] = useState(() => {
     return createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
@@ -80,6 +86,7 @@ export default function App() {
   const [openDialogSearch, setDialogSearch] = useState(false);
   const [openShortcut, setShortcut] = useState(false);
   const [sidebar, setSidebar] = useState(true);
+  const navigate = useNavigate();
 
   const context: ContextType = {
     date: {
@@ -123,33 +130,18 @@ export default function App() {
       open: sidebar,
       set: setSidebar,
     },
-    supabase: supabase,
+    supabase,
   };
 
-  // const access_token = session?.access_token
-
-  // useEffect(() => {
-  //   const {data: {subscription}} = supabase.auth.onAuthStateChange((event, session) => {
-  //     if(session?.access_token !== access_token){
-
-  //     }
-  //   })
-
-  //   return subscription.unsubscribe()
-  // }, [])
-
-  // const revalidator = useRevalidator();
-
-  // useEffect(() => {
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange(async () => {
-  //     revalidator.revalidate();
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, [supabase, revalidator]);
-
-  // const serverAcessToken = session
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/login");
+      } else {
+        navigate("/dashboard");
+      }
+    });
+  }, [supabase, navigate]);
 
   return (
     <html lang="pt-br" className={"dark"}>

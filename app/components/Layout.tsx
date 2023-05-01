@@ -41,6 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const context: ContextType = useOutletContext();
 
   const [shortcut, setShorcut] = useState<ShortcutModel>();
+  const [scrollTo, setScrollTo] = useState(0);
   const [openAccountsMenu, setOpenAccountsMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [params] = useSearchParams();
@@ -49,6 +50,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     params.get("month") !== null ? `?month=${params.get("month")}` : "";
 
   useEffect(() => {
+    document.addEventListener("scroll", (event) => {
+      setScrollTo(window.scrollY);
+    });
+
     function handleShortcut(shortcut: ShortcutModel) {
       setShorcut(shortcut);
       setTimeout(() => {
@@ -101,8 +106,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           context.arrange.set(SHORTCUTS.ARRANGE_ALL.value);
         } else if (key === SHORTCUTS.ARRANGE_CATEGORIES.shortcut) {
           event.preventDefault();
-          console.log("AQUI");
-
           handleShortcut(SHORTCUTS.ARRANGE_CATEGORIES);
           context.arrange.set(SHORTCUTS.ARRANGE_CATEGORIES.value);
         } else if (key === SHORTCUTS.ARRANGE_ACCOUNTS.shortcut) {
@@ -199,8 +202,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen w-full flex-col lg:flex-row">
       {/* Header */}
       <div
-        className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between bg-gray-800/50 backdrop-blur-xl lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:bg-transparent lg:py-4  ${
+        className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between  border-b border-transparent transition-all lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
           context.sidebar.open ? "lg:w-48" : "lg:w-16"
+        } ${
+          scrollTo > 10
+            ? "border-gray-600/50 bg-gray-800/50 backdrop-blur-xl"
+            : ""
         }`}
       >
         <div className="lg:w-full">
@@ -241,7 +248,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
         </div>
-        <div className="flex pr-2 lg:flex lg:w-full lg:flex-col lg:p-2">
+        <div className="flex items-center pr-2 lg:flex lg:w-full lg:flex-col lg:p-2">
           {/* Clientes mobile */}
           <div className="lg:hidden">
             <DropdownMenu.Root

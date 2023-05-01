@@ -6,7 +6,7 @@ import { redirect } from "@remix-run/cloudflare";
 import { Form, useOutletContext } from "@remix-run/react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { Lock, Unlock } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 import Button from "~/components/Button";
 import Exclamation from "~/components/Exclamation";
@@ -51,8 +51,6 @@ const quotes: Array<{ quote: string; author: string }> = [
   },
 ];
 
-const quote = quotes[Math.floor(Math.random() * quotes.length)];
-
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   const {
     data: { session },
@@ -73,7 +71,7 @@ export default function Login() {
   const [error, setError] = useState<AuthError | null>(null);
   const { supabase } = useOutletContext<ContextType>();
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+  const [quote, setQuote] = useState({ quote: "", author: "" });
 
   async function signIn() {
     setLoading(true);
@@ -87,12 +85,16 @@ export default function Login() {
     setError(error);
   }
 
+  useEffect(() => {
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  }, []);
+
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="w-full max-w-3xl grid-cols-2 place-items-center p-8  md:grid">
+      <div className="w-full max-w-md grid-cols-2 place-items-center p-8 md:grid  md:max-w-3xl">
         <div className="w-full p-8">
           <div className="mb-8 w-32">
-            <img src="/ztudio-logo-white.svg" alt="ZTUDIO" />
+            <img src="/logo.png" alt="ZTUDIO" />
           </div>
 
           <ResizeblePanel duration={0.3}>
