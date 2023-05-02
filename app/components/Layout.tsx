@@ -206,11 +206,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen w-full flex-col lg:flex-row">
       {/* Header */}
       <div
-        className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between  border-b border-transparent transition-all lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
+        className={`no-scrollbars fixed z-30 flex h-12 w-full flex-shrink-0 items-center justify-between border-b border-transparent transition-colors lg:relative lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:overflow-y-auto lg:py-4 ${
           context.sidebar.open ? "lg:w-48" : "lg:w-16"
         } ${
           scrollTo > 10
-            ? "border-gray-600/50 bg-gray-800/50 backdrop-blur-xl"
+            ? "border-gray-500/50 bg-gray-800/50 backdrop-blur-xl"
             : ""
         }`}
       >

@@ -189,11 +189,11 @@ body {
   }
 
   .dropdown-label {
-    @apply spacing-sm text-xx font-semibold uppercase text-gray-700  antialiased;
+    @apply spacing-sm text-xx font-semibold uppercase text-gray-400  antialiased;
   }
 
   .dropdown-item {
-    @apply spacing flex cursor-pointer items-center justify-between gap-2 font-normal text-gray-700 antialiased focus:bg-brand focus:text-white focus:outline-none;
+    @apply spacing flex cursor-pointer items-center justify-between gap-2 font-normal text-white antialiased focus:bg-brand focus:outline-none;
   }
 
   .dropdown-item.item-small {
@@ -339,7 +339,7 @@ body {
 }
 
 .bg-doing {
-  @apply bg-doing-600;
+  @apply bg-doing-600 text-white;
 }
 .bg-doing-hover {
   @apply hover:bg-doing-700;

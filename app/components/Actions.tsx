@@ -284,7 +284,7 @@ export const ActionGrid = ({
 
   return action.name === "support" ? (
     <div
-      className={`grid aspect-square place-items-center border border-white  bg-brand text-center text-white dark:border-gray-1000 ${
+      className={`borde grid aspect-square place-items-center  border-gray-1000 bg-brand text-center text-white ${
         index === 0 ? "rounded-tl-xl" : ""
       }`}
     >
@@ -307,11 +307,11 @@ export const ActionGrid = ({
     <ContextMenu.Root>
       <ContextMenu.Trigger>
         <div
-          className={`flex aspect-square flex-col justify-between border border-white p-2 text-center text-xx leading-tight dark:border-gray-1000  ${
+          className={`flex aspect-square flex-col justify-between border  border-gray-1000 p-2 text-center text-xx leading-tight  ${
             (action as ActionModel).stage.id ===
             "a448e17d-05ba-4ad0-9990-773f9384d15e"
-              ? " bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-400"
-              : " bg-gray-100 dark:bg-gray-800 dark:text-gray-200"
+              ? " bg-gray-900 text-gray-400"
+              : " bg-gray-800 text-gray-200"
           } 
           ${index === 0 ? "rounded-tl-xl" : ""} 
           ${
@@ -623,7 +623,7 @@ const IsLate = ({ action }: { action: ActionModel }) =>
   dayjs(action.date).isBefore(dayjs()) &&
   action.stage.slug !== "accomplished" ? (
     <div
-      className="absolute -left-1 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-white bg-error-500 dark:border-gray-1000"
+      className="absolute -left-1 top-2 h-3 w-3 animate-bounce rounded-full border-2 border-gray-1000 bg-error-500"
       title={`Atrasado ${dayjs(action.date).fromNow()}`}
     ></div>
   ) : null;

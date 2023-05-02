@@ -167,11 +167,11 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <div className="grid min-h-screen place-content-center">
-        <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
+        <div className="bg-error mx-auto overflow-hidden rounded-lg p-8 text-2xl font-bold">
           {error.status}
         </div>
         <div className="p-8">
-          <pre className="whitespace-pre-line  text-xs">{error.data}</pre>
+          <pre className="whitespace-pre-line text-xs">{error.data}</pre>
         </div>
       </div>
     );
