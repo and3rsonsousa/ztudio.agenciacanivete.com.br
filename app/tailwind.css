@@ -339,6 +339,9 @@ body {
 }
 
 .bg-doing {
+  @apply bg-doing-600;
+}
+.bg-doing-hover {
   @apply hover:bg-doing-700;
 }
 .border-doing {
