@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const { data: person } = await getPersonByUser(session.user.id, request);
 
-  if (!person.admin) {
+  if (person && !person.admin) {
     return redirect("/dashboard");
   }
 
@@ -64,7 +64,7 @@ export default function Users() {
             >
               <Link
                 to={`/dashboard/admin/users/${person.id}`}
-                className="block py-4 px-8  font-medium focus:text-brand focus:outline-none"
+                className="block px-8 py-4  font-medium focus:text-brand focus:outline-none"
               >
                 {person.name}
               </Link>
