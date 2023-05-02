@@ -284,7 +284,7 @@ export const ActionGrid = ({
 
   return action.name === "support" ? (
     <div
-      className={`borde grid aspect-square place-items-center  border-gray-1000 bg-brand text-center text-white ${
+      className={`grid aspect-square place-items-center border  border-gray-1000 bg-brand text-center ${
         index === 0 ? "rounded-tl-xl" : ""
       }`}
     >
@@ -294,6 +294,7 @@ export const ActionGrid = ({
           large
           squared
           icon
+          className="text-brand-300"
           onClick={() => {
             context.date.set(dayjs(action.date));
             context.actions.set(true);
