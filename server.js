@@ -1,12 +1,21 @@
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
 import * as build from "@remix-run/dev/server-build";
 
-const handleRequest = createPagesFunctionHandler({
+export const onRequest = createPagesFunctionHandler({
   build,
-  mode: process.env.NODE_ENV,
   getLoadContext: (context) => context.env,
+  mode: process.env.NODE_ENV,
 });
 
-export function onRequest(context) {
-  return handleRequest(context);
-}
+// import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
+// import * as build from "@remix-run/dev/server-build";
+
+// const handleRequest = createPagesFunctionHandler({
+//   build,
+//   mode: process.env.NODE_ENV,
+//   getLoadContext: (context) => context.env,
+// });
+
+// export function onRequest(context) {
+//   return handleRequest(context);
+// }

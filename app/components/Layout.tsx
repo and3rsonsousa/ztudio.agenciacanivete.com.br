@@ -336,9 +336,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         className="dropdown-content mr-4 origin-bottom"
                       >
                         {/* Theme Switcher */}
-                        <div className="flex items-center justify-between gap-2"></div>
+                        {/* <div className="flex items-center justify-between gap-2">
 
-                        <hr className="dropdown-hr" />
+                        </div>
+
+                        <hr className="dropdown-hr" /> */}
                         {/* Minha Conta */}
                         <DropdownMenu.Label className="dropdown-label">
                           minha conta

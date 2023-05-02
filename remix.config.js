@@ -10,6 +10,8 @@ module.exports = {
   serverMinify: true,
   serverModuleFormat: "esm",
   serverPlatform: "neutral",
+  postcss: true,
+  tailwind: true,
 
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
@@ -19,7 +21,6 @@ module.exports = {
     v2_meta: true,
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
-    unstable_tailwind: true,
-    unstable_postcss: true,
+    unstable_dev: true,
   },
 };
