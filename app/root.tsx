@@ -155,7 +155,6 @@ export default function App() {
           <Outlet context={context} />
         </div>
         <ScrollRestoration />
-
         <Scripts />
         <LiveReload />
       </body>
