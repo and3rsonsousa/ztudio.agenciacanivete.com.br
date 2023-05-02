@@ -142,7 +142,7 @@ export default function App() {
   // }, [supabase, navigate]);
 
   return (
-    <html lang="pt-br" className={"dark"}>
+    <html lang="pt-br">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -151,9 +151,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="app">
-          <Outlet context={context} />
-        </div>
+        {/* <div className="app"> */}
+        <Outlet context={context} />
+        {/* </div> */}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

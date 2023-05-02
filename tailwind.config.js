@@ -3,7 +3,6 @@ var colors = require("tailwindcss/colors");
 var theme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./app/**/*.{js,ts,tsx,jsx}"],
-  darkMode: "class",
   theme: {
     extend: {
       fontSize: {
