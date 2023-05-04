@@ -9,7 +9,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import styles from "~/tailwind.css";
+// import styles from "~/tailwind.css";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -25,7 +25,7 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
+  // { rel: "stylesheet", href: styles },
   {
     rel: "icon",
     href: "/ico.png",
