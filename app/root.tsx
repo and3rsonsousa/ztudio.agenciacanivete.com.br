@@ -1,8 +1,4 @@
-import type {
-  LinksFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/cloudflare";
+import type { LinksFunction, V2_MetaFunction } from "@remix-run/cloudflare";
 
 import {
   Links,
@@ -11,17 +7,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
 } from "@remix-run/react";
-import { createBrowserClient } from "@supabase/auth-helpers-remix";
-import dayjs from "dayjs";
-import { useState } from "react";
 
 import styles from "~/tailwind.css";
-import type { ContextType } from "./lib/models";
-import { createServerClient } from "./lib/supabase";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -44,103 +32,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader: LoaderFunction = async ({ request, context }) => {
-  const { SUPABASE_URL, SUPABASE_ANON_KEY } = context;
-  const response = new Response();
-  const supabase = createServerClient({
-    SUPABASE_URL: SUPABASE_URL as string,
-    SUPABASE_ANON_KEY: SUPABASE_ANON_KEY as string,
-    request,
-    response,
-  });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  return {
-    env: {
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY,
-    },
-    session,
-    headers: response.headers,
-  };
-};
-
 export default function App() {
-  const { env } = useLoaderData();
-
-  const [supabase] = useState(() => {
-    return createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
-  });
-
-  const [day, setDay] = useState(dayjs());
-  const [filter, setFilter] = useState("all");
-  const [arrange, setArrange] = useState("arrange_all");
-  const [priority, setPriority] = useState(true);
-  const [openDialogAction, setDialogAction] = useState(false);
-  const [openDialogCelebration, setDialogCelebration] = useState(false);
-  const [openDialogCampaign, setDialogCampaign] = useState(false);
-  const [openDialogSearch, setDialogSearch] = useState(false);
-  const [openShortcut, setShortcut] = useState(false);
-  const [sidebar, setSidebar] = useState(true);
-
-  const context: ContextType = {
-    date: {
-      day,
-      set: setDay,
-    },
-    filter: {
-      option: filter,
-      set: setFilter,
-    },
-    arrange: {
-      option: arrange,
-      set: setArrange,
-    },
-    priority: {
-      option: priority,
-      set: setPriority,
-    },
-    actions: {
-      open: openDialogAction,
-      set: setDialogAction,
-    },
-    celebrations: {
-      open: openDialogCelebration,
-      set: setDialogCelebration,
-    },
-    campaigns: {
-      open: openDialogCampaign,
-      set: setDialogCampaign,
-    },
-    search: {
-      open: openDialogSearch,
-      set: setDialogSearch,
-    },
-
-    shortcut: {
-      open: openShortcut,
-      set: setShortcut,
-    },
-    sidebar: {
-      open: sidebar,
-      set: setSidebar,
-    },
-    supabase,
-  };
-
-  // useEffect(() => {
-  //   supabase.auth.onAuthStateChange((event, session) => {
-  // if (!session) {
-  //   navigate("/login");
-  // } else {
-  //   navigate("/dashboard");
-  // }
-  //   });
-  // }, [supabase, navigate]);
-
   return (
     <html lang="pt-br">
       <head>
@@ -152,7 +44,7 @@ export default function App() {
       </head>
       <body>
         {/* <div className="app"> */}
-        <Outlet context={context} />
+        <Outlet />
         {/* </div> */}
         <ScrollRestoration />
         <Scripts />
@@ -160,33 +52,4 @@ export default function App() {
       </body>
     </html>
   );
-}
-
-export function ErrorBoundary() {
-  let error = useRouteError();
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div className="grid min-h-screen place-content-center">
-        <div className="bg-error mx-auto overflow-hidden rounded-lg p-8 text-2xl font-bold">
-          {error.status}
-        </div>
-        <div className="p-8">
-          <pre className="whitespace-pre-line text-xs">{error.data}</pre>
-        </div>
-      </div>
-    );
-  } else if (error instanceof Error) {
-    return (
-      <div className="grid min-h-screen place-content-center">
-        <div className="mx-auto overflow-hidden rounded-lg bg-error-600 p-8 text-2xl font-bold text-white">
-          {error.message}
-        </div>
-        <div className="p-8">
-          <pre className="whitespace-pre-line  text-xs">{error.stack}</pre>
-        </div>
-      </div>
-    );
-  } else {
-    return <h1>Erro desconhecido</h1>;
-  }
 }
